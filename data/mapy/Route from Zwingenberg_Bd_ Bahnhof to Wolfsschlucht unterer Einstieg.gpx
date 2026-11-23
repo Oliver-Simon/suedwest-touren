@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://mapy.com/">
+	<trk>
+		<name>Route from Zwingenberg/Bd, Bahnhof to Wolfsschlucht unterer Einstieg</name>
+		<trkseg>
+			<trkpt lat="49.416106" lon="9.042747">
+				<ele>147.002441</ele>
+			</trkpt>
+			<trkpt lat="49.416094" lon="9.042711">
+				<ele>146.873459</ele>
+			</trkpt>
+			<trkpt lat="49.416053" lon="9.042550">
+				<ele>143.850372</ele>
+			</trkpt>
+			<trkpt lat="49.416035" lon="9.042495">
+				<ele>142.581360</ele>
+			</trkpt>
+			<trkpt lat="49.416047" lon="9.042495">
+				<ele>142.678101</ele>
+			</trkpt>
+			<trkpt lat="49.416246" lon="9.042370">
+				<ele>142.108887</ele>
+			</trkpt>
+			<trkpt lat="49.416257" lon="9.042370">
+				<ele>142.173370</ele>
+			</trkpt>
+			<trkpt lat="49.416269" lon="9.042370">
+				<ele>142.237869</ele>
+			</trkpt>
+			<trkpt lat="49.416310" lon="9.042378">
+				<ele>142.585846</ele>
+			</trkpt>
+			<trkpt lat="49.416298" lon="9.042415">
+				<ele>142.836136</ele>
+			</trkpt>
+			<trkpt lat="49.416293" lon="9.042478">
+				<ele>144.035538</ele>
+			</trkpt>
+			<trkpt lat="49.416287" lon="9.042522">
+				<ele>144.836334</ele>
+			</trkpt>
+			<trkpt lat="49.416293" lon="9.042594">
+				<ele>146.335190</ele>
+			</trkpt>
+			<trkpt lat="49.416304" lon="9.042667">
+				<ele>148.029160</ele>
+			</trkpt>
+			<trkpt lat="49.416328" lon="9.042720">
+				<ele>148.472733</ele>
+			</trkpt>
+			<trkpt lat="49.416345" lon="9.042747">
+				<ele>148.601715</ele>
+			</trkpt>
+			<trkpt lat="49.416374" lon="9.042765">
+				<ele>149.154755</ele>
+			</trkpt>
+			<trkpt lat="49.416392" lon="9.042783">
+				<ele>149.638458</ele>
+			</trkpt>
+			<trkpt lat="49.416409" lon="9.042791">
+				<ele>149.874954</ele>
+			</trkpt>
+			<trkpt lat="49.416468" lon="9.042801">
+				<ele>150.495621</ele>
+			</trkpt>
+			<trkpt lat="49.416562" lon="9.042783">
+				<ele>151.077560</ele>
+			</trkpt>
+			<trkpt lat="49.416655" lon="9.042720">
+				<ele>152.537811</ele>
+			</trkpt>
+			<trkpt lat="49.417076" lon="9.042378">
+				<ele>154.583817</ele>
+			</trkpt>
+			<trkpt lat="49.417105" lon="9.042378">
+				<ele>155.353088</ele>
+			</trkpt>
+			<trkpt lat="49.417122" lon="9.042388">
+				<ele>155.740036</ele>
+			</trkpt>
+			<trkpt lat="49.417134" lon="9.042415">
+				<ele>156.958801</ele>
+			</trkpt>
+			<trkpt lat="49.417221" lon="9.042298">
+				<ele>157.085419</ele>
+			</trkpt>
+			<trkpt lat="49.417631" lon="9.041984">
+				<ele>159.037827</ele>
+			</trkpt>
+			<trkpt lat="49.418303" lon="9.041462">
+				<ele>161.627136</ele>
+			</trkpt>
+			<trkpt lat="49.418904" lon="9.040879">
+				<ele>172.056793</ele>
+			</trkpt>
+			<trkpt lat="49.419407" lon="9.040286">
+				<ele>179.573975</ele>
+			</trkpt>
+			<trkpt lat="49.419682" lon="9.039917">
+				<ele>181.904510</ele>
+			</trkpt>
+			<trkpt lat="49.419927" lon="9.039558">
+				<ele>181.193558</ele>
+			</trkpt>
+			<trkpt lat="49.420191" lon="9.039099">
+				<ele>177.253754</ele>
+			</trkpt>
+			<trkpt lat="49.420862" lon="9.037663">
+				<ele>168.207794</ele>
+			</trkpt>
+			<trkpt lat="49.421272" lon="9.036199">
+				<ele>178.086243</ele>
+			</trkpt>
+			<trkpt lat="49.421540" lon="9.035030">
+				<ele>169.263611</ele>
+			</trkpt>
+			<trkpt lat="49.421575" lon="9.034761">
+				<ele>169.734390</ele>
+			</trkpt>
+			<trkpt lat="49.421581" lon="9.034654">
+				<ele>169.360336</ele>
+			</trkpt>
+			<trkpt lat="49.421599" lon="9.034241">
+				<ele>174.962967</ele>
+			</trkpt>
+			<trkpt lat="49.421610" lon="9.034178">
+				<ele>176.680466</ele>
+			</trkpt>
+			<trkpt lat="49.421640" lon="9.034088">
+				<ele>179.848526</ele>
+			</trkpt>
+			<trkpt lat="49.421651" lon="9.034069">
+				<ele>180.880402</ele>
+			</trkpt>
+			<trkpt lat="49.421668" lon="9.034069">
+				<ele>182.331512</ele>
+			</trkpt>
+			<trkpt lat="49.421675" lon="9.033845">
+				<ele>183.073868</ele>
+			</trkpt>
+			<trkpt lat="49.421692" lon="9.033709">
+				<ele>183.761780</ele>
+			</trkpt>
+			<trkpt lat="49.421698" lon="9.033638">
+				<ele>184.153931</ele>
+			</trkpt>
+			<trkpt lat="49.421692" lon="9.033333">
+				<ele>184.235870</ele>
+			</trkpt>
+			<trkpt lat="49.421692" lon="9.033333">
+				<ele>184.235870</ele>
+			</trkpt>
+			<trkpt lat="49.421698" lon="9.033638">
+				<ele>184.153931</ele>
+			</trkpt>
+			<trkpt lat="49.421692" lon="9.033709">
+				<ele>183.761780</ele>
+			</trkpt>
+			<trkpt lat="49.421675" lon="9.033845">
+				<ele>183.073868</ele>
+			</trkpt>
+			<trkpt lat="49.421668" lon="9.034069">
+				<ele>182.331512</ele>
+			</trkpt>
+			<trkpt lat="49.421715" lon="9.034069">
+				<ele>185.765320</ele>
+			</trkpt>
+			<trkpt lat="49.421739" lon="9.034096">
+				<ele>187.178696</ele>
+			</trkpt>
+			<trkpt lat="49.421774" lon="9.034114">
+				<ele>189.331436</ele>
+			</trkpt>
+			<trkpt lat="49.421850" lon="9.034124">
+				<ele>193.948364</ele>
+			</trkpt>
+			<trkpt lat="49.422031" lon="9.034159">
+				<ele>206.186523</ele>
+			</trkpt>
+			<trkpt lat="49.422084" lon="9.034141">
+				<ele>208.165344</ele>
+			</trkpt>
+			<trkpt lat="49.422113" lon="9.034096">
+				<ele>209.573273</ele>
+			</trkpt>
+			<trkpt lat="49.422282" lon="9.033836">
+				<ele>215.590515</ele>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>
+

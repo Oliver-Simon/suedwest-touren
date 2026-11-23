@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+.agents/
+cache/
+img_src/*.jpg
+data/android_shortcuts_raw.txt
+data/app_manifests.txt

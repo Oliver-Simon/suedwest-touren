@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://mapy.com/">
+	<trk>
+		<name>Route from Ledigsberg to Scenic viewpoint</name>
+		<trkseg>
+			<trkpt lat="49.450369" lon="8.979128">
+				<ele>238.586197</ele>
+			</trkpt>
+			<trkpt lat="49.450375" lon="8.979128">
+				<ele>238.478714</ele>
+			</trkpt>
+			<trkpt lat="49.450381" lon="8.979120">
+				<ele>238.371216</ele>
+			</trkpt>
+			<trkpt lat="49.450398" lon="8.979120">
+				<ele>238.156250</ele>
+			</trkpt>
+			<trkpt lat="49.450416" lon="8.979110">
+				<ele>237.887512</ele>
+			</trkpt>
+			<trkpt lat="49.450451" lon="8.979093">
+				<ele>237.403824</ele>
+			</trkpt>
+			<trkpt lat="49.450463" lon="8.979155">
+				<ele>237.275284</ele>
+			</trkpt>
+			<trkpt lat="49.450468" lon="8.979210">
+				<ele>237.844971</ele>
+			</trkpt>
+			<trkpt lat="49.450498" lon="8.979326">
+				<ele>238.726349</ele>
+			</trkpt>
+			<trkpt lat="49.450532" lon="8.979479">
+				<ele>239.210220</ele>
+			</trkpt>
+			<trkpt lat="49.450532" lon="8.979506">
+				<ele>239.210236</ele>
+			</trkpt>
+			<trkpt lat="49.450737" lon="8.980602">
+				<ele>244.201645</ele>
+			</trkpt>
+			<trkpt lat="49.450778" lon="8.980718">
+				<ele>244.742950</ele>
+			</trkpt>
+			<trkpt lat="49.450813" lon="8.980835">
+				<ele>245.237747</ele>
+			</trkpt>
+			<trkpt lat="49.450953" lon="8.980988">
+				<ele>245.746246</ele>
+			</trkpt>
+			<trkpt lat="49.451140" lon="8.981177">
+				<ele>246.923401</ele>
+			</trkpt>
+			<trkpt lat="49.451379" lon="8.981447">
+				<ele>252.195190</ele>
+			</trkpt>
+			<trkpt lat="49.451613" lon="8.981716">
+				<ele>255.602951</ele>
+			</trkpt>
+			<trkpt lat="49.451929" lon="8.982074">
+				<ele>258.007233</ele>
+			</trkpt>
+			<trkpt lat="49.452191" lon="8.982416">
+				<ele>259.997772</ele>
+			</trkpt>
+			<trkpt lat="49.452454" lon="8.982758">
+				<ele>262.779358</ele>
+			</trkpt>
+			<trkpt lat="49.453044" lon="8.983781">
+				<ele>269.617493</ele>
+			</trkpt>
+			<trkpt lat="49.453505" lon="8.985057">
+				<ele>277.761230</ele>
+			</trkpt>
+			<trkpt lat="49.453569" lon="8.985300">
+				<ele>280.549103</ele>
+			</trkpt>
+			<trkpt lat="49.453639" lon="8.985552">
+				<ele>282.698486</ele>
+			</trkpt>
+			<trkpt lat="49.453709" lon="8.985974">
+				<ele>286.614746</ele>
+			</trkpt>
+			<trkpt lat="49.453733" lon="8.986225">
+				<ele>287.983826</ele>
+			</trkpt>
+			<trkpt lat="49.453744" lon="8.986773">
+				<ele>285.682892</ele>
+			</trkpt>
+			<trkpt lat="49.453400" lon="8.986181">
+				<ele>297.422943</ele>
+			</trkpt>
+			<trkpt lat="49.453184" lon="8.985892">
+				<ele>303.304321</ele>
+			</trkpt>
+			<trkpt lat="49.452962" lon="8.985605">
+				<ele>305.550049</ele>
+			</trkpt>
+			<trkpt lat="49.452431" lon="8.985210">
+				<ele>315.421143</ele>
+			</trkpt>
+			<trkpt lat="49.452553" lon="8.985739">
+				<ele>322.756439</ele>
+			</trkpt>
+			<trkpt lat="49.452612" lon="8.986297">
+				<ele>324.839722</ele>
+			</trkpt>
+			<trkpt lat="49.452617" lon="8.986405">
+				<ele>324.113312</ele>
+			</trkpt>
+			<trkpt lat="49.452623" lon="8.986521">
+				<ele>323.540527</ele>
+			</trkpt>
+			<trkpt lat="49.452617" lon="8.986665">
+				<ele>323.610992</ele>
+			</trkpt>
+			<trkpt lat="49.452612" lon="8.986971">
+				<ele>325.253815</ele>
+			</trkpt>
+			<trkpt lat="49.452594" lon="8.987078">
+				<ele>328.332428</ele>
+			</trkpt>
+			<trkpt lat="49.452495" lon="8.987402">
+				<ele>337.041809</ele>
+			</trkpt>
+			<trkpt lat="49.452460" lon="8.987546">
+				<ele>339.657379</ele>
+			</trkpt>
+			<trkpt lat="49.452360" lon="8.987716">
+				<ele>342.930603</ele>
+			</trkpt>
+			<trkpt lat="49.452097" lon="8.987940">
+				<ele>348.386292</ele>
+			</trkpt>
+			<trkpt lat="49.452051" lon="8.987644">
+				<ele>350.434357</ele>
+			</trkpt>
+			<trkpt lat="49.451987" lon="8.987483">
+				<ele>351.887939</ele>
+			</trkpt>
+			<trkpt lat="49.451876" lon="8.987347">
+				<ele>353.745209</ele>
+			</trkpt>
+			<trkpt lat="49.451806" lon="8.987267">
+				<ele>354.400696</ele>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>
+

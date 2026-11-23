@@ -1,0 +1,2616 @@
+[
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712010475232",
+  "label": "Landau - Germersheim",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Diedesfeld Am Dorfplatz, Neustadt an der Weinstraß",
+    "id": 505869,
+    "lat": 49.322175,
+    "lon": 8.135669
+   },
+   "viaLocation.1": {
+    "name": "Germersheim West",
+    "id": 104645,
+    "lat": 49.208534,
+    "lon": 8.35675
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1716558561128",
+  "label": "K-Town - Trippstadt - Waldfischbach",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Denkmal, Trippstadt",
+    "id": 403629,
+    "lat": 49.360083,
+    "lon": 7.777934
+   },
+   "viaLocation.1": {
+    "name": "Waldfischbach",
+    "id": 8006156,
+    "lat": 49.288547,
+    "lon": 7.652041
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712308259307",
+  "label": "Frankenstein(Pfalz) → Enkenbach",
+  "locations": {
+   "startLocation": {
+    "name": "Frankenstein(Pfalz)",
+    "id": 8002036,
+    "lat": 49.438927,
+    "lon": 7.969818
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Am Erlenbach, Frankenstein (Pfalz)",
+    "id": 403262,
+    "lat": 49.439961,
+    "lon": 7.983518
+   },
+   "viaLocation.1": {
+    "name": "Enkenbach",
+    "id": 8000372,
+    "lat": 49.489995,
+    "lon": 7.899756
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1714073492087",
+  "label": "Rastatt → Jugenheim",
+  "locations": {
+   "startLocation": {
+    "name": "Rastatt",
+    "id": 8000306,
+    "lat": 48.860597,
+    "lon": 8.215763
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1714073243894",
+  "label": "→ Rastatt",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Rastatt",
+    "id": 8000306,
+    "lat": 48.860597,
+    "lon": 8.215763
+   },
+   "viaLocation.0": {
+    "name": "Blankenloch Mühlenweg, Stutensee",
+    "id": 720333,
+    "lat": 49.068769,
+    "lon": 8.474652
+   },
+   "viaLocation.1": {
+    "name": "Illingen Gemeindezentrum, Elchesheim-Illingen",
+    "id": 724284,
+    "lat": 48.930174,
+    "lon": 8.209219
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1714154035449",
+  "label": "Karlsruhe Hbf → Pforzheim Hbf (Bus)",
+  "locations": {
+   "startLocation": {
+    "name": "Karlsruhe Hbf",
+    "id": 8000191,
+    "lat": 48.99353,
+    "lon": 8.401939
+   },
+   "targetLocation": {
+    "name": "Pforzheim Hbf",
+    "id": 8000299,
+    "lat": 48.894064,
+    "lon": 8.702969
+   },
+   "viaLocation.0": {
+    "name": "Grünwettersbach Rathaus, Karlsruhe",
+    "id": 721047,
+    "lat": 48.95831,
+    "lon": 8.466841
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "00000111111111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1707865574587",
+  "label": "Reichenbach zur Hochschule",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Hochschule Süd, Dieburg",
+    "id": 124960,
+    "lat": 49.899858,
+    "lon": 8.854662
+   },
+   "viaLocation.0": {
+    "name": "Reichenbach Sportplatz, Lautertal (Odenwald)",
+    "id": 509157,
+    "lat": 49.708882,
+    "lon": 8.686133
+   }
+  },
+  "params": {
+   "bdepart": "0",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1711022730857",
+  "label": "Karlsruhe - Heilbronn",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Karlsruhe Hbf",
+    "id": 8000191,
+    "lat": 48.99353,
+    "lon": 8.401939
+   },
+   "viaLocation.1": {
+    "name": "Heilbronn Hbf",
+    "id": 8000157,
+    "lat": 49.143245,
+    "lon": 9.207579
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1707131617627",
+  "label": "Dieburg → Jugenheim",
+  "locations": {
+   "startLocation": {
+    "name": "Hochschule Süd, Dieburg",
+    "id": 124960,
+    "lat": 49.899858,
+    "lon": 8.854662
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Bickenbach (Bergstr) Mitte",
+    "id": 505538,
+    "lat": 49.754332,
+    "lon": 8.611765
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1718222609773",
+  "label": "miltenberg nach dieburg",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753491,
+    "lon": 8.629581
+   },
+   "targetLocation": {
+    "name": "Hochschule Süd, Dieburg",
+    "id": 124960,
+    "lat": 49.899858,
+    "lon": 8.854662
+   },
+   "viaLocation.0": {
+    "name": "Eberbach",
+    "id": 8000369,
+    "lat": 49.465607,
+    "lon": 8.984476
+   },
+   "viaLocation.1": {
+    "name": "Miltenberg",
+    "id": 8000640,
+    "lat": 49.706329,
+    "lon": 9.248588
+   }
+  },
+  "params": {
+   "bdepart": "0",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1713514351905",
+  "label": "Rammstein Landstuhl",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Am Belzappel, Kaiserslautern",
+    "id": 518644,
+    "lat": 49.437938,
+    "lon": 7.725366
+   },
+   "viaLocation.1": {
+    "name": "Schwanden Wendeplatz, Kottweiler-Schwanden",
+    "id": 403619,
+    "lat": 49.482687,
+    "lon": 7.534264
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712157136404",
+  "label": "Mosbach→ über Aglasterhausen",
+  "locations": {
+   "startLocation": {
+    "name": "Busbahnhof, Mosbach",
+    "id": 508329,
+    "lat": 49.349664,
+    "lon": 9.140456
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Aglasterhausen",
+    "id": 8007445,
+    "lat": 49.350006,
+    "lon": 8.990876
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1718963987407",
+  "label": "K-Town Rammstein Hochspeyer Bus",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Brentzel, Fischbach (Kreis Kaiserslautern)",
+    "id": 403256,
+    "lat": 49.452159,
+    "lon": 7.913717
+   },
+   "viaLocation.0": {
+    "name": "Miesenbach Friedhof, Ramstein-Miesenbach",
+    "id": 403593,
+    "lat": 49.467531,
+    "lon": 7.560315
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1716556952490",
+  "label": "Lambrecht",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Lambrecht(Pfalz)",
+    "id": 8003497,
+    "lat": 49.373252,
+    "lon": 8.074408
+   },
+   "viaLocation.1": {
+    "name": "Gemeindeplatz, Lindenberg (Pfalz)",
+    "id": 507927,
+    "lat": 49.380803,
+    "lon": 8.09707
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1731095866326",
+  "label": "→ Landau(Pfalz)Hbf (Bus 500)",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Landau(Pfalz)Hbf",
+    "id": 8000216,
+    "lat": 49.198223,
+    "lon": 8.12615
+   },
+   "viaLocation.0": {
+    "name": "St. Martin Ort",
+    "id": 509962,
+    "lat": 49.299244,
+    "lon": 8.107012
+   },
+   "viaLocation.1": {
+    "name": "Burrweiler Mitte",
+    "id": 505743,
+    "lat": 49.247412,
+    "lon": 8.075343
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712156978070",
+  "label": "→Mosbach(Baden)",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Mosbach(Baden)",
+    "id": 8004094,
+    "lat": 49.35237,
+    "lon": 9.143585
+   },
+   "viaLocation.0": {
+    "name": "Orbis, Zwingenberg (Bergstr)",
+    "id": 510851,
+    "lat": 49.729162,
+    "lon": 8.613931
+   },
+   "viaLocation.1": {
+    "name": "Eberbach",
+    "id": 8000369,
+    "lat": 49.465607,
+    "lon": 8.984476
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1734384144333",
+  "label": "Karlsruhe → Bruchsal",
+  "locations": {
+   "startLocation": {
+    "name": "Karlsruhe Durlacher Tor/KIT-Campus Süd",
+    "id": 8079125,
+    "lat": 49.008838,
+    "lon": 8.418074
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Blankenloch Schloß, Stutensee",
+    "id": 720336,
+    "lat": 49.089508,
+    "lon": 8.482149
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1716330902047",
+  "label": "Bad Bergzabern - Annweiler",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Bad Bergzabern",
+    "id": 8000691,
+    "lat": 49.103216,
+    "lon": 8.002809
+   },
+   "viaLocation.1": {
+    "name": "Ortsmitte, Darstein",
+    "id": 505857,
+    "lat": 49.15672,
+    "lon": 7.88398
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1714062097115",
+  "label": "eberbach miltenberg",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Eberbach",
+    "id": 8000369,
+    "lat": 49.465607,
+    "lon": 8.984476
+   },
+   "viaLocation.1": {
+    "name": "Miltenberg",
+    "id": 8000640,
+    "lat": 49.706329,
+    "lon": 9.248588
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1709582376902",
+  "label": "über 676",
+  "locations": {
+   "startLocation": {
+    "name": "Auerbach Otto-Beck-Straße, Bensheim",
+    "id": 505197,
+    "lat": 49.703003,
+    "lon": 8.619352
+   },
+   "targetLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753474,
+    "lon": 8.62956
+   },
+   "viaLocation.0": {
+    "name": "Schwanheim Rathausstraße, Bensheim",
+    "id": 509618,
+    "lat": 49.697808,
+    "lon": 8.567394
+   }
+  },
+  "params": {
+   "bdepart": "0",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712265684879",
+  "label": "BD - Grünstadt - WO",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Bad Dürkheim",
+    "id": 8000698,
+    "lat": 49.460663,
+    "lon": 8.170709
+   },
+   "viaLocation.1": {
+    "name": "Jahnstraße, Obrigheim (Pfalz)",
+    "id": 508913,
+    "lat": 49.592041,
+    "lon": 8.206855
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1712011180430",
+  "label": "MA - Schwetzingen - Wiesloch (Bus S6)",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Wiesloch-Walldorf",
+    "id": 8006421,
+    "lat": 49.291028,
+    "lon": 8.664217
+   },
+   "viaLocation.0": {
+    "name": "Großsachsen Bahnhof, Hirschberg an der Bergstraße",
+    "id": 506672,
+    "lat": 49.514365,
+    "lon": 8.656864
+   },
+   "viaLocation.1": {
+    "name": "Siedlung, Brühl (Baden)",
+    "id": 505693,
+    "lat": 49.402431,
+    "lon": 8.537883
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1713244798657",
+  "label": "Marienplatz, Stuttgart → Stuttgart Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Marienplatz, Stuttgart",
+    "id": 561195,
+    "lat": 48.764215,
+    "lon": 9.168161
+   },
+   "targetLocation": {
+    "name": "Stuttgart Hbf",
+    "id": 8000096,
+    "lat": 48.785052,
+    "lon": 9.182589
+   },
+   "viaLocation.0": {
+    "name": "Degerloch, Stuttgart",
+    "id": 561225,
+    "lat": 48.74878,
+    "lon": 9.168584
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1728942486213",
+  "label": "Homburg→Kusel",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Homburg(Saar)Hbf",
+    "id": 8000176,
+    "lat": 49.328117,
+    "lon": 7.336978
+   },
+   "viaLocation.1": {
+    "name": "Kusel",
+    "id": 8003481,
+    "lat": 49.538312,
+    "lon": 7.411121
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1736626852822",
+  "label": "Schwanen, Waiblingen → Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+  "locations": {
+   "startLocation": {
+    "name": "Schwanen, Waiblingen",
+    "id": 561034,
+    "lat": 48.833486,
+    "lon": 9.319432
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "11111111111111",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1714155117138",
+  "label": "Baden-Baden → Ettlingen (Bus)",
+  "locations": {
+   "startLocation": {
+    "name": "Leopoldsplatz (Sophienstr.), Baden-Baden",
+    "id": 421591,
+    "lat": 48.761204,
+    "lon": 8.240349
+   },
+   "targetLocation": {
+    "name": "Ettlingen Stadt",
+    "id": 8007007,
+    "lat": 48.93839,
+    "lon": 8.410137
+   },
+   "viaLocation.0": {
+    "name": "Gaggenau Bf",
+    "id": 8002167,
+    "lat": 48.805242,
+    "lon": 8.320353
+   },
+   "viaLocation.1": {
+    "name": "Schöllbronn Schwimmbad, Ettlingen",
+    "id": 722412,
+    "lat": 48.887853,
+    "lon": 8.414461
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "00001111111111",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1734382694392",
+  "label": "Forbach - Bühl",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Schwarzenbachtalsperre, Forbach",
+    "id": 722394,
+    "lat": 48.653306,
+    "lon": 8.328029
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.vrn",
+  "id": "1729030471450",
+  "label": "Pforzheim Hbf → Bad Herrenalb",
+  "locations": {
+   "startLocation": {
+    "name": "Pforzheim Hbf",
+    "id": 8000299,
+    "lat": 48.894064,
+    "lon": 8.702969
+   },
+   "targetLocation": {
+    "name": "Bad Herrenalb",
+    "id": 8007011,
+    "lat": 48.803075,
+    "lon": 8.439666
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1768559531845",
+  "label": "Hirschhorn wandern",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.75345,
+    "lon": 8.629579
+   },
+   "targetLocation": {
+    "name": "Im Trieb 9, Oberzent",
+    "id": null,
+    "lat": 49.479105,
+    "lon": 8.924315
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000111011",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776975202873",
+  "label": "Amorbach →Buchen, Mudau Mosbach",
+  "locations": {
+   "startLocation": {
+    "name": "Amorbach",
+    "id": null,
+    "lat": 49.645949,
+    "lon": 9.222438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Morrebrücke, Buchen (Odenwald)",
+    "id": null,
+    "lat": 49.520765,
+    "lon": 9.323899
+   },
+   "viaLocation.1": {
+    "name": "Rathaus, Mudau",
+    "id": null,
+    "lat": 49.533934,
+    "lon": 9.202365
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1751314794262",
+  "label": "Eberbach → Würzburg Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Eberbach",
+    "id": 8000369,
+    "lat": 49.465607,
+    "lon": 8.984476
+   },
+   "targetLocation": {
+    "name": "Würzburg Hbf",
+    "id": 8000260,
+    "lat": 49.802163,
+    "lon": 9.93593
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776970261786",
+  "label": "Darmstadt→ Amorbach bus",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Amorbach",
+    "id": null,
+    "lat": 49.645949,
+    "lon": 9.222438
+   },
+   "viaLocation.0": {
+    "name": "Eulbach Forsthaus Englischer Garten, Michelstadt",
+    "id": null,
+    "lat": 49.679613,
+    "lon": 9.075527
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1760989681397",
+  "label": "→ Oppenau",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Oppenau",
+    "id": null,
+    "lat": 48.471985,
+    "lon": 8.160075
+   },
+   "viaLocation.0": {
+    "name": "Sasbachried Abzw. Sasbachried, Achern",
+    "id": null,
+    "lat": 48.654789,
+    "lon": 8.098139
+   },
+   "viaLocation.1": {
+    "name": "Haftenring, Seebach (Baden)",
+    "id": null,
+    "lat": 48.574875,
+    "lon": 8.203852
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1753912083494",
+  "label": "Gertelbachschlucht→ nach Hause",
+  "locations": {
+   "startLocation": {
+    "name": "Schindelpeter, Bühlertal",
+    "id": null,
+    "lat": 48.672849,
+    "lon": 8.196742
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1779097397546",
+  "label": "→ Lohr am Main",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Meistergasse 14, Lohr am Main",
+    "id": null,
+    "lat": 49.99444,
+    "lon": 9.571932
+   },
+   "viaLocation.0": {
+    "name": "Sportplatz, Rothenbuch",
+    "id": null,
+    "lat": 49.963646,
+    "lon": 9.38899
+   },
+   "viaLocation.1": {
+    "name": "Bischbornerhof, Neuhütten (Unterfranken)",
+    "id": null,
+    "lat": 49.978676,
+    "lon": 9.462046
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1744317684999",
+  "label": "→ Hornisgrinde",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Hornisgrinde 1, Seebach",
+    "id": null,
+    "lat": 48.602017,
+    "lon": 8.199892
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1760963192771",
+  "label": "Achern → Ruhestein Nationalparkzentrum, Baiersbronn",
+  "locations": {
+   "startLocation": {
+    "name": "Achern",
+    "id": null,
+    "lat": 48.633997,
+    "lon": 8.065275
+   },
+   "targetLocation": {
+    "name": "Ruhestein Nationalparkzentrum, Baiersbronn",
+    "id": null,
+    "lat": 48.561256,
+    "lon": 8.221327
+   },
+   "viaLocation.0": {
+    "name": "Oppenau",
+    "id": null,
+    "lat": 48.471985,
+    "lon": 8.160075
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1765752156749",
+  "label": "Worms Hbf → 610 Heppenheim",
+  "locations": {
+   "startLocation": {
+    "name": "Worms Hbf",
+    "id": null,
+    "lat": 49.634973,
+    "lon": 8.356633
+   },
+   "targetLocation": {
+    "name": "Heilig-Geist-Hospital, Bensheim",
+    "id": null,
+    "lat": 49.67787,
+    "lon": 8.620799
+   },
+   "viaLocation.0": {
+    "name": "Hüttenfeld Blumenstraße, Lampertheim",
+    "id": null,
+    "lat": 49.59863,
+    "lon": 8.582083
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767749691701",
+  "label": "Wiesloch-Walldorf → Kandel Bus",
+  "locations": {
+   "startLocation": {
+    "name": "Wiesloch-Walldorf",
+    "id": null,
+    "lat": 49.291028,
+    "lon": 8.664217
+   },
+   "targetLocation": {
+    "name": "Kandel",
+    "id": null,
+    "lat": 49.079053,
+    "lon": 8.197749
+   },
+   "viaLocation.0": {
+    "name": "Rathaus, Klingenmünster",
+    "id": null,
+    "lat": 49.140243,
+    "lon": 8.018369
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767663664280",
+  "label": "→ Bad Wimpfen",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Erich-Sailer-Str., Bad Wimpfen",
+    "id": null,
+    "lat": 49.232886,
+    "lon": 9.159109
+   },
+   "viaLocation.0": {
+    "name": "Heinsheim Lindenplatz, Bad Rappenau",
+    "id": null,
+    "lat": 49.262172,
+    "lon": 9.149527
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776979237033",
+  "label": "Mosbach → Würzburg Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbach(Bergstr)",
+    "id": null,
+    "lat": 49.759626,
+    "lon": 8.603432
+   },
+   "targetLocation": {
+    "name": "Würzburg Hbf",
+    "id": null,
+    "lat": 49.802163,
+    "lon": 9.93593
+   },
+   "viaLocation.0": {
+    "name": "Heidersbach Ort, Limbach (Baden)",
+    "id": null,
+    "lat": 49.453795,
+    "lon": 9.247212
+   },
+   "viaLocation.1": {
+    "name": "Ilmspan Ort, Großrinderfeld",
+    "id": null,
+    "lat": 49.667011,
+    "lon": 9.790646
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1780259390680",
+  "label": "Würzburg Hbf → Lohr",
+  "locations": {
+   "startLocation": {
+    "name": "Würzburg Hbf",
+    "id": null,
+    "lat": 49.802163,
+    "lon": 9.93593
+   },
+   "targetLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753473,
+    "lon": 8.629573
+   },
+   "viaLocation.0": {
+    "name": "Anwesen Handel, Steinfeld b Lohr a Main",
+    "id": null,
+    "lat": 49.951789,
+    "lon": 9.672052
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000111011",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776982532523",
+  "label": "→Weyher in der Pfalz",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Altes Rathaus, Weyher in der Pfalz",
+    "id": null,
+    "lat": 49.266343,
+    "lon": 8.083712
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1753908816502",
+  "label": "Bad Herrenalb → Bühl",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Bad Herrenalb",
+    "id": null,
+    "lat": 48.803075,
+    "lon": 8.439666
+   },
+   "viaLocation.1": {
+    "name": "Bühl(Baden)",
+    "id": null,
+    "lat": 48.696508,
+    "lon": 8.129314
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1743188043517",
+  "label": "→ Buchklingen, Birkenau",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.75345,
+    "lon": 8.629579
+   },
+   "targetLocation": {
+    "name": "Buchklingen, Birkenau",
+    "id": 505734,
+    "lat": 49.544685,
+    "lon": 8.732175
+   }
+  },
+  "params": {
+   "bdepart": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1753911700497",
+  "label": "→ Gertelbachschlucht",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Hundseck, Bühl",
+    "id": null,
+    "lat": 48.645593,
+    "lon": 8.231198
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767117420484",
+  "label": "Neue Buslinie Groß Rohrheim Hüttenfeld",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Industriestraße, Groß-Rohrheim",
+    "id": null,
+    "lat": 49.720407,
+    "lon": 8.484127
+   },
+   "viaLocation.1": {
+    "name": "Hüttenfeld Blumenstraße, Lampertheim",
+    "id": null,
+    "lat": 49.59863,
+    "lon": 8.582083
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1753911390934",
+  "label": "→ Riegel Burg Windeck, Bühl",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Riegel Burg Windeck, Bühl",
+    "id": null,
+    "lat": 48.67204,
+    "lon": 8.158322
+   },
+   "viaLocation.0": {
+    "name": "Heidelberg Hbf",
+    "id": null,
+    "lat": 49.403582,
+    "lon": 8.67548
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1762467349962",
+  "label": "Nothweiler oder Dahn Stunde Pause Tour",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Böllenborn",
+    "id": null,
+    "lat": 49.09802,
+    "lon": 7.936531
+   },
+   "viaLocation.1": {
+    "name": "Nothweiler",
+    "id": null,
+    "lat": 49.068913,
+    "lon": 7.799248
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000111011",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1753911102733",
+  "label": "Bad Herrenalb → Bühl → Rastatt",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Freibad, Bad Herrenalb",
+    "id": null,
+    "lat": 48.792819,
+    "lon": 8.427028
+   },
+   "viaLocation.1": {
+    "name": "Ulm Rathaus, Lichtenau (Baden)",
+    "id": null,
+    "lat": 48.727215,
+    "lon": 8.013434
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1762470677689",
+  "label": "→ Weinheim(Bergstr)Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Weinheim(Bergstr)Hbf",
+    "id": null,
+    "lat": 49.553738,
+    "lon": 8.66561
+   },
+   "viaLocation.0": {
+    "name": "ZOB, Wald-Michelbach",
+    "id": null,
+    "lat": 49.574062,
+    "lon": 8.823002
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1742939984139",
+  "label": "→ Rathaus, Waiblingen",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Rathaus, Waiblingen",
+    "id": 560146,
+    "lat": 48.831841,
+    "lon": 9.316501
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1781694162039",
+  "label": "Stuttgart Universität → Pforzheim Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Stuttgart Universität",
+    "id": null,
+    "lat": 48.745131,
+    "lon": 9.105839
+   },
+   "targetLocation": {
+    "name": "Pforzheim Hbf",
+    "id": null,
+    "lat": 48.894064,
+    "lon": 8.702969
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1742939691088",
+  "label": "→ Karlsruhe Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Karlsruhe Hbf",
+    "id": 8000191,
+    "lat": 48.99353,
+    "lon": 8.401939
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767659439400",
+  "label": "→ Karlsruhe Hbf über Eppingen",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Karlsruhe Hbf",
+    "id": null,
+    "lat": 48.99353,
+    "lon": 8.401939
+   },
+   "viaLocation.0": {
+    "name": "Eichtersheim Heidelberger Straße, Angelbachtal",
+    "id": null,
+    "lat": 49.238603,
+    "lon": 8.771773
+   },
+   "viaLocation.1": {
+    "name": "Eppingen",
+    "id": null,
+    "lat": 49.135982,
+    "lon": 8.914674
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1762771673272",
+  "label": "Baumholder→Idar Oberstein",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Kusel",
+    "id": null,
+    "lat": 49.538312,
+    "lon": 7.411121
+   },
+   "viaLocation.1": {
+    "name": "Baumholder",
+    "id": null,
+    "lat": 49.612266,
+    "lon": 7.330793
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1781644028111",
+  "label": "→ Kaltenbronn Rankhütte, Gernsbach",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbach(Bergstr)",
+    "id": null,
+    "lat": 49.759626,
+    "lon": 8.603432
+   },
+   "targetLocation": {
+    "name": "Kaltenbronn Rankhütte, Gernsbach",
+    "id": null,
+    "lat": 48.738946,
+    "lon": 8.41384
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767620768887",
+  "label": "Neue Runde Gernsheim",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Magdeburger Straße, Gernsheim",
+    "id": null,
+    "lat": 49.754575,
+    "lon": 8.496757
+   },
+   "viaLocation.1": {
+    "name": "Darmstadt Hbf",
+    "id": null,
+    "lat": 49.872549,
+    "lon": 8.629707
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776978056545",
+  "label": "Miltenberg → über Mömmingen",
+  "locations": {
+   "startLocation": {
+    "name": "Miltenberg",
+    "id": null,
+    "lat": 49.706329,
+    "lon": 9.248588
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Schöne Aussicht, Mömlingen",
+    "id": null,
+    "lat": 49.854903,
+    "lon": 9.086332
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1747951604805",
+  "label": "Achern → Freudenstadt",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Achern",
+    "id": 8000412,
+    "lat": 48.633997,
+    "lon": 8.065275
+   },
+   "viaLocation.1": {
+    "name": "Kniebis Waldschwimmbad, Freudenstadt",
+    "id": 815275,
+    "lat": 48.470798,
+    "lon": 8.317107
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1744064782179",
+  "label": "→ Zwingenberg(Baden)",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753486,
+    "lon": 8.629561
+   },
+   "targetLocation": {
+    "name": "Zwingenberg(Baden)",
+    "id": 8006686,
+    "lat": 49.415933,
+    "lon": 9.042932
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1781591763065",
+  "label": "→ Bad Wildbad Bf",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbach(Bergstr)",
+    "id": null,
+    "lat": 49.759626,
+    "lon": 8.603432
+   },
+   "targetLocation": {
+    "name": "Bad Wildbad Bf",
+    "id": null,
+    "lat": 48.755495,
+    "lon": 8.551115
+   },
+   "viaLocation.0": {
+    "name": "Stuttgart Hbf",
+    "id": null,
+    "lat": 48.785052,
+    "lon": 9.182589
+   },
+   "viaLocation.1": {
+    "name": "Calw",
+    "id": null,
+    "lat": 48.714666,
+    "lon": 8.741848
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "productShortcut",
+  "label": "Buy tickets",
+  "locations": {},
+  "params": {}
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1778074151429",
+  "label": "Graben-Neudorf → HAK",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Moltkestraße 30, Karlsruhe",
+    "id": null,
+    "lat": 49.015105,
+    "lon": 8.391198
+   },
+   "viaLocation.0": {
+    "name": "Eggenstein Spöcker Weg, Eggenstein-Leopoldshafen",
+    "id": null,
+    "lat": 49.079745,
+    "lon": 8.399655
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1780008630696",
+  "label": "Wertheim → Würzburg Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753473,
+    "lon": 8.629573
+   },
+   "targetLocation": {
+    "name": "Würzburg Hbf",
+    "id": null,
+    "lat": 49.802163,
+    "lon": 9.93593
+   },
+   "viaLocation.0": {
+    "name": "Kreisverkehr/Almosenberg, Wertheim",
+    "id": null,
+    "lat": 49.773227,
+    "lon": 9.5778
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000111011",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1768001129939",
+  "label": "Bad Dürkheim → Kirchheimbolanden",
+  "locations": {
+   "startLocation": {
+    "name": "Bad Dürkheim",
+    "id": null,
+    "lat": 49.460663,
+    "lon": 8.170709
+   },
+   "targetLocation": {
+    "name": "Kirchheimbolanden",
+    "id": null,
+    "lat": 49.661932,
+    "lon": 8.017524
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1776977624592",
+  "label": "Eberbach → Miltenberg",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Miltenberg",
+    "id": null,
+    "lat": 49.706329,
+    "lon": 9.248588
+   },
+   "viaLocation.0": {
+    "name": "Rathaus, Mudau",
+    "id": null,
+    "lat": 49.533934,
+    "lon": 9.202365
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1780003750007",
+  "label": "Buchen(Odenw) → Jugenheim Bus",
+  "locations": {
+   "startLocation": {
+    "name": "Buchen(Odenw)",
+    "id": null,
+    "lat": 49.523579,
+    "lon": 9.327046
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Eberbach",
+    "id": null,
+    "lat": 49.465607,
+    "lon": 8.984476
+   },
+   "viaLocation.1": {
+    "name": "Reichenberghalle, Reichelsheim (Odenwald)",
+    "id": null,
+    "lat": 49.71379,
+    "lon": 8.841089
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000001011",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1746797876682",
+  "label": "Miltenberg → Würzburg Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Miltenberg",
+    "id": 8000640,
+    "lat": 49.706329,
+    "lon": 9.248588
+   },
+   "targetLocation": {
+    "name": "Würzburg Hbf",
+    "id": 8000260,
+    "lat": 49.802163,
+    "lon": 9.93593
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1762127317149",
+  "label": "Buchen → Würzburg Hbf (Bus)",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Würzburg Hbf",
+    "id": null,
+    "lat": 49.802163,
+    "lon": 9.93593
+   },
+   "viaLocation.0": {
+    "name": "Buchen(Odenw)",
+    "id": null,
+    "lat": 49.523579,
+    "lon": 9.327046
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0001110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1760978060586",
+  "label": "→ Ebersteinburg Kapelle, Baden-Baden",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Ebersteinburg Kapelle, Baden-Baden",
+    "id": null,
+    "lat": 48.778103,
+    "lon": 8.271253
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1746734406787",
+  "label": "→ Burg Trifels, Annweiler am Trifels",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": 124355,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Burg Trifels, Annweiler am Trifels",
+    "id": 509743,
+    "lat": 49.19434,
+    "lon": 7.980587
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1760965034290",
+  "label": "Ottenhöfen → Oppenau",
+  "locations": {
+   "startLocation": {
+    "name": "Ottenhöfen",
+    "id": null,
+    "lat": 48.566929,
+    "lon": 8.151014
+   },
+   "targetLocation": {
+    "name": "Oppenau",
+    "id": null,
+    "lat": 48.471985,
+    "lon": 8.160075
+   },
+   "viaLocation.0": {
+    "name": "Nationalpark-Hornisgrinde, Seebach (Baden)",
+    "id": null,
+    "lat": 48.601276,
+    "lon": 8.20209
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000010111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1768000578608",
+  "label": "Loreley →",
+  "locations": {
+   "startLocation": {
+    "name": "Loreley Plateau, St. Goarshausen",
+    "id": null,
+    "lat": 50.140131,
+    "lon": 7.7328
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Busbahnhof, Nastätten",
+    "id": null,
+    "lat": 50.199154,
+    "lon": 7.853318
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1768000431343",
+  "label": "→ Loreley Plateau, St. Goarshausen",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Loreley Plateau, St. Goarshausen",
+    "id": null,
+    "lat": 50.140131,
+    "lon": 7.7328
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1780007435648",
+  "label": "Miltenberg → Heidelberg Hbf",
+  "locations": {
+   "startLocation": {
+    "name": "Miltenberg",
+    "id": null,
+    "lat": 49.706329,
+    "lon": 9.248588
+   },
+   "targetLocation": {
+    "name": "Heidelberg Hbf",
+    "id": null,
+    "lat": 49.403582,
+    "lon": 8.67548
+   },
+   "viaLocation.0": {
+    "name": "Wildensee Feuerwehrhaus, Eschau",
+    "id": null,
+    "lat": 49.826515,
+    "lon": 9.355541
+   },
+   "viaLocation.1": {
+    "name": "Schweinberg Rathaus, Hardheim",
+    "id": null,
+    "lat": 49.619943,
+    "lon": 9.519172
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "000111011",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1747089093575",
+  "label": "Neuenheim Alte Brücke Nord, Heidelberg → Ziegelhausen Langer Kirschbaum, Heidelberg",
+  "locations": {
+   "startLocation": {
+    "name": "Neuenheim Alte Brücke Nord, Heidelberg",
+    "id": 518409,
+    "lat": 49.415232,
+    "lon": 8.708947
+   },
+   "targetLocation": {
+    "name": "Ziegelhausen Langer Kirschbaum, Heidelberg",
+    "id": 510809,
+    "lat": 49.459045,
+    "lon": 8.751259
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1777887410903",
+  "label": "→ Höningen Ort, Altleiningen",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Höningen Ort, Altleiningen",
+    "id": null,
+    "lat": 49.491838,
+    "lon": 8.075954
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1767746182498",
+  "label": "Wandern→ Sonnenwende, Bad Dürkheim",
+  "locations": {
+   "startLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "targetLocation": {
+    "name": "Sonnenwende, Bad Dürkheim",
+    "id": null,
+    "lat": 49.459477,
+    "lon": 8.157198
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1750695269253",
+  "label": "→ Dimbach Ort",
+  "locations": {
+   "startLocation": {
+    "name": "Bickenbacher Straße 24g, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.75345,
+    "lon": 8.629579
+   },
+   "targetLocation": {
+    "name": "Dimbach Ort",
+    "id": 505890,
+    "lat": 49.167471,
+    "lon": 7.897878
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1780311271549",
+  "label": "Rathaus, Kehl → Bühl(Baden)",
+  "locations": {
+   "startLocation": {
+    "name": "Rathaus, Kehl",
+    "id": null,
+    "lat": 48.572196,
+    "lon": 7.8131
+   },
+   "targetLocation": {
+    "name": "Bühl(Baden)",
+    "id": null,
+    "lat": 48.696508,
+    "lon": 8.129314
+   },
+   "viaLocation.0": {
+    "name": "Offenburg",
+    "id": null,
+    "lat": 48.476506,
+    "lon": 7.94677
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "productsField": "0000110111",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.sbm",
+  "id": "1761078580792",
+  "label": "Offenburg → Jugenheim",
+  "locations": {
+   "startLocation": {
+    "name": "Offenburg",
+    "id": null,
+    "lat": 48.476506,
+    "lon": 7.94677
+   },
+   "targetLocation": {
+    "name": "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "id": null,
+    "lat": 49.753891,
+    "lon": 8.629438
+   },
+   "viaLocation.0": {
+    "name": "Sasbachried Abzw. Sasbachried, Achern",
+    "id": null,
+    "lat": 48.654789,
+    "lon": 8.098139
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.nvv",
+  "id": "1731275603172",
+  "label": "Koblenz - Limburg",
+  "locations": {
+   "startLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "targetLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "viaLocation.0": {
+    "name": "Koblenz Hauptbahnhof",
+    "id": 3011362,
+    "lat": 50.351557,
+    "lon": 7.58846
+   },
+   "viaLocation.1": {
+    "name": "Limburg (Lahn) Bahnhof",
+    "id": 3011025,
+    "lat": 50.384323,
+    "lon": 8.062686
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.nvv",
+  "id": "1712652327010",
+  "label": "Großer Feldberg",
+  "locations": {
+   "startLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "targetLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "viaLocation.0": {
+    "name": "Schmitten-Niederreifenberg Großer Feldberg",
+    "id": 3006391,
+    "lat": 50.232037,
+    "lon": 8.457123
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "period": "0"
+  }
+ },
+ {
+  "app": "de.hafas.android.nvv",
+  "id": "1709818416431",
+  "label": "Clay Kaserne",
+  "locations": {
+   "startLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "targetLocation": {
+    "name": "Seeheim-Jugenheim-Jugenheim Bickenbacher Straße",
+    "id": 3024355,
+    "lat": 49.753721,
+    "lon": 8.629348
+   },
+   "viaLocation.0": {
+    "name": "Mainz Bismarckplatz",
+    "id": 3029071,
+    "lat": 50.012565,
+    "lon": 8.248574
+   },
+   "viaLocation.1": {
+    "name": "Wiesbaden-Delkenheim Domäne Mechtildshausen",
+    "id": 3025629,
+    "lat": 50.038688,
+    "lon": 8.322465
+   }
+  },
+  "params": {
+   "bdepart": "1",
+   "viaDuration.0": "0",
+   "viaDuration.1": "0",
+   "period": "0"
+  }
+ }
+]

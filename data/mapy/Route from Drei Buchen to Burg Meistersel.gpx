@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://mapy.com/">
+	<trk>
+		<name>Route from Drei Buchen to Burg Meistersel</name>
+		<trkseg>
+			<trkpt lat="49.270431" lon="8.024488">
+				<ele>418.207062</ele>
+			</trkpt>
+			<trkpt lat="49.270507" lon="8.024300">
+				<ele>419.788086</ele>
+			</trkpt>
+			<trkpt lat="49.270566" lon="8.024138">
+				<ele>420.190796</ele>
+			</trkpt>
+			<trkpt lat="49.270606" lon="8.024165">
+				<ele>420.210907</ele>
+			</trkpt>
+			<trkpt lat="49.270641" lon="8.024210">
+				<ele>420.498871</ele>
+			</trkpt>
+			<trkpt lat="49.270653" lon="8.024220">
+				<ele>420.563660</ele>
+			</trkpt>
+			<trkpt lat="49.270671" lon="8.024247">
+				<ele>420.628174</ele>
+			</trkpt>
+			<trkpt lat="49.270683" lon="8.024291">
+				<ele>420.601624</ele>
+			</trkpt>
+			<trkpt lat="49.270788" lon="8.024390">
+				<ele>421.558594</ele>
+			</trkpt>
+			<trkpt lat="49.270923" lon="8.024507">
+				<ele>424.475342</ele>
+			</trkpt>
+			<trkpt lat="49.271040" lon="8.024578">
+				<ele>425.792053</ele>
+			</trkpt>
+			<trkpt lat="49.271128" lon="8.024614">
+				<ele>426.513062</ele>
+			</trkpt>
+			<trkpt lat="49.271316" lon="8.024677">
+				<ele>428.169434</ele>
+			</trkpt>
+			<trkpt lat="49.271498" lon="8.024650">
+				<ele>428.979797</ele>
+			</trkpt>
+			<trkpt lat="49.271620" lon="8.024650">
+				<ele>430.089233</ele>
+			</trkpt>
+			<trkpt lat="49.271814" lon="8.024578">
+				<ele>431.742249</ele>
+			</trkpt>
+			<trkpt lat="49.272154" lon="8.024310">
+				<ele>436.141724</ele>
+			</trkpt>
+			<trkpt lat="49.272429" lon="8.024067">
+				<ele>441.097290</ele>
+			</trkpt>
+			<trkpt lat="49.272675" lon="8.023744">
+				<ele>446.825623</ele>
+			</trkpt>
+			<trkpt lat="49.272886" lon="8.023501">
+				<ele>449.899597</ele>
+			</trkpt>
+			<trkpt lat="49.273121" lon="8.023240">
+				<ele>452.129791</ele>
+			</trkpt>
+			<trkpt lat="49.273279" lon="8.023178">
+				<ele>456.046265</ele>
+			</trkpt>
+			<trkpt lat="49.273408" lon="8.023142">
+				<ele>457.920319</ele>
+			</trkpt>
+			<trkpt lat="49.273555" lon="8.023105">
+				<ele>459.667938</ele>
+			</trkpt>
+			<trkpt lat="49.273660" lon="8.023079">
+				<ele>459.989075</ele>
+			</trkpt>
+			<trkpt lat="49.273836" lon="8.023060">
+				<ele>461.823822</ele>
+			</trkpt>
+			<trkpt lat="49.274018" lon="8.023088">
+				<ele>464.554291</ele>
+			</trkpt>
+			<trkpt lat="49.274188" lon="8.023115">
+				<ele>465.329926</ele>
+			</trkpt>
+			<trkpt lat="49.274293" lon="8.023178">
+				<ele>466.349121</ele>
+			</trkpt>
+			<trkpt lat="49.274411" lon="8.023240">
+				<ele>466.783630</ele>
+			</trkpt>
+			<trkpt lat="49.274486" lon="8.023285">
+				<ele>466.613159</ele>
+			</trkpt>
+			<trkpt lat="49.274504" lon="8.023356">
+				<ele>466.122040</ele>
+			</trkpt>
+			<trkpt lat="49.274498" lon="8.023429">
+				<ele>467.720154</ele>
+			</trkpt>
+			<trkpt lat="49.274434" lon="8.023509">
+				<ele>470.366028</ele>
+			</trkpt>
+			<trkpt lat="49.274364" lon="8.023564">
+				<ele>472.162384</ele>
+			</trkpt>
+			<trkpt lat="49.274229" lon="8.023626">
+				<ele>474.315369</ele>
+			</trkpt>
+			<trkpt lat="49.274152" lon="8.023599">
+				<ele>474.981934</ele>
+			</trkpt>
+			<trkpt lat="49.274035" lon="8.023572">
+				<ele>474.815704</ele>
+			</trkpt>
+			<trkpt lat="49.273959" lon="8.023654">
+				<ele>475.133667</ele>
+			</trkpt>
+			<trkpt lat="49.273848" lon="8.023716">
+				<ele>474.625336</ele>
+			</trkpt>
+			<trkpt lat="49.273678" lon="8.023805">
+				<ele>476.289703</ele>
+			</trkpt>
+			<trkpt lat="49.273584" lon="8.023851">
+				<ele>476.809204</ele>
+			</trkpt>
+			<trkpt lat="49.273537" lon="8.023922">
+				<ele>476.986023</ele>
+			</trkpt>
+			<trkpt lat="49.273466" lon="8.024121">
+				<ele>476.552307</ele>
+			</trkpt>
+			<trkpt lat="49.273484" lon="8.024201">
+				<ele>477.723938</ele>
+			</trkpt>
+			<trkpt lat="49.273519" lon="8.024157">
+				<ele>478.406647</ele>
+			</trkpt>
+			<trkpt lat="49.273555" lon="8.024102">
+				<ele>479.110138</ele>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>
+

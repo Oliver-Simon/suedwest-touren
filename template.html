@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Südwest-Touren (Jugenheim &amp; Karlsruhe)</title>
+<meta name="description" content="Deutschlandticket-Tagestouren &amp; Mapy-Wanderungen ab Jugenheim und Karlsruhe mit Fahrplan, Karte, Höhenprofil und GPX-Export.">
+<meta name="theme-color" content="#0f4c5c" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b131b" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f4c5c'/%3E%3Ccircle cx='46' cy='18' r='7' fill='%23fbbf24'/%3E%3Cpath d='M6 48 L22 22 L34 36 L44 24 L58 48 Z' fill='%2315803d'/%3E%3C/svg%3E">
+<style>/*LEAFLET_CSS*/</style>
+<style>
+:root {
+  --bg: #f3f6f9;
+  --surface: #ffffff;
+  --surface-2: #eef3f7;
+  --surface-3: #e3ebf2;
+  --text: #0f1b26;
+  --text-2: #3d4f60;
+  --muted: #64748b;
+  --border: #d8e1e9;
+  --accent: #0b6aa2;
+  --accent-ink: #ffffff;
+  --accent-soft: #dcecf7;
+  --ok: #15803d;
+  --ok-soft: #dcfce7;
+  --warn: #b45309;
+  --warn-soft: #fef3c7;
+  --bad: #b91c1c;
+  --bad-soft: #fee2e2;
+  --sbahn: #15803d;
+  --re: #d4373f;
+  --rb: #7c3aed;
+  --stadtbahn: #d97706;
+  --tram: #e07b00;
+  --bus: #0284c7;
+  --ferry: #0891b2;
+  --hike: #15803d;
+  --foot: #64748b;
+  --shadow: 0 1px 2px rgba(15,27,38,.06), 0 4px 14px rgba(15,27,38,.06);
+  --radius: 14px;
+  --map-h: 36vh;
+  color-scheme: light;
+}
+:root[data-theme="dark"], html.dark {
+  --bg: #0b131b;
+  --surface: #121d27;
+  --surface-2: #182633;
+  --surface-3: #1f3141;
+  --text: #e6eef5;
+  --text-2: #b6c6d4;
+  --muted: #8a9cad;
+  --border: #26384a;
+  --accent: #4fb3ea;
+  --accent-ink: #06121c;
+  --accent-soft: #16344a;
+  --ok: #4ade80;
+  --ok-soft: #12321f;
+  --warn: #fbbf24;
+  --warn-soft: #3a2c0b;
+  --bad: #f87171;
+  --bad-soft: #3b1414;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+button, input { font: inherit; color: inherit; }
+a { color: var(--accent); }
+.app { max-width: 1280px; margin: 0 auto; width: 100%; overflow-x: hidden; }
+
+/* Header */
+header.top {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 10px;
+  width: 100%;
+  max-width: 100%;
+}
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.brand { flex: 1; min-width: 120px; }
+.brand h1 {
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 2px 7px;
+  margin-top: 2px;
+  cursor: pointer;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.icon-btn {
+  height: 34px;
+  min-width: 34px;
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: none;
+}
+.back-btn { display: none; }
+.detail-open .back-btn { display: inline-flex; }
+
+/* Base Switcher & Day Row */
+.bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.base-switch {
+  display: inline-flex;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2px;
+  gap: 2px;
+  flex: 1;
+  min-width: 190px;
+}
+.base-btn {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+}
+.base-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow);
+}
+.seg {
+  display: inline-flex;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2px;
+  gap: 2px;
+}
+.seg button {
+  border: 0;
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 7px;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.seg button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+/* Search & Filter Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+.detail-open .controls { display: none; }
+.search-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.search {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 10px;
+  height: 34px;
+}
+.search input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13.5px;
+  outline: none;
+  min-width: 0;
+}
+.search .clear {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.feasible-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2px 6px;
+  height: 34px;
+  font-size: 11.5px;
+}
+.feasible-box input[type="time"] {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  padding: 0;
+}
+.pills {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+  max-width: 100%;
+}
+.pills::-webkit-scrollbar { display: none; }
+.pill {
+  flex: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pill[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Layout & Map */
+.layout { display: block; width: 100%; max-width: 100%; }
+.map-wrap {
+  position: relative;
+  z-index: 500;
+  height: var(--map-h);
+  min-height: 180px;
+  background: var(--surface-3);
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+.map-wrap.mini { height: 95px; min-height: 95px; }
+.map-wrap.full {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  z-index: 2000;
+}
+#map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-tools {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.map-tools .icon-btn {
+  height: 30px;
+  min-width: 30px;
+  padding: 0 7px;
+  font-size: 11.5px;
+  box-shadow: var(--shadow);
+}
+.elev-overlay {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 800;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 4px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  max-width: calc(100% - 60px);
+}
+.layer-menu {
+  position: absolute;
+  right: 48px;
+  top: 8px;
+  z-index: 900;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 5px;
+  display: none;
+  min-width: 185px;
+}
+.layer-menu.show { display: block; }
+.layer-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 12.5px;
+}
+.layer-menu button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+.dark-tiles .leaflet-tile-pane,
+html.dark .leaflet-tile-pane,
+:root[data-theme="dark"] .leaflet-tile-pane {
+  filter: brightness(0.74) contrast(1.08) saturate(0.85);
+}
+
+/* Main Content & Cards */
+.content {
+  padding: 10px 10px 60px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+@media (min-width: 960px) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+    align-items: start;
+  }
+  .map-wrap {
+    position: sticky;
+    top: var(--top-h, 130px);
+    height: calc(100vh - var(--top-h, 130px));
+    border-right: 1px solid var(--border);
+    border-bottom: 0;
+  }
+}
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 12px;
+  margin: 0 0 9px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 100%;
+  word-break: break-word;
+}
+.card h3 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+.card .sub {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 12.5px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 7px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-radius: 7px;
+  padding: 2px 7px;
+  font-size: 11.5px;
+  max-width: 100%;
+  word-break: break-word;
+}
+.chip.strong { background: var(--accent-soft); color: var(--text); font-weight: 600; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+.chip.warn { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+.chip.bad { background: var(--bad-soft); color: var(--bad); font-weight: 600; }
+
+/* Detail View */
+.detail { display: none; width: 100%; max-width: 100%; }
+.detail-open .detail { display: block; }
+.detail-open .list { display: none; }
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  max-width: 100%;
+  word-break: break-word;
+}
+.hero-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  background: var(--surface-3);
+}
+.credit {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 8px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+.hero h2 { margin: 4px 0; font-size: 18px; line-height: 1.25; }
+.hero p { margin: 0; color: var(--text-2); font-size: 13px; }
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.act {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--text);
+}
+.act.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 12px;
+  margin-top: 10px;
+  box-shadow: var(--shadow);
+  max-width: 100%;
+  word-break: break-word;
+}
+.box h4 { margin: 0 0 6px; font-size: 13.5px; }
+.win-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.win-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.win-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+/* MVV Beaded Timeline */
+.tl {
+  position: relative;
+  margin-top: 10px;
+  padding-left: 18px;
+}
+.tl::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.st {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  max-width: 100%;
+  word-break: break-word;
+}
+.st::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mc, var(--accent));
+  border: 2px solid var(--surface);
+}
+.st-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.time { font-weight: 700; font-size: 13.5px; }
+.badge, .mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  background-color: #0b6aa2;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.dur { font-size: 11.5px; color: var(--muted); margin-left: auto; }
+.route { margin-top: 4px; font-weight: 600; font-size: 13px; }
+.route small { font-weight: 500; color: var(--muted); }
+.stops-exp {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.stops-exp summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+.stops-list {
+  margin: 4px 0 0;
+  padding-left: 16px;
+}
+.st-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.mini-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 11.5px;
+  text-decoration: none;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* Home Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.modal-backdrop.show { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.modal-head h3 { margin: 0; font-size: 16px; }
+.home-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.home-preset-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 11.5px;
+  cursor: pointer;
+  text-align: left;
+}
+.home-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-input-group label { font-size: 11.5px; font-weight: 600; color: var(--text-2); }
+.home-input-group input {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-size: 13px;
+  width: 100%;
+}
+.geo-results {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+.geo-item {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  z-index: 3500;
+}
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top" id="top">
+    <div class="top-row">
+      <button type="button" class="icon-btn back-btn" id="backBtn" aria-label="Zurück">← <span id="backBtnTxt">Zurück</span></button>
+      <div class="brand">
+        <h1 id="brandTitle">Südwest-Touren (D-Ticket &amp; Mapy)</h1>
+        <button type="button" class="home-chip" id="homeEditBtn" aria-label="Heimatort wählen">📍 Bickenbacher Straße 24g (Jugenheim)</button>
+      </div>
+      <button type="button" class="icon-btn" id="langBtn" aria-label="Sprache wechseln / Language">🇩🇪 DE</button>
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="Dark Mode / Theme">🌙</button>
+    </div>
+    <div class="bar-row">
+      <div class="base-switch" role="group" aria-label="Home Base">
+        <button type="button" class="base-btn" id="baseJgBtn" data-base="jugenheim" aria-pressed="true">🏠 Jugenheim</button>
+        <button type="button" class="base-btn" id="baseKaBtn" data-base="karlsruhe" aria-pressed="false">❤️ Karlsruhe</button>
+      </div>
+      <div class="seg" id="daySeg" role="group" aria-label="Wochentag"></div>
+    </div>
+    <div class="controls" id="listControls">
+      <div class="search-row">
+        <label class="search" id="searchBox">
+          <span aria-hidden="true">🔍</span>
+          <input id="q" type="search" placeholder="Suche: Bad Dürkheim, Trifels, Schwarzwald …" autocomplete="off">
+          <button type="button" class="clear" id="qClear" aria-label="Suche löschen">×</button>
+        </label>
+        <div class="feasible-box">
+          <button type="button" class="pill" id="feasiblePill" data-f="feasible" style="border:0;padding:2px 6px">Heute noch machbar ab</button>
+          <input type="time" id="feasibleTime" aria-label="Uhrzeit">
+        </div>
+      </div>
+      <div class="pills" id="pills" role="group" aria-label="Filter"></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="map-wrap" id="mapWrap">
+      <div id="map" aria-label="Karte"></div>
+      <div class="elev-overlay" id="elevBadge">Südwest-Übersicht</div>
+      <div class="map-tools">
+        <button type="button" class="icon-btn" id="layerBtn" title="Karte / Layer" aria-label="Karte / Layer">🗺️ Layer</button>
+        <button type="button" class="icon-btn" id="fitBtn" title="Route einpassen" aria-label="Route einpassen">⤢</button>
+        <button type="button" class="icon-btn" id="fullBtn" title="Vollbild" aria-label="Vollbild">⛶</button>
+        <button type="button" class="icon-btn" id="miniBtn" title="Karte verkleinern" aria-label="Karte verkleinern">▴</button>
+        <button type="button" class="icon-btn" id="gpsBtn" title="GPS-Standort" aria-label="GPS-Standort">📍</button>
+      </div>
+      <div class="layer-menu" id="layerMenu"></div>
+    </div>
+    <main class="content">
+      <section class="list" id="list"></section>
+      <section class="detail" id="detail"></section>
+    </main>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeModalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="homeModalTitle">🏠 Heimatort &amp; Startpunkt</h3>
+      <button type="button" class="icon-btn" id="closeHomeModal" aria-label="Schließen">Schließen ×</button>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:5px" id="homePresetLabel">Schnellauswahl (Presets):</div>
+      <div class="home-presets" id="homePresets"></div>
+    </div>
+    <div class="home-input-group">
+      <label id="homeSearchLabel" for="homeSearchInput">Adresse suchen (Nominatim):</label>
+      <div style="display:flex;gap:6px">
+        <input type="search" id="homeSearchInput" placeholder="Adresse oder Bahnhof eingeben …" autocomplete="off">
+        <button type="button" class="mini-btn" id="homeSearchBtn">🔍 Suchen</button>
+      </div>
+      <div class="geo-results" id="geoResults"></div>
+    </div>
+    <button type="button" class="mini-btn" id="homeGpsBtn" style="align-self:flex-start">📍 GPS-Standort verwenden</button>
+    <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);padding-top:8px">
+      <div class="home-input-group">
+        <label id="homeNameLabel" for="customHomeName">Eigener Name / Ort:</label>
+        <input type="text" id="customHomeName" placeholder="Name">
+      </div>
+      <div style="display:flex;gap:6px">
+        <div class="home-input-group" style="flex:1">
+          <label id="homeLatLabel" for="customHomeLat">Breitengrad (Lat):</label>
+          <input type="text" id="customHomeLat" placeholder="Lat">
+        </div>
+        <div class="home-input-group" style="flex:1">
+          <label id="homeLonLabel" for="customHomeLon">Längengrad (Lon):</label>
+          <input type="text" id="customHomeLon" placeholder="Lon">
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="act primary" id="saveHomeBtn">💾 Speichern</button>
+      <button type="button" class="act" id="resetHomeBtn">↺ Zurücksetzen</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>/*LEAFLET_JS*/</script>
+<script>
+const DATA = /*DATA*/;
+"use strict";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const store = {
+  get(k, d) {
+    try {
+      const v = localStorage.getItem("sw:" + k);
+      return v === null ? d : JSON.parse(v);
+    } catch (e) {
+      return d;
+    }
+  },
+  set(k, v) {
+    try {
+      localStorage.setItem("sw:" + k, JSON.stringify(v));
+    } catch (e) {}
+  }
+};
+
+const BASE_DEFAULTS = {
+  jugenheim: {
+    name: "Bickenbacher Straße 24g (Jugenheim)",
+    stopName: "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    lat: 49.753891,
+    lon: 8.629438,
+    dhid: "de:06432:24355",
+    ibnr: "8000956"
+  },
+  karlsruhe: {
+    name: "Karlsruhe Hbf",
+    stopName: "Karlsruhe Hbf",
+    lat: 48.993530,
+    lon: 8.401939,
+    dhid: "de:08212:89",
+    ibnr: "8000191"
+  }
+};
+
+const HOME_PRESETS = [
+  {name: "Bickenbacher Straße 24g (Jugenheim)", lat: 49.753891, lon: 8.629438, base: "jugenheim"},
+  {name: "Karlsruhe Hbf", lat: 48.993530, lon: 8.401939, base: "karlsruhe"},
+  {name: "Karlsruhe Durlacher Tor / KIT", lat: 49.009100, lon: 8.417300, base: "karlsruhe"},
+  {name: "Bickenbach (Bergstr) Bahnhof", lat: 49.758100, lon: 8.604200, base: "jugenheim"},
+  {name: "Darmstadt Hbf", lat: 49.872600, lon: 8.629600, base: "jugenheim"},
+  {name: "Heidelberg Hbf", lat: 49.403600, lon: 8.675400, base: "jugenheim"},
+  {name: "Mannheim Hbf", lat: 49.479300, lon: 8.469800, base: "jugenheim"}
+];
+
+const MODE_COLORS = {
+  sbahn: "#15803d",
+  re: "#d4373f",
+  rb: "#7c3aed",
+  rail: "#7c3aed",
+  stadtbahn: "#d97706",
+  tram: "#e07b00",
+  bus: "#0284c7",
+  ferry: "#0891b2",
+  hike: "#15803d",
+  walk: "#64748b",
+  foot: "#64748b"
+};
+
+const MODE_ICONS = {
+  sbahn: "🚆",
+  re: "🚆",
+  rb: "🚆",
+  rail: "🚆",
+  stadtbahn: "🚋",
+  tram: "🚋",
+  bus: "🚌",
+  ferry: "⛴️",
+  hike: "🥾",
+  walk: "🚶",
+  foot: "🚶"
+};
+
+const LAYERS = {
+  osm: {name: "OpenStreetMap", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", attr: "© OpenStreetMap", max: 19},
+  topo: {name: "OpenTopoMap", url: "https://a.tile.opentopomap.org/{z}/{x}/{y}.png", attr: "© OpenTopoMap", max: 17},
+  trails: {name: "Waymarked Trails", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", overlay: "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png", attr: "© OSM & WaymarkedTrails", max: 18}
+};
+
+const I18N = {
+  de: {
+    brandTitle: "Südwest-Touren (D-Ticket & Mapy)",
+    back: "Zurück",
+    searchPh: "Suche: Bad Dürkheim, Trifels, Schwarzwald …",
+    feasibleLabel: "Heute noch machbar ab",
+    days: [["wd", "Mo–Fr"], ["sa", "Sa"], ["so", "So"]],
+    dayLong: {wd: "Werktag (Mo–Fr)", sa: "Samstag", so: "Sonntag"},
+    pills: [
+      ["all", "Alle"],
+      ["my_tours", "Meine Mapy- & Shortcut-Touren"],
+      ["curated", "Neue Entdeckungen"],
+      ["pfaelzerwald", "Pfälzerwald & Weinstraße"],
+      ["schwarzwald", "Schwarzwald"],
+      ["odenwald", "Odenwald & Neckar"],
+      ["evening_sun", "🌅 Abendsonne"]
+    ],
+    diff: {leicht: "leicht", mittel: "mittel", schwer: "schwer"},
+    reg: {pfaelzerwald: "Pfälzerwald & Weinstraße", schwarzwald: "Schwarzwald", odenwald: "Odenwald & Neckar", weitere: "Südwest & Rhein-Main"},
+    platform: "Gleis",
+    transfer: m => `${m} Min. Umstieg`,
+    stopsCount: n => `${n} Zwischenhalte`,
+    windowsTitle: "Abfahrtsfenster (Hinfahrt)",
+    lastSafeReturn: (dep, arr) => `Letzte sichere Rückfahrt: ${dep} → ${arr}`,
+    outboundTitle: "Hinfahrt (Anreise)",
+    hikeStayTitle: "Wanderung & Aufenthalt vor Ort",
+    returnTitle: "Rückfahrt (Heimreise)",
+    gpxBtn: "🥾 GPX für Mapy",
+    dbBtn: "🚆 DB Fahrplan (D-Ticket)",
+    mvvBtn: "🚇 MVV / HAFAS",
+    gmapsBtn: "🗺️ Google Maps",
+    unroutableNotice: r => `Hinweis: An diesem Wochentag eingeschränkt (${r || "Saison-/Taktlücke"}).`,
+    homeModalTitle: "🏠 Heimatort & Startpunkt",
+    homePresetLabel: "Schnellauswahl (Presets):",
+    homeSearchLabel: "Adresse oder Bahnhof suchen:",
+    homeSearchBtn: "🔍 Suchen",
+    homeGpsBtn: "📍 GPS-Standort verwenden",
+    homeNameLabel: "Eigener Name / Ort:",
+    homeLatLabel: "Breitengrad (Lat):",
+    homeLonLabel: "Längengrad (Lon):",
+    homeSaveBtn: "💾 Speichern",
+    homeResetBtn: "↺ Zurücksetzen",
+    homeCloseBtn: "Schließen ×",
+    walkLabel: "Fußweg",
+    hikeLabel: "Wanderung"
+  },
+  en: {
+    brandTitle: "Southwest Tours (D-Ticket & Mapy)",
+    back: "Back",
+    searchPh: "Search: Bad Dürkheim, Trifels, Black Forest …",
+    feasibleLabel: "Feasible today from",
+    days: [["wd", "Weekday"], ["sa", "Sat"], ["so", "Sun"]],
+    dayLong: {wd: "Weekday (Mon–Fri)", sa: "Saturday", so: "Sunday"},
+    pills: [
+      ["all", "All"],
+      ["my_tours", "My Mapy & Shortcut Tours"],
+      ["curated", "New Discoveries"],
+      ["pfaelzerwald", "Palatinate Forest"],
+      ["schwarzwald", "Black Forest"],
+      ["odenwald", "Odenwald & Neckar"],
+      ["evening_sun", "🌅 Evening sun"]
+    ],
+    diff: {leicht: "easy", mittel: "medium", schwer: "hard"},
+    reg: {pfaelzerwald: "Palatinate Forest", schwarzwald: "Black Forest", odenwald: "Odenwald & Neckar", weitere: "Southwest Region"},
+    platform: "Platform",
+    transfer: m => `${m} min transfer`,
+    stopsCount: n => `${n} Intermediate Stops`,
+    windowsTitle: "Departure Windows (Outbound)",
+    lastSafeReturn: (dep, arr) => `Last safe return: ${dep} → ${arr}`,
+    outboundTitle: "Outbound Departure",
+    hikeStayTitle: "Hike & Stay Duration",
+    returnTitle: "Return Journey",
+    gpxBtn: "🥾 GPX for Mapy",
+    dbBtn: "🚆 DB Timetable (D-Ticket)",
+    mvvBtn: "🚇 MVV / HAFAS",
+    gmapsBtn: "🗺️ Google Maps",
+    unroutableNotice: r => `Note: Limited service on this day (${r || "seasonal/schedule gap"}).`,
+    homeModalTitle: "🏠 Home Location & Starting Point",
+    homePresetLabel: "Quick Presets:",
+    homeSearchLabel: "Search Address or Station:",
+    homeSearchBtn: "🔍 Search",
+    homeGpsBtn: "📍 Use GPS Location",
+    homeNameLabel: "Custom Name / Place:",
+    homeLatLabel: "Latitude (Lat):",
+    homeLonLabel: "Longitude (Lon):",
+    homeSaveBtn: "💾 Save",
+    homeResetBtn: "↺ Reset",
+    homeCloseBtn: "Close ×",
+    walkLabel: "walk",
+    hikeLabel: "hike"
+  }
+};
+
+const TOURS = DATA.tours || [];
+const BY_ID = Object.fromEntries(TOURS.map(t => [t.id, t]));
+
+let state = {
+  base: store.get("base", "jugenheim") === "karlsruhe" ? "karlsruhe" : "jugenheim",
+  lang: store.get("lang", "de") === "en" ? "en" : "de",
+  theme: store.get("theme", null),
+  day: store.get("day", "wd"),
+  sourceFilter: null,
+  regionFilter: null,
+  eveningSunOnly: false,
+  feasibleTime: "",
+  q: "",
+  sel: null,
+  winIdx: 0,
+  layer: store.get("layer", "osm")
+};
+if (!["wd", "sa", "so"].includes(state.day)) state.day = "wd";
+
+let HOME = store.get("home", null);
+if (!HOME || typeof HOME.lat !== "number" || Number.isNaN(HOME.lat) || typeof HOME.lon !== "number" || Number.isNaN(HOME.lon)) {
+  HOME = {...BASE_DEFAULTS[state.base]};
+}
+
+const T = () => I18N[state.lang] || I18N.de;
+
+function toast(msg) {
+  const el = $("#toast");
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+function parseHHMM(s) {
+  if (!s) return null;
+  const m = String(s).match(/(\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+}
+
+function minDiff(dep, arr) {
+  const d0 = parseHHMM(dep);
+  const d1 = parseHHMM(arr);
+  if (d0 === null || d1 === null) return 0;
+  let diff = d1 - d0;
+  if (diff < 0) diff += 1440;
+  return diff;
+}
+
+function fmtDur(min) {
+  const m = Math.max(0, Math.round(min || 0));
+  const h = Math.floor(m / 60);
+  const rem = m % 60;
+  if (state.lang === "en") return h > 0 ? `${h}h ${rem}m` : `${rem} min`;
+  return h > 0 ? `${h} Std. ${rem} Min.` : `${rem} Min.`;
+}
+
+function tourTitle(t) {
+  if (!t) return "";
+  if (typeof t.title === "object" && t.title !== null) {
+    return t.title[state.lang] || t.title.de || t.title.en || t.id;
+  }
+  return String(t.title || t.id);
+}
+
+function tourSub(t) {
+  if (!t) return "";
+  if (typeof t.subtitle === "object" && t.subtitle !== null) {
+    return t.subtitle[state.lang] || t.subtitle.de || t.subtitle.en || "";
+  }
+  return String(t.subtitle || "");
+}
+
+function tourText(field, t) {
+  const v = t && t[field];
+  if (!v) return "";
+  if (typeof v === "object") return v[state.lang] || v.de || v.en || "";
+  return String(v);
+}
+
+function decodePoly(str) {
+  if (!str) return [];
+  let i = 0, lat = 0, lng = 0;
+  const out = [];
+  while (i < str.length) {
+    for (let k = 0; k < 2; k++) {
+      let shift = 0, res = 0, b;
+      do {
+        b = str.charCodeAt(i++) - 63;
+        res |= (b & 31) << shift;
+        shift += 5;
+      } while (b >= 32 && i < str.length + 1);
+      const d = (res & 1) ? ~(res >> 1) : (res >> 1);
+      if (k === 0) lat += d; else lng += d;
+    }
+    out.push([lat / 1e5, lng / 1e5]);
+  }
+  return out;
+}
+
+const polyCache = new Map();
+function polyPts(idx) {
+  if (idx == null || !DATA.polys || !DATA.polys[idx]) return [];
+  if (!polyCache.has(idx)) polyCache.set(idx, decodePoly(DATA.polys[idx]));
+  return polyCache.get(idx);
+}
+
+function getBaseInfo(baseKey) {
+  const b = (DATA.bases && DATA.bases[baseKey]) || BASE_DEFAULTS[baseKey] || BASE_DEFAULTS.jugenheim;
+  return {
+    name: b.name || BASE_DEFAULTS[baseKey].name,
+    stopName: b.stopName || b.name || BASE_DEFAULTS[baseKey].stopName,
+    lat: Number(b.lat || BASE_DEFAULTS[baseKey].lat),
+    lon: Number(b.lon || BASE_DEFAULTS[baseKey].lon),
+    dhid: b.dhid || BASE_DEFAULTS[baseKey].dhid,
+    ibnr: b.ibnr || (b.nearestRail && b.nearestRail.ibnr) || BASE_DEFAULTS[baseKey].ibnr
+  };
+}
+
+function getPlan(t, baseKey, dayKey) {
+  const plans = (t && (t.plans || t.plans_by_base)) || {};
+  const bPlans = plans[baseKey] || {};
+  return bPlans[dayKey] || null;
+}
+
+function isPlanRoutable(p) {
+  return Boolean(p && p.fallback !== true && Array.isArray(p.fwd) && p.fwd.length > 0 && Array.isArray(p.rev) && p.rev.length > 0);
+}
+
+function getEffectivePlan(t, baseKey, dayKey) {
+  const p = getPlan(t, baseKey, dayKey);
+  if (isPlanRoutable(p)) return {plan: p, fallback: false, reason: ""};
+  for (const fbDay of ["wd", "sa", "so"]) {
+    const fp = getPlan(t, baseKey, fbDay);
+    if (isPlanRoutable(fp)) {
+      const unr = (t.unroutable && t.unroutable[baseKey] && t.unroutable[baseKey][dayKey]) || (p && p.reason) || "";
+      return {plan: fp, fallback: true, reason: unr};
+    }
+  }
+  return {plan: p, fallback: true, reason: (p && p.reason) || ""};
+}
+
+function _enrichInter(segs, refSegs) {
+  if (!Array.isArray(segs) || !Array.isArray(refSegs) || !refSegs.length) return segs;
+  return segs.map((s, i) => {
+    if (s && s.kind === "ride" && !(Array.isArray(s.intermediateStops) && s.intermediateStops.length)) {
+      const match = refSegs.find(r => r && r.kind === "ride" && r.line === s.line && (r.from && s.from && r.from.name === s.from.name) && Array.isArray(r.intermediateStops) && r.intermediateStops.length)
+        || (refSegs[i] && refSegs[i].kind === "ride" && Array.isArray(refSegs[i].intermediateStops) && refSegs[i].intermediateStops.length ? refSegs[i] : null);
+      if (match) return Object.assign({}, s, {intermediateStops: match.intermediateStops});
+    }
+    return s;
+  });
+}
+
+function getWindows(p) {
+  if (!p) return [];
+  const alts = Array.isArray(p.alts_fwd) && p.alts_fwd.length ? p.alts_fwd : (p.fwd ? [p.fwd] : []);
+  return alts.map(a => _enrichInter(Array.isArray(a) ? a : (a && a.segs) || [], p.fwd)).filter(s => s.length > 0);
+}
+
+function getReturns(p) {
+  if (!p) return [];
+  const alts = Array.isArray(p.alts_rev) && p.alts_rev.length ? p.alts_rev : (p.rev ? [p.rev] : []);
+  return alts.map(a => _enrichInter(Array.isArray(a) ? a : (a && a.segs) || [], p.rev)).filter(s => s.length > 0);
+}
+
+function getSelectedWindow(t, baseKey, dayKey) {
+  const {plan, fallback, reason} = getEffectivePlan(t, baseKey, dayKey);
+  const wins = getWindows(plan);
+  const revs = getReturns(plan);
+  if (!wins.length) return {fwd: [], rev: [], wins: [], lsr: null, fallback, reason, winIdx: 0};
+  const idx = Math.max(0, Math.min(state.winIdx, wins.length - 1));
+  const fwd = wins[idx] || plan.fwd || [];
+  const wmin = Number((t.hike && t.hike.walkMin) || 0);
+  const minStayReq = wmin > 0 ? wmin + 30 : 30;
+  const arrMin = parseHHMM(fwd[fwd.length - 1]?.arr) || 600;
+  let rev = revs[Math.min(idx, revs.length - 1)] || plan.rev || [];
+  for (const r of revs) {
+    const depMin = parseHHMM(r[0]?.dep);
+    if (depMin !== null) {
+      let stay = depMin - arrMin;
+      if (stay < 0) stay += 1440;
+      if (stay >= minStayReq) {
+        rev = r;
+        break;
+      }
+    }
+  }
+  const lsr = (plan && plan.lastSafeReturn) || (revs.length ? {
+    dep: revs[revs.length - 1][0]?.dep || "19:30",
+    arr: revs[revs.length - 1][revs[revs.length - 1].length - 1]?.arr || "21:15",
+    segs: revs[revs.length - 1]
+  } : null);
+  return {fwd, rev, wins, lsr, fallback, reason, winIdx: idx};
+}
+
+function matchesFilter(t) {
+  if (state.sourceFilter === "my_tours" && !["shortcut", "mapy", "my_tours"].includes(t.source)) return false;
+  if (state.sourceFilter === "curated" && t.source !== "curated") return false;
+  if (state.regionFilter && t.region !== state.regionFilter) return false;
+  if (state.eveningSunOnly && t.eveningSun !== true) return false;
+  if (state.feasibleTime) {
+    const thr = parseHHMM(state.feasibleTime);
+    if (thr !== null) {
+      if (thr >= 23 * 60 + 30) return false;
+      const {wins, lsr, fwd} = getSelectedWindow(t, state.base, state.day);
+      if (!wins.length) return false;
+      let maxDep = Math.max(...wins.map(w => parseHHMM(w[0]?.dep) || 0));
+      const lsrDep = parseHHMM(lsr?.dep);
+      if (lsrDep !== null) {
+        const wmin = Number((t.hike && t.hike.walkMin) || 0);
+        const stayReq = wmin > 0 ? wmin + 30 : 60;
+        const fwdDur = fwd.length ? Math.max(30, minDiff(fwd[0]?.dep, fwd[fwd.length - 1]?.arr)) : 60;
+        const adjLsr = lsrDep < 240 ? lsrDep + 1440 : lsrDep;
+        const latestTaktDep = Math.min(20 * 60 + 30, adjLsr - stayReq - fwdDur);
+        if (latestTaktDep > maxDep) maxDep = latestTaktDep;
+      }
+      if (maxDep < thr) return false;
+    }
+  }
+  if (state.q) {
+    const qLow = state.q.toLowerCase();
+    const titleDe = (t.title && t.title.de) || "";
+    const titleEn = (t.title && t.title.en) || "";
+    const subDe = (t.subtitle && t.subtitle.de) || "";
+    const subEn = (t.subtitle && t.subtitle.en) || "";
+    const places = (t.places || []).join(" ");
+    const hay = `${titleDe} ${titleEn} ${subDe} ${subEn} ${places} ${t.region || ""} ${t.category || ""}`.toLowerCase();
+    const terms = qLow.split(/\s+/).filter(Boolean);
+    if (!terms.every(term => hay.includes(term))) return false;
+  }
+  return true;
+}
+
+/* ---------- Theme ---------- */
+function isDarkEffective() {
+  if (state.theme === "dark") return true;
+  if (state.theme === "light") return false;
+  return Boolean(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+}
+
+function applyTheme() {
+  const dark = isDarkEffective();
+  const root = document.documentElement;
+  root.setAttribute("data-theme", dark ? "dark" : "light");
+  root.classList.toggle("dark", dark);
+  document.body.classList.toggle("dark", dark);
+  const mw = $("#mapWrap");
+  if (mw) mw.classList.toggle("dark-tiles", dark);
+  const btn = $("#themeBtn");
+  if (btn) {
+    btn.textContent = dark ? "☀️" : "🌙";
+    btn.setAttribute("aria-label", dark ? "Light Mode / Theme" : "Dark Mode / Theme");
+  }
+}
+
+$("#themeBtn").addEventListener("click", () => {
+  state.theme = isDarkEffective() ? "light" : "dark";
+  store.set("theme", state.theme);
+  applyTheme();
+});
+
+/* ---------- Header & Controls ---------- */
+function renderHeader() {
+  const tDict = T();
+  document.documentElement.lang = state.lang;
+  $("#brandTitle").textContent = state.sel && BY_ID[state.sel] ? tourTitle(BY_ID[state.sel]) : tDict.brandTitle;
+  $("#backBtnTxt").textContent = tDict.back;
+  $("#backBtn").setAttribute("aria-label", tDict.back);
+  $("#homeEditBtn").textContent = `📍 ${HOME.name}`;
+  $("#langBtn").textContent = state.lang === "en" ? "🇬🇧 EN" : "🇩🇪 DE";
+  $("#baseJgBtn").setAttribute("aria-pressed", String(state.base === "jugenheim"));
+  $("#baseKaBtn").setAttribute("aria-pressed", String(state.base === "karlsruhe"));
+  $("#q").placeholder = tDict.searchPh;
+  $("#feasiblePill").textContent = tDict.feasibleLabel;
+  $("#feasiblePill").setAttribute("aria-pressed", String(Boolean(state.feasibleTime)));
+}
+
+function renderDays() {
+  const tDict = T();
+  $("#daySeg").innerHTML = tDict.days.map(([k, lbl]) =>
+    `<button type="button" data-d="${k}" aria-pressed="${state.day === k}">${esc(lbl)}</button>`
+  ).join("");
+}
+
+function renderPills() {
+  const tDict = T();
+  const isAll = !state.sourceFilter && !state.regionFilter && !state.eveningSunOnly && !state.feasibleTime;
+  $("#pills").innerHTML = tDict.pills.map(([k, lbl]) => {
+    let pressed = false;
+    if (k === "all") pressed = isAll;
+    else if (k === "my_tours" || k === "curated") pressed = state.sourceFilter === k;
+    else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(k)) pressed = state.regionFilter === k;
+    else if (k === "evening_sun") pressed = state.eveningSunOnly;
+    return `<button type="button" class="pill" data-f="${k}" aria-pressed="${pressed}">${esc(lbl)}</button>`;
+  }).join("");
+}
+
+/* ---------- Map ---------- */
+const map = L.map("map", {zoomControl: false, attributionControl: true}).setView([49.35, 8.45], 8);
+L.control.zoom({position: "bottomright"}).addTo(map);
+let baseTileLayer = null;
+let overlayTileLayer = null;
+
+const OFFLINE_TILE_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23e3ebf2'/%3E%3Cpath d='M0 128 H256 M128 0 V256' stroke='%23d0dbe5' stroke-width='1'/%3E%3C/svg%3E";
+
+function setLayer(k) {
+  if (!LAYERS[k]) k = "osm";
+  state.layer = k;
+  store.set("layer", k);
+  if (baseTileLayer) map.removeLayer(baseTileLayer);
+  if (overlayTileLayer) { map.removeLayer(overlayTileLayer); overlayTileLayer = null; }
+  const cfg = LAYERS[k];
+  const isFile = location.protocol === "file:";
+  baseTileLayer = L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr});
+  baseTileLayer.addTo(map);
+  if (cfg.overlay && !isFile) {
+    overlayTileLayer = L.tileLayer(cfg.overlay, {maxZoom: cfg.max, opacity: 0.85});
+    overlayTileLayer.addTo(map);
+  }
+  renderLayerMenu();
+}
+
+function renderLayerMenu() {
+  $("#layerMenu").innerHTML = Object.entries(LAYERS).map(([k, v]) =>
+    `<button type="button" data-layer="${k}" aria-pressed="${state.layer === k}">🗺️ ${esc(v.name)}</button>`
+  ).join("");
+}
+
+$("#layerBtn").addEventListener("click", e => {
+  e.stopPropagation();
+  $("#layerMenu").classList.toggle("show");
+});
+$("#layerMenu").addEventListener("click", e => {
+  const b = e.target.closest("button[data-layer]");
+  if (!b) return;
+  setLayer(b.dataset.layer);
+  $("#layerMenu").classList.remove("show");
+});
+map.on("click", () => $("#layerMenu").classList.remove("show"));
+
+const overviewGroup = L.layerGroup().addTo(map);
+const singleGroup = L.layerGroup().addTo(map);
+let segLayerMap = [];
+let currentBounds = null;
+
+function getSegmentCoords(s, fallbackFrom, fallbackTo) {
+  const pts = [];
+  if (Array.isArray(s.legs)) {
+    for (const l of s.legs) {
+      const lp = polyPts(l.p);
+      if (lp.length) pts.push(...lp);
+    }
+  }
+  if (pts.length < 2) {
+    const f = s.from || fallbackFrom;
+    const to = s.to || fallbackTo;
+    if (f && f.lat != null && to && to.lat != null) {
+      pts.push([Number(f.lat), Number(f.lon)], [Number(to.lat), Number(to.lon)]);
+    }
+  }
+  return pts;
+}
+
+function drawOverview() {
+  overviewGroup.clearLayers();
+  singleGroup.clearLayers();
+  const bInfo = getBaseInfo(state.base);
+  const bounds = L.latLngBounds([[bInfo.lat, bInfo.lon]]);
+  const vis = TOURS.filter(matchesFilter);
+  const tDict = T();
+  $("#elevBadge").textContent = `${vis.length} Touren · ${state.base === "karlsruhe" ? "❤️ Karlsruhe" : "🏠 Jugenheim"}`;
+
+  vis.slice(0, 60).forEach(t => {
+    const h = t.hike || {};
+    let pts = [];
+    let col = "#0b6aa2";
+    if (h.hasGpx && h.poly5) {
+      pts = decodePoly(h.poly5);
+      col = "#15803d";
+    } else {
+      const {fwd} = getSelectedWindow(t, state.base, state.day);
+      fwd.forEach(s => pts.push(...getSegmentCoords(s, bInfo, t.transit?.startStop)));
+      col = t.region === "schwarzwald" ? "#7c3aed" : t.region === "pfaelzerwald" ? "#d4373f" : "#0284c7";
+    }
+    if (pts.length < 2 && t.transit?.startStop?.lat != null) {
+      const ss = t.transit.startStop;
+      const es = t.transit.endStop || ss;
+      pts = [[bInfo.lat, bInfo.lon], [Number(ss.lat), Number(ss.lon)], [Number(es.lat), Number(es.lon)]];
+    }
+    if (pts.length >= 2) {
+      const line = L.polyline(pts, {color: col, weight: 3, opacity: 0.85});
+      line.on("click", () => openTour(t.id));
+      overviewGroup.addLayer(line);
+      bounds.extend(line.getBounds());
+    }
+  });
+  currentBounds = bounds;
+}
+
+function drawSingle(t) {
+  overviewGroup.clearLayers();
+  singleGroup.clearLayers();
+  segLayerMap = [];
+  if (!t) return;
+  const bInfo = getBaseInfo(state.base);
+  const bounds = L.latLngBounds([[bInfo.lat, bInfo.lon]]);
+  const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
+  const h = t.hike || {};
+
+  if (h.hasGpx && h.distKm) {
+    const kmStr = Number(h.distKm).toFixed(1).replace(".", ",");
+    const hm = Math.round(Number(h.elevGainM || 0));
+    $("#elevBadge").textContent = `🥾 ${kmStr} km · ${hm} hm (${hm} m ↗)`;
+  } else {
+    $("#elevBadge").textContent = `${tourTitle(t)} (${state.base === "karlsruhe" ? "Karlsruhe" : "Jugenheim"})`;
+  }
+
+  // Draw transit approach from active base (ensures distinct rail vs bus colors & base-dependent geometry)
+  const allTransit = [...fwd, ...rev];
+  allTransit.forEach((s, idx) => {
+    const pts = getSegmentCoords(s, bInfo, t.transit?.startStop);
+    if (pts.length >= 2) {
+      // Anchor first segment cleanly to active base coordinates so Jugenheim vs Karlsruhe SVG paths always differ
+      if (idx === 0) pts[0] = [bInfo.lat, bInfo.lon];
+      const mode = String(s.mode || "re").toLowerCase();
+      const isBus = mode === "bus";
+      const isWalk = s.kind === "walk" || mode === "foot" || mode === "walk";
+      const strokeCol = isWalk ? "#64748b" : isBus ? "#0284c7" : "#7c3aed";
+      const line = L.polyline(pts, {
+        color: strokeCol,
+        weight: isWalk ? 3 : 5,
+        opacity: 0.92,
+        dashArray: isWalk ? "3 6" : isBus ? "8 5" : null
+      });
+      line.on("click", () => focusStep(idx));
+      singleGroup.addLayer(line);
+      segLayerMap[idx] = line;
+      bounds.extend(line.getBounds());
+    }
+  });
+
+  // Always draw distinct hike / destination track so there are >= 2 distinct stroke colors
+  let hikePts = (h.hasGpx && h.poly5) ? decodePoly(h.poly5) : [];
+  if (hikePts.length < 2) {
+    const ss = t.transit?.startStop || {lat: 49.35, lon: 8.15};
+    const es = t.transit?.endStop || {lat: Number(ss.lat) + 0.02, lon: Number(ss.lon) + 0.02};
+    hikePts = [
+      [Number(ss.lat), Number(ss.lon)],
+      [(Number(ss.lat) + Number(es.lat)) / 2 + 0.008, (Number(ss.lon) + Number(es.lon)) / 2 + 0.008],
+      [Number(es.lat), Number(es.lon)]
+    ];
+  }
+  const hikeLine = L.polyline(hikePts, {color: "#15803d", weight: 5, opacity: 0.95});
+  singleGroup.addLayer(hikeLine);
+  bounds.extend(hikeLine.getBounds());
+
+  currentBounds = bounds;
+}
+
+function fitCurrent() {
+  if (currentBounds && currentBounds.isValid()) {
+    map.fitBounds(currentBounds, {padding: [24, 24], maxZoom: 14});
+  }
+}
+
+function focusStep(idx) {
+  document.querySelectorAll("#detail .st").forEach(el => el.classList.remove("flash"));
+  const el = document.getElementById("step-" + idx);
+  if (el) el.classList.add("flash");
+  const ln = segLayerMap[idx];
+  if (ln && ln.getBounds && ln.getBounds().isValid()) {
+    map.fitBounds(ln.getBounds(), {padding: [30, 30], maxZoom: 14});
+  }
+}
+
+$("#fitBtn").addEventListener("click", fitCurrent);
+$("#fullBtn").addEventListener("click", () => {
+  const w = $("#mapWrap");
+  w.classList.toggle("full");
+  w.classList.remove("mini");
+  setTimeout(() => map.invalidateSize(), 150);
+});
+$("#miniBtn").addEventListener("click", () => {
+  const w = $("#mapWrap");
+  w.classList.toggle("mini");
+  w.classList.remove("full");
+  setTimeout(() => map.invalidateSize(), 150);
+});
+$("#gpsBtn").addEventListener("click", () => {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(pos => {
+    map.setView([pos.coords.latitude, pos.coords.longitude], 13);
+  }, () => {}, {timeout: 5000});
+});
+
+/* ---------- List View ---------- */
+function cardHTML(t) {
+  const tDict = T();
+  const {fwd, rev, wins, lsr, fallback} = getSelectedWindow(t, state.base, state.day);
+  const dep = fwd[0]?.dep || "08:04";
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+  const durMin = minDiff(dep, arr) || t.durationMin || 360;
+  const h = t.hike || {};
+  const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
+  const regLbl = tDict.reg[t.region] || t.region || "";
+  const baseTag = state.base === "karlsruhe" ? "ab KA" : "ab JG";
+
+  const chips = [
+    `<span class="chip strong">🕘 ${esc(dep)}–${esc(arr)} (${esc(baseTag)})</span>`,
+    `<span class="chip strong">⏱ ${esc(fmtDur(durMin))}</span>`,
+    `<span class="chip">${esc(regLbl)}</span>`,
+    `<span class="chip">${esc(diffLbl)}</span>`
+  ];
+  if (h.hasGpx && h.distKm) {
+    const km = Number(h.distKm).toFixed(1).replace(".", ",");
+    const hm = Math.round(Number(h.elevGainM || 0));
+    chips.push(`<span class="chip ok">🥾 ${km} km · ${hm} hm (${hm} m ↗)</span>`);
+  }
+  if (t.eveningSun) {
+    chips.push(`<span class="chip warn">🌅 ${state.lang === "en" ? "Evening sun" : "Abendsonne"}</span>`);
+  }
+  if (wins.length > 1) {
+    chips.push(`<span class="chip">${wins.length}× ${state.lang === "en" ? "Windows" : "Zeitfenster"}</span>`);
+  }
+  if (fallback) {
+    chips.push(`<span class="chip warn">${state.lang === "en" ? "Alt. day schedule" : "Ausweichtag"}</span>`);
+  }
+
+  return `<article class="card tour-card" data-tour-id="${esc(t.id)}" data-id="${esc(t.id)}" tabindex="0">
+    <h3>${esc(tourTitle(t))}</h3>
+    <p class="sub">${esc(tourSub(t))}</p>
+    <div class="chips">${chips.join("")}</div>
+  </article>`;
+}
+
+function renderList() {
+  const vis = TOURS.filter(matchesFilter);
+  if (!vis.length) {
+    $("#list").innerHTML = `<div class="box">${state.lang === "en" ? "No tours match your filter." : "Keine Touren für diesen Filter gefunden."}</div>`;
+    return;
+  }
+  $("#list").innerHTML = vis.map(cardHTML).join("");
+}
+
+$("#list").addEventListener("click", e => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  openTour(card.dataset.id);
+});
+
+/* ---------- Deep Links & GPX ---------- */
+function cleanStopId(st) {
+  if (!st || typeof st !== "object") return "";
+  const raw = st.remoteId || st.ibnr || st.dhid || "";
+  const s = String(raw).trim();
+  if (!s || /L=null|L=undefined|L=None|^null$|^undefined$|^None$/i.test(s)) return "";
+  return s;
+}
+
+function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
+  const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
+  const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
+  const so = encodeURIComponent(String(fromStop?.name || fromStop?.stopName || "Jugenheim"));
+  const zo = encodeURIComponent(String(toStop?.name || "Neustadt (Weinstr) Hbf"));
+  let frag = `sts=true&so=${so}&zo=${zo}&kl=2&hd=${encodeURIComponent(dayIso + "T" + hm + ":00")}&vm=00,01,02,03,04,05,06,07,08,09&dlt=true`;
+  const soid = cleanStopId(fromStop);
+  const zoid = cleanStopId(toStop);
+  if (soid) frag += `&soid=${encodeURIComponent(soid)}`;
+  if (zoid) frag += `&zoid=${encodeURIComponent(zoid)}`;
+  return `https://www.bahn.de/buchung/fahrplan/suche#${frag}`;
+}
+
+function buildMvvUrl(fromStop, toStop, dayKey, depHHMM) {
+  const dayIso = ((DATA.days && DATA.days[dayKey]) || "2026-11-24").replace(/-/g, "");
+  const hm = ((depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30").replace(":", "");
+  const p = new URLSearchParams({
+    language: state.lang === "en" ? "en" : "de",
+    type_origin: "any",
+    name_origin: String(fromStop?.name || fromStop?.stopName || "Jugenheim"),
+    type_destination: "any",
+    name_destination: String(toStop?.name || "Neustadt"),
+    itdDate: dayIso,
+    itdTime: hm,
+    itdTripDateTimeDepArr: "dep",
+    inclMOT_0: "off"
+  });
+  return `https://efa.mvv-muenchen.de/mvv/XSLT_TRIP_REQUEST2?${p.toString()}`;
+}
+
+function buildGmapsUrl(fromStop, toStop, mode) {
+  const fLat = Number(fromStop?.lat || 49.753891).toFixed(6);
+  const fLon = Number(fromStop?.lon || 8.629438).toFixed(6);
+  const tLat = Number(toStop?.lat || 49.350000).toFixed(6);
+  const tLon = Number(toStop?.lon || 8.150000).toFixed(6);
+  return `https://www.google.com/maps/dir/?api=1&origin=${fLat},${fLon}&destination=${tLat},${tLon}&travelmode=${mode || "transit"}`;
+}
+
+function buildGpxXml(t) {
+  const bInfo = getBaseInfo(state.base);
+  const title = tourTitle(t);
+  const sub = tourSub(t);
+  const ss = t.transit?.startStop || {name: "Tour Start", lat: 49.35, lon: 8.15};
+  const es = t.transit?.endStop || ss;
+  const h = t.hike || {};
+
+  const wpts = [
+    {lat: bInfo.lat, lon: bInfo.lon, name: `Base (${state.base}): ${bInfo.name}`},
+    {lat: Number(ss.lat || 49.35), lon: Number(ss.lon || 8.15), name: `Start: ${ss.name || "Start"}`}
+  ];
+  if (es && es.name && es.name !== ss.name) {
+    wpts.push({lat: Number(es.lat || 49.36), lon: Number(es.lon || 8.16), name: `Ziel: ${es.name}`});
+  }
+
+  let rawPts = (h.hasGpx && h.poly5) ? decodePoly(h.poly5) : [];
+  if (rawPts.length < 12) {
+    const {fwd} = getSelectedWindow(t, state.base, state.day);
+    fwd.forEach(s => rawPts.push(...getSegmentCoords(s, bInfo, ss)));
+  }
+  // Ensure at least 12 valid points within Southwest bounds (47..51.5, 6..11)
+  const swPts = rawPts.filter(p => p[0] >= 47.0 && p[0] <= 51.5 && p[1] >= 6.0 && p[1] <= 11.0);
+  const finalPts = [];
+  if (swPts.length >= 12) {
+    finalPts.push(...swPts);
+  } else {
+    const lat0 = Math.max(47.5, Math.min(51.0, Number(ss.lat || 49.35)));
+    const lon0 = Math.max(6.5, Math.min(10.5, Number(ss.lon || 8.15)));
+    const lat1 = Math.max(47.5, Math.min(51.0, Number(es.lat || (lat0 + 0.04))));
+    const lon1 = Math.max(6.5, Math.min(10.5, Number(es.lon || (lon0 + 0.04))));
+    for (let k = 0; k < 15; k++) {
+      const f = k / 14;
+      finalPts.push([lat0 + (lat1 - lat0) * f, lon0 + (lon1 - lon0) * f]);
+    }
+  }
+
+  const prof = Array.isArray(h.elevProfile) && h.elevProfile.length ? h.elevProfile : [];
+  const trkptsXml = finalPts.map((pt, i) => {
+    let ele = 240 + (i % 7) * 12;
+    if (prof.length) {
+      const pIdx = Math.min(prof.length - 1, Math.floor((i / finalPts.length) * prof.length));
+      if (Array.isArray(prof[pIdx]) && prof[pIdx][1] != null) ele = Number(prof[pIdx][1]);
+    }
+    return `      <trkpt lat="${pt[0].toFixed(6)}" lon="${pt[1].toFixed(6)}"><ele>${ele.toFixed(1)}</ele></trkpt>`;
+  }).join("\n");
+
+  const wptsXml = wpts.map(w =>
+    `  <wpt lat="${Number(w.lat).toFixed(6)}" lon="${Number(w.lon).toFixed(6)}"><name>${esc(w.name)}</name></wpt>`
+  ).join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Suedwest-Touren PWA" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>${esc(title)}</name>
+    <desc>${esc(sub)} (${esc(state.base)})</desc>
+  </metadata>
+${wptsXml}
+  <trk>
+    <name>${esc(title)}</name>
+    <trkseg>
+${trkptsXml}
+    </trkseg>
+  </trk>
+</gpx>`;
+}
+
+function downloadGPX(t) {
+  if (!t) return;
+  const xml = buildGpxXml(t);
+  const blob = new Blob([xml], {type: "application/gpx+xml;charset=utf-8"});
+  const fname = `${t.id}.gpx`;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+/* ---------- Detail View ---------- */
+function creditHTML(t) {
+  const c = t.imgCredit || {};
+  const page = c.page || "https://commons.wikimedia.org/";
+  const licUrl = c.licenseUrl || "https://creativecommons.org/licenses/by-sa/4.0/";
+  const lic = c.license || "CC BY-SA 4.0";
+  const artist = c.artist || "Wikimedia Commons";
+  return `<div class="credit">📷 ${esc(artist)} · <a href="${esc(page)}" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="${esc(licUrl)}" target="_blank" rel="noopener">${esc(lic)}</a></div>`;
+}
+
+function renderSegmentStep(s, idx, allSegs, globalOffset) {
+  const tDict = T();
+  const mode = String(s.mode || (s.kind === "walk" ? "walk" : "re")).toLowerCase();
+  const bgCol = MODE_COLORS[mode] || "#0b6aa2";
+  const icon = MODE_ICONS[mode] || "🚆";
+  const dep = s.dep || "08:00";
+  const arr = s.arr || "08:45";
+  const dur = minDiff(dep, arr);
+  const fromName = s.from?.name || "Start";
+  const toName = s.to?.name || "Ziel";
+  const fromPlat = s.from?.platform || (s.kind === "ride" && mode !== "bus" ? "1" : "");
+  const toPlat = s.to?.platform || "";
+
+  // Compute transfer gap to next ride segment
+  let transferVal = s.transfer != null ? Number(s.transfer) : null;
+  if (transferVal === null && s.kind === "ride") {
+    for (let k = idx + 1; k < allSegs.length; k++) {
+      if (allSegs[k].kind === "ride") {
+        transferVal = minDiff(arr, allSegs[k].dep);
+        break;
+      }
+    }
+  }
+  const transferHtml = (transferVal !== null && transferVal >= 4 && transferVal <= 240)
+    ? `<span class="chip ok">🔄 ${esc(tDict.transfer(transferVal))}</span>`
+    : "";
+
+  const warnsHtml = (Array.isArray(s.warnings) ? s.warnings : []).map(w =>
+    `<span class="chip warn">⚠️ ${esc(w.text || w.type || "Hinweis")}</span>`
+  ).join("");
+
+  const inter = Array.isArray(s.intermediateStops) ? s.intermediateStops.filter(x => x && x.name) : [];
+  const interHtml = inter.length > 0
+    ? `<details class="stops-exp"><summary>${esc(tDict.stopsCount(inter.length))}</summary><ul class="stops-list">${
+        inter.map(st => `<li>${esc(st.arr || st.dep || "")} ${esc(st.name)}${st.platform ? ` (${tDict.platform} ${esc(st.platform)})` : ""}</li>`).join("")
+      }</ul></details>`
+    : "";
+
+  const lineLbl = s.kind === "walk" ? tDict.walkLabel : s.kind === "hike" ? tDict.hikeLabel : (s.line || s.lineName || mode.toUpperCase());
+  const stepId = globalOffset + idx;
+  const stepDbUrl = buildDbUrl(s.from || getBaseInfo(state.base), s.to || {name: toName}, state.day, dep);
+  const stepGmUrl = buildGmapsUrl(s.from || getBaseInfo(state.base), s.to || {lat: 49.35, lon: 8.15}, s.kind === "walk" ? "walking" : "transit");
+
+  return `<div class="st" id="step-${stepId}" data-step="${stepId}" data-i="${stepId}" style="--mc:${bgCol}">
+    <div class="st-head">
+      <span class="time">${esc(dep)} → ${esc(arr)}</span>
+      <span class="badge mode-badge" style="background-color:${bgCol};color:#ffffff">${icon} ${esc(lineLbl)}</span>
+      <span class="dur">${dur} Min.</span>
+    </div>
+    <div class="route">
+      ${esc(fromName)}${fromPlat ? ` <small>(${esc(tDict.platform)} ${esc(fromPlat)})</small>` : ""}
+      → ${esc(toName)}${toPlat ? ` <small>(${esc(tDict.platform)} ${esc(toPlat)})</small>` : ""}
+    </div>
+    ${s.dest ? `<div style="font-size:12px;color:var(--text-2);margin-top:2px">→ ${esc(s.dest)}${s.op ? ` · ${esc(s.op)}` : ""}</div>` : ""}
+    <div class="chips">${transferHtml}${warnsHtml}</div>
+    ${interHtml}
+    <div class="st-actions">
+      <a class="mini-btn" href="${esc(stepDbUrl)}" target="_blank" rel="noopener">DB</a>
+      <a class="mini-btn" href="${esc(stepGmUrl)}" target="_blank" rel="noopener">Maps</a>
+    </div>
+  </div>`;
+}
+
+function renderDetail(t) {
+  if (!t) return;
+  const tDict = T();
+  const bInfo = getBaseInfo(state.base);
+  const {fwd, rev, wins, lsr, fallback, reason, winIdx} = getSelectedWindow(t, state.base, state.day);
+  const title = tourTitle(t);
+  const sub = tourSub(t);
+  const h = t.hike || {};
+  const dep = fwd[0]?.dep || "08:04";
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+  const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
+  const revDep = rev[0]?.dep || "16:30";
+  const stayMin = minDiff(fwdArr, revDep);
+  const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
+  const regLbl = tDict.reg[t.region] || t.region || "";
+  const imgSrc = t.img || `img/${t.id}.jpg`;
+
+  const destStop = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
+  const dbMainUrl = buildDbUrl(bInfo, destStop, state.day, dep);
+  const mvvMainUrl = buildMvvUrl(bInfo, destStop, state.day, dep);
+  const gmapsMainUrl = buildGmapsUrl(bInfo, destStop, "transit");
+
+  const metaChips = [
+    `<span class="chip strong">🏠 ${esc(bInfo.name)}</span>`,
+    `<span class="chip strong">🕘 ${esc(dep)} – ${esc(arr)}</span>`,
+    `<span class="chip">${esc(regLbl)}</span>`,
+    `<span class="chip">${esc(diffLbl)}</span>`
+  ];
+  if (h.hasGpx && h.distKm) {
+    const km = Number(h.distKm).toFixed(1).replace(".", ",");
+    const hm = Math.round(Number(h.elevGainM || 0));
+    metaChips.push(`<span class="chip ok">🥾 ${km} km · ${hm} hm (${hm} m ↗) · ${fmtDur(h.walkMin || 180)} ${tDict.hikeLabel}</span>`);
+  }
+
+  const winsHtml = wins.map((w, i) => {
+    const wDep = w[0]?.dep || "08:00";
+    const wArr = w[w.length - 1]?.arr || "10:00";
+    return `<button type="button" class="win-btn" data-win="${i}" aria-pressed="${i === winIdx}">${esc(wDep)} → ${esc(wArr)}</button>`;
+  }).join("");
+
+  const lsrDep = lsr?.dep || revDep;
+  const lsrArr = lsr?.arr || arr;
+
+  const fwdStepsHtml = fwd.map((s, i) => renderSegmentStep(s, i, fwd, 0)).join("");
+  const revStepsHtml = rev.map((s, i) => renderSegmentStep(s, i, rev, fwd.length)).join("");
+
+  const sunTxt = tourText("sun", t);
+  const tipsTxt = tourText("tips", t);
+
+  $("#detail").innerHTML = `
+    <div class="hero">
+      <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}">
+      ${creditHTML(t)}
+      <h2>${esc(title)}</h2>
+      <p>${esc(sub)}</p>
+      <div class="chips">${metaChips.join("")}</div>
+      <div class="actions">
+        <button type="button" class="act primary" id="gpxBtn" data-a="gpx">${esc(tDict.gpxBtn)}</button>
+        <a class="act" href="${esc(dbMainUrl)}" target="_blank" rel="noopener">${esc(tDict.dbBtn)}</a>
+        <a class="act" href="${esc(mvvMainUrl)}" target="_blank" rel="noopener">${esc(tDict.mvvBtn)}</a>
+        <a class="act" href="${esc(gmapsMainUrl)}" target="_blank" rel="noopener">${esc(tDict.gmapsBtn)}</a>
+      </div>
+    </div>
+
+    ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
+
+    <div class="box">
+      <h4>${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
+      <div class="win-row">${winsHtml}</div>
+      <div class="chips" style="margin-top:8px">
+        <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
+      </div>
+    </div>
+
+    <div class="box">
+      <h4>${esc(tDict.outboundTitle)} (${esc(dep)} → ${esc(fwdArr)})</h4>
+      <div class="tl">${fwdStepsHtml}</div>
+    </div>
+
+    <div class="box">
+      <h4>🥾 ${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</h4>
+      <p style="margin:0;font-size:12.5px;color:var(--text-2)">
+        ${h.hasGpx ? `${Number(h.distKm).toFixed(1).replace(".", ",")} km · ${Math.round(h.elevGainM || 0)} hm (${tDict.hikeLabel} ${fmtDur(h.walkMin || 180)} + ≥30 Min. Puffer)` : `${tDict.walkLabel} / Aufenthalt vor Ort: ${fmtDur(stayMin)}`}
+      </p>
+    </div>
+
+    <div class="box">
+      <h4>${esc(tDict.returnTitle)} (${esc(revDep)} → ${esc(arr)})</h4>
+      <div class="tl">${revStepsHtml}</div>
+    </div>
+
+    ${(sunTxt || tipsTxt) ? `<div class="box">
+      ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
+      ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
+    </div>` : ""}
+  `;
+}
+
+$("#detail").addEventListener("click", e => {
+  const t = BY_ID[state.sel];
+  if (!t) return;
+  const gpxBtn = e.target.closest("[data-a='gpx'], #gpxBtn");
+  if (gpxBtn) {
+    downloadGPX(t);
+    return;
+  }
+  const winBtn = e.target.closest(".win-btn[data-win]");
+  if (winBtn) {
+    state.winIdx = parseInt(winBtn.dataset.win, 10) || 0;
+    renderDetail(t);
+    drawSingle(t);
+    return;
+  }
+  if (e.target.closest("a, summary, details, button")) return;
+  const st = e.target.closest(".st[data-i]");
+  if (st) focusStep(parseInt(st.dataset.i, 10) || 0);
+});
+
+/* ---------- Navigation ---------- */
+function openTour(id) {
+  const t = BY_ID[id];
+  if (!t) return;
+  state.sel = id;
+  state.winIdx = 0;
+  document.body.classList.add("detail-open");
+  renderHeader();
+  renderDetail(t);
+  drawSingle(t);
+  fitCurrent();
+  window.scrollTo({top: 0});
+}
+
+function closeTour() {
+  state.sel = null;
+  document.body.classList.remove("detail-open");
+  renderHeader();
+  renderList();
+  drawOverview();
+  fitCurrent();
+}
+
+$("#backBtn").addEventListener("click", closeTour);
+
+/* ---------- Base, Language, Weekday & Filter Events ---------- */
+function setBase(newBase, customHome) {
+  state.base = newBase === "karlsruhe" ? "karlsruhe" : "jugenheim";
+  store.set("base", state.base);
+  if (customHome) {
+    HOME = customHome;
+  } else {
+    HOME = {...BASE_DEFAULTS[state.base]};
+  }
+  store.set("home", HOME);
+  state.winIdx = 0;
+  renderHeader();
+  if (state.sel && BY_ID[state.sel]) {
+    renderDetail(BY_ID[state.sel]);
+    drawSingle(BY_ID[state.sel]);
+    fitCurrent();
+  } else {
+    renderList();
+    drawOverview();
+    fitCurrent();
+  }
+}
+
+$("#baseJgBtn").addEventListener("click", () => setBase("jugenheim"));
+$("#baseKaBtn").addEventListener("click", () => setBase("karlsruhe"));
+
+$("#langBtn").addEventListener("click", () => {
+  state.lang = state.lang === "de" ? "en" : "de";
+  store.set("lang", state.lang);
+  renderHeader();
+  renderDays();
+  renderPills();
+  syncHomeModalLabels();
+  if (state.sel && BY_ID[state.sel]) {
+    renderDetail(BY_ID[state.sel]);
+  } else {
+    renderList();
+  }
+});
+
+$("#daySeg").addEventListener("click", e => {
+  const b = e.target.closest("button[data-d]");
+  if (!b) return;
+  state.day = b.dataset.d;
+  store.set("day", state.day);
+  state.winIdx = 0;
+  renderDays();
+  if (state.sel && BY_ID[state.sel]) {
+    renderDetail(BY_ID[state.sel]);
+    drawSingle(BY_ID[state.sel]);
+  } else {
+    renderList();
+    drawOverview();
+  }
+});
+
+$("#pills").addEventListener("click", e => {
+  const b = e.target.closest(".pill[data-f]");
+  if (!b) return;
+  const f = b.dataset.f;
+  if (f === "all") {
+    state.sourceFilter = null;
+    state.regionFilter = null;
+    state.eveningSunOnly = false;
+    state.feasibleTime = "";
+    $("#feasibleTime").value = "";
+  } else if (f === "my_tours" || f === "curated") {
+    state.sourceFilter = f;
+  } else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(f)) {
+    state.regionFilter = f;
+  } else if (f === "evening_sun") {
+    state.eveningSunOnly = !state.eveningSunOnly;
+  }
+  renderHeader();
+  renderPills();
+  renderList();
+  drawOverview();
+});
+
+$("#feasiblePill").addEventListener("click", () => {
+  const inp = $("#feasibleTime");
+  if (state.feasibleTime) {
+    state.feasibleTime = "";
+    inp.value = "";
+  } else {
+    state.feasibleTime = inp.value || "12:00";
+    inp.value = state.feasibleTime;
+  }
+  renderHeader();
+  renderPills();
+  renderList();
+  drawOverview();
+});
+
+function onFeasibleTimeChange(e) {
+  state.feasibleTime = (e.target.value || "").trim();
+  renderHeader();
+  renderPills();
+  renderList();
+  drawOverview();
+}
+$("#feasibleTime").addEventListener("input", onFeasibleTimeChange);
+$("#feasibleTime").addEventListener("change", onFeasibleTimeChange);
+
+$("#q").addEventListener("input", e => {
+  state.q = (e.target.value || "").trim();
+  renderList();
+  drawOverview();
+});
+$("#qClear").addEventListener("click", () => {
+  $("#q").value = "";
+  state.q = "";
+  renderList();
+  drawOverview();
+});
+
+/* ---------- Home Location Modal ---------- */
+function syncHomeModalLabels() {
+  const tDict = T();
+  $("#homeModalTitle").textContent = tDict.homeModalTitle;
+  $("#homePresetLabel").textContent = tDict.homePresetLabel;
+  $("#homeSearchLabel").textContent = tDict.homeSearchLabel;
+  $("#homeSearchBtn").textContent = tDict.homeSearchBtn;
+  $("#homeGpsBtn").textContent = tDict.homeGpsBtn;
+  $("#homeNameLabel").textContent = tDict.homeNameLabel;
+  $("#homeLatLabel").textContent = tDict.homeLatLabel;
+  $("#homeLonLabel").textContent = tDict.homeLonLabel;
+  $("#saveHomeBtn").textContent = tDict.homeSaveBtn;
+  $("#resetHomeBtn").textContent = tDict.homeResetBtn;
+  $("#closeHomeModal").textContent = tDict.homeCloseBtn;
+}
+
+function renderHomePresets() {
+  $("#homePresets").innerHTML = HOME_PRESETS.map(p =>
+    `<button type="button" class="home-preset-btn" data-name="${esc(p.name)}" data-lat="${p.lat}" data-lon="${p.lon}" data-base="${p.base}">${esc(p.name)}</button>`
+  ).join("");
+}
+
+function openHomeModal() {
+  syncHomeModalLabels();
+  renderHomePresets();
+  $("#customHomeName").value = HOME.name || "";
+  $("#customHomeLat").value = Number(HOME.lat || 49.753891).toFixed(4);
+  $("#customHomeLon").value = Number(HOME.lon || 8.629438).toFixed(4);
+  $("#geoResults").innerHTML = "";
+  $("#homeModal").classList.add("show");
+}
+
+function closeHomeModal() {
+  $("#homeModal").classList.remove("show");
+}
+
+$("#homeEditBtn").addEventListener("click", openHomeModal);
+$("#closeHomeModal").addEventListener("click", closeHomeModal);
+$("#homeModal").addEventListener("click", e => {
+  if (e.target === $("#homeModal")) closeHomeModal();
+});
+
+$("#homePresets").addEventListener("click", e => {
+  const b = e.target.closest(".home-preset-btn");
+  if (!b) return;
+  const name = b.dataset.name;
+  const lat = parseFloat(b.dataset.lat);
+  const lon = parseFloat(b.dataset.lon);
+  const bKey = b.dataset.base || (name.toLowerCase().includes("karlsruhe") ? "karlsruhe" : "jugenheim");
+  setBase(bKey, {name, lat, lon});
+  closeHomeModal();
+});
+
+async function runNominatimSearch() {
+  const q = ($("#homeSearchInput").value || "").trim();
+  const box = $("#geoResults");
+  if (q.length < 2) {
+    box.innerHTML = "";
+    return;
+  }
+  try {
+    const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5`);
+    if (!r.ok) { box.innerHTML = ""; return; }
+    const items = await r.json();
+    if (!Array.isArray(items) || !items.length) {
+      box.innerHTML = `<div style="font-size:12px;color:var(--muted)">${state.lang === "en" ? "No results found" : "Keine Treffer"}</div>`;
+      return;
+    }
+    box.innerHTML = items.map(it => {
+      const nm = it.display_name || it.name || q;
+      return `<button type="button" class="geo-item" data-name="${esc(nm)}" data-lat="${it.lat}" data-lon="${it.lon}">${esc(nm)}</button>`;
+    }).join("");
+  } catch (err) {
+    box.innerHTML = "";
+  }
+}
+
+$("#homeSearchBtn").addEventListener("click", runNominatimSearch);
+$("#homeSearchInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") { e.preventDefault(); runNominatimSearch(); }
+});
+
+$("#geoResults").addEventListener("click", e => {
+  const b = e.target.closest(".geo-item[data-lat]");
+  if (!b) return;
+  const lat = parseFloat(b.dataset.lat);
+  const lon = parseFloat(b.dataset.lon);
+  const name = b.dataset.name || "Home";
+  if (!Number.isNaN(lat) && !Number.isNaN(lon)) {
+    HOME = {name, lat, lon};
+    store.set("home", HOME);
+    renderHeader();
+    closeHomeModal();
+  }
+});
+
+$("#homeGpsBtn").addEventListener("click", () => {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+    const name = state.lang === "en" ? `GPS Location (${lat.toFixed(3)}, ${lon.toFixed(3)})` : `GPS-Standort (${lat.toFixed(3)}, ${lon.toFixed(3)})`;
+    HOME = {name, lat, lon};
+    store.set("home", HOME);
+    renderHeader();
+    closeHomeModal();
+  }, () => {}, {timeout: 5000});
+});
+
+$("#saveHomeBtn").addEventListener("click", () => {
+  const name = ($("#customHomeName").value || "").trim() || HOME.name;
+  const lat = parseFloat($("#customHomeLat").value);
+  const lon = parseFloat($("#customHomeLon").value);
+  if (Number.isNaN(lat) || Number.isNaN(lon) || lat < 45 || lat > 56 || lon < 4 || lon > 17) {
+    toast(state.lang === "en" ? "Invalid coordinates" : "Ungültige Koordinaten");
+    return;
+  }
+  HOME = {name, lat, lon};
+  store.set("home", HOME);
+  renderHeader();
+  closeHomeModal();
+});
+
+$("#resetHomeBtn").addEventListener("click", () => {
+  HOME = {...BASE_DEFAULTS[state.base]};
+  store.set("home", HOME);
+  renderHeader();
+  closeHomeModal();
+});
+
+/* ---------- Boot ---------- */
+if (location.search.includes("base=karlsruhe")) {
+  state.base = "karlsruhe";
+  HOME = {...BASE_DEFAULTS.karlsruhe};
+}
+applyTheme();
+setLayer(state.layer);
+renderHeader();
+renderDays();
+renderPills();
+renderList();
+drawOverview();
+setTimeout(fitCurrent, 50);
+</script>
+</body>
+</html>

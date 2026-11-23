@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="https://mapy.com/">
+	<wpt lat="49.646000" lon="8.163196">
+		<ele>240.246521</ele>
+		<name>Bench</name>
+	</wpt>
+	<wpt lat="49.831919" lon="9.361028">
+		<ele>400.781158</ele>
+		<name>Position on the map</name>
+	</wpt>
+	<wpt lat="49.689214" lon="9.271616">
+		<ele>447.206207</ele>
+		<name>Haagsaussicht</name>
+	</wpt>
+	<wpt lat="49.549559" lon="8.772335">
+		<ele>498.997925</ele>
+		<name>Position on the map</name>
+	</wpt>
+	<wpt lat="49.479115" lon="8.129491">
+		<ele>499.988068</ele>
+		<name>Bismarck Tower</name>
+	</wpt>
+	<wpt lat="49.246686" lon="7.916615">
+		<ele>558.829956</ele>
+		<name>Almersberg</name>
+	</wpt>
+	<wpt lat="49.688547" lon="8.630065">
+		<ele>211.800003</ele>
+		<name>Weinlagenwanderung (2022)</name>
+	</wpt>
+	<wpt lat="49.580084" lon="9.021094">
+		<ele>553.833740</ele>
+		<name>Krähberg</name>
+	</wpt>
+	<wpt lat="49.088079" lon="8.561046">
+		<ele>256.777924</ele>
+		<name>Scenic viewpoint</name>
+	</wpt>
+	<wpt lat="48.758194" lon="8.406086">
+		<ele>845.203308</ele>
+		<name>Scenic viewpoint</name>
+	</wpt>
+	<wpt lat="49.408303" lon="8.164773">
+		<ele>331.358521</ele>
+		<name>Gymnastics memorial</name>
+	</wpt>
+	<wpt lat="49.469686" lon="8.989649">
+		<ele>234.825684</ele>
+		<name>Ohrsberg Tower</name>
+	</wpt>
+	<wpt lat="49.310330" lon="7.853857">
+		<ele>610.826111</ele>
+		<name>Eschkopf tower</name>
+	</wpt>
+	<wpt lat="49.350464" lon="7.757034">
+		<ele>348.683258</ele>
+		<name>Pavillon</name>
+	</wpt>
+	<wpt lat="49.305326" lon="8.122436">
+		<ele>205.910583</ele>
+		<name>Radweg Deutsche Weinstraße</name>
+	</wpt>
+	<wpt lat="48.712925" lon="8.249713">
+		<ele>319.910583</ele>
+		<name>Geroldsauer Wasserfall</name>
+	</wpt>
+	<wpt lat="49.181654" lon="7.970266">
+		<ele>572.244446</ele>
+		<name>Rehberg tower</name>
+	</wpt>
+	<wpt lat="48.668827" lon="8.275108">
+		<ele>1001.611572</ele>
+		<name>Friedrichsturm</name>
+	</wpt>
+	<wpt lat="48.942802" lon="8.421450">
+		<ele>269.038818</ele>
+		<name>Bismarck Tower</name>
+	</wpt>
+</gpx>
+

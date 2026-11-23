@@ -1,0 +1,119 @@
+[
+  {
+    "rawIndex": 7,
+    "app": "de.hafas.android.vrn",
+    "id": "1707865574587",
+    "label": "Reichenbach zur Hochschule",
+    "category": "commute_university",
+    "reason": "Campus-Pendelweg zur Hochschule Darmstadt (Campus Dieburg), Ankunft 14:15 / University commute to h_da Dieburg campus",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 9,
+    "app": "de.hafas.android.vrn",
+    "id": "1707131617627",
+    "label": "Dieburg → Jugenheim",
+    "category": "commute_university",
+    "reason": "Rückfahrt-Pendelweg vom Campus Dieburg (Hochschule Süd) nach Jugenheim / Return commute from h_da Dieburg campus",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 10,
+    "app": "de.hafas.android.vrn",
+    "id": "1718222609773",
+    "label": "miltenberg nach dieburg",
+    "category": "commute_university",
+    "reason": "Borderline → EXCLUDE: Ziel ist Campus Hochschule Süd, Dieburg (bdepart=0, 14:15); Ausflugsroute Eberbach–Miltenberg ist über #19 und #67+#59 abgedeckt / Target is h_da Dieburg campus commute",
+    "borderlineReviewed": true
+  },
+  {
+    "rawIndex": 17,
+    "app": "de.hafas.android.vrn",
+    "id": "1734384144333",
+    "label": "Karlsruhe → Bruchsal",
+    "category": "base_to_base_transfer",
+    "reason": "Borderline → EXCLUDE: Basis-zu-Basis-Transfer ab Karlsruhe Durlacher Tor/KIT über Blankenloch/Bruchsal nach Jugenheim ohne Wander- oder Ausflugsziel / Base-to-base transfer without excursion target",
+    "borderlineReviewed": true
+  },
+  {
+    "rawIndex": 20,
+    "app": "de.hafas.android.vrn",
+    "id": "1709582376902",
+    "label": "über 676",
+    "category": "local_utility_route",
+    "reason": "Borderline → EXCLUDE: Lokale Alltags-/Nachbarschaftsbuslinie 676 (Bensheim-Auerbach → Schwanheim → Jugenheim, bdepart=0 09:53) ohne Ausflugsziel / Local utility bus commute",
+    "borderlineReviewed": true
+  },
+  {
+    "rawIndex": 23,
+    "app": "de.hafas.android.vrn",
+    "id": "1713244798657",
+    "label": "Marienplatz, Stuttgart → Stuttgart Hbf",
+    "category": "utility_city_hop",
+    "reason": "Innerstädtische Kurzverbindung in Stuttgart (Marienplatz → Stuttgart Hbf, explizit laut R1 auszuschließen) / Inner-city Stuttgart hop",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 25,
+    "app": "de.hafas.android.vrn",
+    "id": "1736626852822",
+    "label": "Schwanen, Waiblingen → Jugenheim Bickenbacher Straße, Seeheim-Jugenheim",
+    "category": "personal_errand_waiblingen",
+    "reason": "Alltags-/Privatfahrt ab Schwanen, Waiblingen (productsField=11111111111111 inkl. Fernverkehr, explizit laut R1 auszuschließen) / Personal errand from Waiblingen",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 52,
+    "app": "de.hafas.android.sbm",
+    "id": "1742939984139",
+    "label": "→ Rathaus, Waiblingen",
+    "category": "personal_errand_waiblingen",
+    "reason": "Alltags-/Privatfahrt nach Rathaus, Waiblingen (Gegenrichtung zu #25, explizit laut R1 auszuschließen) / Personal errand to Waiblingen",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 53,
+    "app": "de.hafas.android.sbm",
+    "id": "1781694162039",
+    "label": "Stuttgart Universität → Pforzheim Hbf",
+    "category": "commute_university",
+    "reason": "Campus-/Alltagsverbindung ab Stuttgart Universität → Pforzheim Hbf (explizit laut R1 auszuschließen) / University commute from Stuttgart",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 54,
+    "app": "de.hafas.android.sbm",
+    "id": "1742939691088",
+    "label": "→ Karlsruhe Hbf",
+    "category": "base_to_base_transfer",
+    "reason": "Borderline → EXCLUDE: Direkter Basis-zu-Basis-Transfer Jugenheim ↔ Karlsruhe Hbf ohne Zwischenziele / Direct base-to-base transfer",
+    "borderlineReviewed": true
+  },
+  {
+    "rawIndex": 63,
+    "app": "de.hafas.android.sbm",
+    "id": "productShortcut",
+    "label": "Buy tickets",
+    "category": "app_utility_shortcut",
+    "reason": "App-Systemverknüpfung 'Buy tickets' (id=productShortcut) ohne Orte/Parameter (explizit laut R1 auszuschließen) / App ticket shortcut",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 64,
+    "app": "de.hafas.android.sbm",
+    "id": "1778074151429",
+    "label": "Graben-Neudorf → HAK",
+    "category": "commute_karlsruhe",
+    "reason": "Pendel-/Alltagsweg zur Moltkestraße 30 / HAK Karlsruhe (explizit laut R1 auszuschließen) / Commute to Moltkestraße 30 / HAK Karlsruhe",
+    "borderlineReviewed": false
+  },
+  {
+    "rawIndex": 85,
+    "app": "de.hafas.android.nvv",
+    "id": "1709818416431",
+    "label": "Clay Kaserne",
+    "category": "personal_errand_clay_kaserne",
+    "reason": "Dienst-/Alltagsweg zur Clay Kaserne Wiesbaden via Mainz Bismarckplatz (explizit laut R1 auszuschließen) / Commute to Clay Kaserne",
+    "borderlineReviewed": false
+  }
+]
