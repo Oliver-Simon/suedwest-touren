@@ -7,6 +7,7 @@
 <meta name="description" content="Deutschlandticket-Tagestouren &amp; Mapy-Wanderungen ab Jugenheim und Karlsruhe mit Fahrplan, Karte, Höhenprofil und GPX-Export.">
 <meta name="theme-color" content="#0f4c5c" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b131b" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f4c5c'/%3E%3Ccircle cx='46' cy='18' r='7' fill='%23fbbf24'/%3E%3Cpath d='M6 48 L22 22 L34 36 L44 24 L58 48 Z' fill='%2315803d'/%3E%3C/svg%3E">
@@ -41,8 +42,8 @@
   --foot: #64748b;
   --shadow: 0 1px 2px rgba(15,27,38,.06), 0 4px 14px rgba(15,27,38,.06);
   --radius: 14px;
-  --map-h: 36vh;
-  color-scheme: light;
+  --map-h: 30vh;
+  color-scheme: only light;
 }
 :root[data-theme="dark"], html.dark {
   --bg: #0b131b;
@@ -65,6 +66,7 @@
   --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
   color-scheme: dark;
 }
+.detail-open { --map-h: 32vh; }
 * { box-sizing: border-box; }
 html, body {
   margin: 0;
@@ -88,7 +90,7 @@ header.top {
   z-index: 1200;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  padding: 8px 10px;
+  padding: 6px 10px;
   width: 100%;
   max-width: 100%;
 }
@@ -98,7 +100,7 @@ header.top {
   gap: 6px;
   flex-wrap: wrap;
 }
-.brand { flex: 1; min-width: 120px; }
+.brand { flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: flex-start; }
 .brand h1 {
   font-size: 15px;
   line-height: 1.2;
@@ -150,7 +152,7 @@ header.top {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 5px;
   flex-wrap: wrap;
 }
 .base-switch {
@@ -210,8 +212,8 @@ header.top {
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 5px;
+  margin-top: 5px;
 }
 .detail-open .controls { display: none; }
 .search-row {
@@ -321,7 +323,7 @@ header.top {
   z-index: 800;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 .map-tools .icon-btn {
   height: 30px;
@@ -431,8 +433,7 @@ html.dark .leaflet-tile-pane,
   background: var(--surface-2);
   overflow: hidden;
   border-bottom: 1px solid var(--border);
-  aspect-ratio: 16 / 9;
-  max-height: 172px;
+  height: 150px;
 }
 .card-thumb {
   display: block;
@@ -568,8 +569,7 @@ html.dark .leaflet-tile-pane,
   display: block;
   width: 100%;
   max-width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 220px;
+  height: 200px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 6px;
@@ -836,6 +836,116 @@ html.dark .leaflet-tile-pane,
   z-index: 3500;
 }
 .toast.show { opacity: 1; }
+.toast button {
+  margin-left: 8px;
+  border: 0;
+  border-radius: 8px;
+  padding: 4px 9px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  pointer-events: auto;
+}
+
+/* v4: compact header, collapsible filter panel */
+.home-chip { margin-top: 1px; padding: 1px 7px; }
+.filter-toggle { position: relative; }
+.filter-toggle[aria-expanded="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge-count[hidden] { display: none; }
+.filter-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+}
+.filter-panel[hidden] { display: none; }
+.fp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.fp-row label { flex: 1; min-width: 0; }
+.fp-row input[type="time"], .fp-row select {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 112px;
+}
+.pill.feasible-pill[aria-pressed="true"]::after { content: attr(data-time); margin-left: 4px; font-weight: 700; }
+
+/* v4: map tool icons */
+.map-tools .icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.map-tools .icon-btn { color: var(--text); }
+
+/* v4: detail actions (primary + "Weitere Apps") */
+.actions.primary-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.actions.primary-actions .act { justify-content: center; text-align: center; padding: 9px 6px; line-height: 1.2; }
+.more-apps { margin-top: 6px; }
+.more-apps > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+.more-apps > summary::-webkit-details-marker { display: none; }
+.more-apps[open] > summary { border-style: solid; background: var(--surface-2); }
+.more-apps .actions { margin-top: 6px; }
+.app-hint { font-size: 11.5px; color: var(--muted); margin: 6px 0 0; }
+
+/* v4: departure windows grouped (recommended first) */
+.win-label { font-size: 11.5px; font-weight: 700; color: var(--muted); margin: 8px 0 0; text-transform: uppercase; letter-spacing: .03em; }
+.win-btn .star { margin-right: 3px; }
+.ret-btn.lsr { border-style: dashed; }
+
+/* v4: interactive elevation profile */
+.elev-box svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.elev-box .elev-read { font-size: 12px; font-weight: 700; color: var(--text-2); min-height: 18px; margin-top: 4px; }
+.elev-axis { font-size: 9.5px; fill: var(--muted); }
+
+@media (pointer: coarse) {
+  .pill, .seg button, .base-btn, .icon-btn, .act, .win-btn, .stay-btn, .ret-btn, .mini-btn, .stay-select, .home-preset-btn, .geo-item, .region-head { min-height: 40px; }
+  .seg button { min-width: 40px; }
+  .search { height: 40px; }
+  .search .clear { min-width: 40px; min-height: 40px; }
+  .home-chip { min-height: 30px; }
+  .map-tools .icon-btn { height: 38px; min-width: 38px; }
+  .leaflet-touch .leaflet-bar a { width: 38px; height: 38px; line-height: 38px; }
+}
 </style>
 </head>
 <body>
@@ -864,22 +974,48 @@ html.dark .leaflet-tile-pane,
           <input id="q" type="search" placeholder="Suche: Bad Dürkheim, Trifels, Schwarzwald …" autocomplete="off">
           <button type="button" class="clear" id="qClear" aria-label="Suche löschen">×</button>
         </label>
-        <div class="feasible-box">
-          <button type="button" class="pill" id="feasiblePill" data-f="feasible" style="border:0;padding:2px 6px">Heute noch machbar ab</button>
-          <input type="time" id="feasibleTime" aria-label="Uhrzeit">
-        </div>
-        <select id="staySelect" class="stay-select" aria-label="Aufenthaltsdauer vor Ort">
-          <option value="">⏱ Aufenthalt: Auto</option>
-          <option value="90">⏱ ≥ 1,5 Std.</option>
-          <option value="120">⏱ ≥ 2 Std.</option>
-          <option value="180">⏱ ≥ 3 Std.</option>
-          <option value="240">⏱ ≥ 4 Std.</option>
-          <option value="300">⏱ ≥ 5 Std.</option>
-          <option value="360">⏱ ≥ 6 Std.</option>
-          <option value="max">⏱ Maximal (Spät zurück)</option>
-        </select>
+        <button type="button" class="icon-btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">⚙️ <span id="filterToggleTxt">Filter</span> <span class="badge-count" id="filterCount" hidden>0</span></button>
       </div>
       <div class="pills" id="pills" role="group" aria-label="Filter"></div>
+      <div class="filter-panel" id="filterPanel" hidden>
+        <div class="fp-row">
+          <label for="feasibleTime" id="feasibleLbl">⏰ Heute noch machbar ab</label>
+          <input type="time" id="feasibleTime" aria-label="Uhrzeit">
+        </div>
+        <div class="fp-row">
+          <label for="staySelect" id="stayLbl">⏱ Aufenthalt vor Ort</label>
+          <select id="staySelect" class="stay-select" aria-label="Aufenthaltsdauer vor Ort">
+            <option value="">Auto (Empfehlung)</option>
+            <option value="90">≥ 1,5 Std.</option>
+            <option value="120">≥ 2 Std.</option>
+            <option value="180">≥ 3 Std.</option>
+            <option value="240">≥ 4 Std.</option>
+            <option value="300">≥ 5 Std.</option>
+            <option value="360">≥ 6 Std.</option>
+            <option value="max">Maximal (spät zurück)</option>
+          </select>
+        </div>
+        <div class="fp-row">
+          <label for="maxRideSelect" id="maxRideLbl">🚆 Max. Anfahrt</label>
+          <select id="maxRideSelect" aria-label="Maximale Anfahrtszeit">
+            <option value="">beliebig</option>
+            <option value="60">≤ 1 Std.</option>
+            <option value="90">≤ 1,5 Std.</option>
+            <option value="120">≤ 2 Std.</option>
+            <option value="180">≤ 3 Std.</option>
+          </select>
+        </div>
+        <div class="fp-row">
+          <label for="sortSelect" id="sortLbl">↕ Sortierung</label>
+          <select id="sortSelect" aria-label="Sortierung">
+            <option value="">nach Region</option>
+            <option value="ride">kürzeste Anfahrt</option>
+            <option value="stay">längster Aufenthalt</option>
+            <option value="km">Wanderstrecke</option>
+            <option value="hm">Höhenmeter</option>
+          </select>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -889,10 +1025,10 @@ html.dark .leaflet-tile-pane,
       <div class="elev-overlay" id="elevBadge">Südwest-Übersicht</div>
       <div class="map-tools">
         <button type="button" class="icon-btn" id="layerBtn" title="Karte / Layer" aria-label="Karte / Layer">🗺️ Layer</button>
-        <button type="button" class="icon-btn" id="fitBtn" title="Route einpassen" aria-label="Route einpassen">⤢</button>
-        <button type="button" class="icon-btn" id="fullBtn" title="Vollbild" aria-label="Vollbild">⛶</button>
-        <button type="button" class="icon-btn" id="miniBtn" title="Karte verkleinern" aria-label="Karte verkleinern">▴</button>
-        <button type="button" class="icon-btn" id="gpsBtn" title="GPS-Standort" aria-label="GPS-Standort">📍</button>
+        <button type="button" class="icon-btn" id="fitBtn" title="Route einpassen" aria-label="Route einpassen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.5"/></svg></button>
+        <button type="button" class="icon-btn" id="fullBtn" title="Vollbild" aria-label="Vollbild"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg></button>
+        <button type="button" class="icon-btn" id="miniBtn" title="Karte verkleinern" aria-label="Karte verkleinern"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+        <button type="button" class="icon-btn" id="gpsBtn" title="GPS-Standort" aria-label="GPS-Standort"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
       <div class="layer-menu" id="layerMenu"></div>
     </div>
@@ -978,7 +1114,8 @@ const BASE_DEFAULTS = {
     lat: 49.753891,
     lon: 8.629438,
     dhid: "de:06432:24355",
-    ibnr: "8000956"
+    ibnr: "8000956",
+    remoteId: "A=1@O=Jugenheim Bickenbacher Straße, Seeheim-Jugenheim@X=8629438@Y=49753891@U=80@L=124355@"
   },
   karlsruhe: {
     name: "Karlsruhe Hbf",
@@ -1050,8 +1187,36 @@ const I18N = {
       ["schwarzwald", "Schwarzwald"],
       ["odenwald", "Odenwald & Neckar"],
       ["loop", "🔄 Rundwanderung"],
-      ["evening_sun", "🌅 Abendsonne"]
+      ["evening_sun", "🌅 Abendsonne"],
+      ["feasible", "⏰ Heute noch machbar"]
     ],
+    filterBtn: "Filter",
+    feasibleLbl: "⏰ Heute noch machbar ab",
+    stayLbl: "⏱ Aufenthalt vor Ort",
+    maxRideLbl: "🚆 Max. Anfahrt",
+    sortLbl: "↕ Sortierung",
+    stayOpts: ["Auto (Empfehlung)", "≥ 1,5 Std.", "≥ 2 Std.", "≥ 3 Std.", "≥ 4 Std.", "≥ 5 Std.", "≥ 6 Std.", "Maximal (spät zurück)"],
+    maxRideOpts: ["beliebig", "≤ 1 Std.", "≤ 1,5 Std.", "≤ 2 Std.", "≤ 3 Std."],
+    sortOpts: ["nach Region", "kürzeste Anfahrt", "längster Aufenthalt", "Wanderstrecke", "Höhenmeter"],
+    sortedHead: n => `↕ ${n} Touren, sortiert`,
+    gpxDownload: "⬇️ GPX",
+    gpxNative: "🥾 GPX → Mapy",
+    mapyRoute: "🥾 Route in Mapy",
+    mapyDest: "📍 Ziel in Mapy",
+    dbPrimary: "🚆 DB Navigator",
+    moreApps: "⋯ Weitere Apps & Links",
+    nvvAppBtn: "🟩 NVV App",
+    myVrnBtn: "🟢 myVRN (Ziel)",
+    naviBtn: "🧭 Navi-App wählen",
+    appHint: "MVV & NVV übernehmen Start, Ziel, Vias und Uhrzeit · myVRN übernimmt nur das Ziel (Route ab aktuellem Standort) · DB ohne Vias.",
+    recommended: "Empfohlen",
+    otherWindows: "Weitere Abfahrten",
+    lsrTag: "🛡️ letzte",
+    elevTitle: "⛰️ Höhenprofil",
+    elevHint: "Finger/Maus über das Profil bewegen – Position erscheint auf der Karte.",
+    updateReady: "Neue Version geladen.",
+    reload: "Neu laden",
+    gpxOpened: "GPX an Mapy übergeben",
     diff: {leicht: "leicht", mittel: "mittel", schwer: "schwer"},
     reg: {pfaelzerwald: "Pfälzerwald & Weinstraße", schwarzwald: "Schwarzwald", odenwald: "Odenwald & Neckar", weitere: "Südwest & Rhein-Main"},
     regGroups: [
@@ -1111,8 +1276,36 @@ const I18N = {
       ["schwarzwald", "Black Forest"],
       ["odenwald", "Odenwald & Neckar"],
       ["loop", "🔄 Loop hikes"],
-      ["evening_sun", "🌅 Evening sun"]
+      ["evening_sun", "🌅 Evening sun"],
+      ["feasible", "⏰ Feasible today"]
     ],
+    filterBtn: "Filter",
+    feasibleLbl: "⏰ Feasible today from",
+    stayLbl: "⏱ Stay at destination",
+    maxRideLbl: "🚆 Max. travel time",
+    sortLbl: "↕ Sort",
+    stayOpts: ["Auto (recommended)", "≥ 1.5 h", "≥ 2 h", "≥ 3 h", "≥ 4 h", "≥ 5 h", "≥ 6 h", "Maximum (late return)"],
+    maxRideOpts: ["any", "≤ 1 h", "≤ 1.5 h", "≤ 2 h", "≤ 3 h"],
+    sortOpts: ["by region", "shortest travel", "longest stay", "hike distance", "elevation gain"],
+    sortedHead: n => `↕ ${n} tours, sorted`,
+    gpxDownload: "⬇️ GPX",
+    gpxNative: "🥾 GPX → Mapy",
+    mapyRoute: "🥾 Route in Mapy",
+    mapyDest: "📍 Destination in Mapy",
+    dbPrimary: "🚆 DB Navigator",
+    moreApps: "⋯ More apps & links",
+    nvvAppBtn: "🟩 NVV App",
+    myVrnBtn: "🟢 myVRN (destination)",
+    naviBtn: "🧭 Choose navigation app",
+    appHint: "MVV & NVV take start, destination, vias and time · myVRN only takes the destination (route from current location) · DB without vias.",
+    recommended: "Recommended",
+    otherWindows: "Other departures",
+    lsrTag: "🛡️ last",
+    elevTitle: "⛰️ Elevation profile",
+    elevHint: "Move finger/mouse over the profile – the position is shown on the map.",
+    updateReady: "New version loaded.",
+    reload: "Reload",
+    gpxOpened: "GPX handed to Mapy",
     diff: {leicht: "easy", mittel: "medium", schwer: "hard"},
     reg: {pfaelzerwald: "Palatinate Forest", schwarzwald: "Black Forest", odenwald: "Odenwald & Neckar", weitere: "Southwest Region"},
     regGroups: [
@@ -1175,8 +1368,11 @@ let state = {
   stayTargetMin: store.get("stayTargetMin", null),
   q: "",
   sel: null,
-  winIdx: 0,
+  winIdx: null,
   revIdx: null,
+  maxRide: store.get("maxRide", null),
+  sort: store.get("sort", ""),
+  filtersOpen: false,
   layer: store.get("layer", "osm")
 };
 if (!["wd", "sa", "so"].includes(state.day)) state.day = "wd";
@@ -1188,13 +1384,20 @@ if (!HOME || typeof HOME.lat !== "number" || Number.isNaN(HOME.lat) || typeof HO
 
 const T = () => I18N[state.lang] || I18N.de;
 
-function toast(msg) {
+function toast(msg, opts) {
   const el = $("#toast");
   if (!el) return;
   el.textContent = msg;
+  if (opts && opts.action) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = opts.label || "OK";
+    b.addEventListener("click", opts.action);
+    el.appendChild(b);
+  }
   el.classList.add("show");
   clearTimeout(toast._t);
-  toast._t = setTimeout(() => el.classList.remove("show"), 2200);
+  toast._t = setTimeout(() => el.classList.remove("show"), (opts && opts.ms) || 2200);
 }
 
 function parseHHMM(s) {
@@ -1279,17 +1482,6 @@ function hikePolyPts(t) {
   return hikePolyCache.get(t.id);
 }
 
-/* Simplified river reference lines (Rhein & Neckar) for instant geographic orientation in card mini-maps */
-const RIVER_RHEIN = [
-  [47.56, 7.59], [47.75, 7.53], [48.03, 7.58], [48.35, 7.72], [48.58, 7.80],
-  [48.80, 8.05], [49.02, 8.30], [49.15, 8.38], [49.32, 8.45], [49.49, 8.45],
-  [49.63, 8.38], [49.77, 8.45], [49.99, 8.28], [50.00, 8.08]
-];
-const RIVER_NECKAR = [
-  [48.78, 9.21], [48.95, 9.18], [49.14, 9.21], [49.35, 9.09], [49.46, 8.99],
-  [49.41, 8.70], [49.48, 8.56], [49.50, 8.46]
-];
-
 function getBaseInfo(baseKey) {
   const b = (DATA.bases && DATA.bases[baseKey]) || BASE_DEFAULTS[baseKey] || BASE_DEFAULTS.jugenheim;
   return {
@@ -1298,14 +1490,78 @@ function getBaseInfo(baseKey) {
     lat: Number(b.lat || BASE_DEFAULTS[baseKey].lat),
     lon: Number(b.lon || BASE_DEFAULTS[baseKey].lon),
     dhid: b.dhid || BASE_DEFAULTS[baseKey].dhid,
-    ibnr: b.ibnr || (b.nearestRail && b.nearestRail.ibnr) || BASE_DEFAULTS[baseKey].ibnr
+    ibnr: b.ibnr || (b.nearestRail && b.nearestRail.ibnr) || BASE_DEFAULTS[baseKey].ibnr,
+    remoteId: b.remoteId || BASE_DEFAULTS[baseKey].remoteId || ""
   };
+}
+
+/* ---------- Compact data (v2): stop/segment/itinerary tables, hydrated lazily ---------- */
+const STOPS = DATA.stops || [];
+const SEGS = DATA.segs || [];
+const ITS = DATA.its || [];
+const segCache = new Map();
+const itCache = new Map();
+const planCache = new Map();
+
+function hydStop(i, platform) {
+  const r = i != null && i >= 0 ? STOPS[i] : null;
+  if (!r) return null;
+  const o = {name: r[0], lat: r[1], lon: r[2]};
+  if (r[3]) o.dhid = r[3];
+  if (r[4]) o.ibnr = r[4];
+  if (r[5]) o.remoteId = r[5];
+  if (platform) o.platform = platform;
+  return o;
+}
+
+function hydSeg(i) {
+  if (segCache.has(i)) return segCache.get(i);
+  const r = SEGS[i];
+  if (!r) return null;
+  const seg = {
+    kind: r[0], mode: r[1], line: r[2], lineName: r[3], op: r[4], dep: r[5], arr: r[6],
+    from: hydStop(r[7], r[8]), to: hydStop(r[9], r[10]), dest: r[11],
+    transfer: r[12] >= 0 ? r[12] : null,
+    warnings: r[13] || [],
+    intermediateStops: (r[14] || []).map(x => ({name: (STOPS[x[0]] || [""])[0], arr: x[1], dep: x[2], platform: x[3]})),
+    legs: (r[15] || []).map(p => ({p}))
+  };
+  segCache.set(i, seg);
+  return seg;
+}
+
+function hydIt(i) {
+  if (i == null || i < 0 || !ITS[i]) return [];
+  if (!itCache.has(i)) itCache.set(i, ITS[i].map(hydSeg).filter(Boolean));
+  return itCache.get(i);
 }
 
 function getPlan(t, baseKey, dayKey) {
   const plans = (t && (t.plans || t.plans_by_base)) || {};
   const bPlans = plans[baseKey] || {};
-  return bPlans[dayKey] || null;
+  const p = bPlans[dayKey] || null;
+  if (!p || !Array.isArray(p.f)) return p;
+  const key = `${t.id}|${baseKey}|${dayKey}`;
+  if (planCache.has(key)) return planCache.get(key);
+  const altsF = p.f.map(hydIt).filter(a => a.length);
+  const altsR = p.r.map(hydIt).filter(a => a.length);
+  const fi = Math.max(0, Math.min(p.fi || 0, altsF.length - 1));
+  const ri = Math.max(0, Math.min(p.ri || 0, altsR.length - 1));
+  const out = {
+    fwd: altsF[fi] || [],
+    rev: altsR[ri] || [],
+    alts_fwd: altsF,
+    alts_rev: altsR,
+    recFwdIdx: fi,
+    recRevIdx: ri,
+    fallback: p.fb || false,
+    reason: p.reason || ""
+  };
+  if (p.lsr) {
+    out.lastSafeReturn = {dep: p.lsr.dep, arr: p.lsr.arr, minStayAchieved: p.lsr.minStayAchieved, segs: hydIt(p.lsr.i)};
+  }
+  planCache.set(key, out);
+  return out;
 }
 
 function isPlanRoutable(p) {
@@ -1366,7 +1622,9 @@ function isClosedLoopHike(t) {
   if (loopCache.has(t.id)) return loopCache.get(t.id);
   const h = t.hike || {};
   let res = false;
-  if (h.hasGpx && h.poly5) {
+  if (t.transit && t.transit.kind === "shortcut_360") {
+    res = false;
+  } else if (h.hasGpx && h.poly5) {
     const pts = decodePoly(h.poly5);
     if (pts.length >= 2) {
       res = haversineM(pts[0], pts[pts.length - 1]) <= 850;
@@ -1380,43 +1638,79 @@ function isClosedLoopHike(t) {
   return res;
 }
 
+function depMinutes(segs) {
+  const m = parseHHMM(segs && segs[0] && segs[0].dep);
+  if (m === null) return null;
+  return m < 240 ? m + 1440 : m;
+}
+
+function sameItin(a, b) {
+  if (!a || !b || !a.length || !b.length) return false;
+  if (a === b) return true;
+  return a.length === b.length && a[0].dep === b[0].dep && a[a.length - 1].arr === b[b.length - 1].arr &&
+    (a[0].line || "") === (b[0].line || "");
+}
+
+function stayMinutes(arrMin, rev) {
+  const depMin = parseHHMM(rev && rev[0] && rev[0].dep);
+  if (depMin === null || arrMin === null) return null;
+  let stay = depMin - arrMin;
+  if (stay < 0) stay += 1440;
+  return stay;
+}
+
 function getSelectedWindow(t, baseKey, dayKey) {
   const {plan, fallback, reason} = getEffectivePlan(t, baseKey, dayKey);
   const wins = getWindows(plan);
   const revs = getReturns(plan);
-  if (!wins.length) return {fwd: [], rev: [], wins: [], validRevs: [], revIdx: 0, lsr: null, fallback, reason, winIdx: 0};
-  const idx = Math.max(0, Math.min(state.winIdx, wins.length - 1));
+  if (!wins.length) return {fwd: [], rev: [], wins: [], validRevs: [], revIdx: 0, lsr: null, fallback, reason, winIdx: 0, recIdx: 0, lsrIdx: -1};
+  let recIdx = plan.recFwdIdx;
+  if (recIdx == null) {
+    recIdx = Math.max(0, wins.findIndex(w => sameItin(w, plan.fwd)));
+  }
+  recIdx = Math.max(0, Math.min(recIdx, wins.length - 1));
+  const idx = state.winIdx == null ? recIdx : Math.max(0, Math.min(state.winIdx, wins.length - 1));
   const fwd = wins[idx] || plan.fwd || [];
   const wmin = Number((t.hike && t.hike.walkMin) || 0);
   const autoMinStay = wmin > 0 ? wmin + 30 : 60;
-  const arrMin = parseHHMM(fwd[fwd.length - 1]?.arr) || 600;
+  const arrMin = parseHHMM(fwd[fwd.length - 1]?.arr) ?? 600;
 
-  const validRevs = revs.filter(r => {
-    const depMin = parseHHMM(r[0]?.dep);
-    if (depMin === null) return false;
-    let stay = depMin - arrMin;
-    if (stay < 0) stay += 1440;
-    return stay >= 20 && stay <= 16 * 60;
+  // Return options = planner alternatives + the last safe return (if it is later than all alternatives)
+  const lsrSegs = plan.lastSafeReturn && Array.isArray(plan.lastSafeReturn.segs) ? plan.lastSafeReturn.segs : null;
+  let allRevs = revs.slice();
+  if (lsrSegs && lsrSegs.length && !allRevs.some(r => sameItin(r, lsrSegs))) {
+    allRevs.push(lsrSegs);
+    allRevs.sort((a, b) => (depMinutes(a) ?? 0) - (depMinutes(b) ?? 0));
+  }
+  const validRevs = allRevs.filter(r => {
+    const stay = stayMinutes(arrMin, r);
+    return stay !== null && stay >= 20 && stay <= 16 * 60;
   });
-  const pool = validRevs.length ? validRevs : revs;
+  const pool = validRevs.length ? validRevs : allRevs;
+  const lsrIdx = lsrSegs ? pool.findIndex(r => sameItin(r, lsrSegs)) : -1;
 
-  let chosenIdx = 0;
+  let chosenIdx = -1;
   if (pool.length) {
     if (state.revIdx !== null && state.revIdx >= 0 && state.revIdx < pool.length) {
       chosenIdx = state.revIdx;
     } else if (state.stayTargetMin === "max") {
-      chosenIdx = pool.length - 1;
+      chosenIdx = lsrIdx >= 0 ? lsrIdx : pool.length - 1;
     } else {
-      const targetStay = (typeof state.stayTargetMin === "number" && state.stayTargetMin > 0)
-        ? state.stayTargetMin
-        : autoMinStay;
-      chosenIdx = pool.length - 1;
-      for (let i = 0; i < pool.length; i++) {
-        const depMin = parseHHMM(pool[i][0]?.dep);
-        if (depMin !== null) {
-          let stay = depMin - arrMin;
-          if (stay < 0) stay += 1440;
-          if (stay >= targetStay) {
+      let targetStay;
+      if (typeof state.stayTargetMin === "number" && state.stayTargetMin > 0) {
+        targetStay = state.stayTargetMin;
+      } else {
+        // Auto = planner recommendation; for other windows keep a comparable stay
+        if (idx === recIdx) chosenIdx = pool.findIndex(r => sameItin(r, plan.rev));
+        const recArr = parseHHMM(plan.fwd && plan.fwd.length ? plan.fwd[plan.fwd.length - 1].arr : null);
+        const recStay = stayMinutes(recArr, plan.rev) || 0;
+        targetStay = Math.max(autoMinStay, recStay <= 16 * 60 ? recStay : 0);
+      }
+      if (chosenIdx < 0) {
+        chosenIdx = pool.length - 1;
+        for (let i = 0; i < pool.length; i++) {
+          const stay = stayMinutes(arrMin, pool[i]);
+          if (stay !== null && stay >= targetStay) {
             chosenIdx = i;
             break;
           }
@@ -1424,13 +1718,14 @@ function getSelectedWindow(t, baseKey, dayKey) {
       }
     }
   }
+  chosenIdx = Math.max(0, chosenIdx);
   const rev = pool[chosenIdx] || plan.rev || [];
   const lsr = (plan && plan.lastSafeReturn) || (revs.length ? {
     dep: revs[revs.length - 1][0]?.dep || "19:30",
     arr: revs[revs.length - 1][revs[revs.length - 1].length - 1]?.arr || "21:15",
     segs: revs[revs.length - 1]
   } : null);
-  return {fwd, rev, wins, validRevs: pool, revIdx: chosenIdx, lsr, fallback, reason, winIdx: idx};
+  return {fwd, rev, wins, validRevs: pool, revIdx: chosenIdx, lsr, fallback, reason, winIdx: idx, recIdx, lsrIdx};
 }
 
 function matchesFilter(t) {
@@ -1439,6 +1734,10 @@ function matchesFilter(t) {
   if (state.regionFilter && t.region !== state.regionFilter) return false;
   if (state.loopOnly && !isClosedLoopHike(t)) return false;
   if (state.eveningSunOnly && t.eveningSun !== true) return false;
+  if (state.maxRide) {
+    const {fwd} = getSelectedWindow(t, state.base, state.day);
+    if (!fwd.length || minDiff(fwd[0]?.dep, fwd[fwd.length - 1]?.arr) > state.maxRide) return false;
+  }
   if (state.feasibleTime) {
     const thr = parseHHMM(state.feasibleTime);
     if (thr !== null) {
@@ -1487,6 +1786,9 @@ function applyTheme() {
   document.body.classList.toggle("dark", dark);
   const mw = $("#mapWrap");
   if (mw) mw.classList.toggle("dark-tiles", dark);
+  if (window.SWNative && typeof window.SWNative.setDarkTheme === "function") {
+    try { window.SWNative.setDarkTheme(dark); } catch (e) {}
+  }
   const btn = $("#themeBtn");
   if (btn) {
     btn.textContent = dark ? "☀️" : "🌙";
@@ -1512,8 +1814,38 @@ function renderHeader() {
   $("#baseJgBtn").setAttribute("aria-pressed", String(state.base === "jugenheim"));
   $("#baseKaBtn").setAttribute("aria-pressed", String(state.base === "karlsruhe"));
   $("#q").placeholder = tDict.searchPh;
-  $("#feasiblePill").textContent = tDict.feasibleLabel;
-  $("#feasiblePill").setAttribute("aria-pressed", String(Boolean(state.feasibleTime)));
+  syncFilterPanel();
+}
+
+function activePanelFilters() {
+  let n = 0;
+  if (state.feasibleTime) n++;
+  if (state.stayTargetMin !== null) n++;
+  if (state.maxRide) n++;
+  if (state.sort) n++;
+  return n;
+}
+
+function syncFilterPanel() {
+  const tDict = T();
+  $("#filterToggleTxt").textContent = tDict.filterBtn;
+  const n = activePanelFilters();
+  $("#filterCount").textContent = String(n);
+  $("#filterCount").hidden = n === 0;
+  $("#filterToggle").setAttribute("aria-expanded", String(state.filtersOpen));
+  $("#filterPanel").hidden = !state.filtersOpen;
+  $("#feasibleLbl").textContent = tDict.feasibleLbl;
+  $("#stayLbl").textContent = tDict.stayLbl;
+  $("#maxRideLbl").textContent = tDict.maxRideLbl;
+  $("#sortLbl").textContent = tDict.sortLbl;
+  const relabel = (sel, labels) => Array.from($(sel).options).forEach((o, i) => { if (labels[i]) o.textContent = labels[i]; });
+  relabel("#staySelect", tDict.stayOpts);
+  relabel("#maxRideSelect", tDict.maxRideOpts);
+  relabel("#sortSelect", tDict.sortOpts);
+  if ($("#feasibleTime").value !== state.feasibleTime) $("#feasibleTime").value = state.feasibleTime;
+  $("#staySelect").value = state.stayTargetMin === null ? "" : String(state.stayTargetMin);
+  $("#maxRideSelect").value = state.maxRide ? String(state.maxRide) : "";
+  $("#sortSelect").value = state.sort || "";
 }
 
 function renderDays() {
@@ -1533,15 +1865,17 @@ function renderPills() {
     else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(k)) pressed = state.regionFilter === k;
     else if (k === "loop") pressed = state.loopOnly;
     else if (k === "evening_sun") pressed = state.eveningSunOnly;
+    else if (k === "feasible") {
+      return `<button type="button" class="pill feasible-pill" data-f="${k}" data-time="${esc(state.feasibleTime)}" aria-pressed="${Boolean(state.feasibleTime)}">${esc(lbl)}</button>`;
+    }
     return `<button type="button" class="pill" data-f="${k}" aria-pressed="${pressed}">${esc(lbl)}</button>`;
   }).join("");
-  const selEl = $("#staySelect");
-  if (selEl) selEl.value = state.stayTargetMin === null ? "" : String(state.stayTargetMin);
+  syncFilterPanel();
 }
 
 /* ---------- Map ---------- */
 const map = L.map("map", {zoomControl: false, attributionControl: true}).setView([49.35, 8.45], 8);
-L.control.zoom({position: "bottomright"}).addTo(map);
+L.control.zoom({position: "topleft"}).addTo(map);
 let baseTileLayer = null;
 let overlayTileLayer = null;
 
@@ -1555,10 +1889,10 @@ function setLayer(k) {
   if (overlayTileLayer) { map.removeLayer(overlayTileLayer); overlayTileLayer = null; }
   const cfg = LAYERS[k];
   const isFile = location.protocol === "file:";
-  baseTileLayer = L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr});
+  baseTileLayer = L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr, crossOrigin: isFile ? undefined : "anonymous"});
   baseTileLayer.addTo(map);
   if (cfg.overlay && !isFile) {
-    overlayTileLayer = L.tileLayer(cfg.overlay, {maxZoom: cfg.max, opacity: 0.85});
+    overlayTileLayer = L.tileLayer(cfg.overlay, {maxZoom: cfg.max, opacity: 0.85, crossOrigin: "anonymous"});
     overlayTileLayer.addTo(map);
   }
   renderLayerMenu();
@@ -1685,7 +2019,7 @@ function drawSingle(t) {
   if (h.hasGpx && h.distKm) {
     const kmStr = Number(h.distKm).toFixed(1).replace(".", ",");
     const hm = Math.round(Number(h.elevGainM || 0));
-    $("#elevBadge").textContent = `🥾 ${kmStr} km · ${hm} hm (${hm} m ↗)`;
+    $("#elevBadge").textContent = `🥾 ${kmStr} km · ↗ ${hm} hm`;
   } else {
     $("#elevBadge").textContent = `${tourTitle(t)} (${state.base === "karlsruhe" ? "Karlsruhe" : "Jugenheim"})`;
   }
@@ -1768,7 +2102,6 @@ $("#gpsBtn").addEventListener("click", () => {
   }, () => {}, {timeout: 5000});
 });
 
-/* ---------- Card Mini-Map SVG ---------- */
 function decimatePts(pts, maxN) {
   if (!pts || pts.length <= maxN) return pts || [];
   const out = [pts[0]];
@@ -1778,162 +2111,6 @@ function decimatePts(pts, maxN) {
   }
   out.push(pts[pts.length - 1]);
   return out;
-}
-
-function shortStopLabel(name, maxLen) {
-  if (!name) return "";
-  let s = String(name)
-    .replace(/,.*$/, "")
-    .replace(/\s*\([^)]*\)\s*/g, " ")
-    .replace(/\bBahnhof\b|\bBf\.?\b|\bHaltestelle\b/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-  if (s.length > maxLen) s = s.slice(0, maxLen - 1).trim() + "…";
-  return s;
-}
-
-function renderCardMiniMap(t, baseKey, dayKey) {
-  const W = 260, H = 110, PAD = 14;
-  const bInfo = getBaseInfo(baseKey);
-  const {fwd, rev} = getSelectedWindow(t, baseKey, dayKey);
-  const h = t.hike || {};
-  const hikePts = (h.hasGpx && h.poly5) ? decimatePts(hikePolyPts(t), 40) : [];
-
-  const ss = t.transit?.startStop;
-  const es = t.transit?.endStop || ss;
-  const startPt = ss && ss.lat != null ? [Number(ss.lat), Number(ss.lon)] : (hikePts[0] || null);
-  const endPt = es && es.lat != null ? [Number(es.lat), Number(es.lon)] : (hikePts.length ? hikePts[hikePts.length - 1] : startPt);
-
-  // Collect transit segments for bounds & drawing
-  const fwdLines = [];
-  fwd.forEach((s, idx) => {
-    const raw = getSegmentCoords(s, bInfo, ss);
-    if (raw.length >= 2) {
-      const pts = decimatePts(raw, 22);
-      if (idx === 0) pts[0] = [bInfo.lat, bInfo.lon];
-      const m = String(s.mode || "re").toLowerCase();
-      const isBus = m === "bus";
-      const isWalk = s.kind === "walk" || m === "foot" || m === "walk";
-      const col = isWalk ? "#64748b" : isBus ? "#0284c7" : (m === "re" ? "#d4373f" : "#7c3aed");
-      fwdLines.push({pts, col, dashed: isBus || isWalk});
-    }
-  });
-  const revLines = [];
-  if (rev.length && endPt && startPt && (Math.abs(endPt[0] - startPt[0]) > 0.01 || Math.abs(endPt[1] - startPt[1]) > 0.01)) {
-    rev.forEach(s => {
-      const raw = getSegmentCoords(s, es, bInfo);
-      if (raw.length >= 2) revLines.push({pts: decimatePts(raw, 18), col: "#7c3aed"});
-    });
-  }
-
-  let minLat = bInfo.lat, maxLat = bInfo.lat, minLon = bInfo.lon, maxLon = bInfo.lon;
-  const expand = p => {
-    if (!p || p.length < 2 || Number.isNaN(p[0]) || Number.isNaN(p[1])) return;
-    if (p[0] < minLat) minLat = p[0];
-    if (p[0] > maxLat) maxLat = p[0];
-    if (p[1] < minLon) minLon = p[1];
-    if (p[1] > maxLon) maxLon = p[1];
-  };
-  fwdLines.forEach(l => l.pts.forEach(expand));
-  revLines.forEach(l => l.pts.forEach(expand));
-  hikePts.forEach(expand);
-  expand(startPt);
-  expand(endPt);
-
-  // Ensure minimum geographic span so local tours look crisp
-  const midLat = (minLat + maxLat) / 2;
-  const cosLat = Math.cos(midLat * Math.PI / 180) || 0.65;
-  let latSpan = Math.max(0.08, maxLat - minLat);
-  let lonSpan = Math.max(0.12, maxLon - minLon);
-  const padLat = latSpan * 0.14;
-  const padLon = lonSpan * 0.14;
-  minLat -= padLat; maxLat += padLat;
-  minLon -= padLon; maxLon += padLon;
-  latSpan = maxLat - minLat;
-  lonSpan = maxLon - minLon;
-
-  const usableW = W - PAD * 2;
-  const usableH = H - PAD * 2;
-  const scaleX = usableW / (lonSpan * cosLat);
-  const scaleY = usableH / latSpan;
-  const scale = Math.min(scaleX, scaleY);
-  const drawnW = lonSpan * cosLat * scale;
-  const drawnH = latSpan * scale;
-  const offX = PAD + (usableW - drawnW) / 2;
-  const offY = PAD + (usableH - drawnH) / 2;
-
-  const proj = p => {
-    const x = offX + (p[1] - minLon) * cosLat * scale;
-    const y = offY + (maxLat - p[0]) * scale;
-    return [x, y];
-  };
-  const toPath = pts => pts.map((p, i) => {
-    const [x, y] = proj(p);
-    return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
-
-  const parts = [];
-  // Subtle topographic grid
-  parts.push(`<g stroke="var(--border)" stroke-opacity="0.45" stroke-width="0.7" stroke-dasharray="2 3">
-    <line x1="0" y1="28" x2="260" y2="28"/><line x1="0" y1="55" x2="260" y2="55"/><line x1="0" y1="82" x2="260" y2="82"/>
-    <line x1="65" y1="0" x2="65" y2="110"/><line x1="130" y1="0" x2="130" y2="110"/><line x1="195" y1="0" x2="195" y2="110"/>
-  </g>`);
-
-  // River orientation lines (Rhein & Neckar)
-  parts.push(`<path d="${toPath(RIVER_RHEIN)}" fill="none" stroke="#60a5fa" stroke-opacity="0.45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`);
-  parts.push(`<path d="${toPath(RIVER_NECKAR)}" fill="none" stroke="#60a5fa" stroke-opacity="0.38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`);
-
-  // Return transit (subtle, for ring tours)
-  revLines.forEach(l => {
-    parts.push(`<path d="${toPath(l.pts)}" fill="none" stroke="${l.col}" stroke-opacity="0.42" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round" stroke-linejoin="round"/>`);
-  });
-
-  // Outbound transit approach
-  fwdLines.forEach(l => {
-    parts.push(`<path d="${toPath(l.pts)}" fill="none" stroke="${l.col}" stroke-opacity="0.88" stroke-width="2.1"${l.dashed ? ' stroke-dasharray="4 3"' : ""} stroke-linecap="round" stroke-linejoin="round"/>`);
-  });
-
-  // Mapy hiking track (bold green with subtle halo)
-  if (hikePts.length >= 2) {
-    const hd = toPath(hikePts);
-    parts.push(`<path d="${hd}" fill="none" stroke="var(--surface)" stroke-opacity="0.75" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>`);
-    parts.push(`<path d="${hd}" fill="none" stroke="#15803d" stroke-opacity="0.98" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"/>`);
-  }
-
-  // Helper to clamp label X inside viewBox
-  const labelAnchor = x => x > 185 ? "end" : x < 75 ? "start" : "middle";
-  const labelDx = x => x > 185 ? -5 : x < 75 ? 5 : 0;
-
-  // Base marker
-  const [bx, by] = proj([bInfo.lat, bInfo.lon]);
-  const baseIcon = baseKey === "karlsruhe" ? "❤️ KA" : "🏠 JG";
-  parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="3.6" fill="${baseKey === "karlsruhe" ? "#e11d48" : "#0b6aa2"}" stroke="var(--surface)" stroke-width="1.4"/>`);
-  parts.push(`<text x="${(bx + labelDx(bx)).toFixed(1)}" y="${Math.max(11, Math.min(104, by - 5)).toFixed(1)}" text-anchor="${labelAnchor(bx)}" font-size="8.5" font-weight="700" fill="var(--text)">${baseIcon}</text>`);
-
-  // StartStop marker (green)
-  let sx = -99, sy = -99;
-  if (startPt) {
-    [sx, sy] = proj(startPt);
-    const sLbl = shortStopLabel(ss?.name || tourTitle(t), 18);
-    parts.push(`<circle cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="3.8" fill="#15803d" stroke="var(--surface)" stroke-width="1.4"/>`);
-    const syText = Math.abs(sy - by) < 14 && Math.abs(sx - bx) < 40 ? Math.min(104, sy + 12) : Math.max(11, Math.min(104, sy - 5));
-    parts.push(`<text x="${(sx + labelDx(sx)).toFixed(1)}" y="${syText.toFixed(1)}" text-anchor="${labelAnchor(sx)}" font-size="8.5" font-weight="700" fill="var(--text)">${esc(sLbl)}</text>`);
-  }
-
-  // EndStop marker (red) if distinct from startPt
-  if (endPt) {
-    const [ex, ey] = proj(endPt);
-    const distPx = Math.hypot(ex - sx, ey - sy);
-    if (distPx > 7) {
-      parts.push(`<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="3.6" fill="#dc2626" stroke="var(--surface)" stroke-width="1.4"/>`);
-      if (distPx > 26 && es?.name && es.name !== ss?.name) {
-        const eLbl = shortStopLabel(es.name, 16);
-        parts.push(`<text x="${(ex + labelDx(ex)).toFixed(1)}" y="${Math.max(11, Math.min(104, ey + 11)).toFixed(1)}" text-anchor="${labelAnchor(ex)}" font-size="8" font-weight="600" fill="var(--text-2)">${esc(eLbl)}</text>`);
-      }
-    }
-  }
-
-  return `<svg class="card-minimap" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(tourTitle(t))}">${parts.join("")}</svg>`;
 }
 
 /* ---------- List View ---------- */
@@ -1965,7 +2142,7 @@ function cardHTML(t) {
   if (h.hasGpx && h.distKm) {
     const km = Number(h.distKm).toFixed(1).replace(".", ",");
     const hm = Math.round(Number(h.elevGainM || 0));
-    chips.push(`<span class="chip ok">🥾 ${km} km · ${hm} hm (${hm} m ↗)</span>`);
+    chips.push(`<span class="chip ok">🥾 ${km} km · ↗ ${hm} hm</span>`);
   }
   if (t.tag === "google_maps") {
     chips.push(`<span class="chip">📍 Google Maps</span>`);
@@ -1982,13 +2159,25 @@ function cardHTML(t) {
 
   return `<article class="card tour-card" data-tour-id="${esc(t.id)}" data-id="${esc(t.id)}" tabindex="0">
     <div class="card-thumb-wrap">
-      <img class="card-thumb" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy">
+      <img class="card-thumb" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="640" height="360">
       <span class="card-thumb-badge">${esc(loopBadge)}</span>
     </div>
     <h3>${esc(tourTitle(t))}</h3>
     <p class="sub">${esc(tourSub(t))}</p>
     <div class="chips">${chips.join("")}</div>
   </article>`;
+}
+
+function sortKey(t) {
+  const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
+  const h = t.hike || {};
+  switch (state.sort) {
+    case "ride": return fwd.length ? minDiff(fwd[0]?.dep, fwd[fwd.length - 1]?.arr) : 9999;
+    case "stay": return -(fwd.length && rev.length ? minDiff(fwd[fwd.length - 1]?.arr, rev[0]?.dep) : 0);
+    case "km": return -(Number(h.distKm) || 0);
+    case "hm": return -(Number(h.elevGainM) || 0);
+    default: return 0;
+  }
 }
 
 function renderList() {
@@ -1998,6 +2187,14 @@ function renderList() {
     return;
   }
   const tDict = T();
+  if (state.sort) {
+    const keyed = vis.map(t => [sortKey(t), t]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+    $("#list").innerHTML = `<div class="region-group" data-region="sorted">
+      <div class="region-head" style="cursor:default"><span>${esc(tDict.sortedHead(keyed.length))}</span><span class="reg-meta">${esc(tDict.sortOpts[["", "ride", "stay", "km", "hm"].indexOf(state.sort)] || "")}</span></div>
+      <div class="region-cards">${keyed.map(cardHTML).join("")}</div>
+    </div>`;
+    return;
+  }
   const buckets = new Map();
   tDict.regGroups.forEach(([k]) => buckets.set(k, []));
   vis.forEach(t => {
@@ -2056,8 +2253,31 @@ function isoToDDMMYYYY(iso) {
   return m ? `${m[3]}.${m[2]}.${m[1]}` : "24.11.2026";
 }
 
+function isoDate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+/* Deep-link date: the timetable reference day while it is still ahead, otherwise the next matching
+   weekday / Saturday / Sunday from today (links must never search in the past). */
+function linkDateIso(dayKey) {
+  const ref = (DATA.days && DATA.days[dayKey]) || "";
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (ref) {
+    const r = new Date(ref + "T00:00:00");
+    if (!Number.isNaN(r.getTime()) && r >= today) return ref;
+  }
+  const want = dayKey === "sa" ? [6] : dayKey === "so" ? [0] : [1, 2, 3, 4, 5];
+  const d = new Date(today);
+  for (let i = 0; i < 8; i++) {
+    if (want.includes(d.getDay())) return isoDate(d);
+    d.setDate(d.getDate() + 1);
+  }
+  return ref || isoDate(today);
+}
+
 function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
-  const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
+  const dayIso = linkDateIso(dayKey);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
   const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
   const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
@@ -2069,11 +2289,12 @@ function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
   return `https://www.bahn.de/buchung/fahrplan/suche#${frag}`;
 }
 
-const IS_ANDROID = /Android/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
+const NATIVE = (typeof window !== "undefined" && window.SWNative) ? window.SWNative : null;
+const IS_ANDROID = Boolean(NATIVE) || /Android/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
 
+/* HAFAS apps (München Navigator, NVV): query?S=…&Z=…&V1=…&V2=…&date=…&time=… */
 function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM, opts) {
-  const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
-  const dateStr = isoToDDMMYYYY(dayIso);
+  const dateStr = isoToDDMMYYYY(linkDateIso(dayKey));
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
   const fromName = cleanStopName(fromStop, "Jugenheim Bickenbacher Straße");
   const toName = cleanStopName(toStop, "Neustadt (Weinstr) Hbf");
@@ -2090,7 +2311,7 @@ function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM, opt
   }
   path += `&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}`;
   if (IS_ANDROID && pkg) {
-    const fb = encodeURIComponent(buildMvvWebUrl(fromStop, toStop, dayKey, depHHMM));
+    const fb = encodeURIComponent(buildDbUrl(fromStop, toStop, dayKey, depHHMM));
     return `intent://${path}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
   }
   return `${scheme}://${path}`;
@@ -2100,8 +2321,12 @@ function buildMvvAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
   return buildHafasNativeUrl("muenchennavigator", "de.hafas.android.sbm", fromStop, toStop, dayKey, depHHMM, opts);
 }
 
+function buildNvvAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
+  return buildHafasNativeUrl("nvv", "de.hafas.android.nvv", fromStop, toStop, dayKey, depHHMM, opts);
+}
+
 function buildDbAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
+  const dayIso = linkDateIso(dayKey);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
   const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim"));
   const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
@@ -2112,22 +2337,57 @@ function buildDbAppUrl(fromStop, toStop, dayKey, depHHMM) {
     const fb = encodeURIComponent(webUrl);
     return `intent://www.bahn.de/buchung/start?${q}#Intent;scheme=dbnav;package=de.hafas.android.db;S.browser_fallback_url=${fb};end`;
   }
-  return `https://www.bahn.de/buchung/start?${q}`;
+  return webUrl;
 }
 
-function buildVrnAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
-  return buildHafasNativeUrl("hafas", "de.hafas.android.vrn", fromStop, toStop, dayKey, depHHMM, opts);
-}
-
-function buildGeoUrl(stop, fallbackName) {
+function geoParts(stop, fallbackName) {
   const lat = Number(stop?.lat || 49.350000).toFixed(6);
   const lon = Number(stop?.lon || 8.150000).toFixed(6);
   const nm = encodeURIComponent(cleanStopName(stop, fallbackName || "Ziel"));
-  return `geo:${lat},${lon}?q=${lat},${lon}(${nm})`;
+  return {lat, lon, nm, data: `${lat},${lon}?q=${lat},${lon}(${nm})`};
+}
+
+function buildGeoUrl(stop, fallbackName) {
+  return `geo:${geoParts(stop, fallbackName).data}`;
+}
+
+/* myVRN (com.mdv.VRNCompanion) accepts geo: only → trip search from the current position to the destination */
+function buildMyVrnUrl(stop, fallbackName) {
+  const g = geoParts(stop, fallbackName);
+  if (IS_ANDROID) {
+    const fb = encodeURIComponent(`https://www.vrn.de/fahrplanauskunft/`);
+    return `intent:${g.data}#Intent;scheme=geo;package=com.mdv.VRNCompanion;S.browser_fallback_url=${fb};end`;
+  }
+  return `geo:${g.data}`;
+}
+
+/* Mapy (cz.seznam.mapy) opens mapy.com URL-API links directly in the app (verified app links) */
+function buildMapyShowUrl(stop) {
+  const lat = Number(stop?.lat || 49.35).toFixed(6);
+  const lon = Number(stop?.lon || 8.15).toFixed(6);
+  return `https://mapy.com/fnc/v1/showmap?mapset=outdoor&center=${lon},${lat}&zoom=15&marker=true`;
+}
+
+function buildMapyRouteUrl(t) {
+  const pts = hikePolyPts(t);
+  if (pts.length < 2) return "";
+  const cum = [0];
+  for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + haversineM(pts[i - 1], pts[i]));
+  const total = cum[cum.length - 1];
+  const n = Math.min(13, Math.max(1, Math.round(total / 450)));
+  const wps = [];
+  let j = 0;
+  for (let k = 1; k <= n; k++) {
+    const target = (total * k) / (n + 1);
+    while (j < cum.length - 1 && cum[j] < target) j++;
+    wps.push(pts[j]);
+  }
+  const f = p => `${p[1].toFixed(5)},${p[0].toFixed(5)}`;
+  return `https://mapy.com/fnc/v1/route?mapset=outdoor&start=${f(pts[0])}&end=${f(pts[pts.length - 1])}&routeType=foot_hiking&waypoints=${wps.map(f).join(";")}`;
 }
 
 function buildMvvWebUrl(fromStop, toStop, dayKey, depHHMM) {
-  const dayIso = ((DATA.days && DATA.days[dayKey]) || "2026-11-24").replace(/-/g, "");
+  const dayIso = linkDateIso(dayKey).replace(/-/g, "");
   const hm = ((depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30").replace(":", "");
   const p = new URLSearchParams({
     language: state.lang === "en" ? "en" : "de",
@@ -2203,7 +2463,7 @@ function buildGpxXml(t) {
   ).join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="Suedwest-Touren PWA" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx version="1.1" creator="Suedwest-Touren" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>${esc(title)}</name>
     <desc>${esc(sub)} (${esc(state.base)})</desc>
@@ -2221,6 +2481,12 @@ ${trkptsXml}
 function downloadGPX(t) {
   if (!t) return;
   const xml = buildGpxXml(t);
+  if (NATIVE && typeof NATIVE.openGpx === "function") {
+    // Native app: hand the track straight to Mapy via FileProvider (no Download folder)
+    const res = NATIVE.openGpx(`${t.id}.gpx`, xml, tourTitle(t));
+    if (res) toast(String(res));
+    return;
+  }
   const blob = new Blob([xml], {type: "application/gpx+xml;charset=utf-8"});
   const fname = `${t.id}.gpx`;
   const a = document.createElement("a");
@@ -2284,9 +2550,9 @@ function renderSegmentStep(s, idx, allSegs, globalOffset) {
   const stepId = globalOffset + idx;
   const stepFrom = s.from || getBaseInfo(state.base);
   const stepTo = s.to || {name: toName};
-  const stepDbUrl = buildDbUrl(stepFrom, stepTo, state.day, dep);
-  const stepMvvAppUrl = buildMvvAppUrl(stepFrom, stepTo, state.day, dep);
-  const stepGmUrl = buildGmapsUrl(stepFrom, s.to || {lat: 49.35, lon: 8.15}, s.kind === "walk" ? "walking" : "transit");
+  const isRide = s.kind !== "walk" && s.kind !== "hike";
+  const stepDbUrl = isRide ? buildDbUrl(stepFrom, stepTo, state.day, dep) : "";
+  const stepGmUrl = buildGmapsUrl(stepFrom, s.to || {lat: 49.35, lon: 8.15}, isRide ? "transit" : "walking");
 
   return `<div class="st" id="step-${stepId}" data-step="${stepId}" data-i="${stepId}" style="--mc:${bgCol}">
     <div class="st-head">
@@ -2302,21 +2568,130 @@ function renderSegmentStep(s, idx, allSegs, globalOffset) {
     <div class="chips">${transferHtml}${warnsHtml}</div>
     ${interHtml}
     <div class="st-actions">
-      <a class="mini-btn" href="${esc(stepDbUrl)}" target="_blank" rel="noopener">DB Web</a>
-      <a class="mini-btn" href="${esc(stepMvvAppUrl)}">MVV App</a>
-      <a class="mini-btn" href="${esc(stepGmUrl)}" target="_blank" rel="noopener">Maps</a>
+      ${stepDbUrl ? `<a class="mini-btn" href="${esc(stepDbUrl)}" target="_blank" rel="noopener">🚆 DB</a>` : ""}
+      <a class="mini-btn" href="${esc(stepGmUrl)}" target="_blank" rel="noopener">🗺️ Maps</a>
     </div>
   </div>`;
+}
+
+function elevProfileHTML(t) {
+  const h = t.hike || {};
+  const prof = Array.isArray(h.elevProfile) ? h.elevProfile.filter(p => Array.isArray(p) && p.length >= 2 && p[1] != null) : [];
+  if (prof.length < 3) return "";
+  const tDict = T();
+  const W = 340, H = 120, PL = 34, R = 8, TOP = 10, B = 20;
+  const kmMax = Math.max(0.1, Number(prof[prof.length - 1][0]) || Number(h.distKm) || 1);
+  const eles = prof.map(p => Number(p[1]));
+  let eMin = Math.min(...eles), eMax = Math.max(...eles);
+  if (eMax - eMin < 40) { const mid = (eMax + eMin) / 2; eMin = mid - 20; eMax = mid + 20; }
+  const pad = (eMax - eMin) * 0.08;
+  eMin -= pad; eMax += pad;
+  const x = km => PL + (km / kmMax) * (W - PL - R);
+  const y = e => TOP + (1 - (e - eMin) / (eMax - eMin)) * (H - TOP - B);
+  const line = prof.map((p, i) => `${i ? "L" : "M"}${x(Number(p[0])).toFixed(1)},${y(Number(p[1])).toFixed(1)}`).join(" ");
+  const area = `${line} L${x(kmMax).toFixed(1)},${(H - B).toFixed(1)} L${PL},${(H - B).toFixed(1)} Z`;
+  const fmtKm = k => k.toFixed(1).replace(".", state.lang === "en" ? "." : ",");
+  const lo = Math.round(Math.min(...eles)), hi = Math.round(Math.max(...eles));
+  const ticks = [0, kmMax / 2, kmMax].map(k => `<text class="elev-axis" x="${x(k).toFixed(1)}" y="${H - 5}" text-anchor="${k === 0 ? "start" : k === kmMax ? "end" : "middle"}">${fmtKm(k)} km</text>`).join("");
+  return `<div class="box elev-box">
+    <h4>${esc(tDict.elevTitle)} · ${esc(fmtKm(Number(h.distKm) || kmMax))} km · ↗ ${Math.round(Number(h.elevGainM) || 0)} hm · ↘ ${Math.round(Number(h.elevLossM) || 0)} hm</h4>
+    <svg class="elev-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(tDict.elevTitle)}" data-km="${kmMax}" data-l="${PL}" data-r="${R}" data-w="${W}">
+      <line x1="${PL}" y1="${y(hi).toFixed(1)}" x2="${W - R}" y2="${y(hi).toFixed(1)}" stroke="var(--border)" stroke-dasharray="3 3"/>
+      <line x1="${PL}" y1="${y(lo).toFixed(1)}" x2="${W - R}" y2="${y(lo).toFixed(1)}" stroke="var(--border)" stroke-dasharray="3 3"/>
+      <text class="elev-axis" x="${PL - 4}" y="${(y(hi) + 3).toFixed(1)}" text-anchor="end">${hi} m</text>
+      <text class="elev-axis" x="${PL - 4}" y="${(y(lo) + 3).toFixed(1)}" text-anchor="end">${lo} m</text>
+      <path d="${area}" fill="#15803d" fill-opacity="0.18"/>
+      <path d="${line}" fill="none" stroke="#15803d" stroke-width="2.2" stroke-linejoin="round"/>
+      ${ticks}
+      <line class="elev-cursor" x1="0" y1="${TOP}" x2="0" y2="${H - B}" stroke="var(--text-2)" stroke-width="1" visibility="hidden"/>
+      <circle class="elev-dot" r="4.5" cx="0" cy="0" fill="#f59e0b" stroke="var(--surface)" stroke-width="1.5" visibility="hidden"/>
+    </svg>
+    <div class="elev-read" aria-live="polite">${esc(tDict.elevHint)}</div>
+  </div>`;
+}
+
+let elevMarker = null;
+function elevAt(t, km) {
+  const prof = (t.hike && t.hike.elevProfile) || [];
+  if (!prof.length) return null;
+  for (let i = 1; i < prof.length; i++) {
+    const [k0, e0] = prof[i - 1];
+    const [k1, e1] = prof[i];
+    if (km <= k1) {
+      const f = k1 > k0 ? (km - k0) / (k1 - k0) : 0;
+      return e0 + (e1 - e0) * f;
+    }
+  }
+  return prof[prof.length - 1][1];
+}
+
+function hikePointAtFraction(t, frac) {
+  const pts = hikePolyPts(t);
+  if (pts.length < 2) return null;
+  if (!t._cum) {
+    const cum = [0];
+    for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + haversineM(pts[i - 1], pts[i]));
+    t._cum = cum;
+  }
+  const cum = t._cum;
+  const target = cum[cum.length - 1] * Math.max(0, Math.min(1, frac));
+  let i = 1;
+  while (i < cum.length - 1 && cum[i] < target) i++;
+  const seg = cum[i] - cum[i - 1] || 1;
+  const f = (target - cum[i - 1]) / seg;
+  return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f];
+}
+
+function onElevPointer(e) {
+  const svg = e.target.closest && e.target.closest(".elev-svg");
+  const t = BY_ID[state.sel];
+  if (!svg || !t) return;
+  const rect = svg.getBoundingClientRect();
+  const W = Number(svg.dataset.w), PL = Number(svg.dataset.l), R = Number(svg.dataset.r), kmMax = Number(svg.dataset.km);
+  const px = ((e.clientX - rect.left) / rect.width) * W;
+  const km = Math.max(0, Math.min(kmMax, ((px - PL) / (W - PL - R)) * kmMax));
+  const ele = elevAt(t, km);
+  if (ele == null) return;
+  const cx = PL + (km / kmMax) * (W - PL - R);
+  const path = svg.querySelectorAll("path")[1];
+  const ys = svg.querySelector(".elev-cursor");
+  const dot = svg.querySelector(".elev-dot");
+  // project elevation to svg y using the drawn path's bounding box of the axis lines
+  const lines = svg.querySelectorAll("line");
+  const yHi = Number(lines[0].getAttribute("y1")), yLo = Number(lines[1].getAttribute("y1"));
+  const eHi = parseFloat(svg.querySelectorAll("text")[0].textContent), eLo = parseFloat(svg.querySelectorAll("text")[1].textContent);
+  const cy = eHi === eLo ? yLo : yLo + (ele - eLo) * (yHi - yLo) / (eHi - eLo);
+  ys.setAttribute("x1", cx.toFixed(1)); ys.setAttribute("x2", cx.toFixed(1)); ys.setAttribute("visibility", "visible");
+  dot.setAttribute("cx", cx.toFixed(1)); dot.setAttribute("cy", cy.toFixed(1)); dot.setAttribute("visibility", "visible");
+  if (path) path.setAttribute("stroke-width", "2.4");
+  const kmTxt = km.toFixed(2).replace(".", state.lang === "en" ? "." : ",");
+  const read = svg.parentElement.querySelector(".elev-read");
+  if (read) read.textContent = `km ${kmTxt} · ${Math.round(ele)} m ü. NN`;
+  if (t._elevFitFor !== state.sel + state.base) {
+    t._elevFitFor = state.sel + state.base;
+    const hp = hikePolyPts(t);
+    if (hp.length >= 2) map.fitBounds(L.latLngBounds(hp), {padding: [24, 24], maxZoom: 15});
+  }
+  const pt = hikePointAtFraction(t, km / kmMax);
+  if (pt) {
+    if (!elevMarker) {
+      elevMarker = L.circleMarker(pt, {radius: 8, color: "#ffffff", weight: 2.5, fillColor: "#f59e0b", fillOpacity: 1});
+    } else {
+      elevMarker.setLatLng(pt);
+    }
+    if (!singleGroup.hasLayer(elevMarker)) singleGroup.addLayer(elevMarker);
+  }
 }
 
 function renderDetail(t) {
   if (!t) return;
   const tDict = T();
   const bInfo = getBaseInfo(state.base);
-  const {fwd, rev, wins, validRevs, revIdx, lsr, fallback, reason, winIdx} = getSelectedWindow(t, state.base, state.day);
+  const {fwd, rev, wins, validRevs, revIdx, lsr, fallback, reason, winIdx, recIdx, lsrIdx} = getSelectedWindow(t, state.base, state.day);
   const title = tourTitle(t);
   const sub = tourSub(t);
   const h = t.hike || {};
+  const hasTrack = Boolean(h.hasGpx && h.poly5);
   const dep = fwd[0]?.dep || "08:04";
   const arr = rev[rev.length - 1]?.arr || "18:42";
   const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
@@ -2335,14 +2710,18 @@ function renderDetail(t) {
   const endStop = (!isSameAsBase(rawEnd) && cleanStopName(rawEnd, "") !== cleanStopName(destStop, ""))
     ? rawEnd
     : (viasList[1] || destStop);
-  const dbMainUrl = buildDbUrl(bInfo, destStop, state.day, dep);
+  const dbWebUrl = buildDbUrl(bInfo, destStop, state.day, dep);
+  const dbPrimaryUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
   const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
-  const dbAppUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
-  const vrnAppUrl = buildVrnAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
-  const geoAppUrl = buildGeoUrl(destStop, title);
+  const nvvAppUrl = buildNvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
+  const myVrnUrl = buildMyVrnUrl(destStop, title);
+  const naviUrl = buildGeoUrl(destStop, title);
   const mvvWebUrl = buildMvvWebUrl(bInfo, destStop, state.day, dep);
   const gmapsMainUrl = buildGmapsUrl(bInfo, destStop, "transit");
+  const mapyUrl = hasTrack ? buildMapyRouteUrl(t) : buildMapyShowUrl(destStop);
   const loopBadge = isClosedLoopHike(t) ? tDict.loopHikeBadge : tDict.roundTripBadge;
+  const kmStr = Number(h.distKm || 0).toFixed(1).replace(".", ",");
+  const hmUp = Math.round(Number(h.elevGainM || 0));
 
   const metaChips = [
     `<span class="chip strong">🏠 ${esc(bInfo.name)}</span>`,
@@ -2352,19 +2731,21 @@ function renderDetail(t) {
     `<span class="chip">${esc(diffLbl)}</span>`
   ];
   if (h.hasGpx && h.distKm) {
-    const km = Number(h.distKm).toFixed(1).replace(".", ",");
-    const hm = Math.round(Number(h.elevGainM || 0));
-    metaChips.push(`<span class="chip ok">🥾 ${km} km · ${hm} hm (${hm} m ↗) · ${fmtDur(h.walkMin || 180)} ${tDict.hikeLabel}</span>`);
+    metaChips.push(`<span class="chip ok">🥾 ${kmStr} km · ↗ ${hmUp} hm · ${fmtDur(h.walkMin || 180)} ${tDict.hikeLabel}</span>`);
   }
   if (t.tag === "google_maps") {
     metaChips.push(`<span class="chip">📍 Google Maps</span>`);
   }
 
-  const winsHtml = wins.map((w, i) => {
+  const winBtn = (w, i) => {
     const wDep = w[0]?.dep || "08:00";
     const wArr = w[w.length - 1]?.arr || "10:00";
-    return `<button type="button" class="win-btn" data-win="${i}" aria-pressed="${i === winIdx}">${esc(wDep)} → ${esc(wArr)}</button>`;
-  }).join("");
+    return `<button type="button" class="win-btn" data-win="${i}" aria-pressed="${i === winIdx}">${i === recIdx ? '<span class="star">⭐</span>' : ""}${esc(wDep)} → ${esc(wArr)}</button>`;
+  };
+  const otherWins = wins.map((w, i) => [w, i]).filter(([, i]) => i !== recIdx);
+  const winsHtml = `<div class="win-label">${esc(tDict.recommended)}</div>
+      <div class="win-row">${wins[recIdx] ? winBtn(wins[recIdx], recIdx) : ""}</div>
+      ${otherWins.length ? `<div class="win-label">${esc(tDict.otherWindows)}</div><div class="win-row">${otherWins.map(([w, i]) => winBtn(w, i)).join("")}</div>` : ""}`;
 
   const stayPresets = [
     ["", "Auto"],
@@ -2385,7 +2766,8 @@ function renderDetail(t) {
     const rDep = r[0]?.dep || "16:00";
     const rArr = r[r.length - 1]?.arr || "18:00";
     const rStay = minDiff(fwdArr, rDep);
-    return `<button type="button" class="ret-btn" data-ret="${i}" aria-pressed="${i === revIdx}">${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    const isLsr = i === lsrIdx;
+    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}">${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
   }).join("");
 
   const shortStayWarn = (h.hasGpx && h.walkMin && stayMin > 0 && stayMin < Number(h.walkMin))
@@ -2405,30 +2787,43 @@ function renderDetail(t) {
     ? `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name} → 🥾 → ${endStop.name} → ${bInfo.name}`
     : `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name || title} → 🥾 → ${bInfo.name}`;
 
+  const gpxLabel = NATIVE ? tDict.gpxNative : tDict.gpxDownload;
+  const mapyLabel = hasTrack ? tDict.mapyRoute : tDict.mapyDest;
+
   $("#detail").innerHTML = `
     <div class="hero">
-      <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}">
+      <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}" decoding="async">
       ${creditHTML(t)}
       <h2>${esc(title)}</h2>
       <p>${esc(sub)}</p>
       <div class="chips">${metaChips.join("")}</div>
-      <div class="actions">
-        <button type="button" class="act primary" id="gpxBtn" data-a="gpx">${esc(tDict.gpxBtn)}</button>
-        <a class="act" href="${esc(dbMainUrl)}" target="_blank" rel="noopener">${esc(tDict.dbBtn)}</a>
-        <a class="act" href="${esc(mvvAppUrl)}">${esc(tDict.mvvAppBtn)}</a>
-        <a class="act" href="${esc(dbAppUrl)}">${esc(tDict.dbAppBtn)}</a>
-        <a class="act" href="${esc(vrnAppUrl)}">${esc(tDict.vrnAppBtn)}</a>
-        <a class="act" href="${esc(geoAppUrl)}">${esc(tDict.geoAppBtn)}</a>
-        <a class="act" href="${esc(mvvWebUrl)}" target="_blank" rel="noopener">${esc(tDict.mvvWebBtn)}</a>
-        <a class="act" href="${esc(gmapsMainUrl)}" target="_blank" rel="noopener">${esc(tDict.gmapsBtn)}</a>
+      <div class="actions primary-actions">
+        <button type="button" class="act${hasTrack && NATIVE ? " primary" : ""}" id="gpxBtn" data-a="gpx">${esc(gpxLabel)}</button>
+        <a class="act${hasTrack ? " primary" : ""}" href="${esc(mapyUrl)}" target="_blank" rel="noopener" data-app="mapy">${esc(mapyLabel)}</a>
+        <a class="act${hasTrack ? "" : " primary"}" href="${esc(dbPrimaryUrl)}" target="_blank" rel="noopener" data-app="db">${esc(tDict.dbPrimary)}</a>
       </div>
+      <details class="more-apps">
+        <summary>${esc(tDict.moreApps)}</summary>
+        <div class="actions">
+          <a class="act" href="${esc(mvvAppUrl)}" data-app="mvv">${esc(tDict.mvvAppBtn)}</a>
+          <a class="act" href="${esc(nvvAppUrl)}" data-app="nvv">${esc(tDict.nvvAppBtn)}</a>
+          <a class="act" href="${esc(myVrnUrl)}" data-app="myvrn">${esc(tDict.myVrnBtn)}</a>
+          <a class="act" href="${esc(naviUrl)}" data-app="geo">${esc(tDict.naviBtn)}</a>
+          <a class="act" href="${esc(dbWebUrl)}" target="_blank" rel="noopener">${esc(tDict.dbBtn)}</a>
+          <a class="act" href="${esc(mvvWebUrl)}" target="_blank" rel="noopener">${esc(tDict.mvvWebBtn)}</a>
+          <a class="act" href="${esc(gmapsMainUrl)}" target="_blank" rel="noopener">${esc(tDict.gmapsBtn)}</a>
+        </div>
+        <p class="app-hint">${esc(tDict.appHint)}</p>
+      </details>
     </div>
+
+    ${elevProfileHTML(t)}
 
     ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
 
     <div class="box">
       <h4>${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
-      <div class="win-row">${winsHtml}</div>
+      ${winsHtml}
       <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
       <div class="stay-row">${stayBtnsHtml}</div>
       ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
@@ -2446,7 +2841,7 @@ function renderDetail(t) {
     <div class="box">
       <h4>🥾 ${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</h4>
       <p style="margin:0 0 4px;font-size:12.5px;color:var(--text-2)">
-        ${h.hasGpx ? `${Number(h.distKm).toFixed(1).replace(".", ",")} km · ${Math.round(h.elevGainM || 0)} hm (${tDict.hikeLabel} ${fmtDur(h.walkMin || 180)} + ≥30 Min. Puffer)` : `${tDict.walkLabel} / Aufenthalt vor Ort: ${fmtDur(stayMin)}`}
+        ${h.hasGpx ? `${kmStr} km · ${hmUp} hm (${tDict.hikeLabel} ${fmtDur(h.walkMin || 180)} + ≥30 Min. Puffer)` : `${tDict.walkLabel} / Aufenthalt vor Ort: ${fmtDur(stayMin)}`}
       </p>
       <p style="margin:0;font-size:12px;color:var(--text-2)">🔄 ${esc(loopFlowTxt)}</p>
     </div>
@@ -2462,6 +2857,9 @@ function renderDetail(t) {
     </div>` : ""}
   `;
 }
+
+$("#detail").addEventListener("pointermove", onElevPointer);
+$("#detail").addEventListener("pointerdown", onElevPointer);
 
 $("#detail").addEventListener("click", e => {
   const t = BY_ID[state.sel];
@@ -2502,31 +2900,71 @@ $("#detail").addEventListener("click", e => {
   if (st) focusStep(parseInt(st.dataset.i, 10) || 0);
 });
 
-/* ---------- Navigation ---------- */
-function openTour(id) {
+/* ---------- Navigation (with history: Android back gesture closes the detail view) ---------- */
+let suppressPopUntil = 0;
+
+function openTour(id, opts) {
   const t = BY_ID[id];
   if (!t) return;
   state.sel = id;
-  state.winIdx = 0;
+  state.winIdx = null;
   state.revIdx = null;
   document.body.classList.add("detail-open");
   renderHeader();
   renderDetail(t);
   drawSingle(t);
+  setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
   fitCurrent();
   window.scrollTo({top: 0});
+  if (!(opts && opts.fromPop)) {
+    try {
+      const st = {tour: id};
+      const url = "#tour=" + encodeURIComponent(id);
+      if (history.state && history.state.tour) history.replaceState(st, "", url);
+      else history.pushState(st, "", url);
+    } catch (e) {}
+  }
 }
 
-function closeTour() {
+function closeTour(opts) {
   state.sel = null;
+  state.winIdx = null;
+  state.revIdx = null;
   document.body.classList.remove("detail-open");
   renderHeader();
   renderList();
   drawOverview();
+  setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
   fitCurrent();
+  if (!(opts && opts.fromPop)) {
+    try {
+      if (history.state && history.state.tour) {
+        suppressPopUntil = Date.now() + 800;
+        history.back();
+      }
+    } catch (e) {}
+  }
 }
 
-$("#backBtn").addEventListener("click", closeTour);
+window.addEventListener("popstate", e => {
+  if (Date.now() < suppressPopUntil) { suppressPopUntil = 0; return; }
+  const st = e.state;
+  if (st && st.tour && BY_ID[st.tour]) openTour(st.tour, {fromPop: true});
+  else if (state.sel) closeTour({fromPop: true});
+});
+
+$("#backBtn").addEventListener("click", () => closeTour());
+
+/* Called by the native Android app on the system back gesture; returns true if the app handled it. */
+window.swHandleBack = function () {
+  if ($("#homeModal").classList.contains("show")) { closeHomeModal(); return true; }
+  const mw = $("#mapWrap");
+  if (mw.classList.contains("full")) { mw.classList.remove("full"); setTimeout(() => map.invalidateSize(), 150); return true; }
+  if ($("#layerMenu").classList.contains("show")) { $("#layerMenu").classList.remove("show"); return true; }
+  if (state.sel) { closeTour(); return true; }
+  if (state.filtersOpen) { state.filtersOpen = false; syncFilterPanel(); return true; }
+  return false;
+};
 
 /* ---------- Base, Language, Weekday & Filter Events ---------- */
 function setBase(newBase, customHome) {
@@ -2538,7 +2976,7 @@ function setBase(newBase, customHome) {
     HOME = {...BASE_DEFAULTS[state.base]};
   }
   store.set("home", HOME);
-  state.winIdx = 0;
+  state.winIdx = null;
   state.revIdx = null;
   renderHeader();
   if (state.sel && BY_ID[state.sel]) {
@@ -2574,7 +3012,7 @@ $("#daySeg").addEventListener("click", e => {
   if (!b) return;
   state.day = b.dataset.d;
   store.set("day", state.day);
-  state.winIdx = 0;
+  state.winIdx = null;
   state.revIdx = null;
   renderDays();
   if (state.sel && BY_ID[state.sel]) {
@@ -2596,7 +3034,19 @@ $("#pills").addEventListener("click", e => {
     state.loopOnly = false;
     state.eveningSunOnly = false;
     state.feasibleTime = "";
+    state.maxRide = null;
+    store.set("maxRide", null);
     $("#feasibleTime").value = "";
+  } else if (f === "feasible") {
+    if (state.feasibleTime) {
+      state.feasibleTime = "";
+    } else {
+      const now = new Date();
+      let m = Math.ceil((now.getHours() * 60 + now.getMinutes()) / 15) * 15;
+      if (m < 5 * 60 || m > 22 * 60) m = 12 * 60;
+      state.feasibleTime = `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+      state.filtersOpen = true;
+    }
   } else if (f === "my_tours" || f === "curated") {
     state.sourceFilter = f;
   } else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(f)) {
@@ -2617,6 +3067,7 @@ $("#staySelect").addEventListener("change", e => {
   state.revIdx = null;
   state.stayTargetMin = v === "" ? null : (v === "max" ? "max" : parseInt(v, 10));
   store.set("stayTargetMin", state.stayTargetMin);
+  syncFilterPanel();
   if (state.sel && BY_ID[state.sel]) {
     renderDetail(BY_ID[state.sel]);
     drawSingle(BY_ID[state.sel]);
@@ -2626,23 +3077,30 @@ $("#staySelect").addEventListener("change", e => {
   }
 });
 
-$("#feasiblePill").addEventListener("click", () => {
-  const inp = $("#feasibleTime");
-  if (state.feasibleTime) {
-    state.feasibleTime = "";
-    inp.value = "";
-  } else {
-    state.feasibleTime = inp.value || "12:00";
-    inp.value = state.feasibleTime;
-  }
-  renderHeader();
+$("#filterToggle").addEventListener("click", () => {
+  state.filtersOpen = !state.filtersOpen;
+  syncFilterPanel();
+});
+
+$("#maxRideSelect").addEventListener("change", e => {
+  const v = parseInt(e.target.value, 10);
+  state.maxRide = Number.isFinite(v) && v > 0 ? v : null;
+  store.set("maxRide", state.maxRide);
   renderPills();
   renderList();
   drawOverview();
 });
 
+$("#sortSelect").addEventListener("change", e => {
+  state.sort = e.target.value || "";
+  store.set("sort", state.sort);
+  renderPills();
+  renderList();
+});
+
 function onFeasibleTimeChange(e) {
   state.feasibleTime = (e.target.value || "").trim();
+  if (state.feasibleTime) state.filtersOpen = true;
   renderHeader();
   renderPills();
   renderList();
@@ -2798,6 +3256,7 @@ if (location.search.includes("base=karlsruhe")) {
   state.base = "karlsruhe";
   HOME = {...BASE_DEFAULTS.karlsruhe};
 }
+if (window.matchMedia && window.matchMedia("(min-width: 960px)").matches) state.filtersOpen = true;
 applyTheme();
 setLayer(state.layer);
 renderHeader();
@@ -2806,6 +3265,29 @@ renderPills();
 renderList();
 drawOverview();
 setTimeout(fitCurrent, 50);
+(function bootDeepLink() {
+  const m = location.hash.match(/^#tour=([^&]+)/);
+  if (!m) return;
+  const id = decodeURIComponent(m[1]);
+  if (!BY_ID[id]) return;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  openTour(id);
+})();
+if (window.matchMedia) {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const onScheme = () => { if (!state.theme) applyTheme(); };
+  if (mq.addEventListener) mq.addEventListener("change", onScheme);
+}
+if (NATIVE && typeof NATIVE.contentReady === "function") {
+  requestAnimationFrame(() => { try { NATIVE.contentReady(performance.now()); } catch (e) {} });
+}
+if (!NATIVE && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  let hadController = Boolean(navigator.serviceWorker.controller);
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController) { hadController = true; return; }
+    toast(T().updateReady, {label: T().reload, action: () => location.reload(), ms: 12000});
+  });
+}
 </script>
 </body>
 </html>

@@ -141,6 +141,9 @@ def slim_data_dict(D: dict[str, Any], max_alts: int = 6, max_alts_rev: int = 8) 
     old_polys: list[str] = D.get("polys") or []
     poly_str_to_new_idx: dict[str, int] = {}
     new_polys: list[str] = []
+    # `fwd`/`rev` are the same segment objects as one entry of `alts_fwd`/`alts_rev` (see dedupe_and_sort_alts),
+    # so a leg must be re-indexed exactly once – otherwise its new index is mis-read as an old one.
+    remapped_legs: set[int] = set()
 
     def compact_stop(st: Any) -> Any:
         if not isinstance(st, dict):
@@ -178,6 +181,9 @@ def slim_data_dict(D: dict[str, Any], max_alts: int = 6, max_alts_rev: int = 8) 
                 else:
                     s.pop("intermediateStops", None)
             for leg in s.get("legs") or []:
+                if id(leg) in remapped_legs:
+                    continue
+                remapped_legs.add(id(leg))
                 old_idx = leg.get("p")
                 leg.pop("p5", None)
                 if isinstance(old_idx, int) and 0 <= old_idx < len(old_polys):

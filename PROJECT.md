@@ -183,3 +183,12 @@ Every feature from Survey (R1–R5) assigned to a milestone (zero unassigned fea
 - `python3 build_pwa.py template.html data/data.json /home/oliver/suedwest_touren.html`
 - Emits `/home/oliver/suedwest_touren/index.html`, `/home/oliver/suedwest_touren/sw.js`, and `/home/oliver/suedwest_touren.html`.
 - `sw.js` caches app shell + map tiles up to `MAX_TILES = 3000`.
+
+## v4 (2026-11-24): Bundle-Diät, UI-Überarbeitung, native Android-App
+
+- **Daten**: `planer/appdata.py` interniert Halte/Segmente/Verbindungen (`DATA.stops/segs/its`, Pläne als Indexlisten mit `fi`/`ri` = Planer-Empfehlung). `index.html` 69 MB → 4,7 MB, Standalone 66 MB → 10,1 MB. `data/data.json` bleibt unverändert (Tests lesen es).
+- **Polylinien-Fix**: `planer/slim.py` hat Legs, die `fwd`/`rev` und einem `alts_*`-Eintrag gemeinsam gehören, doppelt umindiziert (84–92 % falsche Strecken bei den empfohlenen Verbindungen). Root-Cause behoben; `appdata.PolyFixer` repariert die Verweise der bestehenden `data.json` beim Build (0 falsche Segmente danach).
+- **Bilder**: `img/w/<id>.webp` (720×405) für PWA/APK, 560×315 inline für die Standalone-Datei; Encodes gecacht (`cache/webp_inline/`).
+- **Service Worker**: Cache-first + Stale-while-revalidate für die Shell (nur `./`, kein doppeltes `index.html`), alle Fotos vorab gecacht, Kacheln nur als CORS-Antworten (keine opaque-Quota), löscht nur eigene `suedwest-*`-Caches (Origin wird mit der Fjord-PWA geteilt).
+- **UI**: `color-scheme: only light` (Chrome-Auto-Dark), empfohlene Verbindung als Standard, „Max“ = letzte sichere Rückfahrt, 360°-Ringe ≠ Rundwanderung, Deep-Link-Datum rollt auf den nächsten passenden Tag, Filter-Panel (Machbar ab / Aufenthalt / Max. Anfahrt / Sortierung), 3 Primär-Aktionen + „Weitere Apps“ (MVV, NVV, myVRN, Navi, DB/MVV Web, Google Maps), Mapy-Direktlinks (`mapy.com/fnc/v1/route|showmap`), interaktives Höhenprofil, History/Zurück-Geste, Touch-Targets ≥ 40 px.
+- **Android**: `android_app/` (siehe `android_app/README.md`); `build_pwa.py` schreibt die App-Assets nach `android_app/app/src/main/assets/www/`.

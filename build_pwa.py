@@ -203,7 +203,55 @@ def _synth_data_from_catalog(cat_path):
     }
 
 
+IMG_PWA = (720, 405, 58)        # external WebP for PWA + Android app
+IMG_INLINE = (560, 315, 50)     # inline WebP for the single-file standalone HTML
+ANDROID_WWW = os.path.join(HERE, "android_app", "app", "src", "main", "assets", "www")
+
+
+def _webp_bytes(src, size, quality, cache_path=None):
+    """WebP for src; re-encoded only when the JPEG is newer than cache_path."""
+    from PIL import Image
+    import io
+
+    if cache_path and os.path.exists(cache_path) and os.path.getmtime(cache_path) >= os.path.getmtime(src):
+        return open(cache_path, "rb").read()
+    data = _encode_webp(src, size, quality)
+    if cache_path:
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        with open(cache_path, "wb") as f:
+            f.write(data)
+    return data
+
+
+def _encode_webp(src, size, quality):
+    from PIL import Image
+    import io
+
+    with Image.open(src) as im:
+        im = im.convert("RGB").resize(size[:2], Image.LANCZOS)
+        buf = io.BytesIO()
+        im.save(buf, format="WEBP", quality=quality, method=6)
+        return buf.getvalue()
+
+
+def _write_if_changed(path, data):
+    if os.path.exists(path) and open(path, "rb").read() == data:
+        return False
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "wb") as f:
+        f.write(data)
+    return True
+
+
+def _page(tpl, css, js, payload):
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return tpl.replace("/*LEAFLET_CSS*/", css).replace("/*LEAFLET_JS*/", js).replace("/*DATA*/", data)
+
+
 def main():
+    sys.path.insert(0, HERE)
+    from planer.appdata import compact
+
     tpl_path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "template.html")
     data_path = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "data", "data.json")
     standalone = sys.argv[3] if len(sys.argv) > 3 else "/home/oliver/suedwest_touren.html"
@@ -220,32 +268,35 @@ def main():
         print(f"[build_pwa] {data_path} not ready yet; using fallback from {cat_full}")
         D = _synth_data_from_catalog(cat_full)
 
-    import io
-    from PIL import Image
-
     credits_path = os.path.join(HERE, "img_src", "credits.json")
     credits = json.load(open(credits_path, encoding="utf-8")) if os.path.exists(credits_path) else {}
+
+    # Images: external WebP files (PWA + Android) and small inline WebP (standalone single file)
+    ext_imgs, inline_imgs, webp_files = {}, {}, []
     for t in D.get("tours", []):
-        f = os.path.join(HERE, "img", t["id"] + ".jpg")
-        if os.path.exists(f):
-            try:
-                with Image.open(f) as im:
-                    buf = io.BytesIO()
-                    im.convert("RGB").save(buf, format="JPEG", quality=48, optimize=True)
-                    raw_bytes = buf.getvalue()
-            except Exception:
-                raw_bytes = open(f, "rb").read()
-            t["img"] = "data:image/jpeg;base64," + base64.b64encode(raw_bytes).decode()
-            c = credits.get(t["id"], {})
-            t["imgCredit"] = {k: c.get(k, "") for k in ("file", "artist", "license", "licenseUrl", "page")}
+        src = os.path.join(HERE, "img", t["id"] + ".jpg")
+        if not os.path.exists(src):
+            continue
+        rel = f"img/w/{t['id']}.webp"
+        _webp_bytes(src, IMG_PWA, IMG_PWA[2], cache_path=os.path.join(HERE, rel))
+        ext_imgs[t["id"]] = rel
+        webp_files.append(rel)
+        small = _webp_bytes(src, IMG_INLINE, IMG_INLINE[2], cache_path=os.path.join(HERE, "cache", "webp_inline", f"{t['id']}.webp"))
+        inline_imgs[t["id"]] = "data:image/webp;base64," + base64.b64encode(small).decode()
 
-    data = json.dumps(D, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    page = tpl.replace("/*LEAFLET_CSS*/", css).replace("/*LEAFLET_JS*/", js).replace("/*DATA*/", data)
+    base_payload = compact(D, None, credits, verbose=True)
 
+    def with_images(imgs):
+        return dict(base_payload, tours=[dict(t, img=imgs[t["id"]]) if t["id"] in imgs else t for t in base_payload["tours"]])
+
+    # Standalone single-file HTML (works from file://, no SW/manifest)
     if standalone:
+        page = _page(tpl, css, js, with_images(inline_imgs))
         open(standalone, "w", encoding="utf-8").write(page)
         print(standalone, os.path.getsize(standalone), "bytes")
 
+    # PWA (GitHub Pages)
+    page = _page(tpl, css, js, with_images(ext_imgs))
     head = (
         '<link rel="manifest" href="manifest.json">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n</head>'
@@ -260,9 +311,26 @@ def main():
     open(index_path, "w", encoding="utf-8").write(pwa)
 
     version = "suedwest-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    sw = open(os.path.join(HERE, "sw.template.js"), encoding="utf-8").read().replace("__VERSION__", version)
+    sw = (
+        open(os.path.join(HERE, "sw.template.js"), encoding="utf-8").read()
+        .replace("__VERSION__", version)
+        .replace("__IMAGES__", json.dumps(sorted(webp_files)))
+    )
     open(os.path.join(HERE, "sw.js"), "w", encoding="utf-8").write(sw)
-    print("index.html", os.path.getsize(index_path), "bytes,", version)
+    print("index.html", os.path.getsize(index_path), "bytes,", version, len(webp_files), "webp")
+
+    # Android app assets (local WebView, no SW/manifest; native bridge provides intents)
+    if os.path.isdir(os.path.join(HERE, "android_app")):
+        os.makedirs(os.path.join(ANDROID_WWW, "img"), exist_ok=True)
+        app_imgs = {tid: f"img/{tid}.webp" for tid in ext_imgs}
+        open(os.path.join(ANDROID_WWW, "index.html"), "w", encoding="utf-8").write(_page(tpl, css, js, with_images(app_imgs)))
+        for tid, rel in ext_imgs.items():
+            _write_if_changed(os.path.join(ANDROID_WWW, "img", f"{tid}.webp"), open(os.path.join(HERE, rel), "rb").read())
+        keep = {f"{tid}.webp" for tid in ext_imgs}
+        for f in os.listdir(os.path.join(ANDROID_WWW, "img")):
+            if f not in keep:
+                os.remove(os.path.join(ANDROID_WWW, "img", f))
+        print("android assets", os.path.getsize(os.path.join(ANDROID_WWW, "index.html")), "bytes")
 
 
 if __name__ == "__main__":
