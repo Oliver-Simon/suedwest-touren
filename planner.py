@@ -69,6 +69,7 @@ CATALOG_PATH = DATA_DIR / "tours_catalog_full.json"
 OUT_DATA_PATH = DATA_DIR / "data.json"
 OUT_NOTES_PATH = DATA_DIR / "routing_notes.json"
 CACHE_DIR = ROOT_DIR / "cache" / "routing"
+STOPS_LOOKUP_CACHE_DIR = ROOT_DIR / "cache" / "stops_lookup"
 
 USER_AGENT = "suedwest-touren-planner/1.0 (oliver.simon@stud.h-da.de)"
 BERLIN_TZ = ZoneInfo("Europe/Berlin")
@@ -442,6 +443,79 @@ class DualEngineRouter:
             "remoteId": remote_id,
             "platform": platform or "1",
         }
+
+    def find_nearest_stop(
+        self,
+        lat: float,
+        lon: float,
+        max_radius_m: float = 2500.0,
+    ) -> tuple[dict[str, Any], int] | None:
+        """Find nearest real ÖPNV stop within max_radius_m via Transitous /api/v1/map/stops (cached)."""
+        STOPS_LOOKUP_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        key = f"transitous_r2500_{round(lat, 4):.4f}_{round(lon, 4):.4f}.json"
+        cpath = STOPS_LOOKUP_CACHE_DIR / key
+        stops_data: list[dict[str, Any]] = []
+        if cpath.exists():
+            try:
+                stops_data = json.loads(cpath.read_text(encoding="utf-8"))
+            except Exception:
+                stops_data = []
+        else:
+            self._rate_limit_transitous()
+            try:
+                r = self.transitous_sess.get(
+                    "https://api.transitous.org/api/v1/map/stops",
+                    params={
+                        "min": f"{lat - 0.025:.6f},{lon - 0.036:.6f}",
+                        "max": f"{lat + 0.025:.6f},{lon + 0.036:.6f}",
+                    },
+                    timeout=25,
+                )
+                r.raise_for_status()
+                raw = r.json()
+                stops_data = raw if isinstance(raw, list) else []
+            except Exception:
+                stops_data = []
+            try:
+                fd, tmp = tempfile.mkstemp(dir=str(STOPS_LOOKUP_CACHE_DIR), suffix=".tmp")
+                with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                    json.dump(stops_data, fh, ensure_ascii=False)
+                os.replace(tmp, cpath)
+            except Exception:
+                pass
+
+        best: tuple[float, dict[str, Any]] | None = None
+        for s in stops_data:
+            sid = str(s.get("stopId") or s.get("id") or "")
+            if not sid or sid.startswith("de-amarillo-"):
+                continue
+            slat, slon = s.get("lat"), s.get("lon")
+            if slat is None or slon is None:
+                continue
+            m_dhid = DHID_RE.search(sid)
+            if not m_dhid:
+                continue
+            if m_dhid.group(1) in {"de:07337:5512", "de:07337:4692"}:
+                continue
+            dist = haversine_m(lat, lon, float(slat), float(slon))
+            if dist > max_radius_m:
+                continue
+            if best is None or dist < best[0]:
+                best = (
+                    dist,
+                    {
+                        "name": str(s.get("name") or "").strip(),
+                        "lat": round(float(slat), 6),
+                        "lon": round(float(slon), 6),
+                        "dhid": m_dhid.group(1),
+                        "transitousId": sid,
+                        "ibnr": None,
+                        "remoteId": None,
+                    },
+                )
+        if best is None:
+            return None
+        return best[1], int(round(best[0]))
 
     def query_transitous_raw(
         self,
@@ -996,10 +1070,12 @@ def build_plan_for_slot(
     tour: dict[str, Any],
     out_itins: list[list[dict[str, Any]]],
     ret_itins: list[list[dict[str, Any]]],
+    approach_info: dict[str, int] | None = None,
 ) -> tuple[dict[str, Any], str | None]:
     """Match outbound and return itineraries satisfying hike synchronization & >= 3 windows."""
     wmin = int((tour.get("hike") or {}).get("walkMin") or 0)
-    min_stay = max(wmin + 30, 270 if wmin >= 240 else 0) if wmin > 0 else 45
+    approach_min = int((approach_info or {}).get("approachMin") or 0)
+    min_stay = max(wmin + approach_min + 30, 270 if wmin >= 240 else 0) if wmin > 0 else 45
 
     safe_returns = [r for r in ret_itins if arrival_before_0230(r)]
     if not out_itins or not safe_returns:
@@ -1069,7 +1145,42 @@ def build_plan_for_slot(
 
     if wmin > 0:
         main_fwd[-1]["minStay"] = min_stay
-        main_fwd[-1]["stayNote"] = f"Wanderung ca. {wmin} Min. + 30 Min. Puffer (Aufenthalt {best_ret_st} Min.)"
+        if approach_min > 0:
+            main_fwd[-1]["stayNote"] = (
+                f"Wanderung ca. {wmin} Min. + {approach_min} Min. Zustieg + 30 Min. Puffer "
+                f"(Aufenthalt {best_ret_st} Min.)"
+            )
+        else:
+            main_fwd[-1]["stayNote"] = f"Wanderung ca. {wmin} Min. + 30 Min. Puffer (Aufenthalt {best_ret_st} Min.)"
+
+    # Attach approach-walk warnings if tour required extended >800m stop linking
+    if approach_info:
+        w_start = int(approach_info.get("walkToStartM") or 0)
+        w_end = int(approach_info.get("walkFromEndM") or 0)
+        w_start_min = max(1, int(round(w_start / 66.67))) if w_start > 0 else 0
+        w_end_min = max(1, int(round(w_end / 66.67))) if w_end > 0 else 0
+
+        def _add_warn(seg: dict[str, Any], wobj: dict[str, str]) -> None:
+            ws = list(seg.get("warnings") or [])
+            if not any(x.get("type") == wobj["type"] and x.get("text") == wobj["text"] for x in ws):
+                ws.append(dict(wobj))
+            seg["warnings"] = ws
+
+        if w_start > 800:
+            warn_s = {
+                "type": "approach",
+                "text": f"Zustieg ab Haltestelle ca. {w_start} m ({w_start_min} Min. Fußweg) zum Wanderstart.",
+            }
+            _add_warn(main_fwd[-1], warn_s)
+        if w_end > 800:
+            warn_e = {
+                "type": "approach",
+                "text": f"Zustieg ab Haltestelle ca. {w_end} m ({w_end_min} Min. Fußweg) vom Wanderende zur Haltestelle.",
+            }
+            _add_warn(main_rev[0], warn_e)
+            _add_warn(lsr_segs[0], warn_e)
+            if w_start <= 800:
+                _add_warn(main_fwd[-1], warn_e)
 
     # Build alts_fwd (up to 8 diverse windows, sorted and deduplicated)
     all_valid_f = [copy.deepcopy(item[0]) for item in valid_outs]
@@ -1143,6 +1254,58 @@ def main() -> int:
                     stop_meta_by_dhid[d] = st
 
     router = DualEngineRouter(CACHE_DIR, stop_meta_by_dhid)
+
+    # 0. Auto-link previously unlinked Mapy GPX tours up to 2,500 m radius (without touching M1 catalog)
+    tour_approach_map: dict[str, dict[str, int]] = {}
+    auto_linked_cnt = 0
+    for t in tours:
+        tr = t["transit"]
+        if not tr.get("unlinkedReason"):
+            continue
+        hike = t.get("hike") or {}
+        sc = hike.get("startCoord")
+        ec = hike.get("endCoord")
+        if not sc or not ec:
+            continue
+
+        ss = tr.get("startStop")
+        es = tr.get("endStop")
+        w_start = tr.get("walkToStartM")
+        w_end = tr.get("walkFromEndM")
+
+        SEASONAL_ONLY_DHIDS = {"de:07337:5512", "de:07337:4692"}  # Modenbacher Hof, Edenkoben Waldhaus (summer-only)
+        if ss is None or dhid_base(ss) in SEASONAL_ONLY_DHIDS:
+            found_s = router.find_nearest_stop(float(sc[0]), float(sc[1]), max_radius_m=2500.0)
+            if found_s:
+                ss, w_start = found_s
+        if es is None or dhid_base(es) in SEASONAL_ONLY_DHIDS:
+            found_e = router.find_nearest_stop(float(ec[0]), float(ec[1]), max_radius_m=2500.0)
+            if found_e:
+                es, w_end = found_e
+
+        if ss is not None and es is not None:
+            tr["startStop"] = ss
+            tr["endStop"] = es
+            tr["walkToStartM"] = int(w_start or 0)
+            tr["walkFromEndM"] = int(w_end or 0)
+            tr["originalUnlinkedReason"] = tr["unlinkedReason"]
+            tr["unlinkedReason"] = None
+            tr["approachLinked"] = True
+            approach_min = int(round((tr["walkToStartM"] + tr["walkFromEndM"]) / 66.67))
+            tr["approachMin"] = approach_min
+            tour_approach_map[t["id"]] = {
+                "walkToStartM": tr["walkToStartM"],
+                "walkFromEndM": tr["walkFromEndM"],
+                "approachMin": approach_min,
+            }
+            for st in (ss, es):
+                d = dhid_base(st)
+                if d and d not in stop_meta_by_dhid:
+                    stop_meta_by_dhid[d] = st
+            auto_linked_cnt += 1
+
+    if auto_linked_cnt:
+        print(f"planner.py: Auto-linked {auto_linked_cnt} previously unlinked Mapy tours within 2,500 m", flush=True)
 
     # 1. Gather all unique (base_key, stop_dhid, day_key, is_outbound) tasks
     od_tasks: dict[tuple[str, str, str, bool], tuple[dict[str, Any], dict[str, Any], str, bool]] = {}
@@ -1230,13 +1393,14 @@ def main() -> int:
         tour_durations: list[int] = []
         tour_slot_notes: list[tuple[str, str, str]] = []
 
+        approach_info = tour_approach_map.get(t_out["id"])
         for bk in ("jugenheim", "karlsruhe"):
             sA, sB = resolve_tour_endpoints(t_out, bk)
             dA, dB = dhid_base(sA), dhid_base(sB)
             for dk in ("wd", "sa", "so"):
                 out_itins = od_results.get((bk, dA, dk, True)) or []
                 ret_itins = od_results.get((bk, dB, dk, False)) or []
-                plan, note_rsn = build_plan_for_slot(t_out, out_itins, ret_itins)
+                plan, note_rsn = build_plan_for_slot(t_out, out_itins, ret_itins, approach_info=approach_info)
                 if plan.get("fallback"):
                     rsn = note_rsn or "Keine gültige Deutschlandticket-Verbindung an diesem Wochentag verfügbar."
                     plan["reason"] = rsn

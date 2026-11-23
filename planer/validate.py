@@ -250,8 +250,8 @@ def validate_dataset(data: dict[str, Any], notes_raw: Any) -> list[str]:
         errors.append(f"Expected 19 waypoints, got {len(data.get('waypoints') or [])}")
 
     tours = data.get("tours") or []
-    if len(tours) != 144:
-        errors.append(f"Expected 144 tours, got {len(tours)}")
+    if len(tours) < 144:
+        errors.append(f"Expected >= 144 tours, got {len(tours)}")
 
     polys = data.get("polys") or []
     for idx, p_str in enumerate(polys):

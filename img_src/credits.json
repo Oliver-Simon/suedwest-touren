@@ -1438,5 +1438,65 @@
     "page": "https://commons.wikimedia.org/wiki/File:Altstadt_Fachwerk_Ladenburg.JPG",
     "w": 800,
     "h": 450
+  },
+  "gmaps-historische-walddusche-gleisweiler": {
+    "file": "File:Gleisweiler03.10.-09.10.2011 020.jpg",
+    "article": "de:Gleisweiler",
+    "artist": "Paul Flormann",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Gleisweiler03.10.-09.10.2011_020.jpg",
+    "w": 800,
+    "h": 450
+  },
+  "gmaps-grosse-wiese-gernsbach": {
+    "file": "File:Blick auf Reichental von der Fatima-Kapelle 2.jpg",
+    "article": "de:Reichental (Gernsbach)",
+    "artist": "Sven1987",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Blick_auf_Reichental_von_der_Fatima-Kapelle_2.jpg",
+    "w": 800,
+    "h": 450
+  },
+  "gmaps-xxl-liegebank-goetzenstein-birkenau": {
+    "file": "File:Buchklingen.JPG",
+    "article": "de:Birkenau (Odenwald)",
+    "artist": "Meffo",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Buchklingen.JPG",
+    "w": 800,
+    "h": 450
+  },
+  "gmaps-kallstadt-bismarckturm-weinstrasse": {
+    "file": "File:Bismarckturm_(Kallstadt).jpg",
+    "article": "de:Bismarckturm (Kallstadt)",
+    "artist": "Jörg Braukmann",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Bismarckturm_(Kallstadt).jpg",
+    "w": 800,
+    "h": 450
+  },
+  "gmaps-fuerth-odenwald-weschnitztal": {
+    "file": "File:Fürth im Odenwald.jpg",
+    "article": "de:Fürth (Odenwald)",
+    "artist": "Kesslerbensheim",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:F%C3%BCrth_im_Odenwald.jpg",
+    "w": 800,
+    "h": 450
+  },
+  "gmaps-rosskopf-freiburg-schwarzwald": {
+    "file": "File:Rosskopf_19.jpg",
+    "article": "de:Roßkopf (Breisgau)",
+    "artist": "Mondberg",
+    "license": "CC BY-SA 3.0 de",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Rosskopf_19.jpg",
+    "w": 800,
+    "h": 450
   }
 }

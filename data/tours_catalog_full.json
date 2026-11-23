@@ -18637,6 +18637,447 @@
         "elevProfile": []
       },
       "wikimediaQuery": "Ladenburg Altstadt filetype:bitmap"
+    },
+    {
+      "id": "gmaps-historische-walddusche-gleisweiler",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "pfaelzerwald",
+      "category": "wanderung",
+      "difficulty": "mittel",
+      "ring": false,
+      "title": {
+        "de": "Historische Walddusche Gleisweiler (Pfälzerwald)",
+        "en": "Historical Forest Shower Gleisweiler (Palatinate Forest)"
+      },
+      "subtitle": {
+        "de": "Idyllische Haardt-Wanderung ab Gleisweiler zur historischen Walddusche von 1848 über den Orensberg-Hang nach Frankweiler",
+        "en": "Scenic Haardt hike from Gleisweiler to the historic 1848 forest shower and along the Orensberg slopes to Frankweiler"
+      },
+      "sun": {
+        "de": "Sonnige Weinberghänge oberhalb von Gleisweiler und Frankweiler; angenehm kühler Kastanien- und Buchenwald an der Walddusche.",
+        "en": "Sunny vineyard slopes above Gleisweiler and Frankweiler; cool chestnut and beech forest around the forest shower."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Bus 501 verbindet Landau Hbf mit Gleisweiler und Frankweiler; im Sommer herrlich erfrischendes Quellwasser an der Walddusche.",
+        "en": "Saved from Oliver's Google Maps favorites. Bus 501 links Landau Hbf with Gleisweiler and Frankweiler; refreshing spring water at the forest shower in summer."
+      },
+      "eveningSun": true,
+      "places": [
+        "Gleisweiler, Mitte",
+        "Historische Walddusche Gleisweiler",
+        "St.-Anna-Kapelle / Burrweiler-Blick",
+        "Frankweiler, Am Steigert"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Gleisweiler, Mitte",
+          "lat": 49.242,
+          "lon": 8.06729,
+          "dhid": "de:07337:5522",
+          "transitousId": "de-DELFI_de:07337:5522:0:RiS",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Frankweiler, Am Steigert",
+          "lat": 49.23316,
+          "lon": 8.05513,
+          "dhid": "de:07337:4469",
+          "transitousId": "de-DELFI_de:07337:4469:0:2",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 7.5,
+        "elevGainM": 280,
+        "elevLossM": 260,
+        "walkMin": 135,
+        "startCoord": [
+          49.2407011,
+          8.0470981
+        ],
+        "endCoord": [
+          49.2407011,
+          8.0470981
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Gleisweiler"
+    },
+    {
+      "id": "gmaps-grosse-wiese-gernsbach",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "schwarzwald",
+      "category": "wanderung",
+      "difficulty": "schwer",
+      "ring": false,
+      "title": {
+        "de": "Große Wiese & Reichental bei Gernsbach (Nordschwarzwald)",
+        "en": "Große Wiese & Reichental near Gernsbach (Northern Black Forest)"
+      },
+      "subtitle": {
+        "de": "Hochtal- und Murgtal-Wanderung von Reichental über die Große Wiese und Waldwege hinunter nach Gernsbach",
+        "en": "High-valley and Murgtal hike from Reichental across Große Wiese and forest trails down to Gernsbach"
+      },
+      "sun": {
+        "de": "Offene Bergwiesen im Reichental und auf der Großen Wiese; dazwischen schattiger Nordschwarzwald-Tannenwald.",
+        "en": "Open mountain meadows in Reichental and at Große Wiese; shaded Northern Black Forest fir woods in between."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Anreise per S8/S81 ins Murgtal nach Gernsbach und weiter per Bus 242 nach Reichental; Rückfahrt ab Gernsbach Bahnhof im 30-Min.-Takt.",
+        "en": "Saved from Oliver's Google Maps favorites. Reach Gernsbach via S8/S81 and Bus 242 to Reichental; return from Gernsbach Bahnhof every 30 minutes."
+      },
+      "eveningSun": false,
+      "places": [
+        "Reichental Rathaus",
+        "Große Wiese (Nordschwarzwald)",
+        "Heuhüttental",
+        "Gernsbach Bahnhof"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Reichental Rathaus",
+          "lat": 48.72993,
+          "lon": 8.3913,
+          "dhid": "de:08216:3200",
+          "transitousId": "de-KVV_de:08216:3200:0:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Gernsbach Bahnhof",
+          "lat": 48.768307,
+          "lon": 8.336714,
+          "dhid": "de:08216:32142",
+          "transitousId": "de-DELFI_de:08216:32142",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 13.5,
+        "elevGainM": 460,
+        "elevLossM": 610,
+        "walkMin": 225,
+        "startCoord": [
+          48.7537424,
+          8.482971
+        ],
+        "endCoord": [
+          48.7537424,
+          8.482971
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Reichental (Gernsbach)"
+    },
+    {
+      "id": "gmaps-xxl-liegebank-goetzenstein-birkenau",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "odenwald",
+      "category": "berg",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "XXL-Liegebank am Götzenstein bei Birkenau (Odenwald)",
+        "en": "XXL Panorama Lounger at Götzenstein near Birkenau (Odenwald)"
+      },
+      "subtitle": {
+        "de": "Aussichtsreiche Odenwald-Runde ab Löhrbach zur XXL-Liegebank am Götzenstein mit Weitblick über das Weschnitztal",
+        "en": "Panoramic Odenwald loop from Löhrbach to the XXL wooden lounger at Götzenstein overlooking the Weschnitz Valley"
+      },
+      "sun": {
+        "de": "Hervorragende West- und Abendsonne an der XXL-Liegebank am Götzenstein – ideal für den späten Nachmittag.",
+        "en": "Superb west and evening sun at the XXL lounger on Götzenstein – ideal for late afternoon."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Nur ca. 600 m Fußweg von der Haltestelle Löhrbach, Ost hinauf zur Panoramabank.",
+        "en": "Saved from Oliver's Google Maps favorites. Only about 600 m walk from the Löhrbach, Ost bus stop up to the panoramic lounger."
+      },
+      "eveningSun": true,
+      "places": [
+        "Löhrbach, Ost",
+        "XXL-Liegebank am Götzenstein",
+        "Birkenau-Höhenblick"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Löhrbach, Ost",
+          "lat": 49.54476,
+          "lon": 8.77565,
+          "dhid": "de:06431:308",
+          "transitousId": "de-DELFI_de:06431:308:0:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Löhrbach, Ost",
+          "lat": 49.54476,
+          "lon": 8.77565,
+          "dhid": "de:06431:308",
+          "transitousId": "de-DELFI_de:06431:308:0:1",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 590,
+        "walkFromEndM": 590,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 6.2,
+        "elevGainM": 190,
+        "elevLossM": 190,
+        "walkMin": 105,
+        "startCoord": [
+          49.549608,
+          8.772269
+        ],
+        "endCoord": [
+          49.549608,
+          8.772269
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Birkenau (Odenwald)"
+    },
+    {
+      "id": "gmaps-kallstadt-bismarckturm-weinstrasse",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "pfaelzerwald",
+      "category": "wein",
+      "difficulty": "mittel",
+      "ring": true,
+      "title": {
+        "de": "Kallstadt & Bismarckturm (Deutsche Weinstraße / Pfälzerwald)",
+        "en": "Kallstadt & Bismarck Tower (German Wine Route / Palatinate Forest)"
+      },
+      "subtitle": {
+        "de": "Weinbergs- und Waldrunde ab Kallstadt hinauf zum Bismarckturm auf dem Peterskopf mit 360°-Blick über die Rheinebene",
+        "en": "Vineyard and forest loop from Kallstadt up to the Bismarck Tower on Peterskopf with 360° Rhine Plain views"
+      },
+      "sun": {
+        "de": "Sonnige Weinlage Kallstadter Saumagen am Start; großartige Nachmittags- und Abendsonne auf der Turmplattform.",
+        "en": "Sunny Kallstadter Saumagen vineyards at the start; great afternoon and evening sun from the tower platform."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Bus 453 ab Bad Dürkheim direkt nach Kallstadt, Weinstraße; Einkehrmöglichkeit in den Kallstadter Weingütern.",
+        "en": "Saved from Oliver's Google Maps favorites. Bus 453 from Bad Dürkheim stops right at Kallstadt, Weinstraße; great wine taverns in town."
+      },
+      "eveningSun": true,
+      "places": [
+        "Kallstadt, Weinstraße",
+        "Kallstadter Saumagen",
+        "Bismarckturm (Peterskopf, 493 m)"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Kallstadt, Weinstraße",
+          "lat": 49.49274,
+          "lon": 8.17514,
+          "dhid": "de:07332:1653",
+          "transitousId": "de-DELFI_de:07332:1653",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Kallstadt, Weinstraße",
+          "lat": 49.49274,
+          "lon": 8.17514,
+          "dhid": "de:07332:1653",
+          "transitousId": "de-DELFI_de:07332:1653",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 9.8,
+        "elevGainM": 340,
+        "elevLossM": 340,
+        "walkMin": 170,
+        "startCoord": [
+          49.4902,
+          8.1764
+        ],
+        "endCoord": [
+          49.4902,
+          8.1764
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Bismarckturm (Kallstadt)"
+    },
+    {
+      "id": "gmaps-fuerth-odenwald-weschnitztal",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "odenwald",
+      "category": "wanderung",
+      "difficulty": "mittel",
+      "ring": true,
+      "title": {
+        "de": "Fürth im Odenwald & Weschnitztal-Höhenweg (Odenwald)",
+        "en": "Fürth im Odenwald & Weschnitztal Ridge Trail (Odenwald)"
+      },
+      "subtitle": {
+        "de": "Abwechslungsreiche Odenwald-Rundwanderung direkt ab Bahnhof Fürth über Höhenzüge, Wiesen und das obere Weschnitztal",
+        "en": "Varied Odenwald circular hike right from Fürth station across ridges, meadows and the upper Weschnitz Valley"
+      },
+      "sun": {
+        "de": "Wechsel aus offenen Wiesenrücken mit guter Sonne und schattigen Buchenwäldern.",
+        "en": "Mix of sunny open meadow ridges and shaded beech forests."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Sehr bequeme stündliche Anbindung mit der Weschnitztalbahn (RB 69) direkt bis Fürth (Odenw) Bahnhof.",
+        "en": "Saved from Oliver's Google Maps favorites. Convenient hourly rail service on the Weschnitztalbahn (RB 69) straight to Fürth (Odenw) station."
+      },
+      "eveningSun": false,
+      "places": [
+        "Fürth, Bahnhof",
+        "Weschnitztal-Höhenweg",
+        "Bergtierpark-Höhe / Fahrenbach"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Fürth, Bahnhof",
+          "lat": 49.6487,
+          "lon": 8.78036,
+          "dhid": "de:06431:874",
+          "transitousId": "de-DELFI_de:06431:874",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Fürth, Bahnhof",
+          "lat": 49.6487,
+          "lon": 8.78036,
+          "dhid": "de:06431:874",
+          "transitousId": "de-DELFI_de:06431:874",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 11.4,
+        "elevGainM": 320,
+        "elevLossM": 320,
+        "walkMin": 185,
+        "startCoord": [
+          49.6512,
+          8.7822
+        ],
+        "endCoord": [
+          49.6512,
+          8.7822
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Fürth (Odenwald)"
+    },
+    {
+      "id": "gmaps-rosskopf-freiburg-schwarzwald",
+      "source": "mapy",
+      "tag": "google_maps",
+      "region": "schwarzwald",
+      "category": "berg",
+      "difficulty": "mittel",
+      "ring": false,
+      "title": {
+        "de": "Roßkopf-Aussichtsturm bei Freiburg (Südschwarzwald)",
+        "en": "Roßkopf Observation Tower near Freiburg (Southern Black Forest)"
+      },
+      "subtitle": {
+        "de": "Klassische Freiburger Hausberg-Überschreitung ab Freiburg Hbf über den Schlossberg und Roßkopf-Turm (737 m) nach Gundelfingen",
+        "en": "Classic Freiburg ridge traverse from Freiburg Hbf via Schlossberg and Roßkopf Tower (737 m) to Gundelfingen"
+      },
+      "sun": {
+        "de": "Traumhafte Abendsonne am 34 m hohen Roßkopf-Aussichtsturm mit Blick bis zu den Vogesen und zum Kaiserstuhl.",
+        "en": "Gorgeous evening sun at the 34 m Roßkopf observation tower with views to the Vosges and Kaiserstuhl."
+      },
+      "tips": {
+        "de": "Gespeicherter Google-Maps-Favorit von Oliver. Durchgehende RE-Anbindung bis Freiburg Hbf und Rückfahrt ab Gundelfingen (Breisgau) im D-Ticket.",
+        "en": "Saved from Oliver's Google Maps favorites. Direct RE regional trains to Freiburg Hbf and easy D-Ticket return from Gundelfingen (Breisgau)."
+      },
+      "eveningSun": true,
+      "places": [
+        "Freiburg (Breisgau) Hbf",
+        "Schlossberg",
+        "Roßkopf-Aussichtsturm (737 m)",
+        "Gundelfingen (Breisgau)"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Freiburg (Breisgau) Hbf",
+          "lat": 47.996822,
+          "lon": 7.841403,
+          "dhid": "de:08311:6508",
+          "transitousId": "de-DELFI_de:08311:6508:3:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Gundelfingen (Breisgau)",
+          "lat": 48.04429,
+          "lon": 7.87429,
+          "dhid": "de:08315:6514",
+          "transitousId": "de-DELFI_de:08315:6514",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 11.8,
+        "elevGainM": 490,
+        "elevLossM": 480,
+        "walkMin": 210,
+        "startCoord": [
+          48.009974,
+          7.901651
+        ],
+        "endCoord": [
+          48.009974,
+          7.901651
+        ],
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Roßkopfturm"
     }
   ]
 }

@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-23T19:43+01:00",
+  "generated": "2026-11-23T20:25+01:00",
   "days": {
     "wd": "2026-11-24",
     "sa": "2026-11-28",
     "so": "2026-11-29"
   },
-  "totalTours": 144,
-  "notedToursCount": 32,
+  "totalTours": 150,
+  "notedToursCount": 19,
   "notes": [
     {
       "tour_id": "r360-nothweiler-oder-dahn-stunde-pause-tour",
@@ -63,21 +63,6 @@
       "reason": "Keine durchgehende Deutschlandticket-Verbindung (Hin- und Rückfahrt am selben Tag) im Fahrplan gefunden."
     },
     {
-      "tour_id": "ahlmuehle-aussichtspunkt-schuhmacherfelsen",
-      "title": "Ahlmühle → Aussichtspunkt Schuhmacherfelsen",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis)"
-    },
-    {
       "tour_id": "idar-oberstein-markt-felsenkirche-schloss",
       "title": "Idar-Oberstein Markt → Felsenkirche & Schloss",
       "status": "partial_or_unroutable",
@@ -106,34 +91,19 @@
       "reason": "Aufenthaltszeit vor Ort reicht am Stichtag nicht für Wanderdauer + Puffer (45 Min.)."
     },
     {
-      "tour_id": "drei-buchen-orensfelsen",
-      "title": "Drei Buchen → Orensfelsen",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis)"
-    },
-    {
       "tour_id": "drei-eichen-burg-guttenberg",
       "title": "Drei Eichen → Burg Guttenberg",
-      "status": "unlinked_gpx_over_800m",
+      "status": "partial_or_unroutable",
       "bases": [
         "jugenheim",
         "karlsruhe"
       ],
       "days": [
-        "wd",
         "sa",
-        "so"
+        "so",
+        "wd"
       ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Böllenborn', 1361 m); Ende > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis)"
+      "reason": "Keine durchgehende Deutschlandticket-Verbindung (Hin- und Rückfahrt am selben Tag) im Fahrplan gefunden."
     },
     {
       "tour_id": "eberbach-ledigsberg-neckarblick",
@@ -148,49 +118,17 @@
       "reason": "Eingeschränktes Fahrplanangebot: Nur 2 gültige D-Ticket-Abfahrtsfenster mit >= 57 Min. Aufenthalt verfügbar."
     },
     {
-      "tour_id": "cramerhaus-burg-lindelbrunn",
-      "title": "Cramerhaus → Burg Lindelbrunn",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis); Ende > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis)"
-    },
-    {
       "tour_id": "ludwigsturm-weyher-altes-rathaus",
       "title": "Ludwigsturm → Weyher (Altes Rathaus)",
-      "status": "unlinked_gpx_over_800m",
+      "status": "partial_or_unroutable",
       "bases": [
-        "jugenheim",
-        "karlsruhe"
+        "jugenheim"
       ],
       "days": [
-        "wd",
         "sa",
         "so"
       ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Weyher, Glockenbrunnen', 969 m)"
-    },
-    {
-      "tour_id": "not-gottes-kapelle-melibokus-turm",
-      "title": "Not-Gottes-Kapelle → Melibokus-Turm",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Hochstädten, Legelweg', 836 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Hochstädten, Felsbergstraße', 1647 m)"
+      "reason": "Eingeschränktes Fahrplanangebot: Nur 2 gültige D-Ticket-Abfahrtsfenster mit >= 107 Min. Aufenthalt verfügbar."
     },
     {
       "tour_id": "nothweiler-rundtour-weglenburg-felsland",
@@ -221,96 +159,6 @@
       "reason": "Keine durchgehende Deutschlandticket-Verbindung (Hin- und Rückfahrt am selben Tag) im Fahrplan gefunden."
     },
     {
-      "tour_id": "eschbach-burg-madenburg",
-      "title": "Eschbach → Burg Madenburg",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Eschbach, Weinstraße', 1185 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Eschbach, Weinstraße', 933 m)"
-    },
-    {
-      "tour_id": "godramstein-frankweiler-orensfelsen",
-      "title": "Godramstein/Frankweiler → Orensfelsen",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt (kein Halt im 1,3 km Umkreis)"
-    },
-    {
-      "tour_id": "katzenbuckel-gipfelrunde-waldkatzenbach",
-      "title": "Katzenbuckel Gipfelrunde (Waldkatzenbach)",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Waldkatzenbach, Ort', 878 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Waldkatzenbach, Ort', 878 m)"
-    },
-    {
-      "tour_id": "annweiler-sarnstall-adelberg-aussicht",
-      "title": "Annweiler-Sarnstall → Adelberg-Aussicht",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt ('Annweiler, Stadion', 897 m)"
-    },
-    {
-      "tour_id": "ranschbach-schuhmacherfelsen",
-      "title": "Ranschbach → Schuhmacherfelsen",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Leinsweiler, Rathaus', 1504 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Leinsweiler, Parkpl. Ahlmühle', 1562 m)"
-    },
-    {
-      "tour_id": "lug-wernersberger-geierstein",
-      "title": "Lug → Wernersberger Geierstein",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Dimbach, Ort', 1560 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Lug, Abzw. Dimbach', 1107 m)"
-    },
-    {
       "tour_id": "rhodt-mitte-rietburgbahn",
       "title": "Rhodt Mitte → Rietburgbahn",
       "status": "partial_or_unroutable",
@@ -323,34 +171,17 @@
       "reason": "Eingeschränktes Fahrplanangebot: Nur 2 gültige D-Ticket-Abfahrtsfenster mit >= 70 Min. Aufenthalt verfügbar."
     },
     {
-      "tour_id": "bad-wildbad-sommerberg-baumwipfelpfad",
-      "title": "Bad Wildbad Sommerberg → Baumwipfelpfad",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt ('Bad Wildbad, Bätznerstr. 130', 981 m)"
-    },
-    {
       "tour_id": "rietburg-ludwigsturm",
       "title": "Rietburg → Ludwigsturm",
-      "status": "unlinked_gpx_over_800m",
+      "status": "partial_or_unroutable",
       "bases": [
-        "jugenheim",
-        "karlsruhe"
+        "jugenheim"
       ],
       "days": [
-        "wd",
         "sa",
         "so"
       ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt ('Weyher, Glockenbrunnen', 969 m)"
+      "reason": "Eingeschränktes Fahrplanangebot: Nur 2 gültige D-Ticket-Abfahrtsfenster mit >= 98 Min. Aufenthalt verfügbar."
     },
     {
       "tour_id": "rietburg-rhodt-unter-rietburg",
@@ -366,36 +197,6 @@
         "wd"
       ],
       "reason": "Keine durchgehende Deutschlandticket-Verbindung (Hin- und Rückfahrt am selben Tag) im Fahrplan gefunden."
-    },
-    {
-      "tour_id": "doerrenbach-staeffelsberg-runde",
-      "title": "Dörrenbach Stäffelsberg-Runde",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Start > 800 m vom nächsten ÖPNV-Halt ('Dörrenbach, Ort', 1034 m); Ende > 800 m vom nächsten ÖPNV-Halt ('Dörrenbach, Ort', 1034 m)"
-    },
-    {
-      "tour_id": "varnhalt-yburg",
-      "title": "Varnhalt → Yburg",
-      "status": "unlinked_gpx_over_800m",
-      "bases": [
-        "jugenheim",
-        "karlsruhe"
-      ],
-      "days": [
-        "wd",
-        "sa",
-        "so"
-      ],
-      "reason": "Kein ÖPNV-Halt im 800-m-Radius: Ende > 800 m vom nächsten ÖPNV-Halt ('Neuweier Kirche', 1490 m)"
     },
     {
       "tour_id": "wenschdorf-haagsaussicht-miltenberg",
