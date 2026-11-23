@@ -2326,8 +2326,15 @@ function renderDetail(t) {
   const regLbl = tDict.reg[t.region] || t.region || "";
   const imgSrc = t.img || `img/${t.id}.jpg`;
 
-  const destStop = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
-  const endStop = t.transit?.endStop || destStop;
+  const viasList = Array.isArray(t.transit?.vias) ? t.transit.vias.filter(v => v && (v.name || v.stopName)) : [];
+  const rawStart = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
+  const rawEnd = t.transit?.endStop || rawStart;
+  const baseStopNm = cleanStopName(bInfo, "");
+  const isSameAsBase = st => Boolean(st && cleanStopName(st, "") === baseStopNm);
+  const destStop = !isSameAsBase(rawStart) ? rawStart : (viasList[0] || fwd[fwd.length - 1]?.to || rawStart);
+  const endStop = (!isSameAsBase(rawEnd) && cleanStopName(rawEnd, "") !== cleanStopName(destStop, ""))
+    ? rawEnd
+    : (viasList[1] || destStop);
   const dbMainUrl = buildDbUrl(bInfo, destStop, state.day, dep);
   const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
   const dbAppUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
