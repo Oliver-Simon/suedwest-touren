@@ -425,27 +425,67 @@ html.dark .leaflet-tile-pane,
   color: var(--text-2);
   font-size: 12.5px;
 }
-.card-minimap-wrap {
-  margin-top: 7px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
+.card-thumb-wrap {
+  position: relative;
+  margin: -11px -12px 9px;
   background: var(--surface-2);
   overflow: hidden;
-  width: 100%;
-  max-width: 100%;
+  border-bottom: 1px solid var(--border);
+  aspect-ratio: 16 / 9;
+  max-height: 172px;
 }
-.card-minimap {
+.card-thumb {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 112px;
+  height: 100%;
+  object-fit: cover;
 }
-.card-minimap text {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  paint-order: stroke;
-  stroke: var(--surface);
-  stroke-width: 2.6px;
-  stroke-linejoin: round;
+.card-thumb-badge {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(15, 23, 42, 0.78);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  max-width: calc(100% - 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stay-select {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  max-width: 100%;
+}
+.stay-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.stay-btn, .ret-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.stay-btn[aria-pressed="true"], .ret-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
 }
 .region-group {
   margin-bottom: 12px;
@@ -828,6 +868,16 @@ html.dark .leaflet-tile-pane,
           <button type="button" class="pill" id="feasiblePill" data-f="feasible" style="border:0;padding:2px 6px">Heute noch machbar ab</button>
           <input type="time" id="feasibleTime" aria-label="Uhrzeit">
         </div>
+        <select id="staySelect" class="stay-select" aria-label="Aufenthaltsdauer vor Ort">
+          <option value="">⏱ Aufenthalt: Auto</option>
+          <option value="90">⏱ ≥ 1,5 Std.</option>
+          <option value="120">⏱ ≥ 2 Std.</option>
+          <option value="180">⏱ ≥ 3 Std.</option>
+          <option value="240">⏱ ≥ 4 Std.</option>
+          <option value="300">⏱ ≥ 5 Std.</option>
+          <option value="360">⏱ ≥ 6 Std.</option>
+          <option value="max">⏱ Maximal (Spät zurück)</option>
+        </select>
       </div>
       <div class="pills" id="pills" role="group" aria-label="Filter"></div>
     </div>
@@ -999,6 +1049,7 @@ const I18N = {
       ["pfaelzerwald", "Pfälzerwald & Weinstraße"],
       ["schwarzwald", "Schwarzwald"],
       ["odenwald", "Odenwald & Neckar"],
+      ["loop", "🔄 Rundwanderung"],
       ["evening_sun", "🌅 Abendsonne"]
     ],
     diff: {leicht: "leicht", mittel: "mittel", schwer: "schwer"},
@@ -1013,6 +1064,8 @@ const I18N = {
     transfer: m => `${m} Min. Umstieg`,
     stopsCount: n => `${n} Zwischenhalte`,
     windowsTitle: "Abfahrtsfenster (Hinfahrt)",
+    stayChooserTitle: "Aufenthaltsdauer vor Ort einstellen",
+    returnWindowsTitle: "Rückfahrt wählen (Rundkurs zurück zur Basis)",
     lastSafeReturn: (dep, arr) => `Letzte sichere Rückfahrt: ${dep} → ${arr}`,
     outboundTitle: "Hinfahrt (Anreise)",
     hikeStayTitle: "Wanderung & Aufenthalt vor Ort",
@@ -1022,8 +1075,12 @@ const I18N = {
     mvvAppBtn: "🟦 MVV App",
     dbAppBtn: "🟥 DB App",
     vrnAppBtn: "🟩 VRN App",
+    geoAppBtn: "📍 Ziel in Navi/Mapy",
     mvvWebBtn: "🌐 MVV Web",
     gmapsBtn: "🗺️ Google Maps",
+    loopHikeBadge: "🔄 Rundwanderung",
+    roundTripBadge: "🔄 ÖPNV-Rundkurs",
+    shortStayWarn: m => `⚠️ Gewählter Aufenthalt ist kürzer als die geschätzte Wanderzeit (${m}).`,
     unroutableNotice: r => `Hinweis: An diesem Wochentag eingeschränkt (${r || "Saison-/Taktlücke"}).`,
     homeModalTitle: "🏠 Heimatort & Startpunkt",
     homePresetLabel: "Schnellauswahl (Presets):",
@@ -1053,6 +1110,7 @@ const I18N = {
       ["pfaelzerwald", "Palatinate Forest"],
       ["schwarzwald", "Black Forest"],
       ["odenwald", "Odenwald & Neckar"],
+      ["loop", "🔄 Loop hikes"],
       ["evening_sun", "🌅 Evening sun"]
     ],
     diff: {leicht: "easy", mittel: "medium", schwer: "hard"},
@@ -1067,6 +1125,8 @@ const I18N = {
     transfer: m => `${m} min transfer`,
     stopsCount: n => `${n} Intermediate Stops`,
     windowsTitle: "Departure Windows (Outbound)",
+    stayChooserTitle: "Adjust Stay Duration at Destination",
+    returnWindowsTitle: "Choose Return Trip (Round-Trip Back Home)",
     lastSafeReturn: (dep, arr) => `Last safe return: ${dep} → ${arr}`,
     outboundTitle: "Outbound Departure",
     hikeStayTitle: "Hike & Stay Duration",
@@ -1076,8 +1136,12 @@ const I18N = {
     mvvAppBtn: "🟦 MVV App",
     dbAppBtn: "🟥 DB App",
     vrnAppBtn: "🟩 VRN App",
+    geoAppBtn: "📍 Open in Mapy/Navi",
     mvvWebBtn: "🌐 MVV Web",
     gmapsBtn: "🗺️ Google Maps",
+    loopHikeBadge: "🔄 Loop hike",
+    roundTripBadge: "🔄 Transit round-trip",
+    shortStayWarn: m => `⚠️ Selected stay is shorter than the estimated hike time (${m}).`,
     unroutableNotice: r => `Note: Limited service on this day (${r || "seasonal/schedule gap"}).`,
     homeModalTitle: "🏠 Home Location & Starting Point",
     homePresetLabel: "Quick Presets:",
@@ -1105,11 +1169,14 @@ let state = {
   day: store.get("day", "wd"),
   sourceFilter: null,
   regionFilter: null,
+  loopOnly: false,
   eveningSunOnly: false,
   feasibleTime: "",
+  stayTargetMin: store.get("stayTargetMin", null),
   q: "",
   sel: null,
   winIdx: 0,
+  revIdx: null,
   layer: store.get("layer", "osm")
 };
 if (!["wd", "sa", "so"].includes(state.day)) state.day = "wd";
@@ -1282,40 +1349,95 @@ function getReturns(p) {
   return alts.map(a => _enrichInter(Array.isArray(a) ? a : (a && a.segs) || [], p.rev)).filter(s => s.length > 0);
 }
 
+function haversineM(a, b) {
+  if (!a || !b) return 999999;
+  const R = 6371000;
+  const p1 = (a[0] * Math.PI) / 180;
+  const p2 = (b[0] * Math.PI) / 180;
+  const dp = ((b[0] - a[0]) * Math.PI) / 180;
+  const dl = ((b[1] - a[1]) * Math.PI) / 180;
+  const x = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(x)));
+}
+
+const loopCache = new Map();
+function isClosedLoopHike(t) {
+  if (!t) return false;
+  if (loopCache.has(t.id)) return loopCache.get(t.id);
+  const h = t.hike || {};
+  let res = false;
+  if (h.hasGpx && h.poly5) {
+    const pts = decodePoly(h.poly5);
+    if (pts.length >= 2) {
+      res = haversineM(pts[0], pts[pts.length - 1]) <= 850;
+    }
+  } else {
+    const ss = t.transit?.startStop?.name || "";
+    const es = t.transit?.endStop?.name || "";
+    res = Boolean(ss && (!es || ss === es));
+  }
+  loopCache.set(t.id, res);
+  return res;
+}
+
 function getSelectedWindow(t, baseKey, dayKey) {
   const {plan, fallback, reason} = getEffectivePlan(t, baseKey, dayKey);
   const wins = getWindows(plan);
   const revs = getReturns(plan);
-  if (!wins.length) return {fwd: [], rev: [], wins: [], lsr: null, fallback, reason, winIdx: 0};
+  if (!wins.length) return {fwd: [], rev: [], wins: [], validRevs: [], revIdx: 0, lsr: null, fallback, reason, winIdx: 0};
   const idx = Math.max(0, Math.min(state.winIdx, wins.length - 1));
   const fwd = wins[idx] || plan.fwd || [];
   const wmin = Number((t.hike && t.hike.walkMin) || 0);
-  const minStayReq = wmin > 0 ? wmin + 30 : 30;
+  const autoMinStay = wmin > 0 ? wmin + 30 : 60;
   const arrMin = parseHHMM(fwd[fwd.length - 1]?.arr) || 600;
-  let rev = revs[Math.min(idx, revs.length - 1)] || plan.rev || [];
-  for (const r of revs) {
+
+  const validRevs = revs.filter(r => {
     const depMin = parseHHMM(r[0]?.dep);
-    if (depMin !== null) {
-      let stay = depMin - arrMin;
-      if (stay < 0) stay += 1440;
-      if (stay >= minStayReq) {
-        rev = r;
-        break;
+    if (depMin === null) return false;
+    let stay = depMin - arrMin;
+    if (stay < 0) stay += 1440;
+    return stay >= 20 && stay <= 16 * 60;
+  });
+  const pool = validRevs.length ? validRevs : revs;
+
+  let chosenIdx = 0;
+  if (pool.length) {
+    if (state.revIdx !== null && state.revIdx >= 0 && state.revIdx < pool.length) {
+      chosenIdx = state.revIdx;
+    } else if (state.stayTargetMin === "max") {
+      chosenIdx = pool.length - 1;
+    } else {
+      const targetStay = (typeof state.stayTargetMin === "number" && state.stayTargetMin > 0)
+        ? state.stayTargetMin
+        : autoMinStay;
+      chosenIdx = pool.length - 1;
+      for (let i = 0; i < pool.length; i++) {
+        const depMin = parseHHMM(pool[i][0]?.dep);
+        if (depMin !== null) {
+          let stay = depMin - arrMin;
+          if (stay < 0) stay += 1440;
+          if (stay >= targetStay) {
+            chosenIdx = i;
+            break;
+          }
+        }
       }
     }
   }
+  const rev = pool[chosenIdx] || plan.rev || [];
   const lsr = (plan && plan.lastSafeReturn) || (revs.length ? {
     dep: revs[revs.length - 1][0]?.dep || "19:30",
     arr: revs[revs.length - 1][revs[revs.length - 1].length - 1]?.arr || "21:15",
     segs: revs[revs.length - 1]
   } : null);
-  return {fwd, rev, wins, lsr, fallback, reason, winIdx: idx};
+  return {fwd, rev, wins, validRevs: pool, revIdx: chosenIdx, lsr, fallback, reason, winIdx: idx};
 }
 
 function matchesFilter(t) {
   if (state.sourceFilter === "my_tours" && !["shortcut", "mapy", "my_tours"].includes(t.source)) return false;
   if (state.sourceFilter === "curated" && t.source !== "curated") return false;
   if (state.regionFilter && t.region !== state.regionFilter) return false;
+  if (state.loopOnly && !isClosedLoopHike(t)) return false;
   if (state.eveningSunOnly && t.eveningSun !== true) return false;
   if (state.feasibleTime) {
     const thr = parseHHMM(state.feasibleTime);
@@ -1403,15 +1525,18 @@ function renderDays() {
 
 function renderPills() {
   const tDict = T();
-  const isAll = !state.sourceFilter && !state.regionFilter && !state.eveningSunOnly && !state.feasibleTime;
+  const isAll = !state.sourceFilter && !state.regionFilter && !state.loopOnly && !state.eveningSunOnly && !state.feasibleTime;
   $("#pills").innerHTML = tDict.pills.map(([k, lbl]) => {
     let pressed = false;
     if (k === "all") pressed = isAll;
     else if (k === "my_tours" || k === "curated") pressed = state.sourceFilter === k;
     else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(k)) pressed = state.regionFilter === k;
+    else if (k === "loop") pressed = state.loopOnly;
     else if (k === "evening_sun") pressed = state.eveningSunOnly;
     return `<button type="button" class="pill" data-f="${k}" aria-pressed="${pressed}">${esc(lbl)}</button>`;
   }).join("");
+  const selEl = $("#staySelect");
+  if (selEl) selEl.value = state.stayTargetMin === null ? "" : String(state.stayTargetMin);
 }
 
 /* ---------- Map ---------- */
@@ -1818,17 +1943,25 @@ function cardHTML(t) {
   const dep = fwd[0]?.dep || "08:04";
   const arr = rev[rev.length - 1]?.arr || "18:42";
   const durMin = minDiff(dep, arr) || t.durationMin || 360;
+  const fwdArr = fwd[fwd.length - 1]?.arr || "";
+  const revDep = rev[0]?.dep || "";
+  const stayMin = (fwdArr && revDep) ? minDiff(fwdArr, revDep) : 0;
   const h = t.hike || {};
   const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
   const regLbl = tDict.reg[t.region] || t.region || "";
   const baseTag = state.base === "karlsruhe" ? "ab KA" : "ab JG";
+  const imgSrc = t.img || `img/${t.id}.jpg`;
+  const loopBadge = isClosedLoopHike(t) ? tDict.loopHikeBadge : tDict.roundTripBadge;
 
   const chips = [
     `<span class="chip strong">🕘 ${esc(dep)}–${esc(arr)} (${esc(baseTag)})</span>`,
-    `<span class="chip strong">⏱ ${esc(fmtDur(durMin))}</span>`,
-    `<span class="chip">${esc(regLbl)}</span>`,
-    `<span class="chip">${esc(diffLbl)}</span>`
+    `<span class="chip strong">⏱ ${esc(fmtDur(durMin))}</span>`
   ];
+  if (stayMin > 0) {
+    chips.push(`<span class="chip">🕒 ${state.lang === "en" ? "Stay" : "Vor Ort"} ${esc(fmtDur(stayMin))}</span>`);
+  }
+  chips.push(`<span class="chip">${esc(regLbl)}</span>`);
+  chips.push(`<span class="chip">${esc(diffLbl)}</span>`);
   if (h.hasGpx && h.distKm) {
     const km = Number(h.distKm).toFixed(1).replace(".", ",");
     const hm = Math.round(Number(h.elevGainM || 0));
@@ -1848,9 +1981,12 @@ function cardHTML(t) {
   }
 
   return `<article class="card tour-card" data-tour-id="${esc(t.id)}" data-id="${esc(t.id)}" tabindex="0">
+    <div class="card-thumb-wrap">
+      <img class="card-thumb" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy">
+      <span class="card-thumb-badge">${esc(loopBadge)}</span>
+    </div>
     <h3>${esc(tourTitle(t))}</h3>
     <p class="sub">${esc(tourSub(t))}</p>
-    <div class="card-minimap-wrap">${renderCardMiniMap(t, state.base, state.day)}</div>
     <div class="chips">${chips.join("")}</div>
   </article>`;
 }
@@ -1933,25 +2069,46 @@ function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
   return `https://www.bahn.de/buchung/fahrplan/suche#${frag}`;
 }
 
-function buildHafasNativeUrl(scheme, fromStop, toStop, dayKey, depHHMM) {
+const IS_ANDROID = /Android/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
+
+function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM) {
   const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
   const dateStr = isoToDDMMYYYY(dayIso);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
   const s = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
   const z = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
-  return `${scheme}://query?S=${s}&Z=${z}&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}&start=1`;
+  const path = `con?S=${s}&Z=${z}&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}&start=1`;
+  if (IS_ANDROID && pkg) {
+    const fb = encodeURIComponent(buildMvvWebUrl(fromStop, toStop, dayKey, depHHMM));
+    return `intent://${path}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
+  }
+  return `${scheme}://${path}`;
 }
 
 function buildMvvAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  return buildHafasNativeUrl("muenchennavigator", fromStop, toStop, dayKey, depHHMM);
+  return buildHafasNativeUrl("muenchennavigator", "de.hafas.android.sbm", fromStop, toStop, dayKey, depHHMM);
 }
 
 function buildDbAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  return buildHafasNativeUrl("dbnavigator", fromStop, toStop, dayKey, depHHMM);
+  const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
+  const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
+  const webUrl = buildDbUrl(fromStop, toStop, dayKey, depHHMM);
+  if (IS_ANDROID) {
+    const fb = encodeURIComponent(webUrl);
+    return `intent://www.bahn.de/buchung/start?SO=${so}&ZO=${zo}&sts=true#Intent;scheme=https;package=de.hafas.android.db;S.browser_fallback_url=${fb};end`;
+  }
+  return `https://www.bahn.de/buchung/start?SO=${so}&ZO=${zo}&sts=true`;
 }
 
 function buildVrnAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  return buildHafasNativeUrl("hafas", fromStop, toStop, dayKey, depHHMM);
+  return buildHafasNativeUrl("hafas", "de.hafas.android.vrn", fromStop, toStop, dayKey, depHHMM);
+}
+
+function buildGeoUrl(stop, fallbackName) {
+  const lat = Number(stop?.lat || 49.350000).toFixed(6);
+  const lon = Number(stop?.lon || 8.150000).toFixed(6);
+  const nm = encodeURIComponent(cleanStopName(stop, fallbackName || "Ziel"));
+  return `geo:${lat},${lon}?q=${lat},${lon}(${nm})`;
 }
 
 function buildMvvWebUrl(fromStop, toStop, dayKey, depHHMM) {
@@ -2141,7 +2298,7 @@ function renderDetail(t) {
   if (!t) return;
   const tDict = T();
   const bInfo = getBaseInfo(state.base);
-  const {fwd, rev, wins, lsr, fallback, reason, winIdx} = getSelectedWindow(t, state.base, state.day);
+  const {fwd, rev, wins, validRevs, revIdx, lsr, fallback, reason, winIdx} = getSelectedWindow(t, state.base, state.day);
   const title = tourTitle(t);
   const sub = tourSub(t);
   const h = t.hike || {};
@@ -2155,16 +2312,20 @@ function renderDetail(t) {
   const imgSrc = t.img || `img/${t.id}.jpg`;
 
   const destStop = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
+  const endStop = t.transit?.endStop || destStop;
   const dbMainUrl = buildDbUrl(bInfo, destStop, state.day, dep);
   const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep);
   const dbAppUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
   const vrnAppUrl = buildVrnAppUrl(bInfo, destStop, state.day, dep);
+  const geoAppUrl = buildGeoUrl(destStop, title);
   const mvvWebUrl = buildMvvWebUrl(bInfo, destStop, state.day, dep);
   const gmapsMainUrl = buildGmapsUrl(bInfo, destStop, "transit");
+  const loopBadge = isClosedLoopHike(t) ? tDict.loopHikeBadge : tDict.roundTripBadge;
 
   const metaChips = [
     `<span class="chip strong">🏠 ${esc(bInfo.name)}</span>`,
     `<span class="chip strong">🕘 ${esc(dep)} – ${esc(arr)}</span>`,
+    `<span class="chip ok">${esc(loopBadge)}</span>`,
     `<span class="chip">${esc(regLbl)}</span>`,
     `<span class="chip">${esc(diffLbl)}</span>`
   ];
@@ -2183,6 +2344,32 @@ function renderDetail(t) {
     return `<button type="button" class="win-btn" data-win="${i}" aria-pressed="${i === winIdx}">${esc(wDep)} → ${esc(wArr)}</button>`;
   }).join("");
 
+  const stayPresets = [
+    ["", "Auto"],
+    ["90", "1,5 h"],
+    ["120", "2 h"],
+    ["180", "3 h"],
+    ["240", "4 h"],
+    ["300", "5 h"],
+    ["360", "6 h"],
+    ["max", "Max"]
+  ];
+  const curStayVal = state.revIdx !== null ? "__manual__" : (state.stayTargetMin === null ? "" : String(state.stayTargetMin));
+  const stayBtnsHtml = stayPresets.map(([val, lbl]) =>
+    `<button type="button" class="stay-btn" data-stay="${esc(val)}" aria-pressed="${curStayVal === val}">${esc(lbl)}</button>`
+  ).join("");
+
+  const revsHtml = (validRevs || []).map((r, i) => {
+    const rDep = r[0]?.dep || "16:00";
+    const rArr = r[r.length - 1]?.arr || "18:00";
+    const rStay = minDiff(fwdArr, rDep);
+    return `<button type="button" class="ret-btn" data-ret="${i}" aria-pressed="${i === revIdx}">${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+  }).join("");
+
+  const shortStayWarn = (h.hasGpx && h.walkMin && stayMin > 0 && stayMin < Number(h.walkMin))
+    ? `<div class="chips" style="margin-top:6px"><span class="chip warn">${esc(tDict.shortStayWarn(fmtDur(h.walkMin)))}</span></div>`
+    : "";
+
   const lsrDep = lsr?.dep || revDep;
   const lsrArr = lsr?.arr || arr;
 
@@ -2191,6 +2378,10 @@ function renderDetail(t) {
 
   const sunTxt = tourText("sun", t);
   const tipsTxt = tourText("tips", t);
+
+  const loopFlowTxt = (destStop.name && endStop.name && destStop.name !== endStop.name)
+    ? `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name} → 🥾 → ${endStop.name} → ${bInfo.name}`
+    : `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name || title} → 🥾 → ${bInfo.name}`;
 
   $("#detail").innerHTML = `
     <div class="hero">
@@ -2205,6 +2396,7 @@ function renderDetail(t) {
         <a class="act" href="${esc(mvvAppUrl)}">${esc(tDict.mvvAppBtn)}</a>
         <a class="act" href="${esc(dbAppUrl)}">${esc(tDict.dbAppBtn)}</a>
         <a class="act" href="${esc(vrnAppUrl)}">${esc(tDict.vrnAppBtn)}</a>
+        <a class="act" href="${esc(geoAppUrl)}">${esc(tDict.geoAppBtn)}</a>
         <a class="act" href="${esc(mvvWebUrl)}" target="_blank" rel="noopener">${esc(tDict.mvvWebBtn)}</a>
         <a class="act" href="${esc(gmapsMainUrl)}" target="_blank" rel="noopener">${esc(tDict.gmapsBtn)}</a>
       </div>
@@ -2215,6 +2407,10 @@ function renderDetail(t) {
     <div class="box">
       <h4>${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
       <div class="win-row">${winsHtml}</div>
+      <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
+      <div class="stay-row">${stayBtnsHtml}</div>
+      ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
+      ${shortStayWarn}
       <div class="chips" style="margin-top:8px">
         <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
       </div>
@@ -2227,9 +2423,10 @@ function renderDetail(t) {
 
     <div class="box">
       <h4>🥾 ${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</h4>
-      <p style="margin:0;font-size:12.5px;color:var(--text-2)">
+      <p style="margin:0 0 4px;font-size:12.5px;color:var(--text-2)">
         ${h.hasGpx ? `${Number(h.distKm).toFixed(1).replace(".", ",")} km · ${Math.round(h.elevGainM || 0)} hm (${tDict.hikeLabel} ${fmtDur(h.walkMin || 180)} + ≥30 Min. Puffer)` : `${tDict.walkLabel} / Aufenthalt vor Ort: ${fmtDur(stayMin)}`}
       </p>
+      <p style="margin:0;font-size:12px;color:var(--text-2)">🔄 ${esc(loopFlowTxt)}</p>
     </div>
 
     <div class="box">
@@ -2255,6 +2452,25 @@ $("#detail").addEventListener("click", e => {
   const winBtn = e.target.closest(".win-btn[data-win]");
   if (winBtn) {
     state.winIdx = parseInt(winBtn.dataset.win, 10) || 0;
+    state.revIdx = null;
+    renderDetail(t);
+    drawSingle(t);
+    return;
+  }
+  const stayBtn = e.target.closest(".stay-btn[data-stay]");
+  if (stayBtn) {
+    const v = stayBtn.dataset.stay;
+    state.revIdx = null;
+    state.stayTargetMin = v === "" ? null : (v === "max" ? "max" : parseInt(v, 10));
+    store.set("stayTargetMin", state.stayTargetMin);
+    renderPills();
+    renderDetail(t);
+    drawSingle(t);
+    return;
+  }
+  const retBtn = e.target.closest(".ret-btn[data-ret]");
+  if (retBtn) {
+    state.revIdx = parseInt(retBtn.dataset.ret, 10) || 0;
     renderDetail(t);
     drawSingle(t);
     return;
@@ -2270,6 +2486,7 @@ function openTour(id) {
   if (!t) return;
   state.sel = id;
   state.winIdx = 0;
+  state.revIdx = null;
   document.body.classList.add("detail-open");
   renderHeader();
   renderDetail(t);
@@ -2300,6 +2517,7 @@ function setBase(newBase, customHome) {
   }
   store.set("home", HOME);
   state.winIdx = 0;
+  state.revIdx = null;
   renderHeader();
   if (state.sel && BY_ID[state.sel]) {
     renderDetail(BY_ID[state.sel]);
@@ -2335,6 +2553,7 @@ $("#daySeg").addEventListener("click", e => {
   state.day = b.dataset.d;
   store.set("day", state.day);
   state.winIdx = 0;
+  state.revIdx = null;
   renderDays();
   if (state.sel && BY_ID[state.sel]) {
     renderDetail(BY_ID[state.sel]);
@@ -2352,6 +2571,7 @@ $("#pills").addEventListener("click", e => {
   if (f === "all") {
     state.sourceFilter = null;
     state.regionFilter = null;
+    state.loopOnly = false;
     state.eveningSunOnly = false;
     state.feasibleTime = "";
     $("#feasibleTime").value = "";
@@ -2359,6 +2579,8 @@ $("#pills").addEventListener("click", e => {
     state.sourceFilter = f;
   } else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(f)) {
     state.regionFilter = f;
+  } else if (f === "loop") {
+    state.loopOnly = !state.loopOnly;
   } else if (f === "evening_sun") {
     state.eveningSunOnly = !state.eveningSunOnly;
   }
@@ -2366,6 +2588,20 @@ $("#pills").addEventListener("click", e => {
   renderPills();
   renderList();
   drawOverview();
+});
+
+$("#staySelect").addEventListener("change", e => {
+  const v = (e.target.value || "").trim();
+  state.revIdx = null;
+  state.stayTargetMin = v === "" ? null : (v === "max" ? "max" : parseInt(v, 10));
+  store.set("stayTargetMin", state.stayTargetMin);
+  if (state.sel && BY_ID[state.sel]) {
+    renderDetail(BY_ID[state.sel]);
+    drawSingle(BY_ID[state.sel]);
+  } else {
+    renderList();
+    drawOverview();
+  }
 });
 
 $("#feasiblePill").addEventListener("click", () => {

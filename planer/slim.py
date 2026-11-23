@@ -119,7 +119,7 @@ def dedupe_and_sort_alts(
     return unique
 
 
-def slim_data_dict(D: dict[str, Any], max_alts: int = 4) -> dict[str, Any]:
+def slim_data_dict(D: dict[str, Any], max_alts: int = 6, max_alts_rev: int = 8) -> dict[str, Any]:
     """In-place deduplicate/cap alternatives, compact stop/segment payloads, and compact `D["polys"]`."""
     removed = 0
     for tour in D.get("tours", []):
@@ -130,10 +130,10 @@ def slim_data_dict(D: dict[str, Any], max_alts: int = 4) -> dict[str, Any]:
             for day_plan in base_plans.values():
                 if not isinstance(day_plan, dict) or day_plan.get("fallback"):
                     continue
-                for alt_key, main_key in (("alts_fwd", "fwd"), ("alts_rev", "rev")):
+                for alt_key, main_key, cap in (("alts_fwd", "fwd", max_alts), ("alts_rev", "rev", max_alts_rev)):
                     old_alts = day_plan.get(alt_key) or []
                     main_segs = day_plan.get(main_key)
-                    new_alts = dedupe_and_sort_alts(old_alts, main=main_segs, max_alts=max_alts)
+                    new_alts = dedupe_and_sort_alts(old_alts, main=main_segs, max_alts=cap)
                     removed += max(0, len(old_alts) - len(new_alts))
                     day_plan[alt_key] = new_alts
 
