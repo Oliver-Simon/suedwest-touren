@@ -2071,13 +2071,24 @@ function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
 
 const IS_ANDROID = /Android/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
 
-function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM) {
+function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM, opts) {
   const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
   const dateStr = isoToDDMMYYYY(dayIso);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
-  const s = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
-  const z = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
-  const path = `con?S=${s}&Z=${z}&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}&start=1`;
+  const fromName = cleanStopName(fromStop, "Jugenheim Bickenbacher Straße");
+  const toName = cleanStopName(toStop, "Neustadt (Weinstr) Hbf");
+  const isRoundTrip = Boolean(opts && opts.roundTrip);
+  const s = encodeURIComponent(fromName);
+  const z = encodeURIComponent(isRoundTrip ? fromName : toName);
+  let path = `query?S=${s}&Z=${z}`;
+  if (isRoundTrip) {
+    path += `&V1=${encodeURIComponent(toName)}`;
+    const endName = opts && opts.endStop ? cleanStopName(opts.endStop, "") : "";
+    if (endName && endName !== toName && endName !== fromName) {
+      path += `&V2=${encodeURIComponent(endName)}`;
+    }
+  }
+  path += `&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}`;
   if (IS_ANDROID && pkg) {
     const fb = encodeURIComponent(buildMvvWebUrl(fromStop, toStop, dayKey, depHHMM));
     return `intent://${path}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
@@ -2085,23 +2096,27 @@ function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM) {
   return `${scheme}://${path}`;
 }
 
-function buildMvvAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  return buildHafasNativeUrl("muenchennavigator", "de.hafas.android.sbm", fromStop, toStop, dayKey, depHHMM);
+function buildMvvAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
+  return buildHafasNativeUrl("muenchennavigator", "de.hafas.android.sbm", fromStop, toStop, dayKey, depHHMM, opts);
 }
 
 function buildDbAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
+  const dayIso = (DATA.days && DATA.days[dayKey]) || "2026-11-24";
+  const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
+  const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim"));
   const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
+  const hd = encodeURIComponent(`${dayIso}T${hm}:00`);
+  const q = `SO=${so}&ZO=${zo}&hd=${hd}&dlt=true&vm=03,04,05,06,07,08,09&sts=true`;
   const webUrl = buildDbUrl(fromStop, toStop, dayKey, depHHMM);
   if (IS_ANDROID) {
     const fb = encodeURIComponent(webUrl);
-    return `intent://www.bahn.de/buchung/start?SO=${so}&ZO=${zo}&sts=true#Intent;scheme=https;package=de.hafas.android.db;S.browser_fallback_url=${fb};end`;
+    return `intent://www.bahn.de/buchung/start?${q}#Intent;scheme=dbnav;package=de.hafas.android.db;S.browser_fallback_url=${fb};end`;
   }
-  return `https://www.bahn.de/buchung/start?SO=${so}&ZO=${zo}&sts=true`;
+  return `https://www.bahn.de/buchung/start?${q}`;
 }
 
-function buildVrnAppUrl(fromStop, toStop, dayKey, depHHMM) {
-  return buildHafasNativeUrl("hafas", "de.hafas.android.vrn", fromStop, toStop, dayKey, depHHMM);
+function buildVrnAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
+  return buildHafasNativeUrl("hafas", "de.hafas.android.vrn", fromStop, toStop, dayKey, depHHMM, opts);
 }
 
 function buildGeoUrl(stop, fallbackName) {
@@ -2314,9 +2329,9 @@ function renderDetail(t) {
   const destStop = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
   const endStop = t.transit?.endStop || destStop;
   const dbMainUrl = buildDbUrl(bInfo, destStop, state.day, dep);
-  const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep);
+  const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
   const dbAppUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
-  const vrnAppUrl = buildVrnAppUrl(bInfo, destStop, state.day, dep);
+  const vrnAppUrl = buildVrnAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
   const geoAppUrl = buildGeoUrl(destStop, title);
   const mvvWebUrl = buildMvvWebUrl(bInfo, destStop, state.day, dep);
   const gmapsMainUrl = buildGmapsUrl(bInfo, destStop, "transit");

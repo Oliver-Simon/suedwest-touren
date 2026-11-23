@@ -1,5 +1,5 @@
 // Südwest-Touren service worker: app shell offline, visited map tiles cached (up to 3000 tiles).
-const VERSION = "suedwest-20261123-221520";
+const VERSION = "suedwest-20261123-231843";
 const SHELL = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 const TILE_CACHE = "suedwest-tiles-v1";
 const TILE_HOSTS = [
