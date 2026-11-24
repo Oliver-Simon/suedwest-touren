@@ -2584,6 +2584,7 @@ body[data-tab="karte"]:not(.detail-open) .layer-menu { top: calc(12px + env(safe
 
 /* Liniennummern auf der Karte */
 .map-line-label-wrap { background: none; border: 0; }
+.map-line-label::after { content: attr(data-l); }
 .map-line-label { display: inline-block; transform: translate(-50%, -50%); padding: 2px 7px; border-radius: 6px; color: #fff; font: 700 11.5px/1.3 var(--font-sans); white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,.35); border: 1.5px solid #fff; }
 /* "Nur diese Route" im Karten-Tab */
 .sheet-route-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; min-height: 34px; padding: 0 10px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; }
@@ -2601,6 +2602,68 @@ body[data-tab="karte"]:not(.detail-open) .map-float > * { pointer-events: auto; 
 body.detail-open .map-wrap.full .leg-toggle { display: flex; position: absolute; z-index: 1000; left: 50%; transform: translateX(-50%); top: calc(12px + env(safe-area-inset-top, 0px)); background: var(--surface); border-radius: 999px; padding: 3px; gap: 2px; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
 .leg-toggle button { border: 0; background: transparent; color: var(--text-2); font-weight: 700; font-size: 13.5px; min-height: 38px; padding: 0 14px; border-radius: 999px; cursor: pointer; }
 .leg-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- Tourseite: Karte oben (scrollt mit), Tabs darunter ---------- */
+.dt-head { display: flex; align-items: center; gap: 8px; margin: 4px 0 10px; }
+.dt-title { flex: 1; min-width: 0; }
+.dt-head h2 { margin: 0; font-size: 22px; line-height: 1.2; }
+.dt-meta { margin-top: 3px; font-size: 12.5px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dt-done { color: var(--ok); font-weight: 700; }
+.dt-head .hero-fab { position: static; flex: 0 0 auto; width: 42px; height: 42px; background: var(--surface-2, var(--surface)); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+.dt-head .hero-fab-done[aria-pressed="true"] { background: var(--ok); color: #fff; border-color: var(--ok); }
+.dt-tabs { display: none; }
+.dt-legbar { display: none; }
+#detail { overflow-anchor: none; }
+.dt-pager { display: flex; flex-direction: column; }
+.dt-page[data-page="info"] { order: -1; }
+.hike-facts { display: flex; flex-wrap: wrap; gap: 6px 14px; font-weight: 700; font-size: 14.5px; margin: 6px 0; }
+.hike-route { margin: 4px 0 0; font-size: 13px; color: var(--text-2); }
+.elev-svg { touch-action: pan-y; }
+body.detail-open .map-wrap .leg-toggle { display: flex; position: absolute; z-index: 1000; left: 50%; transform: translateX(-50%); top: calc(12px + env(safe-area-inset-top, 0px)); background: var(--surface); border-radius: 999px; padding: 3px; gap: 2px; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+@media (max-width: 959px) {
+  body.detail-open main.content { padding-left: 0; padding-right: 0; padding-top: 0; }
+  #detailMapSlot .map-wrap:not(.full) { height: 40vh; min-height: 260px; max-height: 440px; margin: 0; border: 0; border-radius: 0; }
+  body.detail-open .map-wrap:not(.full) .leaflet-control-zoom { display: none; }
+  body.detail-open .map-wrap:not(.full) .map-tools { top: calc(66px + env(safe-area-inset-top, 0px)); }
+  /* on phones the toggle sits in a bar under the map – the whole map is left for the route */
+  body.detail-open .map-wrap:not(.full) .leg-toggle,
+  body.detail-open .map-wrap:not(.full) .elev-overlay { display: none !important; }
+  .dt-legbar { display: flex; align-items: center; gap: 10px; padding: 8px 12px 0 12px; }
+  .dt-legbar .leg-toggle { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--surface-2, var(--surface)); border: 1px solid var(--border); }
+  .dt-legbar .leg-toggle button { border: 0; background: transparent; color: var(--text-2); font-weight: 700; font-size: 13px; min-height: 36px; padding: 0 12px; border-radius: 999px; cursor: pointer; }
+  .dt-legbar .leg-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .dt-legbar-info { flex: 1 1 auto; min-width: 0; text-align: right; font-size: 12.5px; font-weight: 700; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dt-pin { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2, var(--surface)); color: var(--text-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+  .dt-pin .ico { width: 19px; height: 19px; }
+  .dt-pin[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .dt-pin[aria-pressed="true"] .ico path:first-child { fill: currentColor; }
+  /* pinned: map + bar stay on top while the tab content scrolls underneath */
+  body.dt-pinned:not(.map-full-open) .dt-top { position: sticky; top: 0; z-index: 1150; background: var(--bg); padding-bottom: 8px; box-shadow: 0 3px 10px rgba(0,0,0,.10); }
+  body.dt-pinned #detailMapSlot .map-wrap:not(.full) { height: 34vh; min-height: 220px; }
+  body.dt-pinned.detail-open:not(.map-full-open) header.top { position: fixed; }
+  body.dt-pinned .dt-tabs { top: var(--dt-top-h, 0px); padding-top: 0; }
+  .dt-head { margin: 0; padding: 12px 12px 6px 16px; }
+  .dt-head h2 { font-size: 19px; }
+  .dt-head .hero-fab { width: 40px; height: 40px; }
+  .dt-tabs { display: flex; position: sticky; top: 0; z-index: 1200; padding: env(safe-area-inset-top, 0px) 8px 0; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .dt-tabs button { flex: 1 1 0; min-width: 0; min-height: 46px; padding: 0 4px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--text-2); font: 700 14px/1.2 var(--font-sans); cursor: pointer; white-space: nowrap; }
+  .dt-tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+  .dt-pager { flex-direction: row; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .dt-pager::-webkit-scrollbar { display: none; }
+  .dt-page { flex: 0 0 100%; width: 100%; min-width: 0; box-sizing: border-box; overflow-x: clip; scroll-snap-align: start; scroll-snap-stop: always; padding: 12px 16px 16px; }
+  .dt-page[data-page="info"] { order: 0; }
+  #detail .dt-page .hero { margin: -12px -16px 12px; }
+  #detail .dt-page .hero-media { height: 220px; }
+  #detail .dt-page .hero > p { margin: 8px 16px 0; }
+  #detail .dt-page .hero > .chips { margin: 12px 16px 0; }
+  #detail .dt-page .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+  #detail .dt-page .kpi-tile { padding: 7px 10px; min-width: 0; }
+  #detail .dt-page .kpi-label { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #detail .dt-page .kpi-val { font-size: 15px; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #detail .dt-page .kpi-sub { display: none; }
+  #detail .dt-page .hero-cta-row { margin: 12px 0 0; }
+  #detail .dt-page .hero-cta-row .act { width: 100%; justify-content: center; min-height: 48px; }
+}
 </style>
 </head>
 <body>
@@ -3023,6 +3086,17 @@ const I18N = {
     userTourDelete: "Eigene Tour löschen",
     userTourDeleteConfirm: "Diese eigene Tour wirklich löschen?",
     doneAdd: "Als gemacht markieren",
+    dtTabDay: "Dein Tag",
+    legToggleLbl: "Auf der Karte zeigen",
+    legAll: "Alles",
+    legOut: "Hin",
+    legRet: "Rück",
+    mapPin: "Karte oben anheften",
+    mapUnpin: "Karte mitscrollen lassen",
+    dtTabRides: "Fahrten",
+    dtTabHike: "Wandern",
+    dtTabInfo: "Info",
+    dtWalkTime: "Gehzeit",
     doneRemove: "Markierung „gemacht“ entfernen",
     doneAdded: "Als gemacht markiert ✓",
     doneRemoved: "Markierung entfernt",
@@ -3304,6 +3378,17 @@ const I18N = {
     userTourDelete: "Delete own tour",
     userTourDeleteConfirm: "Really delete this own tour?",
     doneAdd: "Mark as done",
+    dtTabDay: "Your day",
+    legToggleLbl: "Show on map",
+    legAll: "All",
+    legOut: "Out",
+    legRet: "Back",
+    mapPin: "Pin map to the top",
+    mapUnpin: "Let the map scroll away",
+    dtTabRides: "Rides",
+    dtTabHike: "Hike",
+    dtTabInfo: "Info",
+    dtWalkTime: "walking",
     doneRemove: "Remove “done” mark",
     doneAdded: "Marked as done ✓",
     doneRemoved: "Mark removed",
@@ -3548,6 +3633,7 @@ let state = {
   collapsedRegions: new Set((() => { const v = store.get("collapsedRegions", []); return Array.isArray(v) ? v.filter(x => typeof x === "string") : []; })()),
   prefApp: VALID_PREF_APPS.includes(rawPrefApp) ? rawPrefApp : "mvv",
   directOpen: store.get("directOpen", false) === true,
+  mapPinned: store.get("mapPinned", false) === true,
   favs: loadValidFavs(),
   done: loadValidDone(),
   sharedTrips: loadSharedTrips(),
@@ -4696,7 +4782,7 @@ function addRideMarks(s, pts, col) {
   if (!pts || pts.length < 2 || s.kind !== "ride") return;
   const lbl = s.line || s.lineName || "";
   if (lbl) {
-    const icon = L.divIcon({className: "map-line-label-wrap", html: `<span class="map-line-label" style="background:${col}">${esc(lbl)}</span>`, iconSize: null});
+    const icon = L.divIcon({className: "map-line-label-wrap", html: `<span class="map-line-label" style="background:${col}" data-l="${esc(lbl)}" aria-hidden="true"></span>`, iconSize: null});
     const mk = L.marker(pts[Math.floor(pts.length / 2)], {icon, interactive: false, keyboard: false});
     singleGroup.addLayer(mk);
     lineLabelLayers.push({mk, pts});
@@ -4829,6 +4915,11 @@ function drawSingle(t) {
 
 function fitCurrent() {
   if (!currentBounds || !currentBounds.isValid()) return;
+  // Measure the real map size first: the map is moved between layouts and resized (pin, tabs);
+  // a fit with a stale size starts a zoom animation to the wrong level, and Leaflet drops every
+  // further fit while that animation runs.
+  const mc = map.getContainer();
+  if (mc && mc.clientWidth && mc.clientHeight) map.invalidateSize({pan: false});
   if (state.tab === "karte" && !state.sel && !$("#mapWrap").classList.contains("full")) {
     const sheetH = $("#mapSheet")?.getBoundingClientRect().height || 0;
     const mapY = map.getSize().y || window.innerHeight || 800;
@@ -4841,6 +4932,20 @@ function fitCurrent() {
       const padT = fl && mw ? Math.max(24, Math.min(Math.round(fl.getBoundingClientRect().bottom - mw.getBoundingClientRect().top + 12), Math.floor(mapY * 0.35))) : 24;
       map.fitBounds(currentBounds, {paddingTopLeft: [24, padT], paddingBottomRight: [24, padB], maxZoom: 14});
     }
+    return;
+  }
+  if (state.sel && window.innerWidth < 960 && !$("#mapWrap").classList.contains("full")) {
+    const mw = $("#mapWrap").getBoundingClientRect();
+    const lt = $("#legToggle"), top = $("#top");
+    let padT = 24;
+    if (lt && lt.offsetParent !== null) padT = Math.max(padT, lt.getBoundingClientRect().bottom - mw.top + 10);
+    else if (top) padT = Math.max(padT, Math.min(top.getBoundingClientRect().bottom - mw.top, 60) + 4);
+    padT = Math.min(padT, Math.floor((map.getSize().y || 300) * 0.45));
+    // quarter zoom steps: with whole steps a slightly shorter map (pinned) drops a full level → route half as big
+    const snap = map.options.zoomSnap;
+    map.options.zoomSnap = 0.25;
+    map.fitBounds(currentBounds, {paddingTopLeft: [24, padT], paddingBottomRight: [24, 24], maxZoom: 14, animate: false});
+    map.options.zoomSnap = snap;
     return;
   }
   map.fitBounds(currentBounds, {padding: [24, 24], maxZoom: 14});
@@ -4858,7 +4963,7 @@ function focusStep(idx) {
 $("#fitBtn").addEventListener("click", fitCurrent);
 function setLegFilter(v) {
   state.mapLegFilter = ["out", "ret"].includes(v) ? v : "all";
-  document.querySelectorAll("#legToggle button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.leg === state.mapLegFilter)));
+  document.querySelectorAll(".leg-toggle button[data-leg]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.leg === state.mapLegFilter)));
   const t = state.sel && BY_ID[state.sel];
   if (t) { drawSingle(t); fitCurrent(); }
   else if (state.tab === "karte" && state.mapFocusId) { drawOverview(); fitCurrent(); }
@@ -4872,7 +4977,6 @@ $("#fullBtn").addEventListener("click", () => {
   const isFull = w.classList.toggle("full");
   w.classList.remove("mini");
   document.body.classList.toggle("map-full-open", isFull);
-  if (!isFull && state.mapLegFilter && state.mapLegFilter !== "all") setLegFilter("all");
   setTimeout(() => {
     map.invalidateSize();
     fitCurrent();
@@ -6992,10 +7096,129 @@ function restoreDetailParts() {
 }
 
 function renderDetail(t) {
+  const same = Boolean($("#dtPager") && t && state.dtTourId === t.id);
+  const keep = same ? {page: state.detailPage, y: window.scrollY} : null;
   renderDetailInner(t);
   placeDetailParts();
+  state.dtTourId = t ? t.id : null;
+  dtRestore(keep);
+  // re-render (other time, base, day): stay exactly where you were
+  if (keep && Math.abs(window.scrollY - keep.y) > 1) window.scrollTo({top: keep.y, behavior: "instant"});
   if (t && t.source === "user") ensureLivePlan(t);
 }
+
+/* ---------- Tour page: map on top (scrolls away), swipeable tabs below (mobile) ---------- */
+let dtLastIdx = 0;
+function dtPaged() { return MOBILE_MQ.matches; }
+function dtPageEls() { return [...document.querySelectorAll("#dtPager > .dt-page")]; }
+function dtSyncTabs(idx) {
+  document.querySelectorAll("#dtTabs [data-page]").forEach((b, i) => {
+    b.setAttribute("aria-selected", String(i === idx));
+    b.tabIndex = i === idx ? 0 : -1;
+  });
+}
+/* The pager is as tall as the visible tab – otherwise short tabs would end in empty space. */
+function dtSizePager() {
+  const pager = $("#dtPager");
+  if (!pager) return;
+  if (!dtPaged()) { pager.style.height = ""; return; }
+  const page = dtPageEls()[dtLastIdx];
+  if (page) pager.style.height = page.offsetHeight + "px";
+  if (pager.scrollTop) pager.scrollTop = 0;
+}
+const dtResizeObs = window.ResizeObserver ? new ResizeObserver(() => dtSizePager()) : null;
+function dtStickTop() {
+  const tabs = $("#dtTabs");
+  return tabs ? (parseFloat(getComputedStyle(tabs).top) || 0) : 0;
+}
+function dtTabsTop() {
+  const pager = $("#dtPager"), tabs = $("#dtTabs");
+  if (!pager || !tabs) return 0;
+  return Math.max(0, pager.getBoundingClientRect().top + window.scrollY - tabs.offsetHeight - dtStickTop());
+}
+function dtRestore(keep) {
+  const pager = $("#dtPager");
+  if (!pager) return;
+  const pages = dtPageEls();
+  let idx = pages.findIndex(p => p.dataset.page === (keep ? keep.page : state.detailPage));
+  if (idx < 0) idx = 0;
+  state.detailPage = pages[idx].dataset.page;
+  dtLastIdx = idx;
+  if (dtPaged()) pager.scrollLeft = idx * pager.clientWidth;
+  dtSyncTabs(idx);
+  dtSizePager();
+  if (dtResizeObs) { dtResizeObs.disconnect(); pages.forEach(p => dtResizeObs.observe(p)); }
+  if (dtTopObs && $("#dtTop")) { dtTopObs.disconnect(); dtTopObs.observe($("#dtTop")); }
+  dtTopHeight();
+}
+function dtShowPage(name, opts) {
+  const pager = $("#dtPager");
+  if (!pager) return;
+  const pages = dtPageEls();
+  let idx = pages.findIndex(p => p.dataset.page === name);
+  if (idx < 0) idx = 0;
+  const target = opts && opts.target ? pages[idx].querySelector(opts.target) : null;
+  if (dtPaged()) {
+    pager.scrollTo({left: idx * pager.clientWidth, behavior: "smooth"});
+    dtPageChanged(idx);
+    if (target) {
+      const y = target.getBoundingClientRect().top + window.scrollY - ($("#dtTabs")?.offsetHeight || 0) - dtStickTop() - 8;
+      window.scrollTo({top: Math.max(0, y), behavior: "smooth"});
+    }
+  } else {
+    (target || pages[idx]).scrollIntoView({behavior: "smooth", block: "start"});
+    dtPageChanged(idx);
+  }
+}
+function dtPageChanged(idx) {
+  const pages = dtPageEls();
+  if (!pages[idx]) return;
+  const prev = state.detailPage;
+  dtLastIdx = idx;
+  state.detailPage = pages[idx].dataset.page;
+  dtSyncTabs(idx);
+  dtSizePager();
+  if (prev !== state.detailPage) {
+    // scrolled past the tab bar: start the new tab at its top
+    if (dtPaged()) { const top = dtTabsTop(); if (window.scrollY > top) window.scrollTo({top}); }
+  }
+}
+$("#detail").addEventListener("scroll", e => {
+  const el = e.target;
+  if (!el || el.id !== "dtPager" || !dtPaged()) return;
+  if (el.scrollTop) el.scrollTop = 0;
+  const idx = Math.round(el.scrollLeft / Math.max(1, el.clientWidth));
+  if (idx !== dtLastIdx) dtPageChanged(idx);
+}, true);
+window.addEventListener("resize", () => {
+  const pager = $("#dtPager");
+  if (state.sel && pager && dtPaged()) pager.scrollLeft = dtLastIdx * pager.clientWidth;
+  dtSizePager();
+});
+
+/* Pinned map: map + bar stay at the top, tabs stick right below, only the content scrolls. */
+function dtTopHeight() {
+  const top = $("#dtTop");
+  const h = state.mapPinned && top && dtPaged() ? top.offsetHeight : 0;
+  document.documentElement.style.setProperty("--dt-top-h", h + "px");
+}
+const dtTopObs = window.ResizeObserver ? new ResizeObserver(() => dtTopHeight()) : null;
+function setMapPinned(on) {
+  state.mapPinned = Boolean(on);
+  store.set("mapPinned", state.mapPinned);
+  document.body.classList.toggle("dt-pinned", state.mapPinned);
+  const b = $("#dtPinBtn");
+  if (b) {
+    const lbl = state.mapPinned ? T().mapUnpin : T().mapPin;
+    b.setAttribute("aria-pressed", String(state.mapPinned));
+    b.setAttribute("aria-label", lbl);
+    b.title = lbl;
+  }
+  dtTopHeight();
+  setTimeout(() => { map.invalidateSize(); fitCurrent(); dtTopHeight(); }, 60);
+}
+document.body.classList.toggle("dt-pinned", state.mapPinned);
+
 if (MOBILE_MQ.addEventListener) MOBILE_MQ.addEventListener("change", () => { if (state.sel) placeDetailParts(); });
 
 function renderDetailInner(t) {
@@ -7238,38 +7461,76 @@ function renderDetailInner(t) {
   const favActive = isFav(t.id);
   const tripActiveHere = Boolean(state.activeTrip && state.activeTrip.tourId === t.id);
 
+  const elevHtml = elevProfileHTML(t);
+  const hasHikePage = hasKm || hasWalk || Boolean(elevHtml);
+  const dtPages = [["tag", tDict.dtTabDay], ["fahrten", tDict.dtTabRides], ...(hasHikePage ? [["wandern", tDict.dtTabHike]] : []), ["info", tDict.dtTabInfo]];
+  const hikeFacts = [
+    hasKm ? `${kmStr} km` : "",
+    hmUp ? `↗ ${hmUp} hm` : "",
+    hmDown ? `↘ ${hmDown} hm` : "",
+    hasWalk ? `${tDict.dtWalkTime} ${fmtDur(h.walkMin)}` : ""
+  ].filter(Boolean);
+
   $("#detail").innerHTML = `
-    <div class="hero">
-      <div class="hero-media">
-        <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}" decoding="async">
-        ${creditHTML(t)}
-        <button type="button" class="hero-fab hero-fab-done" id="detailDoneBtn" data-done-id="${esc(t.id)}" aria-pressed="${isDone(t.id)}" aria-label="${esc(isDone(t.id) ? tDict.doneRemove : tDict.doneAdd)}" title="${esc(isDone(t.id) ? tDict.doneRemove : tDict.doneAdd)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
-        <button type="button" class="hero-fab" id="detailFavBtn" data-fav-id="${esc(t.id)}" aria-pressed="${favActive}" aria-label="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}" title="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    <div class="dt-top" id="dtTop">
+    <div class="detail-map-slot" id="detailMapSlot"></div>
+    <div class="dt-legbar">
+      <div class="leg-toggle leg-toggle-inline" role="group" aria-label="${esc(tDict.legToggleLbl)}">
+        ${[["all", tDict.legAll], ["out", tDict.legOut], ["ret", tDict.legRet]].map(([k, lbl]) => `<button type="button" data-leg="${k}" aria-pressed="${(state.mapLegFilter || "all") === k}">${esc(lbl)}</button>`).join("")}
       </div>
-      <div class="chips">${doneChipHTML(t.id)}${metaChips.join("")}</div>
-      <h2>${esc(title)}</h2>
-      <p>${esc(sub)}</p>
-      <div class="hero-cta-row">
-        <button type="button" class="act primary" id="startTripBtn">${esc(tripActiveHere ? tDict.openTripBtn : tDict.startTripBtn)}</button>
-      </div>
+      <span class="dt-legbar-info">${hasKm ? `🥾 ${esc(kmStr)} km${hmUp ? ` · ↗ ${hmUp} hm` : ""}` : ""}</span>
+      <button type="button" class="dt-pin" id="dtPinBtn" aria-pressed="${Boolean(state.mapPinned)}" aria-label="${esc(state.mapPinned ? tDict.mapUnpin : tDict.mapPin)}" title="${esc(state.mapPinned ? tDict.mapUnpin : tDict.mapPin)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 6 4 4H6l4-4z"/><path d="M12 13v8"/></svg></button>
+    </div>
     </div>
 
-    ${kpiHtml}
+    <div class="dt-head">
+      <div class="dt-title">
+        <h2>${esc(title)}</h2>
+        <div class="dt-meta">${isDone(t.id) ? `<span class="dt-done">✓ ${esc(tDict.doneChip || "Gemacht")}</span> · ` : ""}${esc(regLbl)} · ${esc(diffLbl)} · ${esc(loopBadge)}</div>
+      </div>
+      <button type="button" class="hero-fab hero-fab-done" id="detailDoneBtn" data-done-id="${esc(t.id)}" aria-pressed="${isDone(t.id)}" aria-label="${esc(isDone(t.id) ? tDict.doneRemove : tDict.doneAdd)}" title="${esc(isDone(t.id) ? tDict.doneRemove : tDict.doneAdd)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+      <button type="button" class="hero-fab" id="detailFavBtn" data-fav-id="${esc(t.id)}" aria-pressed="${favActive}" aria-label="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}" title="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    </div>
 
-    ${elevProfileHTML(t)}
+    <div class="dt-tabs" id="dtTabs" role="tablist">
+      ${dtPages.map(([k, lbl], i) => `<button type="button" role="tab" data-page="${k}" aria-selected="${i === 0}" aria-controls="dtPage-${k}">${esc(lbl)}</button>`).join("")}
+    </div>
 
-    ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
-
-    <div class="detail-map-slot" id="detailMapSlot"></div>
-
-    <div class="box day-flow-box">
-      <div class="box-head"><h4>${esc(tDict.yourDay(dayDateLbl))}</h4><a class="box-link" href="#detailTimes" data-a="times">${esc(tDict.changeTimes)}</a></div>
-      ${dayLineHtml}
+    <div class="dt-pager" id="dtPager">
+      <section class="dt-page" id="dtPage-tag" data-page="tag" role="tabpanel">
+        ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
+        ${kpiHtml}
+        <div class="box day-flow-box">
+          <div class="box-head"><h4>${esc(tDict.yourDay(dayDateLbl))}</h4><a class="box-link" href="#detailTimes" data-a="times">${esc(tDict.changeTimes)}</a></div>
+          ${dayLineHtml}
       ${sharedTripsFor(t.id).map(st => `<div class="shared-trip" data-shared-id="${esc(st.id)}">
         <div class="box-head"><h4>📲 ${esc(st.role === "ret" ? tDict.sharedRet : tDict.sharedOut)} · ${esc(st.dep)}–${esc(st.arr)}</h4>${st.link ? `<a class="box-link" href="${esc(sharedTripLiveUrl(st))}" target="_blank" rel="noopener">${esc(tDict.sharedLive)}</a>` : ""}</div>
         <details class="dl-more"><summary><span class="dl-badges">${lineBadges(st.legs)}</span><span class="dl-toggle">${esc(tDict.showTimes)}</span></summary>${sharedTripTimelineHTML(st)}</details>
         <button type="button" class="link-btn shared-del" data-shared-del="${esc(st.id)}">${esc(tDict.sharedRemove)}</button>
       </div>`).join("")}
+        </div>
+        <div class="hero-cta-row">
+          <button type="button" class="act primary" id="startTripBtn">${esc(tripActiveHere ? tDict.openTripBtn : tDict.startTripBtn)}</button>
+        </div>
+      </section>
+
+      <section class="dt-page" id="dtPage-fahrten" data-page="fahrten" role="tabpanel">
+      <div class="box schedule-box" id="detailTimes">
+        <h4>${esc(tDict.changeTimes)}</h4>
+        <div class="detail-bar-slot" id="detailBarSlot"></div>
+        <h4 class="sub-h">${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
+        ${tpHtml}
+        ${winsHtml}
+        <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
+        <div class="stay-row">${stayBtnsHtml}</div>
+        ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
+        ${shortStayWarn}
+        <div class="chips" style="margin-top:8px">
+          <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
+        </div>
+      </div>
+
+        <div class="box day-flow-box">
       <h4 class="sub-h">${esc(tDict.flowTitle)}</h4>
       <div class="day-flow">
         ${compactOutHtml}
@@ -7291,29 +7552,36 @@ function renderDetailInner(t) {
           <div class="tl">${revStepsHtml}</div>
         </div>
       </details>` : ""}
-    </div>
+        </div>
+      </section>
 
-    <div class="box schedule-box" id="detailTimes">
-      <h4>${esc(tDict.changeTimes)}</h4>
-      <div class="detail-bar-slot" id="detailBarSlot"></div>
-      <h4 class="sub-h">${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
-      ${tpHtml}
-      ${winsHtml}
-      <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
-      <div class="stay-row">${stayBtnsHtml}</div>
-      ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
-      ${shortStayWarn}
-      <div class="chips" style="margin-top:8px">
-        <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
-      </div>
-    </div>
+      ${hasHikePage ? `<section class="dt-page" id="dtPage-wandern" data-page="wandern" role="tabpanel">
+        ${elevHtml}
+        <div class="box hike-box">
+          <h4>🥾 ${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</h4>
+          ${hikeFacts.length ? `<div class="hike-facts">${hikeFacts.map(x => `<span>${esc(x)}</span>`).join("")}</div>` : ""}
+          <p class="hike-route">${esc(fwdEndName)}${rev.find(sg => sg.from?.name)?.from?.name && rev.find(sg => sg.from?.name).from.name !== fwdEndName ? ` → ${esc(rev.find(sg => sg.from?.name).from.name)}` : ""} · ${esc(loopFlowTxt)}</p>
+        </div>
+      </section>` : ""}
 
+      <section class="dt-page" id="dtPage-info" data-page="info" role="tabpanel">
+        <div class="hero">
+          <div class="hero-media">
+            <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}" decoding="async">
+            ${creditHTML(t)}
+          </div>
+          <div class="chips">${doneChipHTML(t.id)}${metaChips.join("")}</div>
+          <p>${esc(sub)}</p>
+        </div>
     ${t.source === "user" ? `<div class="box user-tour-box"><p>${esc(tDict.userTourNote)}</p><button type="button" class="link-btn" data-user-del="${esc(t.id)}">${esc(tDict.userTourDelete)}</button></div>` : ""}
 
-    ${(sunTxt || tipsTxt) ? `<div class="box">
-      ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
-      ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
-    </div>` : ""}
+        ${(sunTxt || tipsTxt) ? `<div class="box">
+          ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
+          ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
+        </div>` : ""}
+
+      </section>
+    </div>
 
     <div class="detail-sticky-bar" id="detailStickyBar">
       <button type="button" class="act" id="openAppSheetBtn">
@@ -7368,7 +7636,21 @@ $("#detail").addEventListener("click", e => {
   const timesLink = e.target.closest("[data-a='times']");
   if (timesLink) {
     e.preventDefault();
-    $("#detailTimes")?.scrollIntoView({behavior: "smooth", block: "start"});
+    dtShowPage("fahrten", {target: "#detailTimes"});
+    return;
+  }
+  if (e.target.closest("#dtPinBtn")) {
+    setMapPinned(!state.mapPinned);
+    return;
+  }
+  const legBtn = e.target.closest(".dt-legbar button[data-leg]");
+  if (legBtn) {
+    setLegFilter(legBtn.dataset.leg);
+    return;
+  }
+  const tabBtn = e.target.closest("#dtTabs [data-page]");
+  if (tabBtn) {
+    dtShowPage(tabBtn.dataset.page);
     return;
   }
   const gpxBtn = e.target.closest("[data-a='gpx'], #gpxBtn");
@@ -7957,6 +8239,12 @@ function openTour(id, opts) {
   const sheet = $("#mapSheet");
   if (sheet) sheet.hidden = true;
 
+  if (state.sel !== id) {
+    state.detailPage = "tag";
+    state.dtTourId = null;
+  }
+  state.mapLegFilter = "all";
+  document.querySelectorAll(".leg-toggle button[data-leg]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.leg === "all")));
   state.sel = id;
   state.winIdx = null;
   state.revIdx = null;
@@ -7980,6 +8268,9 @@ function openTour(id, opts) {
 
 function closeTour(opts) {
   closeAppSheet({clear: true});
+  state.mapLegFilter = "all";
+  state.dtTourId = null;
+  document.querySelectorAll(".leg-toggle button[data-leg]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.leg === "all")));
   state.sel = null;
   state.winIdx = null;
   state.revIdx = null;
@@ -8036,7 +8327,7 @@ window.addEventListener("popstate", e => {
 });
 
 $("#backBtn").addEventListener("click", () => closeTour());
-$("#basePill")?.addEventListener("click", () => $("#detailTimes")?.scrollIntoView({behavior: "smooth", block: "start"}));
+$("#basePill")?.addEventListener("click", () => dtShowPage("fahrten", {target: "#detailTimes"}));
 
 /* Called by the native Android app on the system back gesture; returns true if the app handled it. */
 window.swHandleBack = function () {
