@@ -3242,6 +3242,26 @@ body[data-tab="karte"]:not(.detail-open) .layer-menu { top: calc(12px + env(safe
 .box-link { white-space: nowrap; }
 .shared-trip .box-head { flex-wrap: wrap; row-gap: 2px; }
 .shared-trip .box-head h4 { flex: 1 1 200px; min-width: 0; }
+
+/* Liniennummern auf der Karte */
+.map-line-label-wrap { background: none; border: 0; }
+.map-line-label { display: inline-block; transform: translate(-50%, -50%); padding: 2px 7px; border-radius: 6px; color: #fff; font: 700 11.5px/1.3 var(--font-sans); white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,.35); border: 1.5px solid #fff; }
+/* "Nur diese Route" im Karten-Tab */
+.sheet-route-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; min-height: 34px; padding: 0 10px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.sheet-route-btn .ico { width: 15px; height: 15px; }
+.map-focus { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: var(--radius-md); background: var(--accent); color: var(--accent-ink); box-shadow: 0 2px 10px rgba(0,0,0,.2); }
+.map-focus[hidden] { display: none; }
+.map-focus-name { flex: 1; min-width: 0; font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.map-focus-open { border: 0; border-radius: 999px; background: rgba(255,255,255,.2); color: inherit; font-weight: 700; font-size: 12.5px; min-height: 34px; padding: 0 12px; cursor: pointer; }
+.map-focus-close { border: 0; background: rgba(255,255,255,.2); color: inherit; width: 34px; height: 34px; border-radius: 999px; font-size: 20px; cursor: pointer; }
+body[data-tab="karte"]:not(.detail-open) .map-float { pointer-events: none; }
+body[data-tab="karte"]:not(.detail-open) .map-float > * { pointer-events: auto; }
+
+/* Hin/Rück-Umschalter in der Vollbild-Karte der Tourseite */
+.leg-toggle { display: none; }
+body.detail-open .map-wrap.full .leg-toggle { display: flex; position: absolute; z-index: 1000; left: 50%; transform: translateX(-50%); top: calc(12px + env(safe-area-inset-top, 0px)); background: var(--surface); border-radius: 999px; padding: 3px; gap: 2px; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+.leg-toggle button { border: 0; background: transparent; color: var(--text-2); font-weight: 700; font-size: 13.5px; min-height: 38px; padding: 0 14px; border-radius: 999px; cursor: pointer; }
+.leg-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -3342,6 +3362,11 @@ body[data-tab="karte"]:not(.detail-open) .layer-menu { top: calc(12px + env(safe
       <div class="map-float" id="mapFloat">
         <label class="map-search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mapQ" type="search" autocomplete="off" aria-label="Ort oder Tour suchen" placeholder="Ort oder Tour suchen"><button type="button" class="map-q-clear" id="mapQClear" aria-label="Suche löschen">×</button></label>
         <div class="map-regions" id="mapRegions"></div>
+        <div class="map-focus" id="mapFocus" hidden>
+          <span class="map-focus-name" id="mapFocusName"></span>
+          <button type="button" class="map-focus-open" id="mapFocusOpen"></button>
+          <button type="button" class="map-focus-close" id="mapFocusClose" aria-label="Alle Routen">×</button>
+        </div>
       </div>
       <div class="elev-overlay" id="elevBadge">Südwest-Übersicht</div>
       <div class="map-tools">
@@ -3352,6 +3377,11 @@ body[data-tab="karte"]:not(.detail-open) .layer-menu { top: calc(12px + env(safe
         <button type="button" class="icon-btn" id="gpsBtn" title="GPS-Standort" aria-label="GPS-Standort"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
       <div class="layer-menu" id="layerMenu"></div>
+      <div class="leg-toggle" id="legToggle" role="group" aria-label="Hin- oder Rückfahrt zeigen">
+        <button type="button" data-leg="all" aria-pressed="true">Alles</button>
+        <button type="button" data-leg="out" aria-pressed="false">Hin</button>
+        <button type="button" data-leg="ret" aria-pressed="false">Rück</button>
+      </div>
     </div>
     <main class="content">
       <section class="list" id="list"></section>
@@ -3732,6 +3762,10 @@ const I18N = {
     mapSheetTitle: n => n === 1 ? "1 Tour hier" : `${n} Touren hier`,
     rideLine: d => `${d} Anfahrt`,
     mapSearchPh: "Ort oder Tour suchen",
+    mapFocusBtn: "Nur diese Route",
+    mapFocusTitle: "Nur diese Route",
+    mapFocusOpen: "Tourseite",
+    mapFocusAll: "Alle Routen zeigen",
     regShort: {pfaelzerwald: "Pfalz", odenwald: "Odenwald", schwarzwald: "Schwarzwald"},
     mapEmptyTitle: "Keine Touren im Kartenausschnitt",
     mapEmptyHint: "Zoome heraus oder springe zurück zur Südwest-Übersicht.",
@@ -4009,6 +4043,10 @@ const I18N = {
     mapSheetTitle: n => n === 1 ? "1 tour here" : `${n} tours here`,
     rideLine: d => `${d} by train/bus`,
     mapSearchPh: "Search place or tour",
+    mapFocusBtn: "Only this route",
+    mapFocusTitle: "Only this route",
+    mapFocusOpen: "Tour page",
+    mapFocusAll: "Show all routes",
     regShort: {pfaelzerwald: "Palatinate", odenwald: "Odenwald", schwarzwald: "Black Forest"},
     mapEmptyTitle: "No tours in map area",
     mapEmptyHint: "Zoom out or reset back to the Southwest overview.",
@@ -4829,6 +4867,69 @@ map.on("click", () => {
   }
 });
 
+(function oneFingerZoom() {
+  // Same mechanics as Leaflet's pinch zoom: during the gesture map._move(..., {pinch: true}) only scales the
+  // existing tiles (no reload → no white map); new tiles load once, when the finger is lifted.
+  const el = map.getContainer();
+  let lastTap = 0, lastPt = null, armed = false, moved = false, startY = 0, startZoom = 0;
+  let anchor = null, offset = null, center = null, zoom = 0, raf = null;
+  const opt = {passive: false, capture: true};
+  el.addEventListener("touchstart", e => {
+    if (e.touches.length !== 1) { armed = false; return; }
+    const t = e.touches[0];
+    if (Date.now() - lastTap < 320 && lastPt && Math.hypot(t.clientX - lastPt[0], t.clientY - lastPt[1]) < 40) {
+      const r = el.getBoundingClientRect();
+      const p = L.point(t.clientX - r.left, t.clientY - r.top);
+      armed = true; moved = false; startY = t.clientY; startZoom = zoom = map.getZoom();
+      anchor = map.containerPointToLatLng(p);
+      offset = p.subtract(map.getSize().divideBy(2));
+      center = map.getCenter();
+      map.dragging.disable();
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, opt);
+  el.addEventListener("touchmove", e => {
+    if (!armed || e.touches.length !== 1) return;
+    const dy = e.touches[0].clientY - startY;
+    if (!moved && Math.abs(dy) > 6) {
+      moved = true;
+      map._stop();
+      map.fire("movestart").fire("zoomstart");
+    }
+    if (moved) {
+      zoom = Math.max(map.getMinZoom(), Math.min(map.getMaxZoom(), startZoom + dy / 110));
+      center = map.unproject(map.project(anchor, zoom).subtract(offset), zoom);
+      L.Util.cancelAnimFrame(raf);
+      raf = L.Util.requestAnimFrame(() => map._move(center, zoom, {pinch: true, round: false}), null, true);
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  }, opt);
+  el.addEventListener("touchend", e => {
+    if (armed) {
+      armed = false;
+      map.dragging.enable();
+      L.Util.cancelAnimFrame(raf);
+      if (moved) {
+        const z = map._limitZoom(zoom);
+        if (map.options.zoomAnimation) map._animateZoom(center, z, true, map.options.zoomSnap);
+        else map._resetView(center, z);
+        map.doubleClickZoom.disable();
+        setTimeout(() => map.doubleClickZoom.enable(), 400);
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      lastTap = 0;
+      return;
+    }
+    if (e.touches.length === 0 && e.changedTouches.length === 1) {
+      lastTap = Date.now();
+      lastPt = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    }
+  }, opt);
+})();
+
 const overviewGroup = L.layerGroup().addTo(map);
 const singleGroup = L.layerGroup().addTo(map);
 let segLayerMap = [];
@@ -4896,7 +4997,20 @@ function tourMiddle(t, fwdEnd, revStart) {
   return out;
 }
 
+/* Karte tab: "Nur diese Route" – only one tour with all lines, transfers and its middle stage */
+function setMapFocus(id) {
+  state.mapFocusId = id && BY_ID[id] ? id : null;
+  if (state.mapFocusId) highlightMapTour(null);
+  drawOverview();
+  fitCurrent();
+  renderMapSheet();
+}
+
 function drawOverview() {
+  if (state.tab === "karte" && !state.sel && state.mapFocusId && BY_ID[state.mapFocusId]) {
+    drawSingle(BY_ID[state.mapFocusId]);
+    return;
+  }
   overviewGroup.clearLayers();
   singleGroup.clearLayers();
   overviewMeta = new Map();
@@ -5192,6 +5306,7 @@ function sheetCardHTML(t) {
       <div class="sheet-card-line">${esc(rideLine)}</div>
       ${kmLine ? `<div class="sheet-card-line">${esc(kmLine)}</div>` : ""}
       <div class="sheet-card-time">${esc(dep)} → ${esc(arr)}</div>
+      ${state.mapFocusId === t.id ? "" : `<button type="button" class="sheet-route-btn" data-focus-id="${esc(t.id)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>${esc(T().mapFocusBtn)}</button>`}
     </div>
     ${favBtnHTML(t.id, "fav-inline")}
   </div>`;
@@ -5204,9 +5319,15 @@ function renderMapSheet() {
   if (!sheet || !body) return;
   const tDict = T();
   const vb = map.getBounds();
-  const inView = TOURS.filter(t => matchesFilter(t) && isTourInMapBounds(t.id, vb));
-  $("#mapSheetTitle").textContent = tDict.mapSheetTitle(inView.length);
+  const focus = state.mapFocusId && BY_ID[state.mapFocusId];
+  const inView = focus ? [focus] : TOURS.filter(t => matchesFilter(t) && isTourInMapBounds(t.id, vb));
+  $("#mapSheetTitle").textContent = focus ? tDict.mapFocusTitle : tDict.mapSheetTitle(inView.length);
   renderMapRegions();
+  const fb = $("#mapFocus");
+  if (fb) {
+    fb.hidden = !focus;
+    if (focus) $("#mapFocusName").textContent = tourTitle(focus);
+  }
   const dayLbl = (tDict.days.find(d => d[0] === state.day) || ["", ""])[1];
   $("#mapSheetBaseChip").textContent = `${state.base === "karlsruhe" ? "❤️ Karlsruhe" : "🏠 Jugenheim"} · ${dayLbl}`;
 
@@ -5234,10 +5355,43 @@ function renderMapSheet() {
   body.innerHTML = ordered.map(sheetCardHTML).join("");
 }
 
+/* Line numbers on the map: a coloured label per ride (shown when the ride is long enough on screen),
+   small dots at boarding/alighting stops with time + stop on tap. */
+let lineLabelLayers = [];
+function addRideMarks(s, pts, col) {
+  if (!pts || pts.length < 2 || s.kind !== "ride") return;
+  const lbl = s.line || s.lineName || "";
+  if (lbl) {
+    const icon = L.divIcon({className: "map-line-label-wrap", html: `<span class="map-line-label" style="background:${col}">${esc(lbl)}</span>`, iconSize: null});
+    const mk = L.marker(pts[Math.floor(pts.length / 2)], {icon, interactive: false, keyboard: false});
+    singleGroup.addLayer(mk);
+    lineLabelLayers.push({mk, pts});
+  }
+  [[pts[0], s.dep, s.from], [pts[pts.length - 1], s.arr, s.to]].forEach(([q, hm, st]) => {
+    if (!q) return;
+    const dot = L.circleMarker(q, {radius: 4.5, color: col, weight: 2.5, fillColor: "#ffffff", fillOpacity: 1});
+    dot.bindTooltip(`${esc(hm || "")} ${esc(st?.name || "")}${st?.platform ? ` · ${esc(T().platform)} ${esc(st.platform)}` : ""}${lbl ? ` · ${esc(lbl)}` : ""}`, {direction: "top"});
+    singleGroup.addLayer(dot);
+  });
+}
+function updateLineLabels() {
+  lineLabelLayers.forEach(({mk, pts}) => {
+    const el = mk.getElement && mk.getElement();
+    if (!el) return;
+    const a = map.latLngToContainerPoint(pts[0]), b = map.latLngToContainerPoint(pts[pts.length - 1]);
+    let span = a.distanceTo(b);
+    const m = map.latLngToContainerPoint(pts[Math.floor(pts.length / 2)]);
+    span = Math.max(span, a.distanceTo(m) + m.distanceTo(b) * 0.5);
+    el.style.display = span > 70 ? "" : "none";
+  });
+}
+map.on("zoomend moveend", updateLineLabels);
+
 function drawSingle(t) {
   overviewGroup.clearLayers();
   singleGroup.clearLayers();
   segLayerMap = [];
+  lineLabelLayers = [];
   if (!t) return;
   const bInfo = getBaseInfo(state.base);
   const bounds = L.latLngBounds([[bInfo.lat, bInfo.lon]]);
@@ -5254,7 +5408,10 @@ function drawSingle(t) {
 
   // Draw transit approach from active base (ensures distinct rail vs bus colors & base-dependent geometry)
   const allTransit = [...fwd, ...rev];
+  const legFilter = state.mapLegFilter || "all";
   allTransit.forEach((s, idx) => {
+    if (legFilter === "out" && idx >= fwd.length) return;
+    if (legFilter === "ret" && idx < fwd.length) return;
     const pts = getSegmentCoords(s, bInfo, t.transit?.startStop);
     if (isLongStraight(pts, hasRealPoly(s))) {
       segLayerMap[idx] = L.polyline(pts);
@@ -5279,12 +5436,13 @@ function drawSingle(t) {
       singleGroup.addLayer(line);
       segLayerMap[idx] = line;
       bounds.extend(line.getBounds());
+      if (!isWalk) addRideMarks(s, pts, strokeCol);
     }
   });
 
   // Timetabled middle stage of ÖPNV round trips (e.g. Koblenz → Limburg)
   const midSt = getMiddle(t, state.base, state.day, fwd, rev);
-  if (midSt && midSt.segs.length) {
+  if (midSt && midSt.segs.length && (state.mapLegFilter || "all") === "all") {
     midSt.segs.forEach(s => {
       const pts = getSegmentCoords(s);
       if (pts.length < 2 || isLongStraight(pts, hasRealPoly(s))) return;
@@ -5293,6 +5451,7 @@ function drawSingle(t) {
       const ln = L.polyline(pts, {color: isWalk ? "#64748b" : (MODE_COLORS[mode] || "#7c3aed"), weight: isWalk ? 3 : 5, opacity: 0.92, dashArray: isWalk ? "1 7" : null, lineCap: "round"});
       singleGroup.addLayer(ln);
       bounds.extend(ln.getBounds());
+      if (!isWalk) addRideMarks(s, pts, MODE_COLORS[mode] || "#7c3aed");
     });
   }
 
@@ -5331,6 +5490,7 @@ function drawSingle(t) {
   }
 
   currentBounds = bounds;
+  setTimeout(updateLineLabels, 0);
 }
 
 function fitCurrent() {
@@ -5342,7 +5502,10 @@ function fitCurrent() {
       map.fitBounds(currentBounds, {paddingTopLeft: [452, 24], paddingBottomRight: [24, 24], maxZoom: 14});
     } else {
       const padB = Math.max(24, Math.min(Math.round(sheetH + 16), Math.floor(mapY * 0.48)));
-      map.fitBounds(currentBounds, {paddingTopLeft: [24, 24], paddingBottomRight: [24, padB], maxZoom: 14});
+      // floating search / region chips / focus bar cover the top of the map
+      const fl = $("#mapFloat"), mw = $("#mapWrap");
+      const padT = fl && mw ? Math.max(24, Math.min(Math.round(fl.getBoundingClientRect().bottom - mw.getBoundingClientRect().top + 12), Math.floor(mapY * 0.35))) : 24;
+      map.fitBounds(currentBounds, {paddingTopLeft: [24, padT], paddingBottomRight: [24, padB], maxZoom: 14});
     }
     return;
   }
@@ -5359,11 +5522,23 @@ function focusStep(idx) {
 }
 
 $("#fitBtn").addEventListener("click", fitCurrent);
+function setLegFilter(v) {
+  state.mapLegFilter = ["out", "ret"].includes(v) ? v : "all";
+  document.querySelectorAll("#legToggle button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.leg === state.mapLegFilter)));
+  const t = state.sel && BY_ID[state.sel];
+  if (t) { drawSingle(t); fitCurrent(); }
+  else if (state.tab === "karte" && state.mapFocusId) { drawOverview(); fitCurrent(); }
+}
+$("#legToggle")?.addEventListener("click", e => {
+  const b = e.target.closest("button[data-leg]");
+  if (b) setLegFilter(b.dataset.leg);
+});
 $("#fullBtn").addEventListener("click", () => {
   const w = $("#mapWrap");
   const isFull = w.classList.toggle("full");
   w.classList.remove("mini");
   document.body.classList.toggle("map-full-open", isFull);
+  if (!isFull && state.mapLegFilter && state.mapLegFilter !== "all") setLegFilter("all");
   setTimeout(() => {
     map.invalidateSize();
     fitCurrent();
@@ -5478,6 +5653,12 @@ map.on("moveend", () => {
     }
     const resetBtn = e.target.closest("#mapResetBoundsBtn");
     if (resetBtn) { fitCurrent(); return; }
+    const focusBtn = e.target.closest(".sheet-route-btn[data-focus-id]");
+    if (focusBtn) {
+      e.stopPropagation();
+      setMapFocus(focusBtn.dataset.focusId);
+      return;
+    }
     const card = e.target.closest(".sheet-card[data-sheet-id]");
     if (card) openTour(card.dataset.sheetId);
   });
@@ -8498,6 +8679,10 @@ window.swHandleBack = function () {
     return true;
   }
   if (state.sel) { closeTour(); return true; }
+  if (state.tab === "karte" && !state.sel && state.mapFocusId) {
+    setMapFocus(null);
+    return true;
+  }
   if (state.tab === "karte" && state.mapSheetSnap === "expanded") {
     setMapSheetSnap("half");
     return true;
@@ -8684,6 +8869,11 @@ function renderMapRegions() {
   if (!host) return;
   const tDict = T();
   $("#mapQ").placeholder = tDict.mapSearchPh;
+  if ($("#mapFocusOpen")) {
+    $("#mapFocusOpen").textContent = tDict.mapFocusOpen;
+    $("#mapFocusClose").setAttribute("aria-label", tDict.mapFocusAll);
+    $("#mapFocusClose").title = tDict.mapFocusAll;
+  }
   $("#mapQ").setAttribute("aria-label", tDict.mapSearchPh);
   if ($("#mapQ").value !== $("#q").value) $("#mapQ").value = $("#q").value;
   host.innerHTML = ["pfaelzerwald", "odenwald", "schwarzwald"].map(r => {
@@ -8703,13 +8893,17 @@ $("#mapQClear")?.addEventListener("click", () => {
   mq.dispatchEvent(new Event("input", {bubbles: true}));
 });
 $("#mapQ")?.addEventListener("input", e => {
+  if (state.mapFocusId) { state.mapFocusId = null; }
   const q = $("#q");
   q.value = e.target.value;
   q.dispatchEvent(new Event("input", {bubbles: true}));
 });
+$("#mapFocusClose")?.addEventListener("click", () => setMapFocus(null));
+$("#mapFocusOpen")?.addEventListener("click", () => { const id = state.mapFocusId; if (id) openTour(id); });
 $("#mapRegions")?.addEventListener("click", e => {
   const b = e.target.closest(".map-region[data-region]");
   if (!b) return;
+  if (state.mapFocusId) state.mapFocusId = null;
   document.querySelector(`#pills .pill[data-f="${b.dataset.region}"]`)?.click();   // toggles on/off, refits the map
   renderMapRegions();
 });
