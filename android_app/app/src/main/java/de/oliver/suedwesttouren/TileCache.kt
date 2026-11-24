@@ -10,7 +10,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * Disk cache for map tiles (OSM / OpenTopoMap / Waymarked Trails): every tile seen once stays available offline.
+ * Disk cache for map tiles (OSM / OpenTopoMap / Waymarked Trails / OpenRailwayMap / ÖPNV-Karte): every tile seen once stays available offline.
  * Keeps at most MAX_TILES files (oldest removed first). Responses carry CORS headers because the web UI
  * requests tiles with crossOrigin="anonymous".
  */
@@ -22,7 +22,11 @@ class TileCache(context: Context) {
             "a.tile.opentopomap.org",
             "b.tile.opentopomap.org",
             "c.tile.opentopomap.org",
-            "tile.waymarkedtrails.org"
+            "tile.waymarkedtrails.org",
+            "a.tiles.openrailwaymap.org",
+            "b.tiles.openrailwaymap.org",
+            "c.tiles.openrailwaymap.org",
+            "tile.memomaps.de"
         )
         private const val MAX_TILES = 4000
         private const val USER_AGENT = "SuedwestTouren/1.0 (Android; +https://oliver-simon.github.io/suedwest-touren/)"
@@ -45,6 +49,8 @@ class TileCache(context: Context) {
                 connectTimeout = 8000
                 readTimeout = 12000
                 setRequestProperty("User-Agent", USER_AGENT)
+                // OpenRailwayMap answers 403 without a Referer (tile usage policy)
+                setRequestProperty("Referer", request.requestHeaders["Referer"] ?: "https://appassets.androidplatform.net/")
             }
             conn.inputStream.use { input ->
                 val bytes = input.readBytes()

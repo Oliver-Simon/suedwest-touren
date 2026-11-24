@@ -13,7 +13,11 @@ const TILE_HOSTS = [
   "a.tile.opentopomap.org",
   "b.tile.opentopomap.org",
   "c.tile.opentopomap.org",
-  "tile.waymarkedtrails.org"
+  "tile.waymarkedtrails.org",
+  "a.tiles.openrailwaymap.org",
+  "b.tiles.openrailwaymap.org",
+  "c.tiles.openrailwaymap.org",
+  "tile.memomaps.de"
 ];
 const MAX_TILES = 3000;
 const SHELL_KEY = new URL("./", self.location).href;

@@ -192,3 +192,28 @@ Every feature from Survey (R1–R5) assigned to a milestone (zero unassigned fea
 - **Service Worker**: Cache-first + Stale-while-revalidate für die Shell (nur `./`, kein doppeltes `index.html`), alle Fotos vorab gecacht, Kacheln nur als CORS-Antworten (keine opaque-Quota), löscht nur eigene `suedwest-*`-Caches (Origin wird mit der Fjord-PWA geteilt).
 - **UI**: `color-scheme: only light` (Chrome-Auto-Dark), empfohlene Verbindung als Standard, „Max“ = letzte sichere Rückfahrt, 360°-Ringe ≠ Rundwanderung, Deep-Link-Datum rollt auf den nächsten passenden Tag, Filter-Panel (Machbar ab / Aufenthalt / Max. Anfahrt / Sortierung), 3 Primär-Aktionen + „Weitere Apps“ (MVV, NVV, myVRN, Navi, DB/MVV Web, Google Maps), Mapy-Direktlinks (`mapy.com/fnc/v1/route|showmap`), interaktives Höhenprofil, History/Zurück-Geste, Touch-Targets ≥ 40 px.
 - **Android**: `android_app/` (siehe `android_app/README.md`); `build_pwa.py` schreibt die App-Assets nach `android_app/app/src/main/assets/www/`.
+
+## v5 (2026-11-24): Redesign nach Konzept, Mittelstücke, getrennte Hin-/Rückfahrt
+
+- **UI nach dem Redesign-Konzept** (Entdecken, Karte, Tourseite, App-Auswahl, Unterwegs, Gemerkt). Die Tests verlangen auf
+  Start- und Tourseite sichtbare Basis-/Tag-/Sprache-/Theme-Knöpfe und eine Leaflet-Karte; auf der Tourseite werden Karte und
+  `.bar-row` deshalb (nur mobil) per JS in `#detailMapSlot`/`#detailBarSlot` verschoben. Schriften: `fonts/` (Inter, Space Grotesk,
+  OFL), von `build_pwa.py` an `/*FONTS_CSS*/` eingebettet.
+- **Mittelstücke der ÖPNV-Rundfahrten** (`shortcut_360/_standalone/_pair` ohne GPX, z. B. Koblenz → Limburg): `planner.py` plant nur
+  Basis → A und B → Basis. `python3 planer/midlegs.py` holt die Teilstrecken A → Vias → B mit echten Abfahrten und Streckenverlauf
+  über Transitous (Cache `cache/routing`) nach `data/midlegs.json`; `appdata.compact(mids=…)` hängt sie als `tour.mid[base][day]`
+  an. Die App wählt je Fenster passende Verbindungen (`getMiddle`), zeichnet sie und markiert zu frühe Rückfahrten.
+- **Fehlende Streckenverläufe**: `python3 planer/polyfill.py` holt für Fahrten, deren Polylinie verloren ging, die Geometrie neu
+  (`data/polyfill.json`, PolyFixer-Stufe „refetched“). Lange Luftlinien (> 3 km) werden nie mehr gezeichnet.
+- **App-Auswahl**: je App getrennte Links für Hinfahrt / Weiterfahrt / Rückfahrt. Am Gerät und im APK-Code
+  (`de.hafas.android.c`, baksmali) geprüft:
+  - München Navigator/NVV sucht per Name nur im eigenen Gebiet. Der `query`-Link nimmt aber Koordinaten:
+    `SKOORD=1&SX=<lon·1e6>&SY=<lat·1e6>&SNAME=…` (analog `Z…`), `start=1` sucht sofort → bundesweit mit Live-Daten.
+    Suchzeit 5 Min. vor Abfahrt (Fußweg ab Koordinate).
+  - Ein Via geht nur über den Universal Link `https://s-bahn-muenchen.hafas.de/landingpage/universal_linking/index.html?context=TP&ulVersion=1&SID=…&VID=…&ZID=…`
+    (genau ein `VID`, HAFAS-IDs; DB-IDs `U=80@L=<Zahl>` oder `A=2@O=…@X=…@Y=…@`) → Knopf „Hin + Weiter“ bei Rundfahrten.
+    `V1`/`V2` gehen nur per Name (Bayern-Suche); das Shortcut-Paket `de.hafas.android.requestdata` wird von außen ignoriert.
+  - DB Navigator bekommt DELFI-Namen als „Haltestelle, Ort“ (`dbStopName`), sonst wählt er Doppelgänger.
+- **Karten-Ebenen**: zusätzlich ÖPNV-Karte (memomaps, ohne CORS) und OpenRailwayMap (Overlay; braucht Referer, den der
+  App-Kachelcache mitsendet).
+- Nach einem neuen `planner.py`-Lauf: `planer/midlegs.py` und `planer/polyfill.py` erneut ausführen, dann `build_pwa.py`.

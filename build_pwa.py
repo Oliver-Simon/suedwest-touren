@@ -243,9 +243,24 @@ def _write_if_changed(path, data):
     return True
 
 
+def _fonts_css():
+    """Inter + Space Grotesk (OFL, Latin subset, variable) as data-URL @font-face – offline, no CDN."""
+    out = []
+    for fam, fn, wght in (("Inter", "inter-latin-var.woff2", "400 700"),
+                          ("Space Grotesk", "spacegrotesk-latin-var.woff2", "500 700")):
+        path = os.path.join(HERE, "fonts", fn)
+        if not os.path.exists(path):
+            continue
+        b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
+        out.append(f'@font-face{{font-family:"{fam}";font-style:normal;font-weight:{wght};font-display:swap;'
+                   f'src:url(data:font/woff2;base64,{b64}) format("woff2")}}')
+    return "".join(out)
+
+
 def _page(tpl, css, js, payload):
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    return tpl.replace("/*LEAFLET_CSS*/", css).replace("/*LEAFLET_JS*/", js).replace("/*DATA*/", data)
+    return (tpl.replace("/*FONTS_CSS*/", _fonts_css()).replace("/*LEAFLET_CSS*/", css)
+            .replace("/*LEAFLET_JS*/", js).replace("/*DATA*/", data))
 
 
 def main():
@@ -284,7 +299,11 @@ def main():
         small = _webp_bytes(src, IMG_INLINE, IMG_INLINE[2], cache_path=os.path.join(HERE, "cache", "webp_inline", f"{t['id']}.webp"))
         inline_imgs[t["id"]] = "data:image/webp;base64," + base64.b64encode(small).decode()
 
-    base_payload = compact(D, None, credits, verbose=True)
+    mid_path = os.path.join(HERE, "data", "midlegs.json")
+    mids = json.load(open(mid_path, encoding="utf-8")) if os.path.exists(mid_path) else None
+    fill_path = os.path.join(HERE, "data", "polyfill.json")
+    fill = json.load(open(fill_path, encoding="utf-8")) if os.path.exists(fill_path) else None
+    base_payload = compact(D, None, credits, verbose=True, mids=mids, fill=fill)
 
     def with_images(imgs):
         return dict(base_payload, tours=[dict(t, img=imgs[t["id"]]) if t["id"] in imgs else t for t in base_payload["tours"]])

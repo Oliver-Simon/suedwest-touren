@@ -11,6 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f4c5c'/%3E%3Ccircle cx='46' cy='18' r='7' fill='%23fbbf24'/%3E%3Cpath d='M6 48 L22 22 L34 36 L44 24 L58 48 Z' fill='%2315803d'/%3E%3C/svg%3E">
+<style>/*FONTS_CSS*/</style>
 <style>/*LEAFLET_CSS*/</style>
 <style>
 :root {
@@ -2244,6 +2245,266 @@ html.dark .leaflet-bar a {
 html.dark .leaflet-bar a.leaflet-disabled { background: var(--surface-2); color: var(--muted); }
 :root[data-theme="dark"] .leaflet-bar,
 html.dark .leaflet-bar { border-color: var(--border); }
+
+/* ===== v5.1 – Angleichung an das Redesign-Konzept (Claude-Artefakt) ===== */
+.ico { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+header.top { padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px; border-bottom: 0; position: relative; }
+body.detail-open header.top { position: sticky; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.top-row { align-items: flex-start; gap: 8px; }
+.brand { gap: 2px; }
+.brand-kicker { font-size: 13px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+.brand h1 { font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; white-space: normal; }
+body.detail-open .brand-kicker { display: none; }
+body.detail-open .brand h1 { font-size: 16px; line-height: 1.25; white-space: nowrap; letter-spacing: -0.01em; }
+body.detail-open .top-row { align-items: center; }
+.home-chip { background: transparent; border: 0; padding: 2px 0; margin-top: 2px; font-size: 12.5px; font-weight: 600; color: var(--text-2); border-radius: 6px; }
+#langBtn, #themeBtn { height: 40px; min-width: 40px; border-radius: var(--radius-pill); background: var(--surface); }
+.bar-row { margin-top: 12px; gap: 8px; }
+.base-switch { border-radius: var(--radius-pill); padding: 3px; background: var(--surface); flex: 1 1 auto; }
+.base-btn { border-radius: var(--radius-pill); padding: 0 12px; min-height: 38px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.base-btn .ico { width: 16px; height: 16px; }
+.base-btn[aria-pressed="true"] { box-shadow: none; }
+.seg { border-radius: var(--radius-pill); padding: 3px; background: var(--surface); }
+.seg button { border-radius: var(--radius-pill); padding: 0 12px; min-height: 38px; font-size: 13.5px; font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+.controls { gap: 12px; margin-top: 12px; }
+.search-row { gap: 8px; flex-wrap: nowrap; }
+.search { height: 48px; border-radius: var(--radius-md); padding: 0 6px 0 16px; gap: 10px; color: var(--text-2); }
+.search input { font-size: 15px; font-weight: 500; }
+.filter-toggle { height: 48px; border-radius: var(--radius-md); padding: 0 14px; gap: 6px; font-size: 14px; }
+.pills { gap: 8px; padding-bottom: 0; }
+.pill { min-height: 36px; padding: 0 14px; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px; }
+.content { padding: 4px 16px calc(96px + env(safe-area-inset-bottom, 0px)); }
+
+/* Entdecken: Empfehlung zuerst, dann Karte und Liste */
+.layout > .discover-highlights { padding: 8px 16px 4px; margin: 0; }
+body:not([data-tab="entdecken"]) .layout > .discover-highlights { display: none; }
+body[data-tab="entdecken"]:not(.detail-open) .map-wrap { margin: 8px 16px 12px; width: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+body[data-tab="entdecken"]:not(.detail-open) .map-wrap.full { margin: 0; border-radius: 0; border: 0; }
+.discover-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 6px 0 12px; }
+.discover-title { font-size: 19px; font-weight: 700; color: var(--text); margin: 18px 0 12px; letter-spacing: -0.01em; }
+.discover-head .discover-title { margin: 0; }
+.discover-count { font-size: 13px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.rec-hero { display: block; padding: 0; border: 1px solid var(--border); border-left: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 4px; box-shadow: none; }
+.rec-hero-media { width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: 230px; }
+.rec-hero-img { width: 100%; height: 100%; border-radius: 0; }
+.rh-badge { position: absolute; top: 12px; display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; }
+.rh-reg { left: 12px; background: rgba(255,255,255,.94); color: var(--primary); }
+.rh-dt { right: 12px; background: var(--amber); color: var(--amber-ink); }
+.rec-hero-media .fav-btn.fav-overlay { top: auto; bottom: 10px; right: 10px; width: 40px; height: 40px; }
+.rec-hero-body { padding: 14px 16px 16px; gap: 12px; }
+.rec-hero-title { font-size: 20px; line-height: 1.22; -webkit-line-clamp: 3; }
+.rh-stats { display: grid; grid-template-columns: 1fr 1.35fr 1fr; gap: 8px; }
+.rh-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.rh-stat span { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.rh-stat b { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.discover-row { gap: 12px; padding-bottom: 6px; }
+.rec-card { flex: 0 0 168px; padding: 0; border-radius: var(--radius-md); overflow: hidden; box-shadow: none; }
+.rec-card-media, .rec-card-img { height: 100px; margin: 0; border-radius: 0; }
+.rec-card-title { font-size: 14px; margin: 10px 12px 4px; }
+.rec-card-meta { font-size: 12.5px; color: var(--text-2); margin: 0 12px 12px; font-variant-numeric: tabular-nums; }
+
+/* Bottom-Navigation mit Linien-Icons */
+.bottom-nav { padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px)); gap: 4px; box-shadow: none; }
+.bnav-btn { min-height: 54px; gap: 4px; border-radius: 12px; font-size: 12px; color: var(--text-2); }
+.bnav-btn .bnav-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+@media (min-width: 960px) {
+  .layout { grid-template-areas: "map hl" "map main"; grid-template-rows: auto 1fr; }
+  .layout > .map-wrap { grid-area: map; }
+  .layout > .discover-highlights { grid-area: hl; }
+  .layout > .content { grid-area: main; }
+  body[data-tab="entdecken"]:not(.detail-open) .map-wrap { margin: 0; border-radius: 0; border-width: 0 1px 0 0; }
+}
+
+/* Seitenkopf der Tabs Gemerkt/Unterwegs (globaler Kopf ausgeblendet wie im Konzept) */
+body[data-tab="gemerkt"]:not(.detail-open) header.top,
+body[data-tab="unterwegs"]:not(.detail-open) header.top { display: none; }
+.tab-view { padding-top: env(safe-area-inset-top, 0px); }
+.tab-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin: 6px 0 14px; }
+.tab-head-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tab-kicker { font-size: 13px; font-weight: 600; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tab-title { margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; }
+.offline-pill { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: var(--radius-pill); background: var(--ok-soft); color: var(--ok); font-size: 13px; font-weight: 700; margin-top: 4px; }
+.offline-pill .ico { width: 16px; height: 16px; stroke-width: 2.6; }
+.trip-shell { display: flex; flex-direction: column; gap: 14px; }
+.trip-now { background: var(--primary); color: #fff; border-radius: var(--radius-lg); padding: 20px 20px 18px; }
+html.dark .trip-now, :root[data-theme="dark"] .trip-now { background: #123C47; }
+.trip-now .trip-phase-lbl { text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 600; color: rgba(255,255,255,.82); margin: 0; }
+.trip-big { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 14px; }
+.trip-now .trip-countdown-val { font-family: var(--font-display); font-size: 56px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #fff; }
+.trip-big-unit { font-size: 17px; font-weight: 600; color: rgba(255,255,255,.85); }
+.trip-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.trip-steps li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 4px; font-size: 14px; line-height: 1.35; }
+.trip-steps time { font-weight: 700; font-variant-numeric: tabular-nums; }
+.trip-card { padding: 16px 18px; border-radius: var(--radius-lg); }
+.trip-card h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 12px; }
+.tc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.tc-row h3 { margin-bottom: 10px; }
+.tc-buffer { font-size: 13.5px; font-weight: 700; color: var(--ok); white-space: nowrap; }
+.tc-buffer.neg { color: var(--warn); }
+.trip-card .trip-progress-track { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.trip-card .trip-progress-fill { height: 100%; background: var(--ok); border-radius: 999px; }
+.tc-sub { margin: 10px 0 0; font-size: 13px; color: var(--text-2); }
+.trip-ret-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.trip-ret-btn { min-height: 44px; min-width: 76px; padding: 0 14px; border-radius: 12px; font-size: 14.5px; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-variant-numeric: tabular-nums; }
+.trip-ret-btn.lsr { background: var(--amber-soft); border: 1px dashed var(--amber); color: var(--text); }
+.trip-ret-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.trip-check { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 15px; font-weight: 500; cursor: pointer; min-height: 44px; }
+.trip-check input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; }
+.trip-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.trip-actions .act { min-height: 52px; border-radius: var(--radius-md); font-size: 15px; justify-content: center; }
+.trip-actions .act:not(.primary) { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); }
+.link-btn { align-self: center; background: none; border: 0; color: var(--text-2); font-size: 13.5px; font-weight: 600; text-decoration: underline; padding: 10px 12px; min-height: 44px; cursor: pointer; }
+
+/* Tourseite wie im Konzept: Foto oben mit Overlay-Knöpfen, Karte im Seitenfluss, Sticky-Aktionen */
+.hero-media { position: relative; }
+.hero-fab { position: absolute; right: 12px; bottom: 12px; width: 44px; height: 44px; border-radius: var(--radius-pill); border: 0; background: rgba(255,255,255,.94); color: #13201C; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,.2); cursor: pointer; }
+.hero-fab .ico { width: 20px; height: 20px; }
+#detailFavBtn.hero-fab[aria-pressed="true"] { background: var(--amber); color: var(--amber-ink); }
+#detailFavBtn.hero-fab[aria-pressed="true"] .ico { fill: currentColor; }
+.chip.dt-chip { background: var(--amber); color: var(--amber-ink); font-weight: 700; border-color: transparent; }
+.box-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.box-head h4 { margin: 0; }
+.box-link { font-size: 13.5px; font-weight: 700; color: var(--accent); text-decoration: none; padding: 10px 0; margin: -10px 0; }
+.schedule-box .sub-h { margin-top: 12px; }
+.detail-sticky-bar { gap: 10px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+.detail-sticky-bar .act { flex: 1 1 0; min-height: 52px; border-radius: var(--radius-md); font-size: 15px; font-weight: 700; justify-content: center; gap: 8px; }
+.detail-sticky-bar .act:not(.primary) { background: var(--surface); border: 1.5px solid var(--accent); color: var(--accent); }
+.detail-sticky-bar #gpxBtn { flex: 0 0 auto; padding: 0 14px; font-size: 13.5px; border-color: var(--border); color: var(--text-2); }
+@media (max-width: 959px) {
+  .app { position: relative; }
+  body.detail-open header.top { position: absolute; top: 0; left: 0; right: 0; z-index: 1300; background: transparent; border: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) 12px 0; pointer-events: none; }
+  body.detail-open header.top button { pointer-events: auto; }
+  body.detail-open .brand { display: none; }
+  body.detail-open #backBtn { width: 44px; height: 44px; min-width: 44px; padding: 0; margin-right: auto; border-radius: var(--radius-pill); background: rgba(255,255,255,.94); border: 0; box-shadow: 0 2px 10px rgba(0,0,0,.2); font-size: 20px; color: #13201C; }
+  body.detail-open #backBtnTxt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  body.detail-open #langBtn, body.detail-open #themeBtn { height: 44px; min-width: 44px; border: 0; background: rgba(255,255,255,.94); box-shadow: 0 2px 10px rgba(0,0,0,.2); color: #13201C; }
+  body.detail-open main.content { padding-top: 0; }
+  #detail .hero { background: transparent; border: 0; padding: 0 0 4px; box-shadow: none; margin: 0 -16px 12px; border-radius: 0; }
+  #detail .hero-media { height: 280px; }
+  #detail .hero-img { width: 100%; height: 100%; border-radius: 0; margin: 0; }
+  #detail .hero .credit { position: absolute; left: 12px; bottom: 14px; margin: 0; max-width: calc(100% - 84px); background: rgba(0,0,0,.62); color: #fff; padding: 4px 9px; border-radius: 8px; font-size: 11px; line-height: 1.35; }
+  #detail .hero .credit a { color: #fff; }
+  #detail .hero > .chips { margin: 14px 16px 0; }
+  #detail .hero > h2 { font-size: 26px; line-height: 1.15; margin: 10px 16px 6px; }
+  #detail .hero > p { margin: 0 16px; font-size: 14px; }
+  #detail .hero > .hero-cta-row { margin: 12px 16px 0; }
+  #detailMapSlot .map-wrap:not(.full) { height: 260px; min-height: 0; margin: 0 0 12px; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  #detailMapSlot .map-wrap.mini:not(.full) { height: 95px; }
+  .detail-bar-slot .bar-row { margin: 4px 0 6px; }
+}
+
+/* "Dein Tag" – kompakte Zeitleiste wie im Konzept */
+.day-line { list-style: none; margin: 4px 0 6px; padding: 0; position: relative; }
+.day-line > li { display: grid; grid-template-columns: 52px 18px minmax(0, 1fr); align-items: start; padding-bottom: 16px; position: relative; }
+.day-line > li:last-child { padding-bottom: 4px; }
+.day-line > li > time, .day-line > li > .dl-body, .day-line > li::before { grid-row: 1; }
+.day-line > li > time { font-family: var(--font-display); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.3; grid-column: 1; }
+.day-line > li::before { content: ""; grid-column: 2; justify-self: center; width: 11px; height: 11px; border-radius: 50%; background: var(--primary); margin-top: 6px; position: relative; z-index: 1; }
+.day-line > li.hike::before { background: var(--ok); }
+.day-line > li:not(:last-child)::after { content: ""; position: absolute; left: 60.5px; top: 14px; bottom: -4px; width: 2px; background: var(--primary); }
+.day-line > li.hike:not(:last-child)::after { background: repeating-linear-gradient(to bottom, var(--ok) 0 4px, transparent 4px 8px); }
+html.dark .day-line > li::before, :root[data-theme="dark"] .day-line > li::before { background: var(--accent); }
+html.dark .day-line > li:not(.hike):not(:last-child)::after, :root[data-theme="dark"] .day-line > li:not(.hike):not(:last-child)::after { background: var(--accent); }
+.dl-body { grid-column: 3; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 6px; }
+.dl-body strong { font-size: 15px; line-height: 1.3; }
+.dl-sub { font-size: 13px; color: var(--text-2); line-height: 1.35; }
+.dl-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+.dl-badges .badge { font-size: 11px; padding: 2px 6px; border-radius: 5px; font-weight: 700; }
+@media (max-width: 959px) { #detail .hero { width: calc(100% + 32px); max-width: none; } }
+
+/* App-Auswahl wie im Konzept */
+.app-sheet-head h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+.app-sheet-sub { font-size: 13.5px; color: var(--text-2); line-height: 1.4; }
+#closeAppSheet { width: 44px; height: 44px; min-width: 44px; padding: 0; border-radius: var(--radius-pill); background: var(--surface-2); border: 0; font-size: 0; }
+#closeAppSheet::before { content: "×"; font-size: 24px; line-height: 1; color: var(--text); }
+.cap-row { grid-template-columns: minmax(0, 1fr) repeat(4, 40px); padding: 12px 14px; border-radius: var(--radius-md); }
+.cap-row.cap-head { background: transparent; padding: 4px 14px 2px; }
+.cap-row.cap-head > span:first-child { font-size: 10.5px; }
+.cap-row.is-preferred { border-width: 2px; padding: 11px 13px; }
+.app-sheet-link { font-size: 15.5px; color: var(--text); }
+.cap-sub { font-size: 12.5px; color: var(--text-2); line-height: 1.3; }
+.cap-cell { font-size: 16px; }
+.cap-yes { color: var(--ok); }
+.cap-no { color: var(--muted); font-weight: 400; }
+.sheet-sep { height: 1px; background: var(--border); margin: 14px 0; }
+.sheet-mapy { display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); text-decoration: none; color: var(--text); }
+.sheet-mapy-ico { width: 44px; height: 44px; border-radius: 12px; background: var(--ok-soft); color: var(--ok); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.sheet-mapy-ico .ico { width: 22px; height: 22px; }
+.sheet-mapy-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sheet-mapy-txt strong { font-family: var(--font-display); font-size: 16px; }
+.sheet-mapy-txt span { font-size: 13px; color: var(--text-2); }
+.sheet-check { display: flex; align-items: center; gap: 12px; margin: 16px 2px 4px; font-size: 15px; font-weight: 600; cursor: pointer; min-height: 44px; }
+.sheet-check input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; }
+
+/* Karte-Tab wie im Konzept: schwebende Suche + Regionen, Sheet mit waagerechten Karten */
+.map-float { display: none; }
+body[data-tab="karte"]:not(.detail-open) .map-float { display: flex; flex-direction: column; gap: 10px; position: absolute; z-index: 1000; top: calc(12px + env(safe-area-inset-top, 0px)); left: 16px; right: 76px; }
+.map-search { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.12); color: var(--text-2); }
+.map-search input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 15px; font-weight: 500; color: var(--text); }
+.map-regions { display: flex; gap: 8px; flex-wrap: wrap; }
+.map-region { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: var(--radius-pill); border: 0; background: var(--surface); box-shadow: 0 1px 6px rgba(0,0,0,.14); font-size: 13.5px; font-weight: 600; color: var(--text); cursor: pointer; }
+.map-region::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--reg-weitere); }
+.map-region[data-region="pfaelzerwald"]::before { background: var(--reg-pfalz); }
+.map-region[data-region="odenwald"]::before { background: var(--reg-odenwald); }
+.map-region[data-region="schwarzwald"]::before { background: var(--reg-schwarzwald); }
+.map-region[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+body[data-tab="karte"]:not(.detail-open) .map-tools { top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; }
+body[data-tab="karte"]:not(.detail-open) #fitBtn,
+body[data-tab="karte"]:not(.detail-open) #fullBtn,
+body[data-tab="karte"]:not(.detail-open) .elev-overlay,
+body[data-tab="karte"]:not(.detail-open) .leaflet-control-zoom { display: none !important; }
+body[data-tab="karte"]:not(.detail-open) #layerBtn { width: 48px; height: 48px; padding: 0; font-size: 0; border-radius: var(--radius-md); }
+body[data-tab="karte"]:not(.detail-open) #layerBtn::before { content: ""; width: 22px; height: 22px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5z'/%3E%3Cpath d='M3 13l9 5 9-5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5z'/%3E%3Cpath d='M3 13l9 5 9-5'/%3E%3C/svg%3E") center / contain no-repeat; }
+body[data-tab="karte"]:not(.detail-open) #gpsBtn { width: 48px; height: 48px; border-radius: var(--radius-md); }
+.map-sheet-head strong { font-family: var(--font-display); font-size: 19px; }
+.map-sheet[data-snap="half"] .map-sheet-body { flex-direction: row; overflow-x: auto; overflow-y: hidden; gap: 12px; padding: 6px 16px 16px; scroll-snap-type: x proximity; align-items: stretch; }
+.map-sheet[data-snap="half"] .sheet-card { flex: 0 0 270px; scroll-snap-align: start; align-items: start; }
+.sheet-card { grid-template-columns: 96px minmax(0, 1fr) auto; gap: 12px; padding: 12px; border-radius: var(--radius-lg); box-shadow: none; border-left-width: 1px !important; border-left-color: var(--border) !important; }
+.sheet-card.is-selected { border: 2px solid var(--ok) !important; background: var(--ok-soft); }
+.sheet-card-img { width: 96px; height: 96px; border-radius: 12px; }
+.sheet-card-title { font-size: 15px; -webkit-line-clamp: 2; }
+.sheet-card-line { font-size: 13px; color: var(--text-2); line-height: 1.35; }
+.sheet-card-time { font-size: 14px; font-weight: 700; color: var(--ok); font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+.map-sheet[data-snap="half"] .sheet-card { flex-basis: 292px; grid-template-columns: 96px minmax(0, 1fr); }
+.map-sheet[data-snap="half"] .sheet-card .fav-btn { display: none; }
+.search input:placeholder-shown ~ .clear { visibility: hidden; }
+
+/* Basis-Pille auf dem Tourfoto (zeigt, ab wo gerechnet wird; springt zu "Zeiten ändern") */
+.base-pill { display: none; }
+@media (max-width: 959px) {
+  body.detail-open .base-pill { display: inline-flex; height: 44px; padding: 0 14px; gap: 6px; border-radius: var(--radius-pill); border: 0; background: rgba(255,255,255,.94); color: #13201C; box-shadow: 0 2px 10px rgba(0,0,0,.2); font-size: 13.5px; font-weight: 700; margin-right: auto; }
+  body.detail-open #backBtn { margin-right: 0; }
+  body.detail-open .base-pill .ico { width: 16px; height: 16px; }
+}
+.map-sheet[data-snap="half"] .sheet-card { align-self: flex-start; }
+
+/* App-Auswahl: getrennte Hin-/Weiter-/Rückfahrt je App */
+.legs-summary { list-style: none; margin: 4px 0 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; background: var(--surface-2); border-radius: var(--radius-md); font-size: 13px; }
+.legs-summary li { display: grid; grid-template-columns: 82px 44px minmax(0, 1fr); gap: 6px; align-items: baseline; }
+.legs-summary .lg-k { font-weight: 700; color: var(--text-2); }
+.legs-summary b { font-variant-numeric: tabular-nums; }
+.app-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 10px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+.app-row.is-preferred { border: 2px solid var(--accent); background: var(--accent-soft); padding: 11px 13px; }
+.app-row .cap-app-cell { flex: 1 1 150px; }
+.app-row-name { font-family: var(--font-display); font-size: 15.5px; font-weight: 700; color: var(--text); }
+.app-legs { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.app-leg { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 0 12px; border-radius: 12px; border: 1.5px solid var(--accent); color: var(--accent); background: var(--surface); text-decoration: none; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+.app-leg b { font-variant-numeric: tabular-nums; }
+.app-row.is-preferred .app-leg:first-child { background: var(--accent); color: var(--accent-ink); }
+
+/* aufklappbare Verbindungen in "Dein Tag" */
+.dl-more > summary { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; cursor: pointer; min-height: 32px; }
+.dl-more > summary::-webkit-details-marker { display: none; }
+.dl-toggle { font-size: 12.5px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 3px; padding: 4px 2px; }
+.dl-toggle::after { content: "▾"; font-size: 11px; transition: transform .15s; }
+.dl-more[open] .dl-toggle::after { transform: rotate(180deg); }
+.dl-segs { list-style: none; margin: 6px 0 2px; padding: 8px 10px; background: var(--surface-2); border-radius: 10px; display: flex; flex-direction: column; gap: 6px; }
+.dl-seg { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 6px; font-size: 13px; line-height: 1.35; }
+.dl-seg time { font-weight: 700; font-variant-numeric: tabular-nums; }
+.dl-seg.walk, .dl-seg.xfer { color: var(--text-2); }
+.dl-seg.xfer span { grid-column: 2; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -2251,7 +2512,9 @@ html.dark .leaflet-bar { border-color: var(--border); }
   <header class="top" id="top">
     <div class="top-row">
       <button type="button" class="icon-btn back-btn" id="backBtn" aria-label="Zurück">← <span id="backBtnTxt">Zurück</span></button>
+      <button type="button" class="icon-btn base-pill" id="basePill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span id="basePillTxt"></span></button>
       <div class="brand">
+        <span class="brand-kicker" id="brandKicker"></span>
         <h1 id="brandTitle">Südwest-Touren (D-Ticket &amp; Mapy)</h1>
         <button type="button" class="home-chip" id="homeEditBtn" aria-label="Heimatort wählen">📍 Bickenbacher Straße 24g (Jugenheim)</button>
       </div>
@@ -2260,19 +2523,19 @@ html.dark .leaflet-bar { border-color: var(--border); }
     </div>
     <div class="bar-row">
       <div class="base-switch" role="group" aria-label="Home Base">
-        <button type="button" class="base-btn" id="baseJgBtn" data-base="jugenheim" aria-pressed="true">🏠 Jugenheim</button>
-        <button type="button" class="base-btn" id="baseKaBtn" data-base="karlsruhe" aria-pressed="false">❤️ Karlsruhe</button>
+        <button type="button" class="base-btn" id="baseJgBtn" data-base="jugenheim" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Jugenheim</button>
+        <button type="button" class="base-btn" id="baseKaBtn" data-base="karlsruhe" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Karlsruhe</button>
       </div>
       <div class="seg" id="daySeg" role="group" aria-label="Wochentag"></div>
     </div>
     <div class="controls" id="listControls">
       <div class="search-row">
         <label class="search" id="searchBox">
-          <span aria-hidden="true">🔍</span>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <input id="q" type="search" placeholder="Suche: Bad Dürkheim, Trifels, Schwarzwald …" autocomplete="off">
           <button type="button" class="clear" id="qClear" aria-label="Suche löschen">×</button>
         </label>
-        <button type="button" class="icon-btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">⚙️ <span id="filterToggleTxt">Filter</span> <span class="badge-count" id="filterCount" hidden>0</span></button>
+        <button type="button" class="icon-btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span id="filterToggleTxt">Filter</span> <span class="badge-count" id="filterCount" hidden>0</span></button>
       </div>
       <div class="pills" id="pills" role="group" aria-label="Filter"></div>
       <div class="filter-panel" id="filterPanel" hidden>
@@ -2331,8 +2594,13 @@ html.dark .leaflet-bar { border-color: var(--border); }
   </div>
 
   <div class="layout">
+    <section class="discover-highlights" id="discoverHighlights" aria-label="Empfehlungen"></section>
     <div class="map-wrap" id="mapWrap">
       <div id="map" aria-label="Karte"></div>
+      <div class="map-float" id="mapFloat">
+        <label class="map-search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mapQ" type="search" autocomplete="off" aria-label="Ort oder Tour suchen" placeholder="Ort oder Tour suchen"></label>
+        <div class="map-regions" id="mapRegions"></div>
+      </div>
       <div class="elev-overlay" id="elevBadge">Südwest-Übersicht</div>
       <div class="map-tools">
         <button type="button" class="icon-btn" id="layerBtn" title="Karte / Layer" aria-label="Karte / Layer">🗺️ Layer</button>
@@ -2344,7 +2612,6 @@ html.dark .leaflet-bar { border-color: var(--border); }
       <div class="layer-menu" id="layerMenu"></div>
     </div>
     <main class="content">
-      <section class="discover-highlights" id="discoverHighlights" aria-label="Empfehlungen"></section>
       <section class="list" id="list"></section>
       <section class="detail" id="detail"></section>
       <section class="tab-view" id="savedView" hidden></section>
@@ -2368,10 +2635,10 @@ html.dark .leaflet-bar { border-color: var(--border); }
     <div class="map-sheet-body" id="mapSheetBody"></div>
   </section>
   <nav class="bottom-nav" id="bottomNav" aria-label="Navigation">
-    <button type="button" class="bnav-btn" data-tab="entdecken" aria-pressed="true" aria-current="page"><span class="bnav-ico" aria-hidden="true">🧭</span><span class="bnav-lbl" id="navEntdeckenLbl">Entdecken</span></button>
-    <button type="button" class="bnav-btn" data-tab="karte" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🗺️</span><span class="bnav-lbl" id="navKarteLbl">Karte</span></button>
-    <button type="button" class="bnav-btn" data-tab="gemerkt" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🔖</span><span class="bnav-lbl" id="navGemerktLbl">Gemerkt</span></button>
-    <button type="button" class="bnav-btn" data-tab="unterwegs" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🚆</span><span class="bnav-lbl" id="navUnterwegsLbl">Unterwegs</span></button>
+    <button type="button" class="bnav-btn" data-tab="entdecken" aria-pressed="true" aria-current="page"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span><span class="bnav-lbl" id="navEntdeckenLbl">Entdecken</span></button>
+    <button type="button" class="bnav-btn" data-tab="karte" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="bnav-lbl" id="navKarteLbl">Karte</span></button>
+    <button type="button" class="bnav-btn" data-tab="gemerkt" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span><span class="bnav-lbl" id="navGemerktLbl">Gemerkt</span></button>
+    <button type="button" class="bnav-btn" data-tab="unterwegs" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M9 21l3-7 3 3v4M7 12l3-4 4 1 3 4"/></svg></span><span class="bnav-lbl" id="navUnterwegsLbl">Unterwegs</span></button>
   </nav>
 </div>
 
@@ -2504,14 +2771,17 @@ const MODE_ICONS = {
 const LAYERS = {
   osm: {name: "OpenStreetMap", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", attr: "© OpenStreetMap", max: 19},
   topo: {name: "OpenTopoMap", url: "https://a.tile.opentopomap.org/{z}/{x}/{y}.png", attr: "© OpenTopoMap", max: 17},
-  trails: {name: "Waymarked Trails", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", overlay: "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png", attr: "© OSM & WaymarkedTrails", max: 18}
+  trails: {name: "Waymarked Trails", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", overlay: "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png", attr: "© OSM & WaymarkedTrails", max: 18},
+  // ÖPNV-Karte (memomaps.de): no CORS headers → loaded without crossOrigin (not cached by the PWA service worker)
+  oepnv: {name: "ÖPNV-Karte", url: "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png", attr: "© OpenStreetMap · Karte: memomaps.de (ÖPNVkarte)", max: 18, cors: false},
+  rail: {name: "OpenRailwayMap", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", overlay: "https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png", overlayOpacity: 1, attr: "© OpenStreetMap · OpenRailwayMap (CC-BY-SA)", max: 19}
 };
 
 const I18N = {
   de: {
     brandTitle: "Südwest-Touren (D-Ticket & Mapy)",
     back: "Zurück",
-    searchPh: "Suche: Bad Dürkheim, Trifels, Schwarzwald …",
+    searchPh: "Burg, Weinort, Aussichtsturm …",
     feasibleLabel: "Heute noch machbar ab",
     days: [["wd", "Mo–Fr"], ["sa", "Sa"], ["so", "So"]],
     dayLong: {wd: "Werktag (Mo–Fr)", sa: "Samstag", so: "Sonntag"},
@@ -2544,7 +2814,7 @@ const I18N = {
     nvvAppBtn: "🟩 NVV App",
     myVrnBtn: "🟢 myVRN (Ziel)",
     naviBtn: "🧭 Navi-App wählen",
-    appHint: "MVV & NVV übernehmen Start, Ziel, Vias und Uhrzeit · myVRN übernimmt nur das Ziel (Route ab aktuellem Standort) · DB ohne Vias.",
+    appHint: "Hin- und Rückfahrt werden getrennt mit Start, Ziel und Uhrzeit übergeben · myVRN und Navi-Apps übernehmen nur das Ziel (Route ab aktuellem Standort).",
     recommended: "Empfohlen",
     otherWindows: "Weitere Abfahrten",
     lsrTag: "🛡️ letzte",
@@ -2601,6 +2871,11 @@ const I18N = {
     navKarte: "Karte",
     navGemerkt: "Gemerkt",
     navUnterwegs: "Unterwegs",
+    timetableOf: d => `${d}-Fahrplan`,
+    toursCount: n => `${n} Touren`,
+    statDep: "Los",
+    statHike: "Wandern",
+    statBack: "Zurück",
     heroHeading: "Heute empfohlen",
     heroBadge: "★ Empfehlung des Tages",
     moreTodayHeading: "Weitere für heute",
@@ -2657,8 +2932,22 @@ const I18N = {
     tripRemindCleared: "Erinnerung gelöscht",
     tripRemindPast: "Zielzeit liegt bereits in der Vergangenheit",
     tripRemindPermNeeded: "Mitteilungs-Berechtigung fehlt",
+    tripOnSite: "vor Ort",
+    tripLastShort: "Letzte",
+    tripFrom: "ab",
+    tripArrival: "Ankunft",
+    tripWalkTime: d => `ca. ${d} Gehzeit`,
+    tripStayTime: d => `${d} vor Ort`,
+    tripBuffer: d => `Puffer ca. ${d}`,
+    tripAsOf: hm => `Stand ${hm}`,
+    tripStayLonger: "Doch länger bleiben?",
+    tripRemindChk: m => `${m} Min. vor dem Aufbruch erinnern`,
+    offlineReady: "Offline bereit",
     tripRemindWebHint: "Im Browser kommt die Erinnerung nur, solange die Seite geöffnet ist. Zuverlässig auch bei geschlossener App: Android-App.",
-    mapSheetTitle: n => n === 1 ? "1 Tour im Kartenausschnitt" : `${n} Touren im Kartenausschnitt`,
+    mapSheetTitle: n => n === 1 ? "1 Tour hier" : `${n} Touren hier`,
+    rideLine: d => `${d} Anfahrt`,
+    mapSearchPh: "Ort oder Tour suchen",
+    regShort: {pfaelzerwald: "Pfalz", odenwald: "Odenwald", schwarzwald: "Schwarzwald"},
     mapEmptyTitle: "Keine Touren im Kartenausschnitt",
     mapEmptyHint: "Zoome heraus oder springe zurück zur Südwest-Übersicht.",
     mapResetBounds: "Übersicht zeigen",
@@ -2675,6 +2964,23 @@ const I18N = {
     transferSingle: "1 Umstieg",
     transfersCount: n => `${n} Umstiege`,
     flowTitle: "Tagesablauf",
+    yourDay: d => `Dein Tag · ${d}`,
+    changeTimes: "Zeiten ändern",
+    fromBase: b => `Ab ${b}`,
+    backIn: n => `Zurück in ${n}`,
+    midOnward: (to, arr, stay) => `weiter nach ${to}, an ${arr} · vorher ${stay} Aufenthalt`,
+    showTimes: "Zeiten",
+    transferGap: d => `${d} Umstieg`,
+    arrShort: "an",
+    towards: "Ri.",
+    midStay: d => `${d} Aufenthalt vor der Rückfahrt`,
+    midConflictShort: "Rückfahrt zu früh für das Mittelstück",
+    midConflict: (to, hm) => `⚠️ Mit dieser Rückfahrt ist die Runde nicht zu schaffen: Ankunft in ${to} frühestens ${hm}. Bitte eine spätere Rückfahrt wählen.`,
+    midLegTitle: "Weiterfahrt",
+    midMissingTitle: "Etappe vor Ort",
+    midMissing: (a, b) => `${a} → ${b}: keine Verbindung im Fahrplan gefunden – bitte in der Fahrplan-App prüfen.`,
+    midTooEarly: "Mittelstück bis dahin nicht zu schaffen",
+    lastSafeReturnShort: hm => `Letzte sichere Rückfahrt ${hm}`,
     flowDep: "Abfahrt",
     flowArr: "Ankunft",
     flowRet: "Rückfahrt",
@@ -2685,9 +2991,20 @@ const I18N = {
     tpOutbound: "Hinfahrt",
     tpStay: "Vor Ort",
     tpReturn: "Rückfahrt",
-    appSheetTitle: "🚆 Verbindung in App öffnen",
-    appSheetClose: "Schließen ×",
-    capApp: "App",
+    appSheetTitle: "Verbindung öffnen",
+    appSheetClose: "Schließen",
+    capApp: "App übernimmt",
+    appName: {db: "DB Navigator", mvv: "München Navigator", nvv: "NVV", myvrn: "myVRN", dbweb: "bahn.de", mvvweb: "MVV im Browser", gmaps: "Google Maps", geo: "Navi-App"},
+    appSub: {db: "Deutschlandweit · nur Nahverkehr (D-Ticket)", mvv: "Live-Daten · Start, Ziel und Uhrzeit (per Koordinaten, auch außerhalb Bayerns)", nvv: "Start, Ziel und Uhrzeit · ohne Live-Daten", myvrn: "Route ab aktuellem Standort", dbweb: "Im Browser · nur Nahverkehr", mvvweb: "Im Browser", gmaps: "Im Browser oder in Maps", geo: "Ziel an eine Navi-App"},
+    legShort: {out: "Hin", mid: "Weiter", ret: "Rück", chain: "Hin + Weiter"},
+    legLong: {out: "Hinfahrt", mid: "Weiterfahrt", ret: "Rückfahrt"},
+    sheetMapyTitle: "Wanderung in Mapy",
+    sheetMapySub: "Route mit Wegpunkten direkt in Mapy",
+    sheetMapyTrack: "Track direkt übergeben – ohne Download-Ordner",
+    directOpen: a => `${a} künftig direkt öffnen`,
+    directOpened: a => `${a} geöffnet`,
+    otherApp: "Andere App",
+    departAt: hm => `Abfahrt ${hm}`,
     capStart: "Start",
     capDest: "Ziel",
     capVias: "Vias",
@@ -2701,7 +3018,7 @@ const I18N = {
   en: {
     brandTitle: "Southwest Tours (D-Ticket & Mapy)",
     back: "Back",
-    searchPh: "Search: Bad Dürkheim, Trifels, Black Forest …",
+    searchPh: "Castle, wine village, lookout tower …",
     feasibleLabel: "Feasible today from",
     days: [["wd", "Weekday"], ["sa", "Sat"], ["so", "Sun"]],
     dayLong: {wd: "Weekday (Mon–Fri)", sa: "Saturday", so: "Sunday"},
@@ -2734,7 +3051,7 @@ const I18N = {
     nvvAppBtn: "🟩 NVV App",
     myVrnBtn: "🟢 myVRN (destination)",
     naviBtn: "🧭 Choose navigation app",
-    appHint: "MVV & NVV take start, destination, vias and time · myVRN only takes the destination (route from current location) · DB without vias.",
+    appHint: "Outbound and return are handed over separately with start, destination and time · myVRN and navigation apps only take the destination (route from current location).",
     recommended: "Recommended",
     otherWindows: "Other departures",
     lsrTag: "🛡️ last",
@@ -2791,6 +3108,11 @@ const I18N = {
     navKarte: "Map",
     navGemerkt: "Saved",
     navUnterwegs: "Trip",
+    timetableOf: d => `${d} timetable`,
+    toursCount: n => `${n} tours`,
+    statDep: "Depart",
+    statHike: "Hike",
+    statBack: "Back",
     heroHeading: "Recommended today",
     heroBadge: "★ Top pick today",
     moreTodayHeading: "More for today",
@@ -2847,8 +3169,22 @@ const I18N = {
     tripRemindCleared: "Reminder cancelled",
     tripRemindPast: "Target time is already in the past",
     tripRemindPermNeeded: "Notification permission required",
+    tripOnSite: "on site",
+    tripLastShort: "Last",
+    tripFrom: "from",
+    tripArrival: "Arrival",
+    tripWalkTime: d => `approx. ${d} walking`,
+    tripStayTime: d => `${d} on site`,
+    tripBuffer: d => `Buffer approx. ${d}`,
+    tripAsOf: hm => `as of ${hm}`,
+    tripStayLonger: "Stay longer?",
+    tripRemindChk: m => `Remind me ${m} min before leaving`,
+    offlineReady: "Offline ready",
     tripRemindWebHint: "In the browser the reminder only fires while this page is open. Reliable even when closed: the Android app.",
-    mapSheetTitle: n => n === 1 ? "1 tour in map area" : `${n} tours in map area`,
+    mapSheetTitle: n => n === 1 ? "1 tour here" : `${n} tours here`,
+    rideLine: d => `${d} by train/bus`,
+    mapSearchPh: "Search place or tour",
+    regShort: {pfaelzerwald: "Palatinate", odenwald: "Odenwald", schwarzwald: "Black Forest"},
     mapEmptyTitle: "No tours in map area",
     mapEmptyHint: "Zoom out or reset back to the Southwest overview.",
     mapResetBounds: "Reset overview",
@@ -2865,6 +3201,23 @@ const I18N = {
     transferSingle: "1 transfer",
     transfersCount: n => `${n} transfers`,
     flowTitle: "Day Flow",
+    yourDay: d => `Your day · ${d}`,
+    changeTimes: "Change times",
+    fromBase: b => `From ${b}`,
+    backIn: n => `Back in ${n}`,
+    midOnward: (to, arr, stay) => `on to ${to}, arrives ${arr} · ${stay} stop before`,
+    showTimes: "Times",
+    transferGap: d => `${d} transfer`,
+    arrShort: "arr.",
+    towards: "to",
+    midStay: d => `${d} stop before the return`,
+    midConflictShort: "Return too early for the middle stage",
+    midConflict: (to, hm) => `⚠️ This return is too early for the round trip: earliest arrival in ${to} ${hm}. Please choose a later return.`,
+    midLegTitle: "Onward",
+    midMissingTitle: "Stage on site",
+    midMissing: (a, b) => `${a} → ${b}: no connection found in the timetable – please check in a transit app.`,
+    midTooEarly: "Middle stage cannot be completed by then",
+    lastSafeReturnShort: hm => `Last safe return ${hm}`,
     flowDep: "Departure",
     flowArr: "Arrival",
     flowRet: "Return",
@@ -2875,9 +3228,20 @@ const I18N = {
     tpOutbound: "Outbound",
     tpStay: "On site",
     tpReturn: "Return",
-    appSheetTitle: "🚆 Open connection in app",
-    appSheetClose: "Close ×",
-    capApp: "App",
+    appSheetTitle: "Open connection",
+    appSheetClose: "Close",
+    capApp: "App takes",
+    appName: {db: "DB Navigator", mvv: "München Navigator", nvv: "NVV", myvrn: "myVRN", dbweb: "bahn.de", mvvweb: "MVV in browser", gmaps: "Google Maps", geo: "Navigation app"},
+    appSub: {db: "All of Germany · regional trains only (D-Ticket)", mvv: "Live data · start, destination and time (by coordinates, also outside Bavaria)", nvv: "Start, destination and time · no live data", myvrn: "Route from current location", dbweb: "In browser · regional only", mvvweb: "In browser", gmaps: "In browser or Maps", geo: "Destination to a navigation app"},
+    legShort: {out: "Out", mid: "Onward", ret: "Back", chain: "Out + onward"},
+    legLong: {out: "Outbound", mid: "Onward", ret: "Return"},
+    sheetMapyTitle: "Hike in Mapy",
+    sheetMapySub: "Route with waypoints straight into Mapy",
+    sheetMapyTrack: "Hand over the track directly – no download folder",
+    directOpen: a => `Open ${a} directly next time`,
+    directOpened: a => `${a} opened`,
+    otherApp: "Other app",
+    departAt: hm => `departs ${hm}`,
     capStart: "Start",
     capDest: "Dest.",
     capVias: "Vias",
@@ -2962,6 +3326,7 @@ let state = {
   savedMapView: null,
   returnScrollY: 0,
   prefApp: VALID_PREF_APPS.includes(rawPrefApp) ? rawPrefApp : "mvv",
+  directOpen: store.get("directOpen", false) === true,
   favs: loadValidFavs(),
   activeTrip: loadValidActiveTrip(),
   remindTarget: "dep",
@@ -3160,6 +3525,57 @@ function getPlan(t, baseKey, dayKey) {
   }
   planCache.set(key, out);
   return out;
+}
+
+/* Middle stage of ÖPNV round trips (data/midlegs.json via planer/midlegs.py): A → vias → B with real
+   departures. Picks one connection per hop so that the free time is spread evenly over the stops,
+   and reports whether the chosen return is reachable at all. */
+const MID_MIN_TRANSFER = 3;
+function getMiddle(t, baseKey, dayKey, fwd, rev) {
+  const hopsIdx = t && t.mid && t.mid[baseKey] && t.mid[baseKey][dayKey];
+  if (!Array.isArray(hopsIdx) || !hopsIdx.length || !fwd.length) return null;
+  const hops = hopsIdx.map(h => (h || []).map(hydIt).filter(it => it.length));
+  if (hops.some(h => !h.length)) return {hops: [], segs: [], chosen: [], missing: true};
+  const m = v => parseHHMM(v);
+  const fwdArr = m(fwd[fwd.length - 1]?.arr);
+  const revDep = rev.length ? m(rev[0]?.dep) : null;
+  if (fwdArr === null) return null;
+  const pickChain = stayTarget => {
+    let t0 = fwdArr;
+    const out = [];
+    for (const its of hops) {
+      const ok = its.filter(it => (m(it[0].dep) ?? -1) >= t0 + MID_MIN_TRANSFER);
+      const pref = ok.find(it => m(it[0].dep) >= t0 + stayTarget) || ok[0];
+      if (!pref) return null;
+      out.push(pref);
+      t0 = m(pref[pref.length - 1].arr);
+    }
+    return out;
+  };
+  const earliest = pickChain(0);
+  if (!earliest) return {hops, segs: [], chosen: [], missing: true};
+  const earliestArr = m(earliest[earliest.length - 1].slice(-1)[0].arr);
+  let chosen = earliest;
+  if (revDep !== null) {
+    const ride = earliest.reduce((a, it) => a + Math.max(0, minDiff(it[0].dep, it[it.length - 1].arr)), 0);
+    const slack = revDep - fwdArr - ride;
+    const target = slack > 0 ? Math.floor(slack / (hops.length + 1)) : 0;
+    const spread = pickChain(target);
+    if (spread) {
+      const sArr = m(spread[spread.length - 1].slice(-1)[0].arr);
+      if (sArr <= revDep - MID_MIN_TRANSFER) chosen = spread;
+    }
+  }
+  const lastArr = m(chosen[chosen.length - 1].slice(-1)[0].arr);
+  return {
+    hops,
+    chosen,
+    segs: chosen.flat(),
+    earliestArr,
+    conflict: revDep !== null && lastArr > revDep - MID_MIN_TRANSFER,
+    from: chosen[0][0].from,
+    to: chosen[chosen.length - 1].slice(-1)[0].to
+  };
 }
 
 function isPlanRoutable(p) {
@@ -3420,10 +3836,17 @@ $("#themeBtn").addEventListener("click", () => {
 function renderHeader() {
   const tDict = T();
   document.documentElement.lang = state.lang;
-  $("#brandTitle").textContent = state.sel && BY_ID[state.sel] ? tourTitle(BY_ID[state.sel]) : tDict.brandTitle;
+  const tabTitle = {entdecken: tDict.navEntdecken, karte: tDict.navKarte, gemerkt: tDict.navGemerkt, unterwegs: tDict.navUnterwegs}[state.tab];
+  $("#brandTitle").textContent = state.sel && BY_ID[state.sel] ? tourTitle(BY_ID[state.sel]) : (tabTitle || tDict.brandTitle);
+  const now = new Date();
+  const wdName = now.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {weekday: "short"}).replace(/\.$/, "");
+  const dateTxt = state.lang === "en" ? `${wdName} ${now.getDate()}/${now.getMonth() + 1}` : `${wdName} ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.`;
+  const dayLbl = (tDict.days.find(d => d[0] === state.day) || ["", ""])[1];
+  $("#brandKicker").textContent = `${dateTxt} · ${tDict.timetableOf(dayLbl)}`;
   $("#backBtnTxt").textContent = tDict.back;
   $("#backBtn").setAttribute("aria-label", tDict.back);
   $("#homeEditBtn").textContent = `📍 ${HOME.name}`;
+  $("#basePillTxt").textContent = tDict.fromBase(state.base === "karlsruhe" ? "Karlsruhe" : "Jugenheim");
   $("#langBtn").textContent = state.lang === "en" ? "🇬🇧 EN" : "🇩🇪 DE";
   $("#baseJgBtn").setAttribute("aria-pressed", String(state.base === "jugenheim"));
   $("#baseKaBtn").setAttribute("aria-pressed", String(state.base === "karlsruhe"));
@@ -3503,10 +3926,10 @@ function setLayer(k) {
   if (overlayTileLayer) { map.removeLayer(overlayTileLayer); overlayTileLayer = null; }
   const cfg = LAYERS[k];
   const isFile = location.protocol === "file:";
-  baseTileLayer = L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr, crossOrigin: isFile ? undefined : "anonymous"});
+  baseTileLayer = L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr, crossOrigin: isFile || cfg.cors === false ? undefined : "anonymous"});
   baseTileLayer.addTo(map);
   if (cfg.overlay && !isFile) {
-    overlayTileLayer = L.tileLayer(cfg.overlay, {maxZoom: cfg.max, opacity: 0.85, crossOrigin: "anonymous"});
+    overlayTileLayer = L.tileLayer(cfg.overlay, {maxZoom: cfg.max, opacity: cfg.overlayOpacity || 0.85, subdomains: "abc", crossOrigin: "anonymous"});
     overlayTileLayer.addTo(map);
   }
   renderLayerMenu();
@@ -3560,6 +3983,21 @@ function getSegmentCoords(s, fallbackFrom, fallbackTo) {
     }
   }
   return pts;
+}
+
+/* Straight lines are only acceptable for short hops: longer stretches without a polyline in the data
+   (missing segment geometry, untimed middle stages) would cut straight across the whole map. */
+const STRAIGHT_MAX_M = 3000;
+function hasRealPoly(s) {
+  return Array.isArray(s.legs) && s.legs.some(l => polyPts(l.p).length >= 2);
+}
+function pathLenM(pts) {
+  let d = 0;
+  for (let i = 1; i < (pts || []).length; i++) d += haversineM(pts[i - 1], pts[i]);
+  return d;
+}
+function isLongStraight(pts, real) {
+  return !real && pts && pts.length >= 2 && pathLenM(pts) > STRAIGHT_MAX_M;
 }
 
 /* Part of the tour between arrival and return departure that has no timetable segment:
@@ -3621,12 +4059,29 @@ function drawOverview() {
       col = "#15803d";
     } else {
       const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
-      fwd.forEach(s => pts.push(...getSegmentCoords(s, bInfo, t.transit?.startStop)));
-      const revPts = [];
-      rev.forEach(s => revPts.push(...getSegmentCoords(s, t.transit?.endStop, bInfo)));
-      const mid = tourMiddle(t, pts[pts.length - 1], revPts[0]);
-      if (mid.local) pts.push(...mid.local.slice(1, -1));
-      pts.push(...revPts);
+      const pieces = [];
+      let cur = [];
+      const flush = () => { if (cur.length >= 2) pieces.push(cur); cur = []; };
+      const addPts = (c, real) => {
+        if (!c || c.length < 2) return;
+        if (isLongStraight(c, real)) { flush(); return; }
+        if (cur.length && haversineM(cur[cur.length - 1], c[0]) > STRAIGHT_MAX_M) flush();
+        cur.push(...c);
+      };
+      fwd.forEach(s => addPts(getSegmentCoords(s, bInfo, t.transit?.startStop), hasRealPoly(s)));
+      const fwdEnd = cur.length ? cur[cur.length - 1] : (pieces.length ? pieces[pieces.length - 1].slice(-1)[0] : null);
+      const revFirst = rev.length ? getSegmentCoords(rev[0], t.transit?.endStop, bInfo)[0] : null;
+      const midSt = getMiddle(t, state.base, state.day, fwd, rev);
+      if (midSt && midSt.segs.length) {
+        midSt.segs.forEach(s => addPts(getSegmentCoords(s), hasRealPoly(s)));
+      } else {
+        const mid = tourMiddle(t, fwdEnd, revFirst);
+        if (mid.local && pathLenM(mid.local) <= STRAIGHT_MAX_M) addPts(mid.local, true);
+        else flush();
+      }
+      rev.forEach(s => addPts(getSegmentCoords(s, t.transit?.endStop, bInfo), hasRealPoly(s)));
+      flush();
+      pts = pieces.length === 1 ? pieces[0] : pieces;
       col = t.region === "schwarzwald" ? "#6D28D9" : t.region === "pfaelzerwald" ? "#C2410C" : t.region === "odenwald" ? "#15803D" : "#0F4C5C";
     }
     if (pts.length < 2 && t.transit?.startStop?.lat != null) {
@@ -3659,7 +4114,8 @@ function drawOverview() {
       bounds.extend(line.getBounds());
 
       // Destination / trailhead marker for easy tapping & visual clarity
-      const markerPt = hasGpx ? pts[Math.floor(pts.length / 2)] : (t.transit?.startStop?.lat != null ? [Number(t.transit.startStop.lat), Number(t.transit.startStop.lon)] : pts[pts.length - 1]);
+      const flatPts = Array.isArray(pts[0]?.[0]) ? pts.flat() : pts;
+      const markerPt = hasGpx ? pts[Math.floor(pts.length / 2)] : (t.transit?.startStop?.lat != null ? [Number(t.transit.startStop.lat), Number(t.transit.startStop.lon)] : flatPts[flatPts.length - 1]);
       let mk = null;
       if (markerPt && markerPt.length === 2 && !Number.isNaN(markerPt[0]) && !Number.isNaN(markerPt[1])) {
         mk = L.circleMarker(markerPt, {
@@ -3812,6 +4268,10 @@ function sheetCardHTML(t) {
   const regLbl = tDict.reg[t.region] || t.region || "";
   const imgSrc = t.img || `img/${t.id}.jpg`;
   const selCls = t.id === state.mapSelectedId ? " is-selected" : "";
+  const sw = getSelectedWindow(t, state.base, state.day);
+  const rideMin = sw.fwd.length ? minDiff(sw.fwd[0].dep, sw.fwd[sw.fwd.length - 1].arr) : 0;
+  const rideLine = rideMin ? tDict.rideLine(`${Math.floor(rideMin / 60)}:${String(rideMin % 60).padStart(2, "0")} h`) : (tDict.diff[t.difficulty] || "");
+  const kmLine = h.distKm ? `${Number(h.distKm).toFixed(1).replace(".", ",")} km${Number(h.elevGainM) > 0 ? ` · ↗${Math.round(Number(h.elevGainM))} m` : ""}` : "";
   const hikeTxt = (h.hasGpx && h.distKm)
     ? `🥾 ${Number(h.distKm).toFixed(1).replace(".", ",")} km · ↗ ${Math.round(Number(h.elevGainM || 0))} hm`
     : (tDict.diff[t.difficulty] || t.difficulty || "leicht");
@@ -3819,13 +4279,9 @@ function sheetCardHTML(t) {
     <img class="sheet-card-img" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="152" height="136">
     <div class="sheet-card-body">
       <div class="sheet-card-title">${esc(tourTitle(t))}</div>
-      <div class="sheet-card-sub">${esc(tourSub(t))}</div>
-      <div class="sheet-card-chips">
-        <span class="chip strong">🕘 ${esc(dep)}–${esc(arr)}</span>
-        <span class="chip">⏱ ${esc(fmtDur(durMin))}</span>
-        <span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>
-        <span class="chip ok">${esc(hikeTxt)}</span>
-      </div>
+      <div class="sheet-card-line">${esc(rideLine)}</div>
+      ${kmLine ? `<div class="sheet-card-line">${esc(kmLine)}</div>` : ""}
+      <div class="sheet-card-time">${esc(dep)} → ${esc(arr)}</div>
     </div>
     ${favBtnHTML(t.id, "fav-inline")}
   </div>`;
@@ -3840,6 +4296,7 @@ function renderMapSheet() {
   const vb = map.getBounds();
   const inView = TOURS.filter(t => matchesFilter(t) && isTourInMapBounds(t.id, vb));
   $("#mapSheetTitle").textContent = tDict.mapSheetTitle(inView.length);
+  renderMapRegions();
   const dayLbl = (tDict.days.find(d => d[0] === state.day) || ["", ""])[1];
   $("#mapSheetBaseChip").textContent = `${state.base === "karlsruhe" ? "❤️ Karlsruhe" : "🏠 Jugenheim"} · ${dayLbl}`;
 
@@ -3889,18 +4346,24 @@ function drawSingle(t) {
   const allTransit = [...fwd, ...rev];
   allTransit.forEach((s, idx) => {
     const pts = getSegmentCoords(s, bInfo, t.transit?.startStop);
+    if (isLongStraight(pts, hasRealPoly(s))) {
+      segLayerMap[idx] = L.polyline(pts);
+      [pts[0], pts[pts.length - 1]].forEach(q => singleGroup.addLayer(L.circleMarker(q, {radius: 4, color: "#ffffff", weight: 1.5, fillColor: "#7c3aed", fillOpacity: 1})));
+      bounds.extend(L.latLngBounds(pts));
+      return;
+    }
     if (pts.length >= 2) {
       // Anchor first segment cleanly to active base coordinates so Jugenheim vs Karlsruhe SVG paths always differ
-      if (idx === 0) pts[0] = [bInfo.lat, bInfo.lon];
+      if (idx === 0 && haversineM(pts[0], [bInfo.lat, bInfo.lon]) <= STRAIGHT_MAX_M) pts[0] = [bInfo.lat, bInfo.lon];
       const mode = String(s.mode || "re").toLowerCase();
-      const isBus = mode === "bus";
       const isWalk = s.kind === "walk" || mode === "foot" || mode === "walk";
-      const strokeCol = isWalk ? "#64748b" : isBus ? "#0284c7" : "#7c3aed";
+      const strokeCol = isWalk ? "#64748b" : (MODE_COLORS[mode] || "#7c3aed");
       const line = L.polyline(pts, {
         color: strokeCol,
         weight: isWalk ? 3 : 5,
         opacity: 0.92,
-        dashArray: isWalk ? "3 6" : isBus ? "8 5" : null
+        dashArray: isWalk ? "1 7" : null,
+        lineCap: "round"
       });
       line.on("click", () => focusStep(idx));
       singleGroup.addLayer(line);
@@ -3908,6 +4371,20 @@ function drawSingle(t) {
       bounds.extend(line.getBounds());
     }
   });
+
+  // Timetabled middle stage of ÖPNV round trips (e.g. Koblenz → Limburg)
+  const midSt = getMiddle(t, state.base, state.day, fwd, rev);
+  if (midSt && midSt.segs.length) {
+    midSt.segs.forEach(s => {
+      const pts = getSegmentCoords(s);
+      if (pts.length < 2 || isLongStraight(pts, hasRealPoly(s))) return;
+      const mode = String(s.mode || "re").toLowerCase();
+      const isWalk = s.kind === "walk" || mode === "foot" || mode === "walk";
+      const ln = L.polyline(pts, {color: isWalk ? "#64748b" : (MODE_COLORS[mode] || "#7c3aed"), weight: isWalk ? 3 : 5, opacity: 0.92, dashArray: isWalk ? "1 7" : null, lineCap: "round"});
+      singleGroup.addLayer(ln);
+      bounds.extend(ln.getBounds());
+    });
+  }
 
   // Hike track (GPX) and the untimed middle part, so the whole round is visible
   const fwdPts = fwd.length ? getSegmentCoords(fwd[fwd.length - 1], bInfo, t.transit?.startStop) : [];
@@ -3922,13 +4399,21 @@ function drawSingle(t) {
     singleGroup.addLayer(ln);
     bounds.extend(ln.getBounds());
   };
-  addLine(mid.walkIn, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
-  addLine(mid.walkOut, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
+  if (mid.walkIn && pathLenM(mid.walkIn) <= STRAIGHT_MAX_M) addLine(mid.walkIn, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
+  if (mid.walkOut && pathLenM(mid.walkOut) <= STRAIGHT_MAX_M) addLine(mid.walkOut, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
   if (hikePts.length >= 2) {
     addLine(hikePts, {color: "#15803d", weight: 5, opacity: 0.95});
-  } else if (mid.local) {
-    // own stage on site (e.g. via 1 → via 2 of a 360° ring): no timetable data, drawn dashed
+  } else if (midSt && midSt.segs.length) {
+    // middle stage already drawn from the timetable
+  } else if (mid.local && pathLenM(mid.local) <= STRAIGHT_MAX_M) {
+    // short own stage on site: no timetable data, drawn dashed
     addLine(mid.local, {color: "#15803d", weight: 4, opacity: 0.9, dashArray: "8 7"});
+  } else if (mid.local) {
+    // long stage without map data (e.g. via 1 → via 2 of a 360° ring): only its stops, no straight line across the map
+    mid.local.forEach(q => {
+      singleGroup.addLayer(L.circleMarker(q, {radius: 6, color: "#ffffff", weight: 2, fillColor: "#15803d", fillOpacity: 1}));
+      bounds.extend(L.latLngBounds([q, q]));
+    });
   } else if (fwdEnd) {
     const mk = L.circleMarker(fwdEnd, {radius: 7, color: "#ffffff", weight: 2, fillColor: "#15803d", fillOpacity: 1});
     singleGroup.addLayer(mk);
@@ -4247,57 +4732,57 @@ function renderDiscoverHighlights(vis) {
   }
 
   const hw = getSelectedWindow(hero, state.base, state.day);
-  const hDep = hw.fwd[0]?.dep || "08:04";
-  const hArr = hw.rev[hw.rev.length - 1]?.arr || "18:42";
-  const hDur = minDiff(hDep, hArr) || hero.durationMin || 360;
+  const hDep = hw.fwd[0]?.dep || "–";
+  const hArr = hw.rev[hw.rev.length - 1]?.arr || "–";
   const hh = hero.hike || {};
   const hImg = hero.img || `img/${hero.id}.jpg`;
   const hReg = tDict.reg[hero.region] || hero.region || "";
   const hRk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(hero.region) ? hero.region : "weitere";
-  const hChips = [
-    `<span class="chip strong">🕘 ${esc(hDep)}–${esc(hArr)}</span>`,
-    `<span class="chip">⏱ ${esc(fmtDur(hDur))}</span>`,
-    `<span class="chip reg-chip" data-region="${esc(hRk)}">${esc(hReg)}</span>`
-  ];
-  if (hh.hasGpx && hh.distKm) {
-    hChips.push(`<span class="chip ok">🥾 ${Number(hh.distKm).toFixed(1).replace(".", ",")} km</span>`);
-  }
+  const hmm = m => `${Math.floor(m / 60)}:${String(Math.round(m % 60)).padStart(2, "0")}`;
+  const hikeParts = [];
+  if (hh.distKm) hikeParts.push(`${Number(hh.distKm).toFixed(1).replace(".", ",")} km`);
+  if (Number(hh.walkMin) > 0) hikeParts.push(hmm(Number(hh.walkMin)));
+  const hHike = hikeParts.join(" · ") || (tDict.diff[hero.difficulty] || "–");
 
   const moreHtml = more.length ? `
     <h2 class="discover-title">${esc(tDict.moreTodayHeading)}</h2>
     <div class="discover-row">
       ${more.map(t => {
         const w = getSelectedWindow(t, state.base, state.day);
-        const dep = w.fwd[0]?.dep || "08:04";
-        const arr = w.rev[w.rev.length - 1]?.arr || "18:42";
+        const dep = w.fwd[0]?.dep || "–";
         const h = t.hike || {};
         const img = t.img || `img/${t.id}.jpg`;
         const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
-        const hikeStr = (h.hasGpx && h.distKm) ? `🥾 ${Number(h.distKm).toFixed(1).replace(".", ",")} km` : (tDict.diff[t.difficulty] || "leicht");
+        const meta = [dep];
+        if (h.distKm) meta.push(`${Number(h.distKm).toFixed(1).replace(".", ",")} km`);
+        if (Number(h.elevGainM) > 0) meta.push(`↗${Math.round(Number(h.elevGainM))}`);
         return `<div class="rec-card" data-id="${esc(t.id)}" data-region="${esc(rk)}" role="button" tabindex="0">
           <div class="rec-card-media">
             <img class="rec-card-img" src="${esc(img)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="420" height="160">
             ${favBtnHTML(t.id, "fav-overlay")}
           </div>
           <span class="rec-card-title">${esc(tourTitle(t))}</span>
-          <span class="rec-card-meta">🕘 ${esc(dep)}–${esc(arr)}</span>
-          <span class="rec-card-foot"><span>${esc(tDict.reg[t.region] || t.region || "")}</span><span>${esc(hikeStr)}</span></span>
+          <span class="rec-card-meta">${esc(meta.join(" · "))}</span>
         </div>`;
       }).join("")}
     </div>` : "";
 
   host.innerHTML = `
-    <h2 class="discover-title">${esc(tDict.heroHeading)}</h2>
-    <div class="rec-hero" data-id="${esc(hero.id)}" role="button" tabindex="0">
+    <div class="discover-head"><h2 class="discover-title">${esc(tDict.heroHeading)}</h2><span class="discover-count">${esc(tDict.toursCount(vis.length))}</span></div>
+    <div class="rec-hero" data-id="${esc(hero.id)}" data-region="${esc(hRk)}" role="button" tabindex="0">
       <div class="rec-hero-media">
-        <img class="rec-hero-img" src="${esc(hImg)}" alt="${esc(tourTitle(hero))}" loading="eager" decoding="async" width="208" height="208">
+        <img class="rec-hero-img" src="${esc(hImg)}" alt="${esc(tourTitle(hero))}" loading="eager" decoding="async" width="720" height="405">
+        <span class="rh-badge rh-reg">${esc(hReg)}</span>
+        <span class="rh-badge rh-dt">D-Ticket</span>
         ${favBtnHTML(hero.id, "fav-overlay")}
       </div>
       <div class="rec-hero-body">
-        <span class="rec-hero-badge">${esc(tDict.heroBadge)}</span>
         <div class="rec-hero-title">${esc(tourTitle(hero))}</div>
-        <p class="rec-hero-sub">${esc(tourSub(hero))}</p>
-        <div class="chips">${hChips.join("")}</div>
+        <div class="rh-stats">
+          <div class="rh-stat"><span>${esc(tDict.statDep)}</span><b>${esc(hDep)}</b></div>
+          <div class="rh-stat"><span>${esc(tDict.statHike)}</span><b>${esc(hHike)}</b></div>
+          <div class="rh-stat"><span>${esc(tDict.statBack)}</span><b>${esc(hArr)}</b></div>
+        </div>
       </div>
     </div>
     ${moreHtml}`;
@@ -4469,8 +4954,13 @@ function renderSavedView() {
       </div>`;
 
   saved.innerHTML = `<div class="saved-shell">
+    <div class="tab-head">
+      <div class="tab-head-text">
+        <span class="tab-kicker">${esc(tDict.savedCount(favTours.length))}</span>
+        <h1 class="tab-title">${esc(tDict.navGemerkt)}</h1>
+      </div>
+    </div>
     <div class="saved-head">
-      <h2>🔖 ${esc(tDict.savedTitle)} <span class="chip strong">${esc(tDict.savedCount(favTours.length))}</span></h2>
       <div class="saved-toolbar">
         <button type="button" class="act" id="favExportBtn">${esc(tDict.savedExportBtn)}</button>
         <button type="button" class="act" id="favImportBtn">${esc(tDict.savedImportBtn)}</button>
@@ -4576,6 +5066,11 @@ function formatCountdown(totalSeconds) {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
+function formatCountdownShort(totalSeconds) {
+  const min = Math.max(0, Math.floor(totalSeconds / 60));
+  return `${Math.floor(min / 60)}:${String(min % 60).padStart(2, "0")}`;
+}
+
 function computeTripProgress(t, selWin) {
   const tDict = T();
   const fwd = selWin.fwd || [];
@@ -4598,6 +5093,7 @@ function computeTripProgress(t, selWin) {
   const nowMin = nowSec / 60;
 
   let phaseLbl = tDict.tripPhaseBefore;
+  let phase = "before";
   let remainSec = Math.max(0, depMin * 60 - nowSec);
   let pct = 0;
   let nextSeg = fwd[0] || rev[0] || null;
@@ -4611,24 +5107,28 @@ function computeTripProgress(t, selWin) {
     nextRole = tDict.flowDep;
   } else if (nowMin < fwdArrMin) {
     phaseLbl = tDict.tripPhaseOutbound;
+    phase = "out";
     remainSec = fwdArrMin * 60 - nowSec;
     pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
     nextSeg = fwd[fwd.length - 1] || fwd[0] || null;
     nextRole = tDict.flowDep;
   } else if (nowMin < revDepMin) {
     phaseLbl = tDict.tripPhaseOnSite;
+    phase = "site";
     remainSec = revDepMin * 60 - nowSec;
     pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
     nextSeg = rev[0] || null;
     nextRole = tDict.flowRet;
   } else if (nowMin < revArrMin) {
     phaseLbl = tDict.tripPhaseReturn;
+    phase = "ret";
     remainSec = revArrMin * 60 - nowSec;
     pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
     nextSeg = rev[rev.length - 1] || rev[0] || null;
     nextRole = tDict.flowRet;
   } else {
     phaseLbl = tDict.tripPhaseDone;
+    phase = "done";
     remainSec = (depMin + 1440) * 60 - nowSec;
     pct = 100;
     nextSeg = fwd[0] || null;
@@ -4651,7 +5151,11 @@ function computeTripProgress(t, selWin) {
     arr,
     phaseLbl,
     countdown: formatCountdown(remainSec),
+    countdownShort: formatCountdownShort(remainSec),
     pct: Math.max(0, Math.min(100, pct)),
+    sitePct: phase === "before" || phase === "out" ? 0 : phase === "site" ? Math.round(((nowMin - fwdArrMin) / Math.max(1, stayMin)) * 100) : 100,
+    phase,
+    stayMin,
     nextText
   };
 }
@@ -4663,14 +5167,16 @@ function updateTripCountdown() {
     return;
   }
   const prog = computeTripProgress(resolved.t, resolved.selWin);
+  resolved.phase0 = $("#tripView")?.dataset.phase;
   const phEl = $("#tripPhaseLbl");
   const cdEl = $("#tripCountdownVal");
   const barEl = $("#tripProgressFill");
   const nxEl = $("#tripNextStep");
   if (phEl) phEl.textContent = prog.phaseLbl;
-  if (cdEl) cdEl.textContent = prog.countdown;
-  if (barEl) barEl.style.width = `${prog.pct}%`;
+  if (cdEl) cdEl.textContent = prog.countdownShort;
+  if (barEl) barEl.style.width = `${prog.sitePct}%`;
   if (nxEl) nxEl.textContent = `${T().tripNextStep}: ${prog.nextText}`;
+  if (prog.phase !== resolved.phase0) renderTripView();
 }
 
 function startTrip(t) {
@@ -4829,12 +5335,13 @@ function renderTripView() {
   const dayLbl = (tDict.days.find(d => d[0] === trip.day) || ["", ""])[1];
   const fwdArr = selWin.fwd[selWin.fwd.length - 1]?.arr || prog.fwdArr;
   const revsHtml = (selWin.validRevs || []).map((r, i) => {
-    const rDep = r[0]?.dep || "16:00";
-    const rArr = r[r.length - 1]?.arr || "18:00";
+    const rDep = r[0]?.dep || "";
+    const rArr = r[r.length - 1]?.arr || "";
     const rStay = minDiff(fwdArr, rDep);
     const isLsr = i === selWin.lsrIdx;
     const short = isShortReturn(t, rStay);
-    return `<button type="button" class="trip-ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === selWin.revIdx}"${short ? ` title="${esc(tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    const tip = `${rDep} → ${rArr} (${fmtDur(rStay)} ${tDict.tripOnSite})${short ? " · " + tDict.retTooShort(fmtDur(short)) : ""}`;
+    return `<button type="button" class="trip-ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === selWin.revIdx}" title="${esc(tip)}" aria-label="${esc(tip)}">${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.tripLastShort)} ` : ""}${esc(rDep)}</button>`;
   }).join("");
 
   let rem = trip.reminder;
@@ -4842,57 +5349,82 @@ function renderTripView() {
     trip.reminder = rem = null;
     store.set("activeTrip", trip);
   }
-  const remStatusHtml = rem
-    ? `<div class="trip-remind-status">
-        <span>${esc(rem.status === "pending" ? tDict.tripRemindPending : tDict.tripRemindActive(rem.triggerHHMM, rem.targetHHMM))}</span>
-        <button type="button" class="mini-btn" id="tripCancelRemindBtn">${esc(tDict.tripRemindCancel)}</button>
-      </div>`
+  const remStatus = rem
+    ? (rem.status === "pending" ? tDict.tripRemindPending : tDict.tripRemindActive(rem.triggerHHMM, rem.targetHHMM))
     : "";
 
+  // next steps of the current leg (real segments from the plan)
+  const tripMid = getMiddle(t, trip.base, trip.day, selWin.fwd || [], selWin.rev || []);
+  const leg = prog.phase === "site" ? [...(tripMid && tripMid.segs.length ? tripMid.segs : []), ...(selWin.rev || [])]
+    : prog.phase === "ret" ? (selWin.rev || []) : (selWin.fwd || []);
+  const segLine = sg => {
+    const line = sg.line || sg.lineName || "";
+    const isWalk = /walk|foot/i.test(String(sg.mode || "")) || !line;
+    const from = sg.from?.name || "";
+    const to = sg.to?.name || "";
+    return isWalk ? `${tDict.walkLabel} ${from} → ${to}` : `${line} ${tDict.tripFrom} ${from} → ${to}`;
+  };
+  const nowAbs = new Date().getHours() * 60 + new Date().getMinutes();
+  const upcoming = leg.filter(sg => !(/walk|foot/i.test(String(sg.mode || "")) && sg.from?.name && sg.from.name === sg.to?.name))
+    .filter(sg => { const a = toAbsMin(sg.arr); return a === null || prog.phase === "before" || prog.phase === "done" || a >= nowAbs; })
+    .slice(0, 3);
+  const stepsHtml = leg.length ? `<ol class="trip-steps">${upcoming.map(sg => `<li><time>${esc(sg.dep || "")}</time><span>${esc(segLine(sg))}</span></li>`).join("")}<li><time>${esc(leg[leg.length - 1].arr || "")}</time><span>${esc(tDict.tripArrival)} ${esc(leg[leg.length - 1].to?.name || "")}</span></li></ol>` : "";
+
+  const h = t.hike || {};
+  const walkMin = Number(h.walkMin) || 0;
+  const buffer = walkMin > 0 ? prog.stayMin - walkMin : null;
+  const hikeFacts = [];
+  if (h.distKm) hikeFacts.push(`${Number(h.distKm).toFixed(1).replace(".", ",")} km`);
+  if (walkMin) hikeFacts.push(tDict.tripWalkTime(fmtDur(walkMin)));
+  hikeFacts.push(tDict.tripStayTime(fmtDur(prog.stayMin)));
+  const nowD = new Date();
+  const asOf = `${String(nowD.getHours()).padStart(2, "0")}:${String(nowD.getMinutes()).padStart(2, "0")}`;
+  const offline = Boolean(NATIVE) || Boolean(navigator.serviceWorker && navigator.serviceWorker.controller);
+  const remTarget = (prog.phase === "before" || prog.phase === "done") ? "dep" : "ret";
+
+  tripEl.dataset.phase = prog.phase;
   tripEl.innerHTML = `<div class="trip-shell">
-    <div class="trip-card trip-hero">
-      <h2>${esc(tourTitle(t))}</h2>
-      <p class="trip-sub">${esc(tourSub(t))}</p>
-      <div class="chips">
-        <span class="chip strong">🏠 ${esc(bInfo.name)} · ${esc(dayLbl)}</span>
-        <span class="chip strong">🕘 ${esc(prog.dep)}–${esc(prog.arr)}</span>
-        ${trip.base !== state.base ? `<span class="chip warn">${esc(tDict.tripBaseNote(bInfo.name))}</span>` : ""}
+    <div class="tab-head">
+      <div class="tab-head-text">
+        <span class="tab-kicker">${esc(tDict.tripAsOf(asOf))} · ${esc(tourTitle(t))}</span>
+        <h1 class="tab-title">${esc(tDict.navUnterwegs)}</h1>
       </div>
-      <div class="trip-countdown-box">
-        <div class="trip-phase-lbl" id="tripPhaseLbl">${esc(prog.phaseLbl)}</div>
-        <div class="trip-countdown-val" id="tripCountdownVal">${esc(prog.countdown)}</div>
-        <div class="trip-progress-track"><div class="trip-progress-fill" id="tripProgressFill" style="width:${prog.pct}%"></div></div>
-        <div class="trip-next-step" id="tripNextStep">${esc(tDict.tripNextStep)}: ${esc(prog.nextText)}</div>
-      </div>
-      <div class="trip-actions">
-        <button type="button" class="act" id="tripOpenDetailBtn">${esc(tDict.tripDetailBtn)}</button>
-        <button type="button" class="act primary" id="tripOpenAppSheetBtn">🚆 ${esc(tDict.tripAppBtn)}</button>
-        <button type="button" class="act" id="tripStopBtn">${esc(tDict.tripEndBtn)}</button>
-      </div>
+      ${offline ? `<span class="offline-pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>${esc(tDict.offlineReady)}</span>` : ""}
+    </div>
+    ${trip.base !== state.base ? `<div class="chips"><span class="chip warn">${esc(tDict.tripBaseNote(bInfo.name))}</span></div>` : ""}
+
+    <div class="trip-now">
+      <div class="trip-phase-lbl" id="tripPhaseLbl">${esc(prog.phaseLbl)}</div>
+      <div class="trip-big"><span class="trip-countdown-val" id="tripCountdownVal">${esc(prog.countdownShort)}</span><span class="trip-big-unit">h</span></div>
+      ${stepsHtml}
+      <div class="trip-next-step" id="tripNextStep" hidden>${esc(tDict.tripNextStep)}: ${esc(prog.nextText)}</div>
+    </div>
+
+    <div class="trip-card">
+      <div class="tc-row"><h3>${esc(tDict.hikeLabel.charAt(0).toUpperCase() + tDict.hikeLabel.slice(1))}</h3>${buffer !== null ? `<span class="tc-buffer${buffer < 0 ? " neg" : ""}">${esc(buffer < 0 ? tDict.retTooShort(fmtDur(walkMin)) : tDict.tripBuffer(fmtDur(buffer)))}</span>` : ""}</div>
+      <div class="trip-progress-track"><div class="trip-progress-fill" id="tripProgressFill" style="width:${prog.sitePct}%"></div></div>
+      <p class="tc-sub">${esc(hikeFacts.join(" · "))} · ${esc(dayLbl)} ${esc(prog.dep)}–${esc(prog.arr)}</p>
     </div>
 
     ${revsHtml ? `<div class="trip-card">
-      <h3>🔄 ${esc(tDict.tripLaterReturns)}</h3>
+      <h3>${esc(tDict.tripStayLonger)}</h3>
       <div class="trip-ret-list">${revsHtml}</div>
+      <label class="trip-check"><input type="checkbox" id="tripRemindChk" data-rem-auto="${remTarget}"${rem ? " checked" : ""}><span>${esc(tDict.tripRemindChk(state.remindLead === 30 ? 30 : 15))}</span></label>
+      ${remStatus ? `<p class="trip-remind-hint">${esc(remStatus)}</p>` : ""}
+      ${NATIVE ? "" : `<p class="trip-remind-hint">${esc(tDict.tripRemindWebHint)}</p>`}
     </div>` : ""}
 
-    <div class="trip-card trip-remind-box">
-      <h3>🔔 ${esc(tDict.tripRemindTitle)}</h3>
-      <div class="trip-remind-controls">
-        <button type="button" class="stay-btn" data-rem-target="dep" aria-pressed="${state.remindTarget === "dep"}">${esc(tDict.tripRemindDep)} (${esc(prog.dep)})</button>
-        <button type="button" class="stay-btn" data-rem-target="ret" aria-pressed="${state.remindTarget === "ret"}">${esc(tDict.tripRemindRet)} (${esc(prog.revDep)})</button>
-        <button type="button" class="stay-btn" data-rem-lead="15" aria-pressed="${state.remindLead === 15}">${esc(tDict.tripRemindLead(15))}</button>
-        <button type="button" class="stay-btn" data-rem-lead="30" aria-pressed="${state.remindLead === 30}">${esc(tDict.tripRemindLead(30))}</button>
-        <button type="button" class="act primary" id="tripRemindBtn">${esc(tDict.tripRemindSet)}</button>
-      </div>
-      ${remStatusHtml}
-      ${NATIVE ? "" : `<p class="trip-remind-hint">${esc(tDict.tripRemindWebHint)}</p>`}
+    <div class="trip-actions">
+      <button type="button" class="act" id="tripOpenDetailBtn">${esc(tDict.tripDetailBtn)}</button>
+      <button type="button" class="act primary" id="tripOpenAppSheetBtn">${esc(tDict.tripAppBtn)}</button>
     </div>
+    <button type="button" class="link-btn" id="tripStopBtn">${esc(tDict.tripEndBtn)}</button>
   </div>`;
   startTripTicker();
 }
 
 function renderTabViews() {
+  if (!state.sel) restoreDetailParts();
   const saved = $("#savedView");
   const trip = $("#tripView");
   if (saved) {
@@ -5022,6 +5554,17 @@ $("#tripView")?.addEventListener("click", e => {
   }
   if (e.target.closest("#tripRemindBtn")) {
     scheduleTripReminder();
+    return;
+  }
+  const chk = e.target.closest("#tripRemindChk");
+  if (chk) {
+    if (chk.checked) {
+      state.remindTarget = chk.dataset.remAuto === "ret" ? "ret" : "dep";
+      scheduleTripReminder();
+    } else {
+      cancelActiveTripReminder();
+    }
+    if (state.tab === "unterwegs" && !state.sel) renderTripView();
     return;
   }
   if (e.target.closest("#tripCancelRemindBtn")) {
@@ -5200,11 +5743,21 @@ function linkDateIso(dayKey) {
   return ref || isoDate(today);
 }
 
+/* DELFI stop names are "Ort, Haltestelle"; DB's name search expects "Haltestelle, Ort" and otherwise
+   picks look-alikes (device test: "Schriesheim, Rathaus" → "Altenbach Rathaus, Schriesheim"). */
+function dbStopName(stop, fallback) {
+  const nm = cleanStopName(stop, fallback);
+  const rid = String((stop && stop.remoteId) || "");
+  const delfi = /@L=de:/.test(rid) || (stop && stop.dhid && !/@L=\d/.test(rid));
+  const m = delfi ? nm.match(/^([^,]+),\s*([^,]+)$/) : null;
+  return m ? `${m[2]}, ${m[1]}` : nm;
+}
+
 function buildDbUrl(fromStop, toStop, dayKey, depHHMM) {
   const dayIso = linkDateIso(dayKey);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
-  const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim"));
-  const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
+  const so = encodeURIComponent(dbStopName(fromStop, "Jugenheim"));
+  const zo = encodeURIComponent(dbStopName(toStop, "Neustadt (Weinstr) Hbf"));
   let frag = `sts=true&so=${so}&zo=${zo}&kl=2&hd=${encodeURIComponent(dayIso + "T" + hm + ":00")}&vm=00,01,02,03,04,05,06,07,08,09&dlt=true`;
   const soid = cleanStopId(fromStop);
   const zoid = cleanStopId(toStop);
@@ -5217,28 +5770,51 @@ const NATIVE = (typeof window !== "undefined" && window.SWNative) ? window.SWNat
 const IS_ANDROID = Boolean(NATIVE) || /Android/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
 
 /* HAFAS apps (München Navigator, NVV): query?S=…&Z=…&V1=…&V2=…&date=…&time=… */
-function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM, opts) {
+/* HAFAS apps (München Navigator, NVV) – their name search only covers the own region (MVV: Bavaria), but the
+   link handler (de.hafas.android.c, read from the APK 2026-11-24) also takes coordinate locations:
+   SKOORD=1&SX=<lon·1e6>&SY=<lat·1e6>&SNAME=…, same with Z…; start=1 runs the search at once.
+   Verified on the device: Jugenheim → Dossenheim and Schriesheim → Jugenheim with live data. */
+function buildHafasNativeUrl(scheme, pkg, fromStop, toStop, dayKey, depHHMM) {
   const dateStr = isoToDDMMYYYY(linkDateIso(dayKey));
-  const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
-  const fromName = cleanStopName(fromStop, "Jugenheim Bickenbacher Straße");
-  const toName = cleanStopName(toStop, "Neustadt (Weinstr) Hbf");
-  const isRoundTrip = Boolean(opts && opts.roundTrip);
-  const s = encodeURIComponent(fromName);
-  const z = encodeURIComponent(isRoundTrip ? fromName : toName);
-  let path = `query?S=${s}&Z=${z}`;
-  if (isRoundTrip) {
-    path += `&V1=${encodeURIComponent(toName)}`;
-    const endName = opts && opts.endStop ? cleanStopName(opts.endStop, "") : "";
-    if (endName && endName !== toName && endName !== fromName) {
-      path += `&V2=${encodeURIComponent(endName)}`;
-    }
-  }
-  path += `&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}`;
+  // coordinate starts add a short walk to the platform → search 5 min earlier so the planned train is listed
+  const hm0 = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
+  const m0 = Math.max(0, parseInt(hm0.slice(0, 2), 10) * 60 + parseInt(hm0.slice(3), 10) - 5);
+  const hm = `${String(Math.floor(m0 / 60)).padStart(2, "0")}:${String(m0 % 60).padStart(2, "0")}`;
+  const loc = (pre, st, fb) => {
+    const name = encodeURIComponent(cleanStopName(st, fb));
+    const lat = Number(st && st.lat), lon = Number(st && st.lon);
+    if (!isFinite(lat) || !isFinite(lon) || (!lat && !lon)) return `${pre}=${name}`;
+    return `${pre}KOORD=1&${pre}X=${Math.round(lon * 1e6)}&${pre}Y=${Math.round(lat * 1e6)}&${pre}NAME=${name}`;
+  };
+  const path = `query?${loc("S", fromStop, "Jugenheim Bickenbacher Straße")}&${loc("Z", toStop, "Ziel")}`
+    + `&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}&start=1`;
   if (IS_ANDROID && pkg) {
     const fb = encodeURIComponent(buildDbUrl(fromStop, toStop, dayKey, depHHMM));
     return `intent://${path}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
   }
   return `${scheme}://${path}`;
+}
+
+/* München Navigator "universal link" (context=TP): the only link form with a via point (VID, exactly one).
+   Locations as HAFAS IDs: DB IDs (U=80, numeric L) as they are, otherwise address IDs with coordinates (A=2),
+   which the app resolves anywhere in Germany. Device test: Jugenheim → via Koblenz Hbf → Limburg with live data. */
+function hafasLid(st, fb) {
+  const rid = String((st && st.remoteId) || "");
+  if (/@U=80@L=\d+@/.test(rid)) return rid;
+  const name = cleanStopName(st, fb);
+  return `A=2@O=${name}@X=${Math.round(Number(st && st.lon) * 1e6)}@Y=${Math.round(Number(st && st.lat) * 1e6)}@`;
+}
+function buildMvvViaUrl(fromStop, viaStop, toStop, dayKey, depHHMM) {
+  const dateStr = isoToDDMMYYYY(linkDateIso(dayKey));
+  const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
+  const q = `context=TP&ulVersion=1&SID=${encodeURIComponent(hafasLid(fromStop, "Start"))}&VID=${encodeURIComponent(hafasLid(viaStop, "Via"))}`
+    + `&ZID=${encodeURIComponent(hafasLid(toStop, "Ziel"))}&date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(hm)}&start=1`;
+  const path = `s-bahn-muenchen.hafas.de/landingpage/universal_linking/index.html?${q}`;
+  if (IS_ANDROID) {
+    const fb = encodeURIComponent(buildDbUrl(fromStop, toStop, dayKey, depHHMM));
+    return `intent://${path}#Intent;scheme=https;package=de.hafas.android.sbm;S.browser_fallback_url=${fb};end`;
+  }
+  return `https://${path}`;
 }
 
 function buildMvvAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
@@ -5252,8 +5828,8 @@ function buildNvvAppUrl(fromStop, toStop, dayKey, depHHMM, opts) {
 function buildDbAppUrl(fromStop, toStop, dayKey, depHHMM) {
   const dayIso = linkDateIso(dayKey);
   const hm = (depHHMM && /^\d{2}:\d{2}$/.test(depHHMM)) ? depHHMM : "08:30";
-  const so = encodeURIComponent(cleanStopName(fromStop, "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim"));
-  const zo = encodeURIComponent(cleanStopName(toStop, "Neustadt (Weinstr) Hbf"));
+  const so = encodeURIComponent(dbStopName(fromStop, "Jugenheim Bickenbacher Straße, Seeheim-Jugenheim"));
+  const zo = encodeURIComponent(dbStopName(toStop, "Neustadt (Weinstr) Hbf"));
   const hd = encodeURIComponent(`${dayIso}T${hm}:00`);
   const q = `SO=${so}&ZO=${zo}&hd=${hd}&dlt=true&vm=03,04,05,06,07,08,09&sts=true`;
   const webUrl = buildDbUrl(fromStop, toStop, dayKey, depHHMM);
@@ -5631,6 +6207,34 @@ function buildDetailUrls(t, baseKey, dayKey, winOpts) {
   const endStop = (!isSameAsBase(rawEnd) && cleanStopName(rawEnd, "") !== cleanStopName(destStop, ""))
     ? rawEnd
     : (viasList[1] || destStop);
+  const {rev} = selWin;
+  const midSt = getMiddle(t, bKey, dKey, fwd, rev);
+  const legs = [];
+  if (fwd.length) legs.push({key: "out", from: bInfo, to: fwd[fwd.length - 1].to || destStop, dep: fwd[0].dep});
+  if (midSt && midSt.segs.length) legs.push({key: "mid", from: midSt.from, to: midSt.to, dep: midSt.chosen[0][0].dep});
+  if (rev.length) legs.push({key: "ret", from: rev[0].from || endStop, to: bInfo, dep: rev[0].dep});
+  if (!legs.length) legs.push({key: "out", from: bInfo, to: destStop, dep});
+  const legUrl = (app, lg) => {
+    switch (app) {
+      case "db": return buildDbAppUrl(lg.from, lg.to, dKey, lg.dep);
+      case "mvv": return buildMvvAppUrl(lg.from, lg.to, dKey, lg.dep);
+      case "nvv": return buildNvvAppUrl(lg.from, lg.to, dKey, lg.dep);
+      case "myvrn": return buildMyVrnUrl(lg.to, cleanStopName(lg.to, title));
+      case "dbweb": return buildDbUrl(lg.from, lg.to, dKey, lg.dep);
+      case "mvvweb": return buildMvvWebUrl(lg.from, lg.to, dKey, lg.dep);
+      case "gmaps": return buildGmapsUrl(lg.from, lg.to, "transit");
+      default: return buildGeoUrl(lg.to, cleanStopName(lg.to, title));
+    }
+  };
+  const legUrls = {};
+  ["db", "mvv", "nvv", "myvrn", "dbweb", "mvvweb", "gmaps", "geo"].forEach(app => {
+    legUrls[app] = legs.map(lg => ({key: lg.key, dep: lg.dep, url: legUrl(app, lg)}));
+  });
+  const outLeg = legs.find(lg => lg.key === "out");
+  const midLeg = legs.find(lg => lg.key === "mid");
+  if (outLeg && midLeg) {
+    legUrls.mvv.splice(2, 0, {key: "chain", dep: outLeg.dep, url: buildMvvViaUrl(outLeg.from, midLeg.from, midLeg.to, dKey, outLeg.dep)});
+  }
   return {
     bInfo,
     selWin,
@@ -5638,14 +6242,16 @@ function buildDetailUrls(t, baseKey, dayKey, winOpts) {
     hasTrack,
     destStop,
     endStop,
-    dbWebUrl: buildDbUrl(bInfo, destStop, dKey, dep),
-    dbPrimaryUrl: buildDbAppUrl(bInfo, destStop, dKey, dep),
-    mvvAppUrl: buildMvvAppUrl(bInfo, destStop, dKey, dep, {roundTrip: true, endStop}),
-    nvvAppUrl: buildNvvAppUrl(bInfo, destStop, dKey, dep, {roundTrip: true, endStop}),
-    myVrnUrl: buildMyVrnUrl(destStop, title),
-    naviUrl: buildGeoUrl(destStop, title),
-    mvvWebUrl: buildMvvWebUrl(bInfo, destStop, dKey, dep),
-    gmapsMainUrl: buildGmapsUrl(bInfo, destStop, "transit"),
+    legs,
+    legUrls,
+    dbWebUrl: legUrls.dbweb[0].url,
+    dbPrimaryUrl: legUrls.db[0].url,
+    mvvAppUrl: legUrls.mvv[0].url,
+    nvvAppUrl: legUrls.nvv[0].url,
+    myVrnUrl: legUrls.myvrn[0].url,
+    naviUrl: legUrls.geo[0].url,
+    mvvWebUrl: legUrls.mvvweb[0].url,
+    gmapsMainUrl: legUrls.gmaps[0].url,
     mapyUrl: hasTrack ? buildMapyRouteUrl(t) : buildMapyShowUrl(destStop)
   };
 }
@@ -5683,52 +6289,63 @@ function renderAppSheet(t, urls) {
   }
   const destNm = cleanStopName(urls.destStop, tourTitle(t));
   if (sheetSub) {
-    sheetSub.textContent = `${tourTitle(t)} · ${urls.dep} (${urls.bInfo.name} → ${destNm})`;
+    sheetSub.textContent = tourTitle(t);
   }
   const apps = getAppCatalog(urls);
   const capCell = ok => ok
     ? `<span class="cap-cell cap-yes" aria-label="Ja">✓</span>`
     : `<span class="cap-cell cap-no" aria-label="Nein">—</span>`;
+  const timed = k => !["myvrn", "geo", "gmaps"].includes(k);
   const rowsHtml = apps.map(app => {
     const isPref = state.prefApp === app.key;
     const inst = isPkgInstalled(app.pkg);
     const attrs = app.external ? ` target="_blank" rel="noopener"` : "";
-    const badges = [];
-    if (isPref) badges.push(`<span class="app-pref-badge">★ ${esc(tDict.appPrefBadge)}</span>`);
-    if (inst) badges.push(`<span class="app-inst-badge">✓ ${esc(tDict.appInstalled)}</span>`);
-    const prefCtrl = app.noPref
-      ? `<span></span>`
-      : `<button type="button" class="app-pref-btn" data-pref-app="${esc(app.key)}" aria-pressed="${isPref}" title="${esc(tDict.appSetPref)}" aria-label="${esc(tDict.appSetPref)}: ${esc(app.short)}">${isPref ? "★" : "☆"}</button>`;
-    return `<div class="cap-row${isPref ? " is-preferred" : ""}" data-app-row="${esc(app.key)}">
+    const subParts = [tDict.appSub[app.key] || ""];
+    if (isPref) subParts.push(tDict.appPrefBadge.toLowerCase());
+    if (inst) subParts.push(tDict.appInstalled.toLowerCase());
+    const legLinks = (urls.legUrls && urls.legUrls[app.key]) || [{key: "out", dep: urls.dep, url: app.url}];
+    const btns = legLinks.map((lg, i) => `<a class="app-leg${i === 0 ? " app-sheet-link" : ""}" href="${esc(lg.url)}" data-app="${esc(app.key)}" data-leg="${esc(lg.key)}"${attrs}>${esc(tDict.legShort[lg.key])}${timed(app.key) && lg.dep ? ` <b>${esc(lg.dep)}</b>` : ""}</a>`).join("");
+    return `<div class="app-row${isPref ? " is-preferred" : ""}" data-app-row="${esc(app.key)}">
       <div class="cap-app-cell">
-        <a class="app-sheet-link" href="${esc(app.url)}" data-app="${esc(app.key)}"${attrs}>${esc(app.label)}</a>
-        ${badges.length ? `<div class="app-badge-row">${badges.join("")}</div>` : ""}
+        <span class="app-row-name">${esc(tDict.appName[app.key] || app.label)}</span>
+        <span class="cap-sub">${esc(subParts.filter(Boolean).join(" · "))}</span>
       </div>
-      ${capCell(app.start)}
-      ${capCell(app.dest)}
-      ${capCell(app.vias)}
-      ${capCell(app.time)}
-      ${prefCtrl}
+      <div class="app-legs">${btns}</div>
     </div>`;
   }).join("");
+  const legsSummary = (urls.legs || []).map(lg => `<li><span class="lg-k">${esc(tDict.legLong[lg.key])}</span><b>${esc(lg.dep || "")}</b><span>${esc(cleanStopName(lg.from, ""))} → ${esc(cleanStopName(lg.to, ""))}</span></li>`).join("");
 
   body.innerHTML = `
-    <div class="cap-grid" role="table" aria-label="${esc(tDict.appSheetTitle)}">
-      <div class="cap-row cap-head" role="row">
-        <span>${esc(tDict.capApp)}</span>
-        <span class="cap-cell">${esc(tDict.capStart)}</span>
-        <span class="cap-cell">${esc(tDict.capDest)}</span>
-        <span class="cap-cell">${esc(tDict.capVias)}</span>
-        <span class="cap-cell">${esc(tDict.capTime)}</span>
-        <span class="cap-cell">${esc(tDict.capPref)}</span>
-      </div>
+    <ol class="legs-summary">${legsSummary}</ol>
+    <div class="cap-grid" aria-label="${esc(tDict.appSheetTitle)}">
       ${rowsHtml}
     </div>
+    <div class="sheet-sep"></div>
+    <a class="sheet-mapy" href="${esc(urls.mapyUrl)}" target="_blank" rel="noopener" data-app="mapy"${NATIVE && t.hike && t.hike.hasGpx ? ` data-sheet-track="1"` : ""}>
+      <span class="sheet-mapy-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M3 19l6-10 4 6 3-4 5 8z"/></svg></span>
+      <span class="sheet-mapy-txt"><strong>${esc(tDict.sheetMapyTitle)}</strong><span>${esc(NATIVE && t.hike && t.hike.hasGpx ? tDict.sheetMapyTrack : tDict.sheetMapySub)}</span></span>
+    </a>
+    <label class="sheet-check"><input type="checkbox" id="directOpenChk"${state.directOpen ? " checked" : ""}><span>${esc(tDict.directOpen(tDict.appName[state.prefApp] || state.prefApp))}</span></label>
     <p class="app-sheet-hint">${esc(tDict.appHint)}</p>
   `;
 }
 
 let appSheetContext = null;
+
+/* "Künftig direkt öffnen": opens the preferred app without the sheet; the toast offers the sheet again. */
+function openPreferredApp() {
+  const link = document.querySelector(`#appSheetBody .app-sheet-link[data-app="${state.prefApp}"]`);
+  if (!link || !link.getAttribute("href")) return false;
+  const tDict = T();
+  const a = document.createElement("a");
+  a.href = link.href;
+  if (link.target) { a.target = link.target; a.rel = "noopener"; }
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast(tDict.directOpened(tDict.appName[state.prefApp] || state.prefApp), {label: tDict.otherApp, ms: 6000, action: () => openAppSheet()});
+  return true;
+}
 
 function openAppSheet(customTour, customUrls) {
   const t = customTour || (state.sel ? BY_ID[state.sel] : null);
@@ -5774,28 +6391,28 @@ function setPrefApp(key, opts) {
   }
 }
 
-function compactLegHTML(segs, stepOffset, isReturn) {
+function fmtHHMMabs(m) {
+  if (m == null || isNaN(m)) return "";
+  const x = ((Math.round(m) % 1440) + 1440) % 1440;
+  return `${String(Math.floor(x / 60)).padStart(2, "0")}:${String(x % 60).padStart(2, "0")}`;
+}
+
+function compactLegHTML(segs, stepOffset, isReturn, titleOverride) {
   const tDict = T();
   if (!Array.isArray(segs) || !segs.length) return "";
   const rides = segs.filter(s => s.kind === "ride");
   const primary = rides[0] || segs[0];
   const primaryMode = String(primary.mode || (primary.kind === "walk" ? "walk" : "re")).toLowerCase();
   const bgCol = MODE_COLORS[primaryMode] || "#0F4C5C";
-  const dep = segs[0]?.dep || (isReturn ? "16:30" : "08:04");
-  const arr = segs[segs.length - 1]?.arr || (isReturn ? "18:42" : "10:15");
+  const dep = segs[0]?.dep || "";
+  const arr = segs[segs.length - 1]?.arr || "";
   const dur = Math.max(0, minDiff(dep, arr));
   const fromName = segs[0]?.from?.name || "Start";
   const toName = segs[segs.length - 1]?.to?.name || "Ziel";
 
-  let fromPlat = segs[0]?.from?.platform || (segs[0]?.kind === "ride" && primaryMode !== "bus" ? "1" : "");
-  let toPlat = segs[segs.length - 1]?.to?.platform || "";
-  if (!fromPlat && !toPlat) {
-    const anyPlat = segs.find(s => (s.from && s.from.platform) || (s.to && s.to.platform) || (s.kind === "ride" && String(s.mode || "").toLowerCase() !== "bus"));
-    if (anyPlat) {
-      fromPlat = anyPlat.from?.platform || (anyPlat.kind === "ride" && String(anyPlat.mode || "").toLowerCase() !== "bus" ? "1" : "");
-      toPlat = anyPlat.to?.platform || "";
-    }
-  }
+  // platforms only from the timetable data – never guessed
+  const fromPlat = segs[0]?.from?.platform || "";
+  const toPlat = segs[segs.length - 1]?.to?.platform || "";
 
   const badgeSegs = rides.length ? rides.slice(0, 3) : [primary];
   const badgesHtml = badgeSegs.map(s => {
@@ -5851,7 +6468,7 @@ function compactLegHTML(segs, stepOffset, isReturn) {
       }</ul></details>`
     : "";
 
-  const roleLabel = isReturn ? tDict.flowRet : tDict.flowDep;
+  const roleLabel = titleOverride || (isReturn ? tDict.flowRet : tDict.flowDep);
   return `<div class="st compact-step" data-step="${stepOffset}" data-i="${stepOffset}" style="--mc:${bgCol}">
     <div class="st-head">
       <span class="time">${esc(roleLabel)}: ${esc(dep)} → ${esc(arr)}</span>
@@ -5867,7 +6484,46 @@ function compactLegHTML(segs, stepOffset, isReturn) {
   </div>`;
 }
 
+/* Mobile detail like the concept: photo on top, map inside the page, base/day switch under "Zeiten ändern". */
+const MOBILE_MQ = window.matchMedia ? window.matchMedia("(max-width: 959px)") : {matches: true};
+const MAP_WRAP_EL = document.getElementById("mapWrap");
+const BAR_ROW_EL = document.querySelector("#top .bar-row");
+function placeDetailParts() {
+  const mw = MAP_WRAP_EL;
+  const bar = BAR_ROW_EL;
+  if (state.sel && MOBILE_MQ.matches) {
+    const mslot = $("#detailMapSlot");
+    if (mslot && mw && mw.parentNode !== mslot && !mw.classList.contains("full")) {
+      mslot.appendChild(mw);
+      setTimeout(() => map.invalidateSize(), 0);
+    }
+    const bslot = $("#detailBarSlot");
+    if (bslot && bar && bar.parentNode !== bslot) bslot.appendChild(bar);
+  } else {
+    restoreDetailParts();
+  }
+}
+function restoreDetailParts() {
+  const mw = MAP_WRAP_EL;
+  const layout = $(".layout");
+  const content = $("main.content");
+  if (mw && layout && content && mw.parentNode !== layout) {
+    layout.insertBefore(mw, content);
+    setTimeout(() => map.invalidateSize(), 0);
+  }
+  const bar = BAR_ROW_EL;
+  const top = $("#top");
+  const controls = $("#listControls");
+  if (bar && top && controls && bar.parentNode !== top) top.insertBefore(bar, controls);
+}
+
 function renderDetail(t) {
+  renderDetailInner(t);
+  placeDetailParts();
+}
+if (MOBILE_MQ.addEventListener) MOBILE_MQ.addEventListener("change", () => { if (state.sel) placeDetailParts(); });
+
+function renderDetailInner(t) {
   if (!t) return;
   const tDict = T();
   const urls = buildDetailUrls(t);
@@ -5876,9 +6532,11 @@ function renderDetail(t) {
   const title = tourTitle(t);
   const sub = tourSub(t);
   const h = t.hike || {};
-  const arr = rev[rev.length - 1]?.arr || "18:42";
-  const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
-  const revDep = rev[0]?.dep || "16:30";
+  const arr = rev[rev.length - 1]?.arr || "–";
+  const fwdArr = fwd[fwd.length - 1]?.arr || "–";
+  const revDep = rev[0]?.dep || "–";
+  const midSt = getMiddle(t, state.base, selWin.fallback ? "wd" : state.day, fwd, rev);
+  const hasMid = Boolean(midSt && midSt.segs.length);
   const stayMin = (fwd.length && rev.length) ? Math.max(0, minDiff(fwdArr, revDep)) : 0;
   const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
   const regLbl = tDict.reg[t.region] || t.region || "";
@@ -5894,11 +6552,10 @@ function renderDetail(t) {
 
   const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
   const metaChips = [
-    `<span class="chip strong">🏠 ${esc(bInfo.name)}</span>`,
-    `<span class="chip strong">🕘 ${esc(dep)} – ${esc(arr)}</span>`,
-    `<span class="chip ok">${esc(loopBadge)}</span>`,
     `<span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>`,
-    `<span class="chip">${esc(diffLbl)}</span>`
+    `<span class="chip">${esc(diffLbl)}</span>`,
+    `<span class="chip dt-chip">D-Ticket</span>`,
+    `<span class="chip">${esc(loopBadge)}</span>`
   ];
   if (t.tag === "google_maps") {
     metaChips.push(`<span class="chip">📍 Google Maps</span>`);
@@ -6013,8 +6670,9 @@ function renderDetail(t) {
     const rArr = r[r.length - 1]?.arr || "18:00";
     const rStay = minDiff(fwdArr, rDep);
     const isLsr = i === lsrIdx;
-    const short = isShortReturn(t, rStay);
-    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}"${short ? ` title="${esc(tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    const midEarly = hasMid && parseHHMM(rDep) !== null && parseHHMM(rDep) < midSt.earliestArr + MID_MIN_TRANSFER;
+    const short = isShortReturn(t, rStay) || (midEarly ? -1 : 0);
+    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}"${short ? ` title="${esc(short < 0 ? tDict.midTooEarly : tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
   }).join("");
 
   const shortStayWarn = (h.hasGpx && h.walkMin && stayMin > 0 && stayMin < Number(h.walkMin))
@@ -6048,18 +6706,67 @@ function renderDetail(t) {
   // Phase 6: Keep #appSheet links populated and updated in DOM on every renderDetail
   renderAppSheet(t, urls);
 
+  const lineBadges = segs => segs.filter(sg => sg.kind === "ride").map(sg => {
+    const m = String(sg.mode || "re").toLowerCase();
+    return `<span class="badge mode-badge" style="background-color:${MODE_COLORS[m] || "#0F4C5C"};color:#ffffff">${esc(sg.line || sg.lineName || m.toUpperCase())}</span>`;
+  }).join("");
+  const viaTxt = (hasTrack && Array.isArray(t.hike?.vias) && t.hike.vias.length) ? t.hike.vias.slice(0, 2).map(v => v.name || v).filter(Boolean).join(", ") : "";
+  const segListHtml = segs => {
+    const rows = [];
+    let lastRideArr = null;
+    segs.forEach(sg => {
+      const m = String(sg.mode || "").toLowerCase();
+      const isWalk = sg.kind === "walk" || m === "foot" || m === "walk";
+      const fromNm = sg.from?.name || "";
+      const toNm = sg.to?.name || "";
+      if (isWalk) {
+        if (fromNm && fromNm === toNm) return;
+        rows.push(`<li class="dl-seg walk"><time>${esc(sg.dep || "")}</time><span>${esc(tDict.walkLabel)} ${esc(fmtDur(minDiff(sg.dep, sg.arr)))} · ${esc(fromNm)} → ${esc(toNm)}</span></li>`);
+        return;
+      }
+      if (lastRideArr && sg.dep) {
+        const gap = minDiff(lastRideArr, sg.dep);
+        if (gap > 0) rows.push(`<li class="dl-seg xfer"><span>↺ ${esc(tDict.transferGap(fmtDur(gap)))}</span></li>`);
+      }
+      const plat = x => x?.platform ? ` (${tDict.platform} ${x.platform})` : "";
+      rows.push(`<li class="dl-seg"><time>${esc(sg.dep || "")}</time><span><b>${esc(sg.line || sg.lineName || m.toUpperCase())}</b> ${esc(fromNm)}${esc(plat(sg.from))} → ${esc(toNm)}${esc(plat(sg.to))} · ${esc(tDict.arrShort)} ${esc(sg.arr || "")}${sg.dest ? ` · ${esc(tDict.towards)} ${esc(sg.dest)}` : ""}</span></li>`);
+      lastRideArr = sg.arr;
+    });
+    return `<ol class="dl-segs">${rows.join("")}</ol>`;
+  };
+  const expandable = segs => `<details class="dl-more"><summary><span class="dl-badges">${lineBadges(segs)}</span><span class="dl-toggle">${esc(tDict.showTimes)}</span></summary>${segListHtml(segs)}</details>`;
+  const dayRows = [];
+  if (fwd.length) dayRows.push({time: dep, name: fwd[0]?.from?.name || bInfo.name, html: expandable(fwd)});
+  if (hasMid) {
+    midSt.chosen.forEach((it, k) => {
+      const prevArr = k === 0 ? fwdArr : midSt.chosen[k - 1].slice(-1)[0].arr;
+      dayRows.push({time: it[0].dep, name: it[0].from?.name || "", html: `${expandable(it)}<div class="dl-sub">${esc(tDict.midOnward(it.slice(-1)[0].to?.name || "", it.slice(-1)[0].arr, fmtDur(minDiff(prevArr, it[0].dep))))}</div>`});
+    });
+  }
+  if (fwd.length && !hasMid) dayRows.push({time: fwdArr, name: fwdEndName, cls: "hike", html: `<div class="dl-sub">${esc(hasKm ? `${tDict.hikeLabel.charAt(0).toUpperCase() + tDict.hikeLabel.slice(1)} ${kmStr} km` : tDict.hikeStayTitle)}${Number(t.hike?.walkMin) ? ` · ${esc(tDict.tripWalkTime(fmtDur(Number(t.hike.walkMin))))}` : ""}${viaTxt ? ` · ${esc(viaTxt)}` : ""}</div>`});
+  if (rev.length) dayRows.push({time: revDep, name: rev[0]?.from?.name || "", html: `${expandable(rev)}${hasMid ? `<div class="dl-sub">${esc(midSt.conflict ? tDict.midConflictShort : tDict.midStay(fmtDur(minDiff(midSt.segs.slice(-1)[0].arr, revDep))))}</div>` : ""}`});
+  if (rev.length) dayRows.push({time: arr, name: tDict.backIn(bInfo.name), html: `<div class="dl-sub">${esc(tDict.lastSafeReturnShort(lsrDep))}</div>`});
+  const dayLineHtml = dayRows.length ? `<ol class="day-line">${dayRows.map(r => `<li class="${r.cls || ""}"><time>${esc(r.time)}</time><div class="dl-body"><strong>${esc(r.name)}</strong>${r.html}</div></li>`).join("")}</ol>` : "";
+  const dayDateLbl = (() => {
+    const d = new Date(linkDateIso(state.day) + "T12:00:00");
+    if (isNaN(d)) return tDict.dayLong[state.day];
+    const wd = d.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {weekday: "short"}).replace(/\.$/, "");
+    return state.lang === "en" ? `${wd} ${d.getDate()}/${d.getMonth() + 1}` : `${wd} ${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.`;
+  })();
   const favActive = isFav(t.id);
   const tripActiveHere = Boolean(state.activeTrip && state.activeTrip.tourId === t.id);
 
   $("#detail").innerHTML = `
     <div class="hero">
-      <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}" decoding="async">
-      ${creditHTML(t)}
+      <div class="hero-media">
+        <img class="hero-img" src="${esc(imgSrc)}" alt="${esc(title)}" decoding="async">
+        ${creditHTML(t)}
+        <button type="button" class="hero-fab" id="detailFavBtn" data-fav-id="${esc(t.id)}" aria-pressed="${favActive}" aria-label="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}" title="${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+      </div>
+      <div class="chips">${metaChips.join("")}</div>
       <h2>${esc(title)}</h2>
       <p>${esc(sub)}</p>
-      <div class="chips">${metaChips.join("")}</div>
       <div class="hero-cta-row">
-        <button type="button" class="act" id="detailFavBtn" data-fav-id="${esc(t.id)}" aria-pressed="${favActive}">${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}</button>
         <button type="button" class="act primary" id="startTripBtn">${esc(tripActiveHere ? tDict.openTripBtn : tDict.startTripBtn)}</button>
       </div>
     </div>
@@ -6070,30 +6777,21 @@ function renderDetail(t) {
 
     ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
 
-    <div class="box schedule-box">
-      <h4>${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
-      ${tpHtml}
-      ${winsHtml}
-      <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
-      <div class="stay-row">${stayBtnsHtml}</div>
-      ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
-      ${shortStayWarn}
-      <div class="chips" style="margin-top:8px">
-        <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
-      </div>
-    </div>
+    <div class="detail-map-slot" id="detailMapSlot"></div>
 
     <div class="box day-flow-box">
-      <h4>🧭 ${esc(tDict.flowTitle)}</h4>
+      <div class="box-head"><h4>${esc(tDict.yourDay(dayDateLbl))}</h4><a class="box-link" href="#detailTimes" data-a="times">${esc(tDict.changeTimes)}</a></div>
+      ${dayLineHtml}
+      <h4 class="sub-h">${esc(tDict.flowTitle)}</h4>
       <div class="day-flow">
         ${compactOutHtml}
         <div class="flow-node">
           <div>📍 <strong>${esc(tDict.flowArr)} ${esc(fwdArr)}</strong> · ${esc(fwdEndName)}${fwdEndPlat ? ` (${esc(tDict.platform)} ${esc(fwdEndPlat)})` : ""}</div>
         </div>
-        <div class="flow-node flow-hike">
+        ${hasMid ? `${midSt.chosen.map((it, k) => compactLegHTML(it, fwd.length + rev.length + k, false, tDict.midLegTitle)).join("")}${midSt.conflict ? `<div class="chips"><span class="chip warn">${esc(tDict.midConflict(midSt.to?.name || "", fmtHHMMabs(midSt.earliestArr)))}</span></div>` : ""}` : (midSt && midSt.missing ? `<div class="flow-node flow-hike"><div>🚆 <strong>${esc(tDict.midMissingTitle)}</strong></div><div class="flow-node-sub">${esc(tDict.midMissing(fwdEndName, rev[0]?.from?.name || ""))}</div></div>` : `<div class="flow-node flow-hike">
           <div>🥾 <strong>${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</strong></div>
           <div class="flow-node-sub">${hasKm ? `${kmStr} km · ↗ ${hmUp} hm` : tDict.walkLabel} · ${esc(loopFlowTxt)}</div>
-        </div>
+        </div>`)}
         ${compactRetHtml}
       </div>
       ${totalLegs > 0 ? `<details class="tl-details">
@@ -6107,17 +6805,32 @@ function renderDetail(t) {
       </details>` : ""}
     </div>
 
+    <div class="box schedule-box" id="detailTimes">
+      <h4>${esc(tDict.changeTimes)}</h4>
+      <div class="detail-bar-slot" id="detailBarSlot"></div>
+      <h4 class="sub-h">${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
+      ${tpHtml}
+      ${winsHtml}
+      <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
+      <div class="stay-row">${stayBtnsHtml}</div>
+      ${revsHtml ? `<h4 style="margin-top:10px">🔄 ${esc(tDict.returnWindowsTitle)}</h4><div class="stay-row">${revsHtml}</div>` : ""}
+      ${shortStayWarn}
+      <div class="chips" style="margin-top:8px">
+        <span class="chip ok">🛡️ ${esc(tDict.lastSafeReturn(lsrDep, lsrArr))}</span>
+      </div>
+    </div>
+
     ${(sunTxt || tipsTxt) ? `<div class="box">
       ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
       ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
     </div>` : ""}
 
     <div class="detail-sticky-bar" id="detailStickyBar">
-      <button type="button" class="act primary" id="openAppSheetBtn">
-        <span>🚆 ${esc(tDict.connectBtn)}</span>
+      <button type="button" class="act" id="openAppSheetBtn">
+        <span>${esc(tDict.connectBtn)}</span>
         <span class="sticky-app-pill">${esc(prefMeta.short)}</span>
       </button>
-      <a class="act" href="${esc(mapyUrl)}" target="_blank" rel="noopener" data-app="mapy">${esc(mapyLabel)}</a>
+      <a class="act primary" href="${esc(mapyUrl)}" target="_blank" rel="noopener" data-app="mapy">${esc(mapyLabel)}</a>
       <button type="button" class="act" id="gpxBtn" data-a="gpx">${esc(gpxLabel)}</button>
     </div>
   `;
@@ -6140,7 +6853,14 @@ $("#detail").addEventListener("click", e => {
     return;
   }
   if (e.target.closest("#openAppSheetBtn")) {
+    if (state.directOpen && openPreferredApp()) return;
     openAppSheet();
+    return;
+  }
+  const timesLink = e.target.closest("[data-a='times']");
+  if (timesLink) {
+    e.preventDefault();
+    $("#detailTimes")?.scrollIntoView({behavior: "smooth", block: "start"});
     return;
   }
   const gpxBtn = e.target.closest("[data-a='gpx'], #gpxBtn");
@@ -6195,12 +6915,25 @@ $("#appSheet")?.addEventListener("click", e => {
     closeAppSheet();
     return;
   }
+  const chk = e.target.closest("#directOpenChk");
+  if (chk) {
+    state.directOpen = chk.checked;
+    store.set("directOpen", state.directOpen);
+    return;
+  }
+  const trackLink = e.target.closest("[data-sheet-track]");
+  if (trackLink && appSheetContext && appSheetContext.tour) {
+    e.preventDefault();
+    closeAppSheet();
+    downloadGPX(appSheetContext.tour);
+    return;
+  }
   const prefBtn = e.target.closest(".app-pref-btn[data-pref-app]");
   if (prefBtn) {
     setPrefApp(prefBtn.dataset.prefApp, {notify: true});
     return;
   }
-  const link = e.target.closest(".app-sheet-link[data-app]");
+  const link = e.target.closest(".app-leg[data-app], .app-sheet-link[data-app]");
   if (link && VALID_PREF_APPS.includes(link.dataset.app)) {
     setPrefApp(link.dataset.app, {notify: false});
   }
@@ -6306,6 +7039,7 @@ window.addEventListener("popstate", e => {
 });
 
 $("#backBtn").addEventListener("click", () => closeTour());
+$("#basePill")?.addEventListener("click", () => $("#detailTimes")?.scrollIntoView({behavior: "smooth", block: "start"}));
 
 /* Called by the native Android app on the system back gesture; returns true if the app handled it. */
 window.swHandleBack = function () {
@@ -6496,6 +7230,32 @@ function onFeasibleTimeChange(e) {
 }
 $("#feasibleTime").addEventListener("input", onFeasibleTimeChange);
 $("#feasibleTime").addEventListener("change", onFeasibleTimeChange);
+
+function renderMapRegions() {
+  const host = $("#mapRegions");
+  if (!host) return;
+  const tDict = T();
+  $("#mapQ").placeholder = tDict.mapSearchPh;
+  $("#mapQ").setAttribute("aria-label", tDict.mapSearchPh);
+  if ($("#mapQ").value !== $("#q").value) $("#mapQ").value = $("#q").value;
+  host.innerHTML = ["pfaelzerwald", "odenwald", "schwarzwald"].map(r => {
+    const pill = document.querySelector(`#pills .pill[data-f="${r}"]`);
+    if (!pill) return "";
+    return `<button type="button" class="map-region" data-region="${r}" aria-pressed="${pill.getAttribute("aria-pressed") === "true"}" aria-label="${esc(pill.textContent.trim())}">${esc(tDict.regShort[r] || pill.textContent.trim())}</button>`;
+  }).join("");
+}
+$("#mapQ")?.addEventListener("input", e => {
+  const q = $("#q");
+  q.value = e.target.value;
+  q.dispatchEvent(new Event("input", {bubbles: true}));
+});
+$("#mapRegions")?.addEventListener("click", e => {
+  const b = e.target.closest(".map-region[data-region]");
+  if (!b) return;
+  document.querySelector(`#pills .pill[data-f="${b.dataset.region}"]`)?.click();
+  renderMapRegions();
+  renderMapSheet();
+});
 
 $("#q").addEventListener("input", e => {
   state.q = (e.target.value || "").trim();

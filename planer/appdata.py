@@ -117,14 +117,18 @@ class PolyFixer:
     TOL_M = 1500
     SEARCH_M = 400
 
-    def __init__(self, D):
+    def __init__(self, D, fill=None, out_polys=None):
         self.polys = D.get("polys") or []
+        # geometry re-fetched by planer/polyfill.py for rides that lost theirs; appended to out_polys
+        self.fill = fill or {}
+        self.out_polys = out_polys
+        self._fill_idx = {}
         self.ends = []
         for enc in self.polys:
             pts = _decode5(enc) if enc else []
             self.ends.append((pts[0], pts[-1]) if len(pts) >= 2 else None)
         self.good = {}
-        self.stats = {"ok": 0, "by_signature": 0, "by_endpoints": 0, "dropped": 0}
+        self.stats = {"ok": 0, "by_signature": 0, "by_endpoints": 0, "refetched": 0, "dropped": 0}
         for segs in self._all_segs(D):
             for s in segs:
                 ps = self._polys(s)
@@ -169,10 +173,21 @@ class PolyFixer:
             return False
         return _dist_m(ends[0][0], a) < self.TOL_M and _dist_m(ends[-1][1], b) < self.TOL_M
 
+    def _refetched(self, s):
+        k = "|".join(str(x) for x in self._sig(s))
+        p5 = self.fill.get(k)
+        if not p5 or self.out_polys is None:
+            return None
+        if p5 not in self._fill_idx:
+            self._fill_idx[p5] = len(self.out_polys)
+            self.out_polys.append(p5)
+        self.stats["refetched"] += 1
+        return [self._fill_idx[p5]]
+
     def fix(self, s):
         ps = self._polys(s)
         if not ps:
-            return []
+            return self._refetched(s) or []
         if self._matches(s, ps):
             self.stats["ok"] += 1
             return ps
@@ -192,6 +207,9 @@ class PolyFixer:
             if best:
                 self.stats["by_endpoints"] += 1
                 return [best[1]]
+        refetched = self._refetched(s)
+        if refetched:
+            return refetched
         self.stats["dropped"] += 1
         return []
 
@@ -327,15 +345,62 @@ class Compactor:
         return out
 
 
-def compact(D, images=None, credits=None, verbose=False):
+def _mid_tour(c, polys, poly_idx, per_base, mid_polys=None):
+    """Middle stages (planer/midlegs.py) → {base: {"days": {day: [[itin index, ...] per hop]}}} with
+    their polylines appended to the shared polyline table."""
+    out = {}
+    fixer, c.fixer = c.fixer, None
+    try:
+        for base, entry in (per_base or {}).items():
+            if entry.get("ref"):
+                entry = per_base.get(entry["ref"]) or {}
+            days = {}
+            for day, hops in (entry.get("days") or {}).items():
+                day_hops = []
+                for its in hops:
+                    idxs = []
+                    for itin in its:
+                        segs = []
+                        for sg in itin:
+                            sg = dict(sg)
+                            legs = []
+                            for lg in sg.get("legs") or []:
+                                p5 = lg.get("p5") or ""
+                                if not p5 and isinstance(lg.get("p"), int) and mid_polys and 0 <= lg["p"] < len(mid_polys):
+                                    p5 = mid_polys[lg["p"]]
+                                if not p5:
+                                    continue
+                                if p5 not in poly_idx:
+                                    poly_idx[p5] = len(polys)
+                                    polys.append(p5)
+                                legs.append({"p": poly_idx[p5]})
+                            sg["legs"] = legs
+                            segs.append(sg)
+                        i = c.itin(segs)
+                        if i is not None:
+                            idxs.append(i)
+                    day_hops.append(idxs)
+                days[day] = day_hops
+            out[base] = days
+    finally:
+        c.fixer = fixer
+    return out
+
+
+def compact(D, images=None, credits=None, verbose=False, mids=None, fill=None):
     """Return the compact frontend payload for data.json dict D.
 
     images: optional {tour_id: url-or-data-uri}; credits: optional {tour_id: {...}}.
     """
-    c = Compactor(PolyFixer(D))
+    polys = list(D.get("polys") or [])
+    c = Compactor(PolyFixer(D, fill=(fill or {}).get("fill"), out_polys=polys))
+    poly_idx = {p: i for i, p in enumerate(polys)}
+    mid_tours = (mids or {}).get("tours") or {}
     tours = []
     for t in D.get("tours", []):
         ct = c.tour(t)
+        if t["id"] in mid_tours:
+            ct["mid"] = _mid_tour(c, polys, poly_idx, mid_tours[t["id"]], (mids or {}).get("polys"))
         if images and t["id"] in images:
             ct["img"] = images[t["id"]]
         if credits is not None:
@@ -350,7 +415,7 @@ def compact(D, images=None, credits=None, verbose=False):
         "bases": D.get("bases"),
         "days": D.get("days"),
         "tours": tours,
-        "polys": D.get("polys") or [],
+        "polys": polys,
         "stops": c.stops.items,
         "segs": c.segs.items,
         "its": c.its.items,
