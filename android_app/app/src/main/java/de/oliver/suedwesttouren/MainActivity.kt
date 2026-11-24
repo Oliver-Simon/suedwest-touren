@@ -63,6 +63,8 @@ class MainActivity : ComponentActivity() {
     private data class PendingReminder(val id: String, val triggerAtMillis: Long, val title: String, val text: String)
     private var pendingReminder: PendingReminder? = null
     private var pendingOpenTab: String? = null
+    /** Shared content (RegioNavigator text, Mapy GPX) waiting until the web UI is ready. */
+    private var pendingShare: JSONObject? = null
 
     private val locationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         pendingGeo?.let { (origin, cb) -> cb.invoke(origin, granted, false) }
@@ -119,6 +121,7 @@ class MainActivity : ComponentActivity() {
         tiles = TileCache(this)
         ReminderReceiver.ensureChannel(this)
         pendingOpenTab = intent?.getStringExtra(ReminderReceiver.EXTRA_OPEN_TAB)?.takeIf { it.isNotBlank() }
+        pendingShare = readShare(intent)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
@@ -252,6 +255,8 @@ class MainActivity : ComponentActivity() {
         val sinceProcess = SystemClock.elapsedRealtime() - Process.getStartElapsedRealtime()
         Log.i(TAG, "content ready: ${sinceProcess} ms since process start (JS ${jsMillis.toInt()} ms after navigation start)")
         root.post { root.invalidate() }
+        pendingShare?.let { deliverShare(it) }
+        pendingShare = null
         val openTab = pendingOpenTab
         pendingOpenTab = null
         if (!openTab.isNullOrBlank()) {
@@ -265,6 +270,10 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        readShare(intent)?.let { share ->
+            if (contentReady) deliverShare(share) else pendingShare = share
+            return
+        }
         val openTab = intent.getStringExtra(ReminderReceiver.EXTRA_OPEN_TAB)?.takeIf { it.isNotBlank() } ?: return
         if (contentReady) {
             val quoted = JSONObject.quote(openTab)
@@ -274,6 +283,60 @@ class MainActivity : ComponentActivity() {
         } else {
             pendingOpenTab = openTab
         }
+    }
+
+    /**
+     * ACTION_SEND (text or file) / ACTION_VIEW (GPX file) → {kind, text, name}. GPX files are read here
+     * (content:// URIs are not reachable from the WebView); size is capped at 5 MB.
+     */
+    private fun readShare(intent: Intent?): JSONObject? {
+        if (intent == null) return null
+        val action = intent.action ?: return null
+        if (action != Intent.ACTION_SEND && action != Intent.ACTION_VIEW) return null
+        if (action == Intent.ACTION_VIEW && intent.data?.scheme !in setOf("content", "file")) return null
+        val out = JSONObject()
+        val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+        @Suppress("DEPRECATION")
+        val stream: Uri? = if (action == Intent.ACTION_SEND) intent.getParcelableExtra(Intent.EXTRA_STREAM) else intent.data
+        if (stream != null) {
+            try {
+                var name = ""
+                contentResolver.query(stream, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)?.use { c ->
+                    if (c.moveToFirst()) name = c.getString(0) ?: ""
+                }
+                val bytes = contentResolver.openInputStream(stream)?.use { inp ->
+                    val buf = java.io.ByteArrayOutputStream()
+                    val chunk = ByteArray(64 * 1024)
+                    var total = 0
+                    while (true) {
+                        val n = inp.read(chunk)
+                        if (n < 0) break
+                        total += n
+                        if (total > 5 * 1024 * 1024) throw IllegalStateException("file too large")
+                        buf.write(chunk, 0, n)
+                    }
+                    buf.toByteArray()
+                } ?: return null
+                out.put("kind", "file").put("name", name).put("text", String(bytes, Charsets.UTF_8))
+                if (!text.isNullOrBlank()) out.put("note", text)
+                Log.i(TAG, "share: file '$name' (${bytes.size} B)")
+                return out
+            } catch (e: Exception) {
+                Log.w(TAG, "share: cannot read $stream", e)
+                return JSONObject().put("kind", "error").put("text", e.message ?: "")
+            }
+        }
+        if (!text.isNullOrBlank()) {
+            out.put("kind", "text").put("text", text).put("name", intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: "")
+            Log.i(TAG, "share: text (${text.length} chars)")
+            return out
+        }
+        return null
+    }
+
+    private fun deliverShare(share: JSONObject) {
+        val js = "window.swHandleShared && window.swHandleShared(${share})"
+        webView.post { webView.evaluateJavascript(js, null) }
     }
 
     fun isNight(): Boolean =

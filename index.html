@@ -3196,6 +3196,52 @@ body[data-tab="karte"]:not(.detail-open) #gpsBtn { width: 48px; height: 48px; bo
 
 .dl-more .dl-segs { margin-left: -76px; width: calc(100% + 76px); position: relative; z-index: 2; }
 .ds-stop { grid-template-columns: 46px minmax(0, 1fr) auto; }
+
+/* Import / geteilte Verbindungen */
+.share-h { margin: 16px 0 8px; }
+.share-opts { display: flex; flex-direction: column; gap: 8px; }
+.share-opt { text-align: left; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; min-height: 52px; }
+.share-opt strong { font-size: 14.5px; }
+.share-opt span { font-size: 12.5px; color: var(--text-2); }
+.shared-trip { margin: 12px 0 4px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--accent-soft); }
+.shared-trip .box-head h4 { font-size: 14px; }
+.shared-trip .dl-more .dl-segs { margin-left: 0; width: 100%; }
+.shared-del { padding: 6px 0; min-height: 36px; font-size: 12.5px; }
+.shared-list .shared-trip { background: var(--surface-2); }
+.user-tour-box p { margin: 0 0 6px; font-size: 13px; color: var(--text-2); }
+
+/* ===== UI-Analyse am Gerät (24.11.): Korrekturen ===== */
+/* (1)(14) Kartenwerkzeuge passen in die Karte; "verkleinern" nur auf dem Desktop */
+@media (max-width: 959px) { #miniBtn { display: none !important; } .map-wrap.mini { height: var(--map-h); min-height: 224px; } }
+.map-tools { gap: 6px; }
+/* (3) Filter-Panel: eine Spalte, Beschriftung links, Feld rechts */
+@media (max-width: 959px) {
+  .filter-panel { grid-template-columns: 1fr; gap: 10px; padding: 12px; }
+  .fp-row { font-size: 13.5px; }
+  .fp-row input[type="time"], .fp-row select { width: 48%; flex: 0 0 48%; min-height: 40px; }
+}
+/* (5) Ebenen-Menü über allem, im Karten-Tab unter dem Knopf */
+.layer-menu { z-index: 1100; }
+body[data-tab="karte"]:not(.detail-open) .layer-menu { top: calc(12px + env(safe-area-inset-top, 0px) + 56px); right: 16px; }
+/* (6) halbes Sheet nur so hoch wie die Kartenreihe */
+.map-sheet[data-snap="half"] { height: 236px; }
+/* (7) Sheet-Knöpfe mit Pfeil-Symbolen */
+#mapSheetExpandBtn, #mapSheetCollapseBtn { width: 40px; height: 40px; padding: 0; font-size: 0; }
+#mapSheetExpandBtn::before, #mapSheetCollapseBtn::before { content: ""; width: 18px; height: 18px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
+#mapSheetCollapseBtn::before, #mapSheetExpandBtn[data-state="shrink"]::before { transform: rotate(180deg); }
+/* (9) Tastatur offen: keine Navigationsleiste darüber */
+@media (max-width: 959px) { body.kbd-open .bottom-nav { display: none; } }
+/* (10) Kartensuche leeren */
+.map-q-clear { border: 0; background: none; color: var(--muted); font-size: 22px; width: 36px; height: 40px; cursor: pointer; flex: none; }
+.map-search input:placeholder-shown ~ .map-q-clear { visibility: hidden; }
+/* (13) Rückfahrten zweispaltig */
+.ret-btn .ret-stay { font-weight: 500; opacity: .8; margin-left: 2px; }
+
+.box-link { white-space: nowrap; }
+.shared-trip .box-head { flex-wrap: wrap; row-gap: 2px; }
+.shared-trip .box-head h4 { flex: 1 1 200px; min-width: 0; }
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -3294,7 +3340,7 @@ body[data-tab="karte"]:not(.detail-open) #gpsBtn { width: 48px; height: 48px; bo
     <div class="map-wrap" id="mapWrap">
       <div id="map" aria-label="Karte"></div>
       <div class="map-float" id="mapFloat">
-        <label class="map-search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mapQ" type="search" autocomplete="off" aria-label="Ort oder Tour suchen" placeholder="Ort oder Tour suchen"></label>
+        <label class="map-search"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mapQ" type="search" autocomplete="off" aria-label="Ort oder Tour suchen" placeholder="Ort oder Tour suchen"><button type="button" class="map-q-clear" id="mapQClear" aria-label="Suche löschen">×</button></label>
         <div class="map-regions" id="mapRegions"></div>
       </div>
       <div class="elev-overlay" id="elevBadge">Südwest-Übersicht</div>
@@ -3442,7 +3488,7 @@ const HOME_PRESETS = [
 ];
 
 const MODE_COLORS = {
-  sbahn: "#15803d",
+  sbahn: "#0e7c86",
   re: "#d4373f",
   rb: "#7c3aed",
   rail: "#7c3aed",
@@ -3482,7 +3528,7 @@ const I18N = {
   de: {
     brandTitle: "Südwest-Touren (D-Ticket & Mapy)",
     back: "Zurück",
-    searchPh: "Burg, Weinort, Aussichtsturm …",
+    searchPh: "Ort, Burg, Turm …",
     feasibleLabel: "Heute noch machbar ab",
     days: [["wd", "Mo–Fr"], ["sa", "Sa"], ["so", "So"]],
     dayLong: {wd: "Werktag (Mo–Fr)", sa: "Samstag", so: "Sonntag"},
@@ -3578,13 +3624,42 @@ const I18N = {
     statHike: "Wandern",
     statBack: "Zurück",
     heroHeading: "Heute empfohlen",
+    heroHeadingDay: d => `Empfohlen · ${d}`,
     heroBadge: "★ Empfehlung des Tages",
     moreTodayHeading: "Weitere für heute",
+    moreDayHeading: d => `Weitere · ${d}`,
     savedEmptyTitle: "Noch keine gemerkten Touren",
     savedEmptyBody: "Tippe auf das Lesezeichen-Symbol auf einer Tour, um sie hier für später zu speichern oder als JSON zu exportieren.",
     savedBrowseBtn: "Touren entdecken",
     savedTitle: "Gemerkt",
     savedCount: n => n === 1 ? "1 Tour" : `${n} Touren`,
+    importNoConn: "Keine Deutschlandticket-Verbindung gefunden",
+    importLoading: "Verbindungen werden live geladen …",
+    importTrackStart: "Tourstart",
+    importTrackEnd: "Tourende",
+    importOffline: "Verbindungen konnten nicht geladen werden (offline?)",
+    importBadGpx: "Die GPX-Datei enthält keine Strecke",
+    importBadFile: "Die geteilte Datei konnte nicht gelesen werden",
+    importWorking: "Tour wird angelegt …",
+    importDone: n => `Eigene Tour „${n}“ angelegt`,
+    importSub: (a, b) => `Eigene Tour · ${a} → ${b}`,
+    importMapyLink: "Mapy-Links enthalten keine Strecke – bitte in Mapy „Exportieren → GPX“ und die Datei mit Südwest-Touren teilen.",
+    importUnknown: "Damit kann die App nichts anfangen – geteilt werden können Verbindungen aus dem RegioNavigator/München Navigator und GPX-Dateien",
+    shareTitle: app => `Verbindung aus ${app}`,
+    shareAssign: "Wofür ist die Verbindung?",
+    shareAsOut: "als Hinfahrt",
+    shareAsRet: "als Rückfahrt",
+    shareJustSave: "Nur speichern",
+    shareJustSaveSub: "erscheint unter Unterwegs",
+    shareSaved: "Verbindung gespeichert",
+    sharedOut: "Deine Hinfahrt",
+    sharedRet: "Deine Rückfahrt",
+    sharedLive: "Live öffnen",
+    sharedRemove: "Verbindung entfernen",
+    sharedListTitle: "Gespeicherte Verbindungen",
+    userTourNote: "Eigene Tour aus einer GPX-Datei – die Verbindungen werden live über Transitous berechnet (Internet nötig).",
+    userTourDelete: "Eigene Tour löschen",
+    userTourDeleteConfirm: "Diese eigene Tour wirklich löschen?",
     doneAdd: "Als gemacht markieren",
     doneRemove: "Markierung „gemacht“ entfernen",
     doneAdded: "Als gemacht markiert ✓",
@@ -3730,7 +3805,7 @@ const I18N = {
   en: {
     brandTitle: "Southwest Tours (D-Ticket & Mapy)",
     back: "Back",
-    searchPh: "Castle, wine village, lookout tower …",
+    searchPh: "Place, castle, tower …",
     feasibleLabel: "Feasible today from",
     days: [["wd", "Weekday"], ["sa", "Sat"], ["so", "Sun"]],
     dayLong: {wd: "Weekday (Mon–Fri)", sa: "Saturday", so: "Sunday"},
@@ -3826,13 +3901,42 @@ const I18N = {
     statHike: "Hike",
     statBack: "Back",
     heroHeading: "Recommended today",
+    heroHeadingDay: d => `Recommended · ${d}`,
     heroBadge: "★ Top pick today",
     moreTodayHeading: "More for today",
+    moreDayHeading: d => `More · ${d}`,
     savedEmptyTitle: "No saved tours yet",
     savedEmptyBody: "Tap the bookmark icon on any tour to save it here for quick planning or JSON export.",
     savedBrowseBtn: "Browse tours",
     savedTitle: "Saved",
     savedCount: n => n === 1 ? "1 tour" : `${n} tours`,
+    importNoConn: "No Deutschlandticket connection found",
+    importLoading: "Loading connections live …",
+    importTrackStart: "Tour start",
+    importTrackEnd: "Tour end",
+    importOffline: "Connections could not be loaded (offline?)",
+    importBadGpx: "The GPX file contains no track",
+    importBadFile: "The shared file could not be read",
+    importWorking: "Creating tour …",
+    importDone: n => `Own tour “${n}” created`,
+    importSub: (a, b) => `Own tour · ${a} → ${b}`,
+    importMapyLink: "Mapy links contain no track – please use “Export → GPX” in Mapy and share the file with Südwest-Touren.",
+    importUnknown: "Nothing to import – you can share connections from RegioNavigator/München Navigator and GPX files",
+    shareTitle: app => `Connection from ${app}`,
+    shareAssign: "What is this connection for?",
+    shareAsOut: "as outbound",
+    shareAsRet: "as return",
+    shareJustSave: "Just save",
+    shareJustSaveSub: "shown under Trip",
+    shareSaved: "Connection saved",
+    sharedOut: "Your outbound",
+    sharedRet: "Your return",
+    sharedLive: "Open live",
+    sharedRemove: "Remove connection",
+    sharedListTitle: "Saved connections",
+    userTourNote: "Own tour from a GPX file – connections are computed live via Transitous (internet needed).",
+    userTourDelete: "Delete own tour",
+    userTourDeleteConfirm: "Really delete this own tour?",
     doneAdd: "Mark as done",
     doneRemove: "Remove “done” mark",
     doneAdded: "Marked as done ✓",
@@ -3980,6 +4084,16 @@ const I18N = {
 const VALID_PREF_APPS = ["mvv", "nvv", "db", "myvrn", "mvvweb", "dbweb", "gmaps"];
 const TOURS = DATA.tours || [];
 const BY_ID = Object.fromEntries(TOURS.map(t => [t.id, t]));
+/* own tours (GPX import, stored on the device; connections are fetched live) */
+const USER_TOUR_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 405'%3E%3Crect width='720' height='405' fill='%23DCECEF'/%3E%3Cpath d='M0 330l170-150 120 90 150-160 280 220v75H0z' fill='%230F4C5C' opacity='.55'/%3E%3Cpath d='M0 360l220-110 160 70 140-90 200 130v45H0z' fill='%2315803D' opacity='.6'/%3E%3C/svg%3E";
+(store.get("userTours", []) || []).forEach(t => {
+  if (t && t.id && t.source === "user" && !BY_ID[t.id] && t.hike && t.transit) {
+    t.plans = {};
+    t.img = USER_TOUR_IMG;
+    TOURS.push(t);
+    BY_ID[t.id] = t;
+  }
+});
 
 /* "Gemacht": {tourId: "YYYY-MM-DD"} */
 function loadValidDone() {
@@ -4064,6 +4178,7 @@ let state = {
   directOpen: store.get("directOpen", false) === true,
   favs: loadValidFavs(),
   done: loadValidDone(),
+  sharedTrips: loadSharedTrips(),
   hideDone: store.get("hideDone", false) === true,
   activeTrip: loadValidActiveTrip(),
   remindTarget: "dep",
@@ -4169,6 +4284,7 @@ function decodePoly(str) {
 
 const polyCache = new Map();
 function polyPts(idx) {
+  if (Array.isArray(idx)) return idx;
   if (idx == null || !DATA.polys || !DATA.polys[idx]) return [];
   if (!polyCache.has(idx)) polyCache.set(idx, decodePoly(DATA.polys[idx]));
   return polyCache.get(idx);
@@ -4479,6 +4595,17 @@ function getSelectedWindow(t, baseKey, dayKey, opts) {
     }
   }
   chosenIdx = Math.max(0, chosenIdx);
+  // round trips with a timetabled middle stage: the automatic choice must leave time for it
+  if (t.mid && (revOverride === null || revOverride === undefined) && pool.length) {
+    const ms = getMiddle(t, baseKey, dayKey, fwd, []);
+    if (ms && ms.segs && ms.segs.length && ms.earliestArr != null) {
+      const minDep = ms.earliestArr + MID_MIN_TRANSFER;
+      if ((depMinutes(pool[chosenIdx]) ?? 0) < minDep) {
+        const ok = pool.findIndex(r => (depMinutes(r) ?? 0) >= minDep);
+        if (ok >= 0) chosenIdx = ok;
+      }
+    }
+  }
   const rev = pool[chosenIdx] || plan.rev || [];
   const lsr = (plan && plan.lastSafeReturn) || (revs.length ? {
     dep: revs[revs.length - 1][0]?.dep || "19:30",
@@ -4490,7 +4617,7 @@ function getSelectedWindow(t, baseKey, dayKey, opts) {
 
 function matchesFilter(t) {
   if (state.hideDone && isDone(t.id)) return false;
-  if (state.sourceFilter === "my_tours" && !["shortcut", "mapy", "my_tours"].includes(t.source)) return false;
+  if (state.sourceFilter === "my_tours" && !["shortcut", "mapy", "my_tours", "user"].includes(t.source)) return false;
   if (state.sourceFilter === "curated" && t.source !== "curated") return false;
   if (state.regionFilter && t.region !== state.regionFilter) return false;
   if (state.loopOnly && !isClosedLoopHike(t)) return false;
@@ -4576,7 +4703,7 @@ function renderHeader() {
   document.documentElement.lang = state.lang;
   const tabTitle = {entdecken: tDict.navEntdecken, karte: tDict.navKarte, gemerkt: tDict.navGemerkt, unterwegs: tDict.navUnterwegs}[state.tab];
   $("#brandTitle").textContent = state.sel && BY_ID[state.sel] ? tourTitle(BY_ID[state.sel]) : (tabTitle || tDict.brandTitle);
-  const now = new Date();
+  const now = new Date(linkDateIso(state.day) + "T12:00:00");
   const wdName = now.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {weekday: "short"}).replace(/\.$/, "");
   const dateTxt = state.lang === "en" ? `${wdName} ${now.getDate()}/${now.getMonth() + 1}` : `${wdName} ${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.`;
   const dayLbl = (tDict.days.find(d => d[0] === state.day) || ["", ""])[1];
@@ -4948,7 +5075,8 @@ function setMapSheetSnap(snap) {
   const tDict = T();
   if (expBtn) {
     expBtn.setAttribute("aria-expanded", String(valid === "expanded"));
-    expBtn.textContent = valid === "expanded" ? "⤡" : "⤢";
+    expBtn.textContent = "";
+    expBtn.dataset.state = valid === "expanded" ? "shrink" : "grow";
     expBtn.title = valid === "expanded" ? tDict.mapShrink : tDict.mapExpand;
     expBtn.setAttribute("aria-label", valid === "expanded" ? tDict.mapShrink : tDict.mapExpand);
   }
@@ -5013,8 +5141,12 @@ function syncFavButtons(id) {
     const fid = btn.dataset.favId;
     const on = isFav(fid);
     btn.setAttribute("aria-pressed", String(on));
-    if (btn.id === "detailFavBtn") {
+    if (btn.id === "detailFavBtn" && !btn.classList.contains("hero-fab")) {
       btn.textContent = on ? tDict.detailFavSaved : tDict.detailFavAdd;
+    } else if (btn.id === "detailFavBtn") {
+      const lbl = on ? tDict.detailFavSaved : tDict.detailFavAdd;
+      btn.setAttribute("aria-label", lbl);
+      btn.title = lbl;
     } else {
       const lbl = on ? tDict.favRemove : tDict.favAdd;
       btn.setAttribute("aria-label", lbl);
@@ -5234,6 +5366,7 @@ $("#fullBtn").addEventListener("click", () => {
   document.body.classList.toggle("map-full-open", isFull);
   setTimeout(() => {
     map.invalidateSize();
+    fitCurrent();
     if (state.tab === "karte" && !state.sel && !isFull) renderMapSheet();
   }, 150);
 });
@@ -5524,7 +5657,7 @@ function renderDiscoverHighlights(vis) {
   const hHike = hikeParts.join(" · ") || (tDict.diff[hero.difficulty] || "–");
 
   const moreHtml = more.length ? `
-    <h2 class="discover-title">${esc(tDict.moreTodayHeading)}</h2>
+    <h2 class="discover-title">${esc(linkDateIso(state.day) === new Date().toISOString().slice(0, 10) ? tDict.moreTodayHeading : tDict.moreDayHeading(tDict.dayLong[state.day]))}</h2>
     <div class="discover-row">
       ${more.map(t => {
         const w = getSelectedWindow(t, state.base, state.day);
@@ -5547,7 +5680,7 @@ function renderDiscoverHighlights(vis) {
     </div>` : "";
 
   host.innerHTML = `
-    <div class="discover-head"><h2 class="discover-title">${esc(tDict.heroHeading)}</h2><span class="discover-count">${esc(tDict.toursCount(vis.length))}</span></div>
+    <div class="discover-head"><h2 class="discover-title">${esc(linkDateIso(state.day) === new Date().toISOString().slice(0, 10) ? tDict.heroHeading : tDict.heroHeadingDay(tDict.dayLong[state.day]))}</h2><span class="discover-count">${esc(tDict.toursCount(vis.length))}</span></div>
     <div class="rec-hero" data-id="${esc(hero.id)}" data-region="${esc(hRk)}" role="button" tabindex="0">
       <div class="rec-hero-media">
         <img class="rec-hero-img" src="${esc(hImg)}" alt="${esc(tourTitle(hero))}" loading="eager" decoding="async" width="720" height="405">
@@ -6105,6 +6238,18 @@ window.swOpenTab = function (tab) {
   setTab(tab);
 };
 
+function sharedTripsListHTML() {
+  const tDict = T();
+  const list = state.sharedTrips || [];
+  if (!list.length) return "";
+  return `<div class="trip-card shared-list"><h3>📲 ${esc(tDict.sharedListTitle)}</h3>${list.map(st => `<div class="shared-trip" data-shared-id="${esc(st.id)}">
+      <div class="box-head"><h4>${esc(st.from)} → ${esc(st.to)} · ${esc(st.dep)}–${esc(st.arr)}</h4>${st.link ? `<a class="box-link" href="${esc(sharedTripLiveUrl(st))}" target="_blank" rel="noopener">${esc(tDict.sharedLive)}</a>` : ""}</div>
+      ${st.tourId && BY_ID[st.tourId] ? `<p class="tc-sub">${esc(st.role === "ret" ? tDict.sharedRet : tDict.sharedOut)}: <a href="#" data-open-tour="${esc(st.tourId)}">${esc(tourTitle(BY_ID[st.tourId]))}</a></p>` : ""}
+      <details class="dl-more"><summary><span class="dl-badges">${st.legs.filter(l => l.kind === "ride").map(l => `<span class="badge mode-badge" style="background-color:${MODE_COLORS[l.mode] || "#0F4C5C"};color:#fff">${esc(l.line)}</span>`).join("")}</span><span class="dl-toggle">${esc(tDict.showTimes)}</span></summary>${sharedTripTimelineHTML(st)}</details>
+      <button type="button" class="link-btn shared-del" data-shared-del="${esc(st.id)}">${esc(tDict.sharedRemove)}</button>
+    </div>`).join("")}</div>`;
+}
+
 function renderTripView() {
   const tripEl = $("#tripView");
   if (!tripEl) return;
@@ -6117,7 +6262,7 @@ function renderTripView() {
       <h2>${esc(tDict.tripEmptyTitle)}</h2>
       <p>${esc(tDict.tripEmptyBody)}</p>
       <button type="button" class="act primary" data-go-tab="entdecken">${esc(tDict.tripBrowseBtn)}</button>
-    </div>`;
+    </div>${sharedTripsListHTML()}`;
     return;
   }
 
@@ -6304,6 +6449,19 @@ $("#savedView")?.addEventListener("change", e => {
 });
 
 $("#tripView")?.addEventListener("click", e => {
+  const sd = e.target.closest("[data-shared-del]");
+  if (sd) {
+    state.sharedTrips = state.sharedTrips.filter(x => x.id !== sd.dataset.sharedDel);
+    saveSharedTrips();
+    renderTripView();
+    return;
+  }
+  const ot = e.target.closest("[data-open-tour]");
+  if (ot) {
+    e.preventDefault();
+    openTour(ot.dataset.openTour);
+    return;
+  }
   const resolved = resolveActiveTrip(state.activeTrip);
   if (!resolved) return;
   const {t, trip, selWin} = resolved;
@@ -6792,6 +6950,7 @@ function downloadGPX(t) {
 
 /* ---------- Detail View ---------- */
 function creditHTML(t) {
+  if (t.source === "user") return "";   // own tours: placeholder graphic, no photo to credit
   const c = t.imgCredit || {};
   const page = c.page || "https://commons.wikimedia.org/";
   const licUrl = c.licenseUrl || "https://creativecommons.org/licenses/by-sa/4.0/";
@@ -7287,7 +7446,9 @@ function placeDetailParts() {
     const mslot = $("#detailMapSlot");
     if (mslot && mw && mw.parentNode !== mslot && !mw.classList.contains("full")) {
       mslot.appendChild(mw);
-      setTimeout(() => map.invalidateSize(), 0);
+      mw.classList.remove("mini");
+      setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
+      setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 350);
     }
     const bslot = $("#detailBarSlot");
     if (bslot && bar && bar.parentNode !== bslot) bslot.appendChild(bar);
@@ -7312,6 +7473,7 @@ function restoreDetailParts() {
 function renderDetail(t) {
   renderDetailInner(t);
   placeDetailParts();
+  if (t && t.source === "user") ensureLivePlan(t);
 }
 if (MOBILE_MQ.addEventListener) MOBILE_MQ.addEventListener("change", () => { if (state.sel) placeDetailParts(); });
 
@@ -7464,7 +7626,7 @@ function renderDetailInner(t) {
     const isLsr = i === lsrIdx;
     const midEarly = hasMid && parseHHMM(rDep) !== null && parseHHMM(rDep) < midSt.earliestArr + MID_MIN_TRANSFER;
     const short = isShortReturn(t, rStay) || (midEarly ? -1 : 0);
-    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}"${short ? ` title="${esc(short < 0 ? tDict.midTooEarly : tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}"${short ? ` title="${esc(short < 0 ? tDict.midTooEarly : tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} <span class="ret-stay">${esc(Math.floor(rStay / 60) + ":" + String(rStay % 60).padStart(2, "0"))} h</span></button>`;
   }).join("");
 
   const shortStayWarn = (h.hasGpx && h.walkMin && stayMin > 0 && stayMin < Number(h.walkMin))
@@ -7543,7 +7705,7 @@ function renderDetailInner(t) {
     });
   }
   if (fwd.length && !hasMid) dayRows.push({time: fwdArr, name: fwdEndName, cls: "hike", html: `<div class="dl-sub">${esc(hasKm ? `${tDict.hikeLabel.charAt(0).toUpperCase() + tDict.hikeLabel.slice(1)} ${kmStr} km` : tDict.hikeStayTitle)}${Number(t.hike?.walkMin) ? ` · ${esc(tDict.tripWalkTime(fmtDur(Number(t.hike.walkMin))))}` : ""}${Number(t.hike?.liftKm) > 0 ? ` · ${esc(tDict.liftNote)}` : ""}${viaTxt ? ` · ${esc(viaTxt)}` : ""}</div>`});
-  if (rev.length) dayRows.push({time: revDep, name: rev[0]?.from?.name || "", html: `${expandable(rev)}${hasMid ? `<div class="dl-sub">${esc(midSt.conflict ? tDict.midConflictShort : tDict.midStay(fmtDur(minDiff(midSt.segs.slice(-1)[0].arr, revDep))))}</div>` : ""}`});
+  if (rev.length) dayRows.push({time: revDep, name: rev.find(sg => sg.from?.name)?.from?.name || "", html: `${expandable(rev)}${hasMid ? `<div class="dl-sub">${esc(midSt.conflict ? tDict.midConflictShort : tDict.midStay(fmtDur(minDiff(midSt.segs.slice(-1)[0].arr, revDep))))}</div>` : ""}`});
   if (rev.length) dayRows.push({time: arr, name: tDict.backIn(bInfo.name), html: `<div class="dl-sub">${esc(tDict.lastSafeReturnShort(lsrDep))}</div>`});
   const dayLineHtml = dayRows.length ? `<ol class="day-line">${dayRows.map(r => `<li class="${r.cls || ""}"><time>${esc(r.time)}</time><div class="dl-body"><strong>${esc(r.name)}</strong>${r.html}</div></li>`).join("")}</ol>` : "";
   const dayDateLbl = (() => {
@@ -7582,6 +7744,11 @@ function renderDetailInner(t) {
     <div class="box day-flow-box">
       <div class="box-head"><h4>${esc(tDict.yourDay(dayDateLbl))}</h4><a class="box-link" href="#detailTimes" data-a="times">${esc(tDict.changeTimes)}</a></div>
       ${dayLineHtml}
+      ${sharedTripsFor(t.id).map(st => `<div class="shared-trip" data-shared-id="${esc(st.id)}">
+        <div class="box-head"><h4>📲 ${esc(st.role === "ret" ? tDict.sharedRet : tDict.sharedOut)} · ${esc(st.dep)}–${esc(st.arr)}</h4>${st.link ? `<a class="box-link" href="${esc(sharedTripLiveUrl(st))}" target="_blank" rel="noopener">${esc(tDict.sharedLive)}</a>` : ""}</div>
+        <details class="dl-more"><summary><span class="dl-badges">${lineBadges(st.legs)}</span><span class="dl-toggle">${esc(tDict.showTimes)}</span></summary>${sharedTripTimelineHTML(st)}</details>
+        <button type="button" class="link-btn shared-del" data-shared-del="${esc(st.id)}">${esc(tDict.sharedRemove)}</button>
+      </div>`).join("")}
       <h4 class="sub-h">${esc(tDict.flowTitle)}</h4>
       <div class="day-flow">
         ${compactOutHtml}
@@ -7620,6 +7787,8 @@ function renderDetailInner(t) {
       </div>
     </div>
 
+    ${t.source === "user" ? `<div class="box user-tour-box"><p>${esc(tDict.userTourNote)}</p><button type="button" class="link-btn" data-user-del="${esc(t.id)}">${esc(tDict.userTourDelete)}</button></div>` : ""}
+
     ${(sunTxt || tipsTxt) ? `<div class="box">
       ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
       ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
@@ -7642,6 +7811,18 @@ $("#detail").addEventListener("pointerdown", onElevPointer);
 $("#detail").addEventListener("click", e => {
   const t = BY_ID[state.sel];
   if (!t) return;
+  const sharedDel = e.target.closest("[data-shared-del]");
+  if (sharedDel) {
+    state.sharedTrips = state.sharedTrips.filter(x => x.id !== sharedDel.dataset.sharedDel);
+    saveSharedTrips();
+    renderDetail(t);
+    return;
+  }
+  const userDel = e.target.closest("[data-user-del]");
+  if (userDel) {
+    if (window.confirm(T().userTourDeleteConfirm)) deleteUserTour(userDel.dataset.userDel);
+    return;
+  }
   if (e.target.closest("#detailDoneBtn")) {
     e.stopPropagation();
     toggleDone(t.id);
@@ -7721,6 +7902,11 @@ $("#appSheet")?.addEventListener("click", e => {
     closeAppSheet();
     return;
   }
+  const shareOpt = e.target.closest(".share-opt");
+  if (shareOpt) {
+    commitSharedTrip(shareOpt.dataset.shareTour, shareOpt.dataset.shareRole);
+    return;
+  }
   const chk = e.target.closest("#directOpenChk");
   if (chk) {
     state.directOpen = chk.checked;
@@ -7749,6 +7935,451 @@ document.addEventListener("keydown", e => {
     closeAppSheet();
   }
 });
+
+/* ===================== Import: geteilte Verbindungen (RegioNavigator/München Navigator) & Mapy-GPX ===================== */
+
+/* --- RegioNavigator / HAFAS share text ---
+   12:37 - departure Jugenheim Bickenbacher Straße, Seeheim-Jugenheim
+         with STR 6 to Alsbach Am Hinkelstein, Alsbach-Hähnlein
+   12:38 - arrival Alsbach Beuneweg, Alsbach-Hähnlein
+   12:54 - Walk to Bickenbach(Bergstr), duration 3 min
+   (German UI: Abfahrt / Ankunft / mit … Richtung … / Fußweg …, Dauer … Min.) */
+function hafasModeOf(line) {
+  const l = String(line || "").trim();
+  if (/^(STR|Tram)\b/i.test(l)) return "tram";
+  if (/^(Bus|RUF|ALT|AST)\b/i.test(l)) return "bus";
+  if (/^S\s?\d/i.test(l)) return "sbahn";
+  if (/^RE\s?\d/i.test(l)) return "re";
+  if (/^(RB|R)\s?\d/i.test(l)) return "rb";
+  if (/^U\s?\d/i.test(l)) return "tram";
+  if (/^(ICE|IC|EC|FLX)\b/i.test(l)) return "rail";
+  return /^\d+$/.test(l) ? "bus" : "rb";
+}
+function splitPlatform(s) {
+  const m = String(s || "").match(/^(.*?),\s*(?:Platform|Gleis|Steig|Bstg\.?)\s+(.+)$/i);
+  return m ? {name: m[1].trim(), platform: m[2].trim()} : {name: String(s || "").trim(), platform: ""};
+}
+function parseHafasShare(text) {
+  const lines = String(text || "").split(/\r?\n/);
+  const legs = [];
+  let cur = null;
+  const depRx = /^\s*(\d{1,2}:\d{2})\s*-\s*(?:departure|Abfahrt|ab)\s+(.+?)\s*$/i;
+  const arrRx = /^\s*(\d{1,2}:\d{2})\s*-\s*(?:arrival|Ankunft|an)\s+(.+?)\s*$/i;
+  const withRx = /^\s*(?:with|mit)\s+(.+?)\s+(?:to|nach|Richtung|in Richtung)\s+(.+?)\s*$/i;
+  const walkRx = /^\s*(\d{1,2}:\d{2})\s*-\s*(?:Walk to|Fußweg (?:zu|nach|bis)|Fussweg (?:zu|nach))\s+(.+?),\s*(?:duration|Dauer)\s+(\d+)\s*(?:min|Min\.?)/i;
+  for (const ln of lines) {
+    let m;
+    if ((m = ln.match(walkRx))) {
+      const to = splitPlatform(m[2]);
+      const dep = m[1].padStart(5, "0");
+      const durMin = parseInt(m[3], 10) || 0;
+      const t0 = parseHHMM(dep);
+      legs.push({kind: "walk", mode: "foot", line: "", dep, arr: t0 !== null ? fmtHHMMabs(t0 + durMin) : dep, from: {name: legs.length ? legs[legs.length - 1].to.name : ""}, to: {name: to.name}});
+      cur = null;
+    } else if ((m = ln.match(depRx))) {
+      const st = splitPlatform(m[2]);
+      cur = {kind: "ride", dep: m[1].padStart(5, "0"), from: {name: st.name, platform: st.platform}, line: "", dest: "", mode: "rb", arr: "", to: {name: ""}};
+    } else if (cur && (m = ln.match(withRx))) {
+      cur.line = m[1].trim();
+      cur.dest = m[2].trim();
+      cur.mode = hafasModeOf(cur.line);
+    } else if (cur && (m = ln.match(arrRx))) {
+      const st = splitPlatform(m[2]);
+      cur.arr = m[1].padStart(5, "0");
+      cur.to = {name: st.name, platform: st.platform};
+      legs.push(cur);
+      cur = null;
+    }
+  }
+  if (!legs.some(l => l.kind === "ride")) return null;
+  const link = (String(text).match(/https?:\/\/\S+/) || [""])[0];
+  const app = /RegioNavigator/i.test(text) ? "RegioNavigator" : /München Navigator|MVV/i.test(text) ? "München Navigator" : "Fahrplan-App";
+  return {legs, link, app, dep: legs[0].dep, arr: legs[legs.length - 1].arr, from: legs[0].from.name, to: legs[legs.length - 1].to.name};
+}
+
+/* --- DB Navigator share text ---
+   Jugenheim Bickenbacher Straße, Seeheim-Jugenheim → Bahnhof, Dossenheim
+   Tue 24.11.2026
+   RB68 (15309)
+   To Wiesloch-Walldorf
+   From 08:48 Hähnlein-Alsbach, Platform 1
+   To 09:11 Weinheim(Bergstr)Hbf, Platform 3
+   (German: Richtung/Nach …, Ab/Von HH:MM …, An/Bis HH:MM …, Gleis …) */
+function parseDbShare(text) {
+  const lines = String(text || "").split(/\r?\n/).map(l => l.trim());
+  const dateM = String(text).match(/\b(\d{1,2})\.(\d{1,2})\.(\d{4})\b/);
+  const legs = [];
+  const fromRx = /^(?:From|Ab|Von)\s+(\d{1,2}:\d{2})\s+(.+)$/i;
+  const toTimeRx = /^(?:To|An|Bis|Nach)\s+(\d{1,2}:\d{2})\s+(.+)$/i;
+  const dirRx = /^(?:To|Richtung|Nach|Direction)\s+(?!\d{1,2}:\d{2}\b)(.+)$/i;
+  let line = "", dir = "", cur = null;
+  for (let i = 0; i < lines.length; i++) {
+    const ln = lines[i];
+    let m;
+    if (!ln) { line = ""; dir = ""; cur = null; continue; }
+    if ((m = ln.match(fromRx))) {
+      const st = splitPlatform(m[2]);
+      cur = {kind: "ride", line, mode: hafasModeOf(line), dest: dir, dep: m[1].padStart(5, "0"), from: {name: st.name, platform: st.platform}, arr: "", to: {name: ""}};
+    } else if (cur && (m = ln.match(toTimeRx))) {
+      const st = splitPlatform(m[2]);
+      cur.arr = m[1].padStart(5, "0");
+      cur.to = {name: st.name, platform: st.platform};
+      legs.push(cur);
+      cur = null;
+    } else if (line && !dir && (m = ln.match(dirRx))) {
+      dir = m[1].trim();
+    } else if (!line && !/→|https?:|^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|Mo|Di|Mi|Do|Fr|Sa|So)\b/i.test(ln) && !/^(View journey|Verbindung anzeigen|Reise anzeigen)/i.test(ln)) {
+      line = ln.replace(/\s*\(\d+\)\s*$/, "").split(/\s*\/\s*/)[0].trim();
+    }
+  }
+  if (!legs.length) return null;
+  const link = (String(text).match(/https?:\/\/\S+/) || [""])[0];
+  const date = dateM ? `${dateM[3]}-${dateM[2].padStart(2, "0")}-${dateM[1].padStart(2, "0")}` : "";
+  return {legs, link, app: "DB Navigator", date, dep: legs[0].dep, arr: legs[legs.length - 1].arr, from: legs[0].from.name, to: legs[legs.length - 1].to.name};
+}
+
+/* --- saved connections --- */
+function loadSharedTrips() {
+  const raw = store.get("sharedTrips", []);
+  return Array.isArray(raw) ? raw.filter(x => x && Array.isArray(x.legs) && x.legs.length) : [];
+}
+function saveSharedTrips() {
+  store.set("sharedTrips", state.sharedTrips);
+}
+function normStop(s) {
+  return String(s || "").toLowerCase().replace(/\(.*?\)/g, " ").replace(/[^a-zäöüß0-9]+/g, " ").replace(/\b(bahnhof|bf|hbf|hauptbahnhof)\b/g, "bf").trim();
+}
+function stopsMatch(a, b) {
+  const x = normStop(a), y = normStop(b);
+  if (!x || !y) return false;
+  if (x === y) return true;
+  const tx = new Set(x.split(" ").filter(w => w.length >= 2)), ty = [...new Set(y.split(" ").filter(w => w.length >= 2))];
+  const common = ty.filter(w => tx.has(w)).length;
+  return common >= Math.min(2, Math.min(tx.size, ty.length));
+}
+/* tours whose outbound end / return start matches the shared connection */
+function suggestToursForTrip(trip) {
+  // outbound: the connection ends where a tour's outbound ends; return: it starts where the tour's return starts.
+  // Home bases never count as a match (360° rings start and end there).
+  const bases = ["jugenheim", "karlsruhe"].map(k => getBaseInfo(k)).map(b => b.stopName || b.name);
+  const isBase = n => bases.some(b => stopsMatch(n, b));
+  const out = [];
+  for (const t of TOURS) {
+    const w = getSelectedWindow(t, state.base, state.day);
+    const fwdEnd = w.fwd[w.fwd.length - 1]?.to?.name;
+    const revStart = w.rev[0]?.from?.name;
+    if (fwdEnd && !isBase(fwdEnd) && stopsMatch(trip.to, fwdEnd)) out.push({t, role: "out"});
+    else if (revStart && !isBase(revStart) && stopsMatch(trip.from, revStart)) out.push({t, role: "ret"});
+  }
+  return out.slice(0, 6);
+}
+function sharedTripsFor(tourId) {
+  return (state.sharedTrips || []).filter(x => x.tourId === tourId);
+}
+
+/* in-app link to reopen the connection live in the HAFAS app */
+function sharedTripLiveUrl(trip) {
+  if (!trip.link) return "";
+  if (IS_ANDROID && /bahn\.de\//.test(trip.link)) {
+    return `intent://${trip.link.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=de.hafas.android.db;S.browser_fallback_url=${encodeURIComponent(trip.link)};end`;
+  }
+  if (IS_ANDROID && /s-bahn-muenchen\.hafas\.de/.test(trip.link)) {
+    return `intent://${trip.link.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=de.hafas.android.sbm;S.browser_fallback_url=${encodeURIComponent(trip.link)};end`;
+  }
+  return trip.link;
+}
+
+/* --- GPX (Mapy export) → own tour --- */
+function decodePolyP(str, precision) {
+  const f = Math.pow(10, precision || 5);
+  const pts = [];
+  let i = 0, lat = 0, lon = 0;
+  while (i < str.length) {
+    let b, sh = 0, r = 0;
+    do { b = str.charCodeAt(i++) - 63; r |= (b & 0x1f) << sh; sh += 5; } while (b >= 0x20);
+    lat += (r & 1) ? ~(r >> 1) : (r >> 1);
+    sh = 0; r = 0;
+    do { b = str.charCodeAt(i++) - 63; r |= (b & 0x1f) << sh; sh += 5; } while (b >= 0x20);
+    lon += (r & 1) ? ~(r >> 1) : (r >> 1);
+    pts.push([lat / f, lon / f]);
+  }
+  return pts;
+}
+function encodePoly5(pts) {
+  let out = "", pLat = 0, pLon = 0;
+  const enc = v => {
+    v = v < 0 ? ~(v << 1) : (v << 1);
+    let s = "";
+    while (v >= 0x20) { s += String.fromCharCode((0x20 | (v & 0x1f)) + 63); v >>= 5; }
+    return s + String.fromCharCode(v + 63);
+  };
+  for (const [la, lo] of pts) {
+    const a = Math.round(la * 1e5), b = Math.round(lo * 1e5);
+    out += enc(a - pLat) + enc(b - pLon);
+    pLat = a; pLon = b;
+  }
+  return out;
+}
+function hysteresisGainLoss(eles, th) {
+  if (!eles.length) return [0, 0];
+  let gain = 0, loss = 0, st = 0, low = eles[0], high = eles[0];
+  for (const e of eles.slice(1)) {
+    if (st === 0) {
+      if (e - low >= th) { st = 1; high = e; gain += e - low; }
+      else if (high - e >= th) { st = -1; low = e; loss += high - e; }
+      if (e < low) low = e;
+      if (e > high) high = e;
+    } else if (st === 1) {
+      if (e > high) { gain += e - high; high = e; }
+      else if (high - e >= th) { st = -1; low = e; loss += high - e; }
+    } else {
+      if (e < low) { loss += low - e; low = e; }
+      else if (e - low >= th) { st = 1; high = e; gain += e - low; }
+    }
+  }
+  return [Math.round(gain), Math.round(loss)];
+}
+/* Swiss SAC hiking time – identical to scripts/build_catalog.calc_walk_min */
+function sacWalkMin(km, up, down) {
+  const h = km / 4.0, v = up / 400.0 + down / 800.0;
+  return Math.ceil((Math.max(h, v) + 0.5 * Math.min(h, v)) * 60);
+}
+function parseGpx(xml, fileName) {
+  const doc = new DOMParser().parseFromString(xml, "application/xml");
+  if (doc.querySelector("parsererror")) return null;
+  let nodes = [...doc.getElementsByTagName("trkpt")];
+  if (nodes.length < 2) nodes = [...doc.getElementsByTagName("rtept")];
+  const pts = nodes.map(n => [parseFloat(n.getAttribute("lat")), parseFloat(n.getAttribute("lon")), parseFloat(n.getElementsByTagName("ele")[0]?.textContent)])
+    .filter(p => isFinite(p[0]) && isFinite(p[1]));
+  if (pts.length < 2) return null;
+  const nameEl = doc.querySelector("trk > name, rte > name, metadata > name");
+  let name = (nameEl && nameEl.textContent.trim()) || String(fileName || "").replace(/\.gpx$/i, "");
+  const m = name.match(/^Route from (.+?) to (.+)$/i);
+  if (m) name = `${m[1].replace(/_/g, ",")} → ${m[2].replace(/_/g, ",")}`;
+  const cum = [0];
+  for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + haversineM(pts[i - 1], pts[i]) / 1000);
+  const distKm = Math.round(cum[cum.length - 1] * 100) / 100;
+  const hasEle = pts.some(p => isFinite(p[2]));
+  const [up, down] = hasEle ? hysteresisGainLoss(pts.map(p => isFinite(p[2]) ? p[2] : 0), 3) : [0, 0];
+  const step = Math.max(1, Math.floor(pts.length / 400));
+  const poly = pts.filter((_, i) => i % step === 0 || i === pts.length - 1).map(p => [p[0], p[1]]);
+  const prof = [];
+  if (hasEle) {
+    const n = Math.min(30, pts.length);
+    for (let k = 0; k < n; k++) {
+      const i = Math.round(k * (pts.length - 1) / (n - 1));
+      prof.push([Math.round(cum[i] * 100) / 100, Math.round(pts[i][2] || 0)]);
+    }
+  }
+  return {name, distKm, up, down, walkMin: sacWalkMin(distKm, up, down), poly5: encodePoly5(poly), prof, start: pts[0], end: pts[pts.length - 1]};
+}
+function regionOfCoord(lat, lon) {   // scripts/build_catalog.region_from_coord
+  if (lat >= 49.72 && lon < 8.60) return "weitere";
+  if (lat >= 49.76 && lon > 9.15) return "weitere";
+  if (lon <= 8.40 && lat >= 49.00 && lat <= 49.68) return lon >= 7.60 ? "pfaelzerwald" : "weitere";
+  if (lat <= 48.98 && lon >= 7.80) return "schwarzwald";
+  if (lon >= 8.55 && lat >= 49.30 && lat <= 49.82) return "odenwald";
+  return "weitere";
+}
+
+/* --- Transitous (live, CORS open): nearest stop and connections --- */
+const TRANSITOUS = "https://api.transitous.org/api/v1";
+const TRANSIT_MODES = "REGIONAL_RAIL,REGIONAL_FAST_RAIL,SUBURBAN,METRO,TRAM,BUS,FERRY,ODM";
+async function nearestStop(lat, lon) {
+  const r = await fetch(`${TRANSITOUS}/reverse-geocode?place=${lat},${lon}&type=STOP`);
+  const arr = r.ok ? await r.json() : [];
+  const best = (arr || []).map(s => ({s, d: haversineM([lat, lon], [s.lat, s.lon])})).sort((a, b) => a.d - b.d)[0];
+  return best ? {stop: {name: best.s.name, lat: best.s.lat, lon: best.s.lon, transitousId: best.s.id}, distM: Math.round(best.d)} : null;
+}
+function berlinHHMM(iso) {
+  return new Intl.DateTimeFormat("de-DE", {timeZone: "Europe/Berlin", hour: "2-digit", minute: "2-digit", hour12: false}).format(new Date(iso));
+}
+function motisMode(leg) {
+  const m = String(leg.mode || "").toUpperCase();
+  const l = String(leg.routeShortName || "");
+  if (m === "WALK") return "foot";
+  if (m === "BUS" || m === "COACH" || m === "ODM") return "bus";
+  if (m === "TRAM" || m === "METRO" || m === "SUBWAY") return "tram";
+  if (m === "SUBURBAN") return "sbahn";
+  if (m === "FERRY") return "ferry";
+  return /^RE/i.test(l) ? "re" : "rb";
+}
+function motisItinToSegs(it) {
+  return (it.legs || []).map(lg => {
+    const mode = motisMode(lg);
+    const pts = lg.legGeometry && lg.legGeometry.points ? decodePolyP(lg.legGeometry.points, parseInt(lg.legGeometry.precision || "7", 10)) : [];
+    const stop = x => ({name: x.name === "START" || x.name === "END" ? "" : x.name, lat: x.lat, lon: x.lon, platform: x.track || x.scheduledTrack || ""});
+    return {
+      kind: mode === "foot" ? "walk" : "ride", mode,
+      line: /^\d/.test(lg.routeShortName || "") && (mode === "bus" || mode === "tram") ? `${mode === "bus" ? "Bus" : "Tram"} ${lg.routeShortName}` : (lg.routeShortName || ""),
+      lineName: lg.routeShortName || "",
+      dep: berlinHHMM(lg.startTime), arr: berlinHHMM(lg.endTime), from: stop(lg.from || {}), to: stop(lg.to || {}),
+      dest: lg.headsign || "", transfer: null, warnings: [], intermediateStops: [], legs: pts.length >= 2 ? [{p: pts}] : []
+    };
+  }).filter(s => !(s.kind === "walk" && s.from.name && s.from.name === s.to.name));
+}
+async function motisPlan(from, to, dateIso, startUtcHour, windowSec) {
+  const time = `${dateIso}T${String(startUtcHour).padStart(2, "0")}:00:00Z`;
+  const url = `${TRANSITOUS}/plan?fromPlace=${from.lat},${from.lon}&toPlace=${to.lat},${to.lon}&time=${time}&transitModes=${TRANSIT_MODES}&minTransferTime=4&searchWindow=${windowSec}&numItineraries=10&maxPreTransitTime=1500&maxPostTransitTime=1500`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`Transitous ${r.status}`);
+  const d = await r.json();
+  const seen = new Set();
+  return (d.itineraries || []).map(motisItinToSegs).filter(s => s.length && s.some(x => x.kind === "ride"))
+    .filter(s => { const k = s.map(x => x.dep + x.line).join("|"); if (seen.has(k)) return false; seen.add(k); return true; })
+    .sort((a, b) => (parseHHMM(a[0].dep) ?? 0) - (parseHHMM(b[0].dep) ?? 0));
+}
+/* live plan for an own tour (same shape as hydrated planner plans) */
+async function buildLivePlan(t, baseKey, dayKey) {
+  const b = getBaseInfo(baseKey);
+  const dateIso = linkDateIso(dayKey);
+  // plan from/to the track ends themselves: Transitous picks the nearest stop that is actually served (+ walk)
+  const sc = t.hike && t.hike.startCoord, ec = t.hike && t.hike.endCoord;
+  const ss = sc ? {lat: sc[0], lon: sc[1]} : t.transit.startStop;
+  const es = ec ? {lat: ec[0], lon: ec[1]} : t.transit.endStop;
+  const [fwd, rev] = await Promise.all([
+    motisPlan(b, ss, dateIso, 5, 8 * 3600),       // 06:00–14:00 (CET)
+    motisPlan(es, b, dateIso, 9, 12 * 3600)       // 10:00–22:00
+  ]);
+  if (!fwd.length || !rev.length) return {fallback: true, reason: T().importNoConn, fwd: [], rev: [], alts_fwd: [], alts_rev: []};
+  // coordinate ends have no stop name: base / track ends get readable names
+  const startNm = t.transit.startStop?.name || T().importTrackStart, endNm = t.transit.endStop?.name || T().importTrackEnd;
+  const name = (st, nm) => { if (st && !st.name) st.name = nm; };
+  fwd.forEach(it => { name(it[0].from, b.name); name(it[it.length - 1].to, startNm); });
+  rev.forEach(it => { name(it[0].from, endNm); name(it[it.length - 1].to, b.name); });
+  const wmin = Number(t.hike?.walkMin) || 60;
+  let fi = fwd.findIndex(it => (parseHHMM(it[0].dep) ?? 0) >= 7 * 60 + 30);
+  if (fi < 0) fi = 0;
+  const fwdArr = parseHHMM(fwd[fi][fwd[fi].length - 1].arr) ?? 600;
+  let ri = rev.findIndex(it => (parseHHMM(it[0].dep) ?? 0) >= fwdArr + wmin + 30);
+  if (ri < 0) ri = rev.length - 1;
+  const last = rev[rev.length - 1];
+  return {
+    fwd: fwd[fi], rev: rev[ri], alts_fwd: fwd, alts_rev: rev, recFwdIdx: fi, recRevIdx: ri, fallback: false, reason: "",
+    lastSafeReturn: {dep: last[0].dep, arr: last[last.length - 1].arr, segs: last}, live: new Date().toISOString()
+  };
+}
+async function ensureLivePlan(t) {
+  if (!t || t.source !== "user") return;
+  t.plans = t.plans || {};
+  t.plans[state.base] = t.plans[state.base] || {};
+  const base = state.base, day = state.day;
+  const cur = t.plans[base][day];
+  if (cur && (cur.fwd?.length || cur.tried || cur.loading)) return;   // one live request per base/day
+  t.plans[base][day] = {fallback: true, loading: true, reason: T().importLoading, fwd: [], rev: [], alts_fwd: [], alts_rev: []};
+  try {
+    const p = await buildLivePlan(t, base, day);
+    p.tried = true;
+    t.plans[base][day] = p;
+  } catch (e) {
+    t.plans[base][day] = {fallback: true, tried: true, reason: T().importOffline, fwd: [], rev: [], alts_fwd: [], alts_rev: []};
+  }
+  if (state.sel === t.id) { renderDetail(t); drawSingle(t); } else renderList();
+}
+
+/* own tours persist in localStorage (without plans – those are fetched live) */
+function saveUserTours() {
+  store.set("userTours", TOURS.filter(t => t.source === "user").map(t => Object.assign({}, t, {plans: {}})));
+}
+async function importGpxTour(xml, fileName) {
+  const tDict = T();
+  const g = parseGpx(xml, fileName);
+  if (!g) { toast(tDict.importBadGpx); return; }
+  toast(tDict.importWorking);
+  let s0 = null, s1 = null;
+  try {
+    [s0, s1] = await Promise.all([nearestStop(g.start[0], g.start[1]), nearestStop(g.end[0], g.end[1])]);
+  } catch (e) {}
+  if (!s0 || !s1) { toast(tDict.importOffline); return; }
+  const id = `user-${Date.now().toString(36)}`;
+  const ring = haversineM(g.start, g.end) < 300;
+  const t = {
+    id, source: "user", region: regionOfCoord(g.start[0], g.start[1]), category: "eigene", ring,
+    difficulty: g.walkMin < 90 && g.up < 250 ? "leicht" : (g.walkMin > 180 || g.up > 500 ? "schwer" : "mittel"),
+    title: {de: g.name, en: g.name},
+    subtitle: {de: tDict.importSub(s0.stop.name, s1.stop.name), en: tDict.importSub(s0.stop.name, s1.stop.name)},
+    places: [s0.stop.name, s1.stop.name],
+    transit: {kind: "gpx_linked", startStop: s0.stop, endStop: s1.stop, vias: [], walkToStartM: s0.distM, walkFromEndM: s1.distM},
+    hike: {hasGpx: true, distKm: g.distKm, elevGainM: g.up, elevLossM: g.down, walkMin: g.walkMin, poly5: g.poly5, elevProfile: g.prof,
+      startCoord: [g.start[0], g.start[1]], endCoord: [g.end[0], g.end[1]]},
+    durationMin: g.walkMin + 240, plans: {}, importedAt: new Date().toISOString()
+  };
+  t.img = USER_TOUR_IMG;
+  TOURS.push(t);
+  BY_ID[id] = t;
+  saveUserTours();
+  toast(tDict.importDone(g.name));
+  openTour(id);
+  ensureLivePlan(t);
+}
+function deleteUserTour(id) {
+  const i = TOURS.findIndex(t => t.id === id && t.source === "user");
+  if (i < 0) return;
+  TOURS.splice(i, 1);
+  delete BY_ID[id];
+  saveUserTours();
+  if (state.sel === id) closeTour();
+  renderList();
+}
+
+/* --- entry point: Android share intent / PWA share target --- */
+window.swHandleShared = function (payload) {
+  const tDict = T();
+  if (!payload || payload.kind === "error") { toast(tDict.importBadFile); return; }
+  const text = String(payload.text || "");
+  if (/<gpx[\s>]/i.test(text)) { importGpxTour(text, payload.name); return; }
+  const trip = parseHafasShare(text) || parseDbShare(text);
+  if (trip) { openShareSheet(Object.assign(trip, {id: `st-${Date.now().toString(36)}`, savedAt: new Date().toISOString(), raw: text.slice(0, 4000)})); return; }
+  if (/mapy\.(cz|com)\//i.test(text)) { toast(tDict.importMapyLink, {ms: 9000}); return; }
+  toast(tDict.importUnknown);
+};
+
+function sharedTripTimelineHTML(trip) {
+  return `<ol class="dl-segs shared-segs">${trip.legs.map(l => {
+    if (l.kind === "walk") return `<li class="ds-walk"><span class="ds-walk-ico" aria-hidden="true">🚶</span><span>${esc(T().walkLabel)} ${esc(fmtDur(minDiff(l.dep, l.arr)))} · ${esc(T().towardsStop)} ${esc(l.to.name)}</span></li>`;
+    const col = MODE_COLORS[l.mode] || "#0F4C5C";
+    const plat = x => x?.platform ? `<span class="ds-plat">${esc(T().platform)} ${esc(x.platform)}</span>` : "";
+    return `<li class="ds-ride" style="--c:${col}">
+      <div class="ds-stop"><time>${esc(l.dep)}</time><span class="ds-name">${esc(l.from.name)}</span>${plat(l.from)}</div>
+      <div class="ds-mid"><span class="badge mode-badge" style="background-color:${col};color:#fff">${MODE_ICONS[l.mode] || "🚆"} ${esc(l.line)}</span>${l.dest ? `<span class="ds-dir">→ ${esc(l.dest)}</span>` : ""}<span class="ds-dur">${esc(fmtDur(minDiff(l.dep, l.arr)))}</span></div>
+      <div class="ds-stop"><time>${esc(l.arr)}</time><span class="ds-name">${esc(l.to.name)}</span>${plat(l.to)}</div>
+    </li>`;
+  }).join("")}</ol>`;
+}
+
+let pendingSharedTrip = null;
+function openShareSheet(trip) {
+  const tDict = T();
+  pendingSharedTrip = trip;
+  const sug = suggestToursForTrip(trip);
+  const body = $("#appSheetBody");
+  $("#appSheetTitle").textContent = tDict.shareTitle(trip.app);
+  $("#appSheetSub").textContent = `${trip.from} → ${trip.to} · ${trip.dep}–${trip.arr}`;
+  body.innerHTML = `${sharedTripTimelineHTML(trip)}
+    <h4 class="share-h">${esc(tDict.shareAssign)}</h4>
+    <div class="share-opts">
+      ${sug.map(({t, role}) => `<button type="button" class="share-opt" data-share-tour="${esc(t.id)}" data-share-role="${role}"><strong>${esc(tourTitle(t))}</strong><span>${esc(role === "out" ? tDict.shareAsOut : tDict.shareAsRet)}</span></button>`).join("")}
+      <button type="button" class="share-opt" data-share-tour="" data-share-role=""><strong>${esc(tDict.shareJustSave)}</strong><span>${esc(tDict.shareJustSaveSub)}</span></button>
+    </div>`;
+  const el = $("#appSheet");
+  el.hidden = false;
+  el.setAttribute("role", "dialog");
+  el.classList.add("show");
+}
+function commitSharedTrip(tourId, role) {
+  const trip = pendingSharedTrip;
+  if (!trip) return;
+  pendingSharedTrip = null;
+  trip.tourId = tourId || "";
+  trip.role = role || "";
+  trip.day = state.day;
+  state.sharedTrips = [trip, ...(state.sharedTrips || []).filter(x => !(tourId && x.tourId === tourId && x.role === role))].slice(0, 30);
+  saveSharedTrips();
+  closeAppSheet();
+  toast(T().shareSaved);
+  if (tourId && BY_ID[tourId]) openTour(tourId);
+  else setTab("unterwegs");
+}
 
 /* ---------- Navigation (with history: Android back gesture closes the detail view) ---------- */
 let suppressPopUntil = 0;
@@ -7934,6 +8565,7 @@ $("#daySeg").addEventListener("click", e => {
   state.winIdx = null;
   state.revIdx = null;
   renderDays();
+  renderHeader();
   if (state.sel && BY_ID[state.sel]) {
     renderDetail(BY_ID[state.sel]);
     drawSingle(BY_ID[state.sel]);
@@ -7971,7 +8603,7 @@ $("#pills").addEventListener("click", e => {
   } else if (f === "my_tours" || f === "curated") {
     state.sourceFilter = f;
   } else if (["pfaelzerwald", "schwarzwald", "odenwald"].includes(f)) {
-    state.regionFilter = f;
+    state.regionFilter = state.regionFilter === f ? null : f;
   } else if (f === "loop") {
     state.loopOnly = !state.loopOnly;
   } else if (f === "evening_sun") {
@@ -7981,7 +8613,7 @@ $("#pills").addEventListener("click", e => {
   renderPills();
   renderList();
   drawOverview();
-  if (state.tab === "karte" && !state.sel) renderMapSheet();
+  if (state.tab === "karte" && !state.sel) { fitCurrent(); renderMapSheet(); }
 });
 
 $("#staySelect").addEventListener("change", e => {
@@ -8060,6 +8692,16 @@ function renderMapRegions() {
     return `<button type="button" class="map-region" data-region="${r}" aria-pressed="${pill.getAttribute("aria-pressed") === "true"}" aria-label="${esc(pill.textContent.trim())}">${esc(tDict.regShort[r] || pill.textContent.trim())}</button>`;
   }).join("");
 }
+document.addEventListener("focusin", e => {
+  if (e.target.matches && e.target.matches("input[type=search], input[type=text], input:not([type]), textarea")) document.body.classList.add("kbd-open");
+});
+document.addEventListener("focusout", () => document.body.classList.remove("kbd-open"));
+
+$("#mapQClear")?.addEventListener("click", () => {
+  const mq = $("#mapQ");
+  mq.value = "";
+  mq.dispatchEvent(new Event("input", {bubbles: true}));
+});
 $("#mapQ")?.addEventListener("input", e => {
   const q = $("#q");
   q.value = e.target.value;
@@ -8068,9 +8710,8 @@ $("#mapQ")?.addEventListener("input", e => {
 $("#mapRegions")?.addEventListener("click", e => {
   const b = e.target.closest(".map-region[data-region]");
   if (!b) return;
-  document.querySelector(`#pills .pill[data-f="${b.dataset.region}"]`)?.click();
+  document.querySelector(`#pills .pill[data-f="${b.dataset.region}"]`)?.click();   // toggles on/off, refits the map
   renderMapRegions();
-  renderMapSheet();
 });
 
 $("#q").addEventListener("input", e => {
@@ -8254,6 +8895,15 @@ if (NATIVE && typeof NATIVE.contentReady === "function") {
   requestAnimationFrame(() => { try { NATIVE.contentReady(performance.now()); } catch (e) {} });
 }
 if (!NATIVE && state.activeTrip && state.activeTrip.reminder) armInPageReminder(state.activeTrip.reminder);
+
+if (/[?&]share=1\b/.test(location.search) && "caches" in window) {
+  history.replaceState(null, "", location.pathname);
+  caches.open("suedwest-share").then(c => c.match(new URL("./__shared__", location.href).href).then(r => {
+    if (!r) return;
+    c.delete(new URL("./__shared__", location.href).href);
+    return r.json().then(p => setTimeout(() => window.swHandleShared(p), 400));
+  })).catch(() => {});
+}
 
 if (!NATIVE && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
   let hadController = Boolean(navigator.serviceWorker.controller);

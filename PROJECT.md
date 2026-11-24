@@ -217,3 +217,12 @@ Every feature from Survey (R1–R5) assigned to a milestone (zero unassigned fea
 - **Karten-Ebenen**: zusätzlich ÖPNV-Karte (memomaps, ohne CORS) und OpenRailwayMap (Overlay; braucht Referer, den der
   App-Kachelcache mitsendet).
 - Nach einem neuen `planner.py`-Lauf: `planer/midlegs.py` und `planer/polyfill.py` erneut ausführen, dann `build_pwa.py`.
+- **Import (Teilen in die App)**: Android-App nimmt `ACTION_SEND` (Text, GPX-Datei) und `ACTION_VIEW` (GPX) an
+  (`MainActivity.readShare` → `window.swHandleShared`), die PWA über `manifest.share_target` + Service Worker
+  (`/share-target` → Cache `suedwest-share` → `?share=1`).
+  - Verbindungstexte aus RegioNavigator/München Navigator (`HH:MM - departure …`) und DB Navigator
+    (`From HH:MM …` / `To HH:MM …`) werden geparst, einer Tour als Hin-/Rückfahrt zugeordnet oder unter Unterwegs gespeichert;
+    der Link im Text („ds=…“ bzw. „vbid=…“) öffnet die Verbindung live in der jeweiligen App.
+  - Mapy-GPX wird zur „Eigenen Tour“ (localStorage `sw:userTours`): Metriken wie `build_catalog` (SAC-Gehzeit, 3-m-Hysterese),
+    nächste Haltestellen per Transitous `reverse-geocode`, Verbindungen live per Transitous `plan` (CORS offen) ab den Track-Enden.
+- **Gemacht**: `sw:done` = {tourId: Datum}; Filter „Gemachte ausblenden“; im JSON-Export enthalten.
