@@ -28,7 +28,7 @@ TOUR_KEYS = (
     "tips", "eveningSun", "places", "tag", "durationMin", "unroutable",
 )
 STOP_KEYS = ("name", "lat", "lon", "dhid", "ibnr", "remoteId")
-HIKE_KEYS = ("hasGpx", "distKm", "elevGainM", "elevLossM", "walkMin", "poly5", "elevProfile")
+HIKE_KEYS = ("hasGpx", "distKm", "elevGainM", "elevLossM", "walkMin", "poly5", "elevProfile", "liftKm")
 
 
 def _num(v, nd=6):

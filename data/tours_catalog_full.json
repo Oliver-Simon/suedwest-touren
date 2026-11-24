@@ -16167,6 +16167,214 @@
       }
     },
     {
+      "id": "chain-edenkoben-rietburgbahn-ludwigsturm-weyher",
+      "source": "mapy",
+      "region": "pfaelzerwald",
+      "category": "wein",
+      "difficulty": "mittel",
+      "ring": false,
+      "title": {
+        "de": "Edenkoben → Villa Ludwigshöhe → Rietburgbahn → Ludwigsturm → Weyher",
+        "en": "Edenkoben – Villa Ludwigshöhe – Rietburg chairlift – Ludwig's Tower – Weyher"
+      },
+      "subtitle": {
+        "de": "Von Bushalt zu Bushalt: zur Villa Ludwigshöhe, mit dem Sessellift zur Rietburg, über den Ludwigsturm hinab nach Weyher",
+        "en": "Stop to stop: up to Villa Ludwigshöhe, chairlift to Rietburg, across Ludwig's Tower down to Weyher"
+      },
+      "sun": {
+        "de": "Abendsonne entlang der offenen Höhen.",
+        "en": "Evening sun along open ridges."
+      },
+      "tips": {
+        "de": "Zwischen Villa Ludwigshöhe (Talstation) und Rietburg (Bergstation) fährt die Rietburgbahn (Sessellift, ca. 438 m / +200 Hm, nicht im D-Ticket, nur saisonal – Fahrzeiten vorher prüfen). Alternative: steiler Fußweg.",
+        "en": "Between Villa Ludwigshöhe (valley station) and Rietburg (summit) the Rietburg chairlift runs (approx. 438 m / +200 m, not in the D-Ticket, seasonal – check operating times). Alternative: steep footpath."
+      },
+      "eveningSun": true,
+      "places": [
+        "Edenkoben, Abzw. Ludwigshöhe",
+        "Altes Rathaus, Weyher in der Pfalz"
+      ],
+      "transit": {
+        "kind": "gpx_linked",
+        "startStop": {
+          "name": "Edenkoben, Abzw. Ludwigshöhe",
+          "lat": 49.278904,
+          "lon": 8.11945,
+          "dhid": "de:07337:5832",
+          "transitousId": "de-DELFI_de:07337:5832:0:RiW",
+          "ibnr": null,
+          "remoteId": null,
+          "modes": [
+            "BUS"
+          ],
+          "odmOnly": false,
+          "ruftaxiClass10": false
+        },
+        "endStop": {
+          "name": "Altes Rathaus, Weyher in der Pfalz",
+          "type": "STATION",
+          "lat": 49.266343,
+          "lon": 8.083712,
+          "stationId": "510532",
+          "remoteId": "A=1@O=Altes Rathaus, Weyher in der Pfalz@X=8083712@Y=49266343@U=80@L=510532@",
+          "ibnr": null,
+          "dhid": "de:07337:5511",
+          "transitousId": "de-DELFI_de:07337:5511:0:1",
+          "modes": [
+            "BUS"
+          ]
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 7,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": true,
+        "gpxFiles": [
+          "Route from Edenkoben_ Abzw_ Ludwigshöhe to Rietburg Chairlift.gpx",
+          "Route from Scenic viewpoint to Ludwigs Tower.gpx",
+          "Route from Ludwigs Tower to Weyher_ Altes Rathaus.gpx"
+        ],
+        "distKm": 7.43,
+        "elevGainM": 276,
+        "elevLossM": 387,
+        "walkMin": 147,
+        "startCoord": [
+          49.278905,
+          8.119449
+        ],
+        "endCoord": [
+          49.266322,
+          8.083625
+        ],
+        "poly5": "cxwkHqypp@HIAlARVCx@{ApM@xR]bL^|LEfa@Rrg@I~AiBzFxBjKfApDBvKJr@SvDJ|@bD`G~BxA?p@Wv@iBFAZQ?K^Evd@Vn@BfBNA[rEO|SVrK|@rJKdEPzAnAfAxDdAtEMj@P|@jA`Gb@zBl@zA~@nAdBdLsAlF_BdB_AfAHhBcBrBq@Wg@{De@wA_AdEw@|DaC`@An@TLf@b@jGYvDm@fCrBqEnAuIRoFIgEy@cF~Az@[iCJOnAhAPEm@wCk@qAy@]p@k@v@Fq@q@mAGkAq@}ATiBg@UcE_BoLwEkCM]Zo@z@Il@cEo@Kj@sDXmEO{CvFdA",
+        "elevProfile": [
+          [
+            0.0,
+            183
+          ],
+          [
+            1.68,
+            224
+          ],
+          [
+            2.32,
+            300
+          ],
+          [
+            2.43,
+            303
+          ],
+          [
+            2.59,
+            324
+          ],
+          [
+            2.66,
+            319
+          ],
+          [
+            2.66,
+            519
+          ],
+          [
+            2.81,
+            543
+          ],
+          [
+            2.94,
+            546
+          ],
+          [
+            3.43,
+            585
+          ],
+          [
+            3.55,
+            582
+          ],
+          [
+            4.31,
+            615
+          ],
+          [
+            4.4,
+            612
+          ],
+          [
+            4.4,
+            612
+          ],
+          [
+            4.51,
+            610
+          ],
+          [
+            4.74,
+            558
+          ],
+          [
+            4.81,
+            560
+          ],
+          [
+            4.92,
+            552
+          ],
+          [
+            5.04,
+            523
+          ],
+          [
+            5.22,
+            505
+          ],
+          [
+            5.27,
+            513
+          ],
+          [
+            5.35,
+            504
+          ],
+          [
+            5.44,
+            507
+          ],
+          [
+            6.43,
+            335
+          ],
+          [
+            6.53,
+            343
+          ],
+          [
+            6.78,
+            312
+          ],
+          [
+            6.92,
+            323
+          ],
+          [
+            7.06,
+            298
+          ],
+          [
+            7.28,
+            277
+          ],
+          [
+            7.43,
+            272
+          ]
+        ],
+        "liftKm": 0.44
+      }
+    },
+    {
       "id": "chain-rhodt-rietburg-loop",
       "source": "mapy",
       "region": "pfaelzerwald",

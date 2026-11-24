@@ -1498,5 +1498,15 @@
     "page": "https://commons.wikimedia.org/wiki/File:Rosskopf_19.jpg",
     "w": 800,
     "h": 450
+  },
+  "chain-edenkoben-rietburgbahn-ludwigsturm-weyher": {
+    "file": "File:180624-Villa Ludwigshöhe-01.jpg",
+    "article": "de:Edenkoben",
+    "artist": "BlueBreezeWiki",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:180624-Villa_Ludwigsh%C3%B6he-01.jpg",
+    "w": 800,
+    "h": 450
   }
 }

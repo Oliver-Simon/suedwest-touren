@@ -439,6 +439,33 @@ CHAIN_DEFS = [
         },
     },
     {
+        # Wunsch Oliver (2026-11-24): von Bushalt zu Bushalt – Edenkoben → Villa Ludwigshöhe → Rietburgbahn
+        # (Sessellift hinauf) → Rietburg → Ludwigsturm → Weyher. Die Lücke zwischen Tal- und Bergstation ist der Lift.
+        "id": "chain-edenkoben-rietburgbahn-ludwigsturm-weyher",
+        "region": "pfaelzerwald",
+        "lift": True,
+        "segments": [
+            ("Route from Edenkoben_ Abzw_ Ludwigshöhe to Rietburg Chairlift.gpx", False),
+            ("Route from Scenic viewpoint to Ludwigs Tower.gpx", False),
+            ("Route from Ludwigs Tower to Weyher_ Altes Rathaus.gpx", False),
+        ],
+        "ring": False,
+        "category": "wein",
+        "eveningSun": True,
+        "title": {
+            "de": "Edenkoben → Villa Ludwigshöhe → Rietburgbahn → Ludwigsturm → Weyher",
+            "en": "Edenkoben – Villa Ludwigshöhe – Rietburg chairlift – Ludwig's Tower – Weyher",
+        },
+        "subtitle": {
+            "de": "Von Bushalt zu Bushalt: zur Villa Ludwigshöhe, mit dem Sessellift zur Rietburg, über den Ludwigsturm hinab nach Weyher",
+            "en": "Stop to stop: up to Villa Ludwigshöhe, chairlift to Rietburg, across Ludwig's Tower down to Weyher",
+        },
+        "tips": {
+            "de": "Zwischen Villa Ludwigshöhe (Talstation) und Rietburg (Bergstation) fährt die Rietburgbahn (Sessellift, ca. 438 m / +200 Hm, nicht im D-Ticket, nur saisonal – Fahrzeiten vorher prüfen). Alternative: steiler Fußweg.",
+            "en": "Between Villa Ludwigshöhe (valley station) and Rietburg (summit) the Rietburg chairlift runs (approx. 438 m / +200 m, not in the D-Ticket, seasonal – check operating times). Alternative: steep footpath.",
+        },
+    },
+    {
         "id": "chain-rhodt-rietburg-loop",
         "region": "pfaelzerwald",
         "segments": [
@@ -1968,6 +1995,28 @@ def build_all_tours(
     for ch in CHAIN_DEFS:
         pts, files = merge_segments(ch["segments"], unique_tracks)
         hike = compute_hike_metrics(pts, files)
+        if ch.get("lift"):
+            # Only the segments are walked; the gap between them is ridden (chairlift) → not in km/Hm/walkMin.
+            seg_d = seg_g = seg_l = 0.0
+            for fn, rev in ch["segments"]:
+                sp = list(reversed(unique_tracks[fn])) if rev else list(unique_tracks[fn])
+                m = compute_hike_metrics(sp, [fn])
+                seg_d += m["distKm"]
+                seg_g += m["elevGainM"]
+                seg_l += m["elevLossM"]
+            hike["liftKm"] = round(hike["distKm"] - seg_d, 2)
+            hike["distKm"] = round(seg_d, 2)
+            hike["elevGainM"] = type(hike["elevGainM"])(round(seg_g))
+            hike["elevLossM"] = type(hike["elevLossM"])(round(seg_l))
+            hike["walkMin"] = calc_walk_min(hike["distKm"], hike["elevGainM"], hike["elevLossM"])
+            # Höhenprofil nur über die Gehstrecke: die Liftfahrt zählt 0 km (senkrechter Sprung im Profil)
+            prof, off = [], 0.0
+            for fn, rev in ch["segments"]:
+                sp = list(reversed(unique_tracks[fn])) if rev else list(unique_tracks[fn])
+                m = compute_hike_metrics(sp, [fn])
+                prof.extend([round(off + km, 2), ele] for km, ele in m["elevProfile"])
+                off += m["distKm"]
+            hike["elevProfile"] = prof
         s_stop, e_stop, s_d, e_d, u_rsn, eff_ring = resolve_gpx_endpoints(hike, ch["ring"], by_idx, api)
         places = []
         for nm in ([s_stop["name"]] if s_stop else []) + ([e_stop["name"]] if e_stop else []):

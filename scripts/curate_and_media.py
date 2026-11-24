@@ -1917,6 +1917,10 @@ MEDIA_QUERY_MAP: dict[str, tuple[str, str, str, tuple[float, float]]] = { 'r360-
                                   'Rietburg',
                                   'Weyher in der Pfalz Weinberge',
                                   (49.2663, 8.0836)),
+  'chain-edenkoben-rietburgbahn-ludwigsturm-weyher': ( 'Edenkoben',
+                                                       'Villa Ludwigshöhe',
+                                                       'Villa Ludwigshöhe Edenkoben',
+                                                       (49.2741, 8.1037)),
   'chain-rhodt-rietburg-loop': ( 'Edenkoben',
                                  'Rhodt unter Rietburg',
                                  'Edenkoben Weinstraße Pfälzerwald',
@@ -2112,7 +2116,7 @@ def build_full_catalog() -> dict[str, Any]:
     assert M1_CATALOG_PATH.exists(), f"Missing M1 catalog: {M1_CATALOG_PATH}"
     m1 = json.loads(M1_CATALOG_PATH.read_text(encoding="utf-8"))
     m1_tours = list(m1["tours"])
-    assert len(m1_tours) == 117, f"Expected 117 M1 tours, got {len(m1_tours)}"
+    assert len(m1_tours) == 118, f"Expected 118 M1 tours (117 + Edenkoben–Rietburgbahn–Weyher chain), got {len(m1_tours)}"
     assert 20 <= len(CURATED_TOURS) <= 30, f"Expected 20..30 curated tours, got {len(CURATED_TOURS)}"
 
     m1_ids = {t["id"] for t in m1_tours}
