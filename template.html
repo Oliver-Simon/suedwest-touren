@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Südwest-Touren (Jugenheim &amp; Karlsruhe)</title>
 <meta name="description" content="Deutschlandticket-Tagestouren &amp; Mapy-Wanderungen ab Jugenheim und Karlsruhe mit Fahrplan, Karte, Höhenprofil und GPX-Export.">
-<meta name="theme-color" content="#0f4c5c" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b131b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F3F5F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D1513" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,18 +14,32 @@
 <style>/*LEAFLET_CSS*/</style>
 <style>
 :root {
-  --bg: #f3f6f9;
-  --surface: #ffffff;
-  --surface-2: #eef3f7;
-  --surface-3: #e3ebf2;
-  --text: #0f1b26;
-  --text-2: #3d4f60;
-  --muted: #64748b;
-  --border: #d8e1e9;
-  --accent: #0b6aa2;
-  --accent-ink: #ffffff;
-  --accent-soft: #dcecf7;
+  --bg: #F3F5F1;
+  --surface: #FFFFFF;
+  --surface-2: #E9EDE6;
+  --surface-3: #DDE4D9;
+  --text: #13201C;
+  --text-2: #3B4F48;
+  --muted: #566B63;
+  --border: #D1DBD2;
+  --primary: #0F4C5C;
+  --accent: #0F4C5C;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DCECEF;
+  --amber: #F59E0B;
+  --amber-ink: #13201C;
+  --amber-soft: #FEF3C7;
+  --reg-pfalz: #C2410C;
+  --reg-pfalz-soft: #FFEDD5;
+  --reg-odenwald: #15803D;
+  --reg-odenwald-soft: #DCFCE7;
+  --reg-schwarzwald: #6D28D9;
+  --reg-schwarzwald-soft: #EDE9FE;
+  --reg-weitere: #0F4C5C;
+  --reg-weitere-soft: #DCECEF;
+  --reg-ink: #FFFFFF;
   --ok: #15803d;
+  --ok-ink: #FFFFFF;
   --ok-soft: #dcfce7;
   --warn: #b45309;
   --warn-soft: #fef3c7;
@@ -34,30 +48,52 @@
   --sbahn: #15803d;
   --re: #d4373f;
   --rb: #7c3aed;
-  --stadtbahn: #d97706;
-  --tram: #e07b00;
-  --bus: #0284c7;
-  --ferry: #0891b2;
+  --stadtbahn: #b45309;
+  --tram: #c2410c;
+  --bus: #0369a1;
+  --ferry: #0e7490;
   --hike: #15803d;
   --foot: #64748b;
-  --shadow: 0 1px 2px rgba(15,27,38,.06), 0 4px 14px rgba(15,27,38,.06);
-  --radius: 14px;
-  --map-h: 30vh;
+  --shadow: 0 1px 2px rgba(19,32,28,.06), 0 4px 14px rgba(19,32,28,.06);
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --map-h: 24vh;
+  --nav-h: 58px;
   color-scheme: only light;
 }
 :root[data-theme="dark"], html.dark {
-  --bg: #0b131b;
-  --surface: #121d27;
-  --surface-2: #182633;
-  --surface-3: #1f3141;
-  --text: #e6eef5;
-  --text-2: #b6c6d4;
-  --muted: #8a9cad;
-  --border: #26384a;
-  --accent: #4fb3ea;
-  --accent-ink: #06121c;
-  --accent-soft: #16344a;
+  --bg: #0D1513;
+  --surface: #14201D;
+  --surface-2: #1B2B27;
+  --surface-3: #233731;
+  --text: #ECF2EE;
+  --text-2: #B7C7C0;
+  --muted: #8DA39A;
+  --border: #2A3E38;
+  --primary: #4EB8CE;
+  --accent: #4EB8CE;
+  --accent-ink: #07181D;
+  --accent-soft: #16363F;
+  --amber: #FBBF24;
+  --amber-ink: #13201C;
+  --amber-soft: #3A2C0B;
+  --reg-pfalz: #FB923C;
+  --reg-pfalz-soft: rgba(194, 65, 12, 0.24);
+  --reg-odenwald: #4ADE80;
+  --reg-odenwald-soft: rgba(21, 128, 61, 0.24);
+  --reg-schwarzwald: #A78BFA;
+  --reg-schwarzwald-soft: rgba(109, 40, 217, 0.26);
+  --reg-weitere: #4EB8CE;
+  --reg-weitere-soft: rgba(78, 184, 206, 0.2);
+  --reg-ink: #07181D;
   --ok: #4ade80;
+  --ok-ink: #07181D;
   --ok-soft: #12321f;
   --warn: #fbbf24;
   --warn-soft: #3a2c0b;
@@ -73,15 +109,20 @@ html, body {
   padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
-  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font: 14px/1.45 var(--font-sans);
   -webkit-tap-highlight-color: transparent;
 }
-button, input { font: inherit; color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+.brand h1, .card h3, .hero h2, .box h4, .region-head, .modal-head h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+}
+.time, .dur, .win-btn, .stay-btn, .ret-btn { font-variant-numeric: tabular-nums; }
 a { color: var(--accent); }
-.app { max-width: 1280px; margin: 0 auto; width: 100%; overflow-x: hidden; }
+.app { max-width: 1280px; margin: 0 auto; width: 100%; overflow-x: clip; }
 
 /* Header */
 header.top {
@@ -131,7 +172,7 @@ header.top {
   height: 34px;
   min-width: 34px;
   padding: 0 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: var(--surface);
   display: inline-flex;
@@ -159,7 +200,7 @@ header.top {
   display: inline-flex;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 2px;
   gap: 2px;
   flex: 1;
@@ -170,7 +211,7 @@ header.top {
   border: 0;
   background: transparent;
   padding: 5px 8px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 12px;
   font-weight: 600;
   color: var(--text-2);
@@ -187,7 +228,7 @@ header.top {
   display: inline-flex;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 2px;
   gap: 2px;
 }
@@ -195,7 +236,7 @@ header.top {
   border: 0;
   background: transparent;
   padding: 4px 8px;
-  border-radius: 7px;
+  border-radius: var(--radius-sm);
   font-size: 12px;
   color: var(--text-2);
   cursor: pointer;
@@ -230,7 +271,7 @@ header.top {
   gap: 6px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0 10px;
   height: 34px;
 }
@@ -257,7 +298,7 @@ header.top {
   gap: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 2px 6px;
   height: 34px;
   font-size: 11.5px;
@@ -284,7 +325,7 @@ header.top {
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-2);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 4px 10px;
   font-size: 12px;
   font-weight: 600;
@@ -296,6 +337,26 @@ header.top {
   border-color: var(--accent);
   color: var(--accent-ink);
 }
+.pill[data-f="pfaelzerwald"]::before,
+.pill[data-f="odenwald"]::before,
+.pill[data-f="schwarzwald"]::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.pill[data-f="pfaelzerwald"]::before { background: var(--reg-pfalz); }
+.pill[data-f="odenwald"]::before { background: var(--reg-odenwald); }
+.pill[data-f="schwarzwald"]::before { background: var(--reg-schwarzwald); }
+.pill[data-f="pfaelzerwald"][aria-pressed="true"] { background: var(--reg-pfalz); border-color: var(--reg-pfalz); color: var(--reg-ink); }
+.pill[data-f="odenwald"][aria-pressed="true"] { background: var(--reg-odenwald); border-color: var(--reg-odenwald); color: var(--reg-ink); }
+.pill[data-f="schwarzwald"][aria-pressed="true"] { background: var(--reg-schwarzwald); border-color: var(--reg-schwarzwald); color: var(--reg-ink); }
+.pill[data-f="pfaelzerwald"][aria-pressed="true"]::before,
+.pill[data-f="odenwald"][aria-pressed="true"]::before,
+.pill[data-f="schwarzwald"][aria-pressed="true"]::before { background: currentColor; }
 
 /* Layout & Map */
 .layout { display: block; width: 100%; max-width: 100%; }
@@ -303,7 +364,7 @@ header.top {
   position: relative;
   z-index: 500;
   height: var(--map-h);
-  min-height: 180px;
+  min-height: 224px;
   background: var(--surface-3);
   border-bottom: 1px solid var(--border);
   width: 100%;
@@ -313,6 +374,7 @@ header.top {
   position: fixed;
   inset: 0;
   height: 100vh;
+  height: 100dvh;
   z-index: 2000;
 }
 #map { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -339,7 +401,7 @@ header.top {
   z-index: 800;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   padding: 4px 8px;
   font-size: 11.5px;
   font-weight: 600;
@@ -353,7 +415,7 @@ header.top {
   z-index: 900;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow);
   padding: 5px;
   display: none;
@@ -368,7 +430,7 @@ header.top {
   border: 0;
   background: none;
   padding: 6px 8px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   text-align: left;
   font-size: 12.5px;
@@ -385,10 +447,11 @@ html.dark .leaflet-tile-pane,
 
 /* Main Content & Cards */
 .content {
-  padding: 10px 10px 60px;
+  padding: 10px 10px calc(82px + env(safe-area-inset-bottom, 0px));
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  min-width: 0;
+  overflow-x: clip;
 }
 @media (min-width: 960px) {
   .layout {
@@ -477,7 +540,7 @@ html.dark .leaflet-tile-pane,
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   padding: 5px 9px;
   font-size: 12px;
   font-weight: 600;
@@ -485,7 +548,7 @@ html.dark .leaflet-tile-pane,
 }
 .stay-btn[aria-pressed="true"], .ret-btn[aria-pressed="true"] {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-ink);
   border-color: var(--accent);
 }
 .region-group {
@@ -500,7 +563,7 @@ html.dark .leaflet-tile-pane,
   width: 100%;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 11px;
+  border-radius: var(--radius-md);
   padding: 7px 11px;
   margin: 0 0 8px;
   font-size: 13px;
@@ -509,6 +572,18 @@ html.dark .leaflet-tile-pane,
   cursor: pointer;
   text-align: left;
 }
+.region-group[data-region="pfaelzerwald"] .region-head { border-left: 4px solid var(--reg-pfalz); }
+.region-group[data-region="odenwald"] .region-head { border-left: 4px solid var(--reg-odenwald); }
+.region-group[data-region="schwarzwald"] .region-head { border-left: 4px solid var(--reg-schwarzwald); }
+.region-group[data-region="weitere"] .region-head { border-left: 4px solid var(--reg-weitere); }
+.card[data-region="pfaelzerwald"] { border-left: 3px solid var(--reg-pfalz); }
+.card[data-region="odenwald"] { border-left: 3px solid var(--reg-odenwald); }
+.card[data-region="schwarzwald"] { border-left: 3px solid var(--reg-schwarzwald); }
+.card[data-region="weitere"] { border-left: 3px solid var(--reg-weitere); }
+.reg-chip[data-region="pfaelzerwald"] { background: var(--reg-pfalz-soft); color: var(--text); font-weight: 600; }
+.reg-chip[data-region="odenwald"] { background: var(--reg-odenwald-soft); color: var(--text); font-weight: 600; }
+.reg-chip[data-region="schwarzwald"] { background: var(--reg-schwarzwald-soft); color: var(--text); font-weight: 600; }
+.reg-chip[data-region="weitere"] { background: var(--reg-weitere-soft); color: var(--text); font-weight: 600; }
 .region-head .reg-meta {
   display: inline-flex;
   align-items: center;
@@ -571,7 +646,7 @@ html.dark .leaflet-tile-pane,
   max-width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 6px;
   background: var(--surface-3);
 }
@@ -593,7 +668,7 @@ html.dark .leaflet-tile-pane,
 .act {
   border: 1px solid var(--border);
   background: var(--surface-2);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 7px 10px;
   font-size: 12.5px;
   font-weight: 600;
@@ -630,7 +705,7 @@ html.dark .leaflet-tile-pane,
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   padding: 5px 9px;
   font-size: 12px;
   font-weight: 600;
@@ -661,12 +736,17 @@ html.dark .leaflet-tile-pane,
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 10px;
   margin-bottom: 8px;
   cursor: pointer;
   max-width: 100%;
   word-break: break-word;
+}
+.st.flash {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 2px var(--amber-soft);
+  background: var(--accent-soft);
 }
 .st::before {
   content: "";
@@ -690,9 +770,9 @@ html.dark .leaflet-tile-pane,
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #ffffff;
-  background-color: #0b6aa2;
-  border-radius: 6px;
+  color: var(--accent-ink);
+  background-color: var(--primary);
+  border-radius: 8px;
   padding: 2px 7px;
   font-size: 11.5px;
   font-weight: 700;
@@ -705,10 +785,16 @@ html.dark .leaflet-tile-pane,
   font-size: 12px;
   color: var(--text-2);
 }
-.stops-exp summary {
+.stops-exp summary,
+.stops-btn {
   cursor: pointer;
   color: var(--accent);
   font-weight: 600;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  text-align: left;
 }
 .stops-list {
   margin: 4px 0 0;
@@ -723,7 +809,7 @@ html.dark .leaflet-tile-pane,
 .mini-btn {
   border: 1px solid var(--border);
   background: var(--surface-2);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 4px 8px;
   font-size: 11.5px;
   text-decoration: none;
@@ -749,7 +835,7 @@ html.dark .leaflet-tile-pane,
 .modal {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
@@ -777,7 +863,7 @@ html.dark .leaflet-tile-pane,
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 5px 8px;
   font-size: 11.5px;
   cursor: pointer;
@@ -793,7 +879,7 @@ html.dark .leaflet-tile-pane,
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 6px 9px;
   font-size: 13px;
   width: 100%;
@@ -809,7 +895,7 @@ html.dark .leaflet-tile-pane,
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 6px 8px;
   font-size: 12px;
   text-align: left;
@@ -823,23 +909,34 @@ html.dark .leaflet-tile-pane,
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 16px;
+  bottom: calc(var(--nav-h, 58px) + 16px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   background: var(--text);
   color: var(--bg);
   padding: 7px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-size: 12.5px;
   opacity: 0;
   pointer-events: none;
   transition: opacity .2s;
   z-index: 3500;
 }
+body.detail-open .toast {
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+}
+body.detail-open .content {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 960px) {
+  body.detail-open .content {
+    padding-bottom: 24px;
+  }
+}
 .toast.show { opacity: 1; }
 .toast button {
   margin-left: 8px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 4px 9px;
   background: var(--accent);
   color: var(--accent-ink);
@@ -871,7 +968,7 @@ html.dark .leaflet-tile-pane,
   gap: 6px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 8px;
 }
 .filter-panel[hidden] { display: none; }
@@ -889,7 +986,7 @@ html.dark .leaflet-tile-pane,
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   padding: 4px 8px;
   font-size: 13px;
   font-weight: 600;
@@ -916,7 +1013,7 @@ html.dark .leaflet-tile-pane,
   align-items: center;
   gap: 6px;
   border: 1px dashed var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 8px 12px;
   font-size: 12.5px;
   font-weight: 700;
@@ -937,8 +1034,1181 @@ html.dark .leaflet-tile-pane,
 .elev-box .elev-read { font-size: 12px; font-weight: 700; color: var(--text-2); min-height: 18px; margin-top: 4px; }
 .elev-axis { font-size: 9.5px; fill: var(--muted); }
 
+/* Phase 2: Bottom-Nav, Tab Views & Discover Highlights */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1500;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 4px 6px calc(4px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -2px 10px rgba(19,32,28,.06);
+}
+.bnav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  padding: 4px 2px;
+  min-width: 0;
+  min-height: 48px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bnav-btn .bnav-ico { font-size: 16px; line-height: 1; }
+.bnav-btn .bnav-lbl { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bnav-btn[aria-pressed="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 700;
+}
+
+body.detail-open #discoverHighlights,
+body.detail-open .tab-view,
+body.detail-open #mapSheet,
+body.detail-open #bottomNav,
+body.map-full-open #mapSheet,
+body.map-full-open #bottomNav {
+  display: none !important;
+}
+body[data-tab="gemerkt"]:not(.detail-open) #listControls,
+body[data-tab="gemerkt"]:not(.detail-open) #mapWrap,
+body[data-tab="gemerkt"]:not(.detail-open) #discoverHighlights,
+body[data-tab="gemerkt"]:not(.detail-open) #list,
+body[data-tab="unterwegs"]:not(.detail-open) #listControls,
+body[data-tab="unterwegs"]:not(.detail-open) #mapWrap,
+body[data-tab="unterwegs"]:not(.detail-open) #discoverHighlights,
+body[data-tab="unterwegs"]:not(.detail-open) #list {
+  display: none;
+}
+@media (min-width: 960px) {
+  body[data-tab="gemerkt"]:not(.detail-open) .layout,
+  body[data-tab="unterwegs"]:not(.detail-open) .layout {
+    display: block;
+  }
+}
+
+.discover-highlights {
+  margin-bottom: 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.discover-highlights:empty { display: none; }
+.discover-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rec-hero {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 9px 10px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  margin-bottom: 10px;
+  max-width: 100%;
+  align-items: center;
+}
+.rec-hero-img {
+  width: 104px;
+  height: 104px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: block;
+}
+.rec-hero-body { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.rec-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  background: var(--amber-soft);
+  color: var(--text);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.rec-hero-title {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rec-hero-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rec-hero .chips { margin-top: 2px; }
+.discover-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  max-width: 100%;
+  min-width: 0;
+  padding-bottom: 4px;
+}
+.discover-row::-webkit-scrollbar { display: none; }
+.rec-card {
+  flex: 0 0 210px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  min-width: 0;
+  color: var(--text);
+}
+.rec-card-img {
+  width: 100%;
+  height: 76px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  margin-bottom: 5px;
+  display: block;
+}
+.rec-card-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+.rec-card-meta {
+  font-size: 11.5px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rec-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tab-view[hidden] { display: none; }
+.tab-empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 520px;
+  margin: 16px auto;
+}
+.tab-empty-ico { font-size: 32px; margin-bottom: 8px; }
+.tab-empty h2 { font-family: var(--font-display); font-size: 17px; margin: 0 0 6px; color: var(--text); }
+.tab-empty p { margin: 0 0 14px; font-size: 13px; color: var(--text-2); }
+
+/* Phase 3: Karte Fullscreen Map & Viewport-Synced Bottom-Sheet */
+body[data-tab="karte"]:not(.detail-open) header.top { display: none; }
+body[data-tab="karte"]:not(.detail-open) main.content { display: none; }
+body[data-tab="karte"]:not(.detail-open) .layout { display: block; }
+body[data-tab="karte"]:not(.detail-open) .map-wrap:not(.full) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--nav-h, 58px) + env(safe-area-inset-bottom, 0px));
+  height: auto;
+  min-height: 0;
+  z-index: 1100;
+  border: 0;
+}
+body[data-tab="karte"]:not(.detail-open) .map-wrap.menu-open { z-index: 1450; }
+body[data-tab="karte"]:not(.detail-open) #miniBtn { display: none; }
+body[data-tab="karte"]:not(.detail-open) .elev-overlay {
+  top: 10px;
+  left: 58px;
+  bottom: auto;
+  max-width: calc(100% - 114px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body[data-tab="karte"]:not(.detail-open):not(.map-full-open) #mapSheet {
+  display: flex;
+  flex-direction: column;
+}
+.map-sheet[hidden] { display: none !important; }
+.map-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--nav-h, 58px) + env(safe-area-inset-bottom, 0px));
+  z-index: 1350;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.16);
+  max-width: 100%;
+  overflow: hidden;
+  transition: height .18s ease;
+  display: none;
+}
+.map-sheet.is-dragging { transition: none; }
+.map-sheet[data-snap="collapsed"] { height: 74px; }
+.map-sheet[data-snap="collapsed"] .map-sheet-body { display: none; }
+.map-sheet[data-snap="half"] { height: min(42vh, 360px); }
+.map-sheet[data-snap="expanded"] {
+  height: calc(100vh - var(--nav-h, 58px) - 56px);
+  height: calc(100dvh - var(--nav-h, 58px) - 56px);
+}
+@media (min-width: 960px) {
+  .map-sheet {
+    left: 16px;
+    right: auto;
+    width: min(420px, calc(100vw - 32px));
+    bottom: calc(var(--nav-h, 58px) + env(safe-area-inset-bottom, 0px) + 12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .map-sheet[data-snap="half"] { height: min(54vh, 460px); }
+  .map-sheet[data-snap="expanded"] {
+    height: calc(100vh - var(--nav-h, 58px) - 88px);
+    height: calc(100dvh - var(--nav-h, 58px) - 88px);
+  }
+}
+.map-sheet-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0 4px;
+  cursor: grab;
+  touch-action: none;
+  flex: none;
+}
+.map-sheet-grip {
+  width: 38px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+}
+.map-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px 8px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+  touch-action: pan-y;
+}
+.map-sheet-meta { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.map-sheet-meta strong {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.map-sheet-ctx {
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.map-sheet-actions { display: flex; align-items: center; gap: 5px; flex: none; }
+.map-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sheet-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  gap: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.sheet-card[data-region="pfaelzerwald"] { border-left: 3px solid var(--reg-pfalz); }
+.sheet-card[data-region="odenwald"] { border-left: 3px solid var(--reg-odenwald); }
+.sheet-card[data-region="schwarzwald"] { border-left: 3px solid var(--reg-schwarzwald); }
+.sheet-card[data-region="weitere"] { border-left: 3px solid var(--reg-weitere); }
+.sheet-card.is-selected {
+  border: 2px solid var(--amber);
+  background: var(--accent-soft);
+}
+.sheet-card-img {
+  width: 76px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: block;
+}
+.sheet-card-body { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.sheet-card-title {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sheet-card-sub {
+  font-size: 11.5px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sheet-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.map-sheet-empty {
+  text-align: center;
+  padding: 14px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.map-sheet-empty h4 { margin: 0 0 4px; font-family: var(--font-display); font-size: 14px; color: var(--text); }
+.map-sheet-empty p { margin: 0 0 10px; font-size: 12px; color: var(--text-2); }
+
+/* Phase 4: KPI Grid, Compact Day Flow, Collapsible Details & Sticky Action Bar */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+@media (min-width: 1120px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.kpi-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 10px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.kpi-val {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.day-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.compact-step {
+  margin-bottom: 0;
+  border-left: 4px solid var(--mc, var(--accent));
+}
+.compact-step::before { display: none; }
+.flow-node {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  font-size: 12.5px;
+  color: var(--text);
+}
+.flow-node-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  word-break: break-word;
+}
+.flow-node.flow-hike {
+  border-left: 4px solid var(--ok);
+}
+.tl-details {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.tl-details > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.tl-details > summary::-webkit-details-marker { display: none; }
+.tl-details > summary::before { content: "▸"; font-size: 11px; transition: transform .15s ease; }
+.tl-details[open] > summary::before { transform: rotate(90deg); }
+.tl-details[open] > summary { background: var(--accent-soft); border-color: var(--accent); }
+.tl-details-body { margin-top: 8px; }
+
+.detail-sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1400;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  box-shadow: 0 -4px 16px rgba(19, 32, 28, 0.12);
+}
+.detail-sticky-bar .act {
+  justify-content: center;
+  text-align: center;
+  padding: 8px 9px;
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 1.2;
+}
+#openAppSheetBtn {
+  flex: 1.25 1 0;
+  gap: 5px;
+}
+.detail-sticky-bar a[data-app="mapy"] {
+  flex: 1 1 0;
+}
+.detail-sticky-bar #gpxBtn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.sticky-app-pill {
+  background: rgba(255, 255, 255, 0.22);
+  color: inherit;
+  border-radius: var(--radius-pill);
+  padding: 1px 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+:root[data-theme="dark"] .sticky-app-pill,
+html.dark .sticky-app-pill {
+  background: rgba(7, 24, 29, 0.2);
+}
+@media (min-width: 960px) {
+  .detail-sticky-bar {
+    position: sticky;
+    bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-top: 12px;
+    padding: 8px 10px;
+  }
+}
+
+/* Phase 5: Tagesplan (05–24h) */
+.tagesplan {
+  margin-top: 8px;
+  margin-bottom: 10px;
+  padding: 9px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.tp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.tp-span {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.tp-track {
+  position: relative;
+  height: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.tp-seg {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 2px;
+}
+.tp-seg.tp-fwd { background: var(--primary); color: var(--accent-ink); }
+.tp-seg.tp-stay { background: var(--ok); color: var(--ok-ink); }
+.tp-seg.tp-rev { background: var(--amber); color: var(--amber-ink); }
+.tp-axis {
+  position: relative;
+  height: 16px;
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.tp-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+.tp-tick[data-first] { transform: none; left: 0 !important; }
+.tp-tick[data-last] { transform: translateX(-100%); left: 100% !important; }
+.tp-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.tp-leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.tp-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+.tp-swatch.fwd { background: var(--primary); }
+.tp-swatch.stay { background: var(--ok); }
+.tp-swatch.rev { background: var(--amber); }
+
+/* Phase 6: App-Auswahl Bottom-Sheet */
+.app-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: rgba(0, 0, 0, 0.52);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.app-sheet-backdrop.show { display: flex; }
+.app-sheet {
+  width: 100%;
+  max-width: 560px;
+  max-height: 86vh;
+  max-height: 86dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--surface);
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 14px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media (min-width: 720px) {
+  .app-sheet-backdrop {
+    align-items: center;
+    padding: 16px;
+  }
+  .app-sheet {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+}
+.app-sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.app-sheet-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.25;
+}
+.app-sheet-sub {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--text-2);
+  word-break: break-word;
+}
+.app-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cap-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(4, 30px) 38px;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.cap-row.cap-head {
+  background: var(--surface-2);
+  border-color: transparent;
+  padding: 5px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.cap-row.is-preferred {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.cap-app-cell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.app-sheet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-word;
+}
+.app-sheet-link:hover { text-decoration: underline; }
+.app-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.app-pref-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.app-inst-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+.cap-cell {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.cap-yes { color: var(--ok); }
+.cap-row.is-preferred .cap-yes { color: #166534; }
+:root[data-theme="dark"] .cap-row.is-preferred .cap-yes,
+html.dark .cap-row.is-preferred .cap-yes { color: var(--ok); }
+.cap-no { color: var(--muted); }
+.app-pref-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-radius: var(--radius-sm);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+.app-pref-btn[aria-pressed="true"] {
+  background: var(--amber);
+  color: var(--amber-ink);
+  border-color: var(--amber);
+}
+.app-sheet-hint {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+/* Phase 8: Bookmarks („Gemerkt“), JSON Export/Import & Phase 7: „Unterwegs-Modus“ */
+.fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  cursor: pointer;
+  flex: none;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.fav-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.fav-btn[aria-pressed="true"] svg {
+  fill: currentColor;
+}
+.fav-btn.fav-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(15, 23, 42, 0.74);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+}
+.fav-btn.fav-inline {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.fav-btn.fav-overlay[aria-pressed="true"],
+.fav-btn.fav-inline[aria-pressed="true"],
+#detailFavBtn[aria-pressed="true"] {
+  background: var(--amber);
+  color: var(--amber-ink);
+  border-color: var(--amber);
+}
+.rec-hero-media {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  flex: none;
+}
+.rec-card-media {
+  position: relative;
+  width: 100%;
+  height: 76px;
+  margin-bottom: 5px;
+}
+.rec-card-media .rec-card-img {
+  margin-bottom: 0;
+}
+.rec-card-media .fav-btn.fav-overlay,
+.rec-hero-media .fav-btn.fav-overlay {
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.hero-cta-row .act {
+  flex: 1 1 135px;
+  justify-content: center;
+  text-align: center;
+}
+
+.saved-shell,
+.trip-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 880px;
+  margin: 0 auto;
+  min-width: 0;
+}
+.saved-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 12px;
+  box-shadow: var(--shadow);
+}
+.saved-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.saved-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.saved-json-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  box-shadow: var(--shadow);
+}
+.saved-json-box > summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+.saved-json-area {
+  width: 100%;
+  min-height: 86px;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  padding: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  resize: vertical;
+}
+.saved-json-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.saved-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 9px;
+  min-width: 0;
+}
+@media (min-width: 720px) {
+  .saved-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.saved-card {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 10px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  min-width: 0;
+  max-width: 100%;
+}
+.saved-card[data-region="pfaelzerwald"] { border-left: 3px solid var(--reg-pfalz); }
+.saved-card[data-region="odenwald"] { border-left: 3px solid var(--reg-odenwald); }
+.saved-card[data-region="schwarzwald"] { border-left: 3px solid var(--reg-schwarzwald); }
+.saved-card[data-region="weitere"] { border-left: 3px solid var(--reg-weitere); }
+.saved-card-img {
+  width: 84px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: block;
+}
+.saved-card-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.saved-card-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.24;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.saved-card-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+  max-width: 100%;
+  word-break: break-word;
+}
+.trip-hero {
+  border-left: 4px solid var(--accent);
+}
+.trip-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--text);
+}
+.trip-card h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text);
+}
+.trip-sub {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+.trip-countdown-box {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 11px 12px;
+  margin-top: 10px;
+}
+.trip-phase-lbl {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.trip-countdown-val {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  margin-top: 3px;
+}
+.trip-progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.trip-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+.trip-next-step {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--text);
+}
+.trip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.trip-actions .act {
+  flex: 1 1 110px;
+  justify-content: center;
+  text-align: center;
+}
+.trip-ret-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.trip-ret-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.trip-ret-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.trip-ret-btn.lsr {
+  border-style: dashed;
+}
+.trip-remind-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+.trip-remind-status {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--ok-soft);
+  color: var(--ok);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 @media (pointer: coarse) {
-  .pill, .seg button, .base-btn, .icon-btn, .act, .win-btn, .stay-btn, .ret-btn, .mini-btn, .stay-select, .home-preset-btn, .geo-item, .region-head { min-height: 40px; }
+  .pill, .seg button, .base-btn, .icon-btn, .act, .win-btn, .stay-btn, .ret-btn, .trip-ret-btn, .mini-btn, .stay-select, .home-preset-btn, .geo-item, .region-head { min-height: 40px; }
+  .fav-btn { min-width: 40px; min-height: 40px; }
   .seg button { min-width: 40px; }
   .search { height: 40px; }
   .search .clear { min-width: 40px; min-height: 40px; }
@@ -1019,6 +2289,19 @@ html.dark .leaflet-tile-pane,
     </div>
   </header>
 
+  <div class="app-sheet-backdrop" id="appSheet" aria-modal="true" aria-labelledby="appSheetTitle" hidden>
+    <div class="app-sheet">
+      <div class="app-sheet-head">
+        <div>
+          <h3 id="appSheetTitle">🚆 Verbindung in App öffnen</h3>
+          <p class="app-sheet-sub" id="appSheetSub"></p>
+        </div>
+        <button type="button" class="icon-btn" id="closeAppSheet" aria-label="Schließen">Schließen ×</button>
+      </div>
+      <div class="app-sheet-body" id="appSheetBody"></div>
+    </div>
+  </div>
+
   <div class="layout">
     <div class="map-wrap" id="mapWrap">
       <div id="map" aria-label="Karte"></div>
@@ -1033,10 +2316,35 @@ html.dark .leaflet-tile-pane,
       <div class="layer-menu" id="layerMenu"></div>
     </div>
     <main class="content">
+      <section class="discover-highlights" id="discoverHighlights" aria-label="Empfehlungen"></section>
       <section class="list" id="list"></section>
       <section class="detail" id="detail"></section>
+      <section class="tab-view" id="savedView" hidden></section>
+      <section class="tab-view" id="tripView" hidden></section>
     </main>
   </div>
+  <section class="map-sheet" id="mapSheet" data-snap="half" aria-label="Touren im Kartenausschnitt" hidden>
+    <div class="map-sheet-handle" id="mapSheetHandle" role="button" tabindex="0" aria-label="Sheet ein-/ausklappen">
+      <span class="map-sheet-grip" aria-hidden="true"></span>
+    </div>
+    <div class="map-sheet-head" id="mapSheetHead">
+      <div class="map-sheet-meta">
+        <strong id="mapSheetTitle">0 Touren im Kartenausschnitt</strong>
+        <button type="button" class="map-sheet-ctx" id="mapSheetBaseChip"></button>
+      </div>
+      <div class="map-sheet-actions">
+        <button type="button" class="icon-btn" id="mapSheetExpandBtn" aria-expanded="false" title="Vergrößern" aria-label="Vergrößern">⤢</button>
+        <button type="button" class="icon-btn" id="mapSheetCollapseBtn" title="Minimieren" aria-label="Minimieren">▾</button>
+      </div>
+    </div>
+    <div class="map-sheet-body" id="mapSheetBody"></div>
+  </section>
+  <nav class="bottom-nav" id="bottomNav" aria-label="Navigation">
+    <button type="button" class="bnav-btn" data-tab="entdecken" aria-pressed="true" aria-current="page"><span class="bnav-ico" aria-hidden="true">🧭</span><span class="bnav-lbl" id="navEntdeckenLbl">Entdecken</span></button>
+    <button type="button" class="bnav-btn" data-tab="karte" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🗺️</span><span class="bnav-lbl" id="navKarteLbl">Karte</span></button>
+    <button type="button" class="bnav-btn" data-tab="gemerkt" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🔖</span><span class="bnav-lbl" id="navGemerktLbl">Gemerkt</span></button>
+    <button type="button" class="bnav-btn" data-tab="unterwegs" aria-pressed="false"><span class="bnav-ico" aria-hidden="true">🚆</span><span class="bnav-lbl" id="navUnterwegsLbl">Unterwegs</span></button>
+  </nav>
 </div>
 
 <div class="modal-backdrop" id="homeModal" role="dialog" aria-modal="true" aria-labelledby="homeModalTitle">
@@ -1142,10 +2450,10 @@ const MODE_COLORS = {
   re: "#d4373f",
   rb: "#7c3aed",
   rail: "#7c3aed",
-  stadtbahn: "#d97706",
-  tram: "#e07b00",
-  bus: "#0284c7",
-  ferry: "#0891b2",
+  stadtbahn: "#b45309",
+  tram: "#c2410c",
+  bus: "#0369a1",
+  ferry: "#0e7490",
   hike: "#15803d",
   walk: "#64748b",
   foot: "#64748b"
@@ -1259,7 +2567,106 @@ const I18N = {
     homeResetBtn: "↺ Zurücksetzen",
     homeCloseBtn: "Schließen ×",
     walkLabel: "Fußweg",
-    hikeLabel: "Wanderung"
+    hikeLabel: "Wanderung",
+    navEntdecken: "Entdecken",
+    navKarte: "Karte",
+    navGemerkt: "Gemerkt",
+    navUnterwegs: "Unterwegs",
+    heroHeading: "Heute empfohlen",
+    heroBadge: "★ Empfehlung des Tages",
+    moreTodayHeading: "Weitere für heute",
+    savedEmptyTitle: "Noch keine gemerkten Touren",
+    savedEmptyBody: "Tippe auf das Lesezeichen-Symbol auf einer Tour, um sie hier für später zu speichern oder als JSON zu exportieren.",
+    savedBrowseBtn: "Touren entdecken",
+    savedTitle: "Gemerkt",
+    savedCount: n => n === 1 ? "1 Tour" : `${n} Touren`,
+    savedExportBtn: "⬇️ JSON Export",
+    savedImportBtn: "⬆️ JSON Import",
+    savedJsonToggle: "📋 JSON kopieren / einfügen",
+    savedPastePh: "Exportiertes JSON hier einfügen (z. B. {\"favs\": [...]}) …",
+    savedPasteApply: "JSON übernehmen",
+    savedCopyBtn: "JSON kopieren",
+    savedCopied: "JSON in Zwischenablage kopiert",
+    savedExported: "Merkliste als JSON exportiert",
+    savedImported: n => n === 1 ? "1 Tour importiert" : `${n} Touren importiert`,
+    savedImportInvalid: "Ungültiges JSON-Format",
+    savedImportEmpty: "Keine gültigen Touren-IDs im JSON gefunden",
+    favAdd: "Merken",
+    favRemove: "Entfernen",
+    favAdded: "Zur Merkliste hinzugefügt",
+    favRemoved: "Aus Merkliste entfernt",
+    detailFavAdd: "🔖 Merken",
+    detailFavSaved: "🔖 Gemerkt",
+    tripEmptyTitle: "Noch keine Tour gestartet",
+    tripEmptyBody: "Wähle eine Tour aus und starte sie für deinen Tagesbegleiter mit Countdown und Rückfahrten.",
+    tripBrowseBtn: "Touren entdecken",
+    startTripBtn: "🚆 Tour starten",
+    openTripBtn: "🚆 Unterwegs öffnen",
+    tripStarted: "Unterwegs-Modus gestartet",
+    tripEnded: "Aktive Tour beendet",
+    tripEndBtn: "Tour beenden",
+    tripDetailBtn: "Tourseite",
+    tripAppBtn: "Verbindung",
+    tripBaseNote: b => `Gestartet ab ${b}`,
+    tripPhaseBefore: "Aufbruch in",
+    tripPhaseOutbound: "Anreise · Ankunft in",
+    tripPhaseOnSite: "Vor Ort · Rückfahrt in",
+    tripPhaseReturn: "Rückfahrt · Ankunft in",
+    tripPhaseDone: "Tagesfenster beendet · Nächster Aufbruch in",
+    tripNextStep: "Nächster Schritt",
+    tripLaterReturns: "Spätere Rückfahrten & Alternativen",
+    tripReturnUpdated: "Rückfahrt im Unterwegs-Modus aktualisiert",
+    tripRemindTitle: "Erinnerung",
+    tripRemindDep: "Abfahrt",
+    tripRemindRet: "Rückfahrt",
+    tripRemindLead: m => `${m} Min. vorher`,
+    tripRemindSet: "🔔 Erinnerung setzen",
+    tripRemindCancel: "Erinnerung löschen",
+    tripRemindActive: (t, hm) => `Aktiv: Erinnerung um ${t} (Ziel ${hm})`,
+    tripRemindPending: "Warte auf Mitteilungs-Freigabe …",
+    tripRemindSaved: hm => `Erinnerung für ${hm} gesetzt`,
+    tripRemindCleared: "Erinnerung gelöscht",
+    tripRemindPast: "Zielzeit liegt bereits in der Vergangenheit",
+    tripRemindPermNeeded: "Mitteilungs-Berechtigung fehlt",
+    mapSheetTitle: n => n === 1 ? "1 Tour im Kartenausschnitt" : `${n} Touren im Kartenausschnitt`,
+    mapEmptyTitle: "Keine Touren im Kartenausschnitt",
+    mapEmptyHint: "Zoome heraus oder springe zurück zur Südwest-Übersicht.",
+    mapResetBounds: "Übersicht zeigen",
+    mapExpand: "Vergrößern",
+    mapShrink: "Verkleinern",
+    mapCollapse: "Minimieren",
+    kpiTransit: "Anfahrt",
+    kpiHike: "Wanderung",
+    kpiElev: "Höhenmeter",
+    kpiStay: "Vor Ort",
+    kpiDirect: "Direkt",
+    kpiTransfers: n => n === 1 ? "1 Umstieg" : `${n} Umstiege`,
+    kpiRoundTrip: "Rundkurs",
+    transferSingle: "1 Umstieg",
+    transfersCount: n => `${n} Umstiege`,
+    flowTitle: "Tagesablauf",
+    flowDep: "Abfahrt",
+    flowArr: "Ankunft",
+    flowRet: "Rückfahrt",
+    detailsAllLegs: n => `Details · ${n} Etappen`,
+    connectBtn: "Verbindung",
+    openInMapyBtn: "🥾 In Mapy öffnen",
+    tagesplanTitle: "Tagesplan (05–24 Uhr)",
+    tpOutbound: "Hinfahrt",
+    tpStay: "Vor Ort",
+    tpReturn: "Rückfahrt",
+    appSheetTitle: "🚆 Verbindung in App öffnen",
+    appSheetClose: "Schließen ×",
+    capApp: "App",
+    capStart: "Start",
+    capDest: "Ziel",
+    capVias: "Vias",
+    capTime: "Zeit",
+    capPref: "Fav",
+    appInstalled: "Installiert",
+    appPrefBadge: "Bevorzugt",
+    appSetPref: "Als bevorzugte App merken",
+    appPrefSaved: nm => `${nm} als bevorzugte App gespeichert`
   },
   en: {
     brandTitle: "Southwest Tours (D-Ticket & Mapy)",
@@ -1348,13 +2755,156 @@ const I18N = {
     homeResetBtn: "↺ Reset",
     homeCloseBtn: "Close ×",
     walkLabel: "walk",
-    hikeLabel: "hike"
+    hikeLabel: "hike",
+    navEntdecken: "Discover",
+    navKarte: "Map",
+    navGemerkt: "Saved",
+    navUnterwegs: "Trip",
+    heroHeading: "Recommended today",
+    heroBadge: "★ Top pick today",
+    moreTodayHeading: "More for today",
+    savedEmptyTitle: "No saved tours yet",
+    savedEmptyBody: "Tap the bookmark icon on any tour to save it here for quick planning or JSON export.",
+    savedBrowseBtn: "Browse tours",
+    savedTitle: "Saved",
+    savedCount: n => n === 1 ? "1 tour" : `${n} tours`,
+    savedExportBtn: "⬇️ Export JSON",
+    savedImportBtn: "⬆️ Import JSON",
+    savedJsonToggle: "📋 Copy / paste JSON",
+    savedPastePh: "Paste exported JSON here (e.g. {\"favs\": [...]}) …",
+    savedPasteApply: "Apply JSON",
+    savedCopyBtn: "Copy JSON",
+    savedCopied: "JSON copied to clipboard",
+    savedExported: "Saved tours exported as JSON",
+    savedImported: n => n === 1 ? "Imported 1 tour" : `Imported ${n} tours`,
+    savedImportInvalid: "Invalid JSON format",
+    savedImportEmpty: "No valid tour IDs found in JSON",
+    favAdd: "Save",
+    favRemove: "Remove",
+    favAdded: "Added to saved tours",
+    favRemoved: "Removed from saved tours",
+    detailFavAdd: "🔖 Save",
+    detailFavSaved: "🔖 Saved",
+    tripEmptyTitle: "No active trip yet",
+    tripEmptyBody: "Pick a tour to start your on-the-go companion with departure countdown and return options.",
+    tripBrowseBtn: "Browse tours",
+    startTripBtn: "🚆 Start trip",
+    openTripBtn: "🚆 Open active trip",
+    tripStarted: "Active trip started",
+    tripEnded: "Active trip ended",
+    tripEndBtn: "End trip",
+    tripDetailBtn: "Tour page",
+    tripAppBtn: "Connections",
+    tripBaseNote: b => `Started from ${b}`,
+    tripPhaseBefore: "Departure in",
+    tripPhaseOutbound: "Outbound · Arrival in",
+    tripPhaseOnSite: "On site · Return in",
+    tripPhaseReturn: "Return · Home in",
+    tripPhaseDone: "Window passed · Next departure in",
+    tripNextStep: "Next step",
+    tripLaterReturns: "Later returns & options",
+    tripReturnUpdated: "Return option updated",
+    tripRemindTitle: "Reminder",
+    tripRemindDep: "Departure",
+    tripRemindRet: "Return",
+    tripRemindLead: m => `${m} min before`,
+    tripRemindSet: "🔔 Set reminder",
+    tripRemindCancel: "Cancel reminder",
+    tripRemindActive: (t, hm) => `Active: reminder at ${t} (target ${hm})`,
+    tripRemindPending: "Waiting for notification permission …",
+    tripRemindSaved: hm => `Reminder set for ${hm}`,
+    tripRemindCleared: "Reminder cancelled",
+    tripRemindPast: "Target time is already in the past",
+    tripRemindPermNeeded: "Notification permission required",
+    mapSheetTitle: n => n === 1 ? "1 tour in map area" : `${n} tours in map area`,
+    mapEmptyTitle: "No tours in map area",
+    mapEmptyHint: "Zoom out or reset back to the Southwest overview.",
+    mapResetBounds: "Reset overview",
+    mapExpand: "Expand",
+    mapShrink: "Shrink",
+    mapCollapse: "Minimize",
+    kpiTransit: "Transit",
+    kpiHike: "Hike",
+    kpiElev: "Elevation",
+    kpiStay: "On site",
+    kpiDirect: "Direct",
+    kpiTransfers: n => n === 1 ? "1 transfer" : `${n} transfers`,
+    kpiRoundTrip: "Round-trip",
+    transferSingle: "1 transfer",
+    transfersCount: n => `${n} transfers`,
+    flowTitle: "Day Flow",
+    flowDep: "Departure",
+    flowArr: "Arrival",
+    flowRet: "Return",
+    detailsAllLegs: n => `Details · ${n} legs`,
+    connectBtn: "Connections",
+    openInMapyBtn: "🥾 Open in Mapy",
+    tagesplanTitle: "Day timeline (05–24h)",
+    tpOutbound: "Outbound",
+    tpStay: "On site",
+    tpReturn: "Return",
+    appSheetTitle: "🚆 Open connection in app",
+    appSheetClose: "Close ×",
+    capApp: "App",
+    capStart: "Start",
+    capDest: "Dest.",
+    capVias: "Vias",
+    capTime: "Time",
+    capPref: "Fav",
+    appInstalled: "Installed",
+    appPrefBadge: "Preferred",
+    appSetPref: "Save as preferred app",
+    appPrefSaved: nm => `Saved ${nm} as preferred app`
   }
 };
 
+const VALID_PREF_APPS = ["mvv", "nvv", "db", "myvrn", "mvvweb", "dbweb", "gmaps"];
 const TOURS = DATA.tours || [];
 const BY_ID = Object.fromEntries(TOURS.map(t => [t.id, t]));
 
+function loadValidFavs() {
+  const raw = store.get("favs", []);
+  if (!Array.isArray(raw)) return [];
+  const seen = new Set();
+  const out = [];
+  for (const id of raw) {
+    if (typeof id === "string" && BY_ID[id] && !seen.has(id)) {
+      seen.add(id);
+      out.push(id);
+    }
+  }
+  return out;
+}
+
+function loadValidActiveTrip() {
+  const raw = store.get("activeTrip", null);
+  if (!raw || typeof raw !== "object" || typeof raw.tourId !== "string" || !BY_ID[raw.tourId]) return null;
+  const rem = raw.reminder && typeof raw.reminder === "object" && typeof raw.reminder.id === "string"
+    ? {
+        id: raw.reminder.id,
+        target: raw.reminder.target === "ret" ? "ret" : "dep",
+        leadMin: Number(raw.reminder.leadMin) === 30 ? 30 : 15,
+        triggerAt: Number(raw.reminder.triggerAt) || 0,
+        targetHHMM: String(raw.reminder.targetHHMM || ""),
+        triggerHHMM: String(raw.reminder.triggerHHMM || ""),
+        title: String(raw.reminder.title || ""),
+        text: String(raw.reminder.text || ""),
+        status: String(raw.reminder.status || "scheduled")
+      }
+    : null;
+  return {
+    tourId: raw.tourId,
+    base: raw.base === "karlsruhe" ? "karlsruhe" : "jugenheim",
+    day: ["wd", "sa", "so"].includes(raw.day) ? raw.day : "wd",
+    winIdx: typeof raw.winIdx === "number" && Number.isFinite(raw.winIdx) ? raw.winIdx : 0,
+    revIdx: typeof raw.revIdx === "number" && Number.isFinite(raw.revIdx) ? raw.revIdx : 0,
+    stayTargetMin: raw.stayTargetMin === "max" || (typeof raw.stayTargetMin === "number" && Number.isFinite(raw.stayTargetMin)) ? raw.stayTargetMin : null,
+    startedAt: typeof raw.startedAt === "number" ? raw.startedAt : Date.now(),
+    reminder: rem
+  };
+}
+
+const rawPrefApp = store.get("prefApp", "mvv");
 let state = {
   base: store.get("base", "jugenheim") === "karlsruhe" ? "karlsruhe" : "jugenheim",
   lang: store.get("lang", "de") === "en" ? "en" : "de",
@@ -1373,7 +2923,17 @@ let state = {
   maxRide: store.get("maxRide", null),
   sort: store.get("sort", ""),
   filtersOpen: false,
-  layer: store.get("layer", "osm")
+  layer: store.get("layer", "osm"),
+  tab: "entdecken",
+  mapSheetSnap: "half",
+  mapSelectedId: null,
+  savedMapView: null,
+  returnScrollY: 0,
+  prefApp: VALID_PREF_APPS.includes(rawPrefApp) ? rawPrefApp : "mvv",
+  favs: loadValidFavs(),
+  activeTrip: loadValidActiveTrip(),
+  remindTarget: "dep",
+  remindLead: 15
 };
 if (!["wd", "sa", "so"].includes(state.day)) state.day = "wd";
 
@@ -1405,6 +2965,12 @@ function parseHHMM(s) {
   const m = String(s).match(/(\d{1,2}):(\d{2})/);
   if (!m) return null;
   return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+}
+
+function toAbsMin(hhmm) {
+  const m = parseHHMM(hhmm);
+  if (m === null) return null;
+  return m < 240 ? m + 1440 : m;
 }
 
 function minDiff(dep, arr) {
@@ -1659,7 +3225,10 @@ function stayMinutes(arrMin, rev) {
   return stay;
 }
 
-function getSelectedWindow(t, baseKey, dayKey) {
+function getSelectedWindow(t, baseKey, dayKey, opts) {
+  const winOverride = opts && opts.winIdx !== undefined ? opts.winIdx : state.winIdx;
+  const revOverride = opts && opts.revIdx !== undefined ? opts.revIdx : state.revIdx;
+  const stayOverride = opts && opts.stayTargetMin !== undefined ? opts.stayTargetMin : state.stayTargetMin;
   const {plan, fallback, reason} = getEffectivePlan(t, baseKey, dayKey);
   const wins = getWindows(plan);
   const revs = getReturns(plan);
@@ -1669,7 +3238,7 @@ function getSelectedWindow(t, baseKey, dayKey) {
     recIdx = Math.max(0, wins.findIndex(w => sameItin(w, plan.fwd)));
   }
   recIdx = Math.max(0, Math.min(recIdx, wins.length - 1));
-  const idx = state.winIdx == null ? recIdx : Math.max(0, Math.min(state.winIdx, wins.length - 1));
+  const idx = winOverride == null ? recIdx : Math.max(0, Math.min(winOverride, wins.length - 1));
   const fwd = wins[idx] || plan.fwd || [];
   const wmin = Number((t.hike && t.hike.walkMin) || 0);
   const autoMinStay = wmin > 0 ? wmin + 30 : 60;
@@ -1691,14 +3260,14 @@ function getSelectedWindow(t, baseKey, dayKey) {
 
   let chosenIdx = -1;
   if (pool.length) {
-    if (state.revIdx !== null && state.revIdx >= 0 && state.revIdx < pool.length) {
-      chosenIdx = state.revIdx;
-    } else if (state.stayTargetMin === "max") {
+    if (revOverride !== null && revOverride >= 0 && revOverride < pool.length) {
+      chosenIdx = revOverride;
+    } else if (stayOverride === "max") {
       chosenIdx = lsrIdx >= 0 ? lsrIdx : pool.length - 1;
     } else {
       let targetStay;
-      if (typeof state.stayTargetMin === "number" && state.stayTargetMin > 0) {
-        targetStay = state.stayTargetMin;
+      if (typeof stayOverride === "number" && stayOverride > 0) {
+        targetStay = stayOverride;
       } else {
         // Auto = planner recommendation; for other windows keep a comparable stay
         if (idx === recIdx) chosenIdx = pool.findIndex(r => sameItin(r, plan.rev));
@@ -1786,6 +3355,13 @@ function applyTheme() {
   document.body.classList.toggle("dark", dark);
   const mw = $("#mapWrap");
   if (mw) mw.classList.toggle("dark-tiles", dark);
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+    if (state.theme === "dark" || state.theme === "light") {
+      m.setAttribute("content", dark ? "#0D1513" : "#F3F5F1");
+    } else {
+      m.setAttribute("content", m.media && m.media.includes("dark") ? "#0D1513" : "#F3F5F1");
+    }
+  });
   if (window.SWNative && typeof window.SWNative.setDarkTheme === "function") {
     try { window.SWNative.setDarkTheme(dark); } catch (e) {}
   }
@@ -1906,20 +3482,29 @@ function renderLayerMenu() {
 
 $("#layerBtn").addEventListener("click", e => {
   e.stopPropagation();
-  $("#layerMenu").classList.toggle("show");
+  const open = $("#layerMenu").classList.toggle("show");
+  $("#mapWrap").classList.toggle("menu-open", open);
 });
 $("#layerMenu").addEventListener("click", e => {
   const b = e.target.closest("button[data-layer]");
   if (!b) return;
   setLayer(b.dataset.layer);
   $("#layerMenu").classList.remove("show");
+  $("#mapWrap").classList.remove("menu-open");
 });
-map.on("click", () => $("#layerMenu").classList.remove("show"));
+map.on("click", () => {
+  $("#layerMenu").classList.remove("show");
+  $("#mapWrap").classList.remove("menu-open");
+  if (state.tab === "karte" && !state.sel && state.mapSelectedId) {
+    highlightMapTour(null);
+  }
+});
 
 const overviewGroup = L.layerGroup().addTo(map);
 const singleGroup = L.layerGroup().addTo(map);
 let segLayerMap = [];
 let currentBounds = null;
+let overviewMeta = new Map();
 
 function getSegmentCoords(s, fallbackFrom, fallbackTo) {
   const pts = [];
@@ -1970,6 +3555,7 @@ function tourMiddle(t, fwdEnd, revStart) {
 function drawOverview() {
   overviewGroup.clearLayers();
   singleGroup.clearLayers();
+  overviewMeta = new Map();
   const bInfo = getBaseInfo(state.base);
   const bounds = L.latLngBounds([[bInfo.lat, bInfo.lon]]);
   const vis = TOURS.filter(matchesFilter);
@@ -1980,17 +3566,18 @@ function drawOverview() {
     radius: 6,
     color: "#ffffff",
     weight: 2,
-    fillColor: state.base === "karlsruhe" ? "#e11d48" : "#0b6aa2",
+    fillColor: state.base === "karlsruhe" ? "#e11d48" : "#0F4C5C",
     fillOpacity: 1
   }).bindTooltip(`${state.base === "karlsruhe" ? "❤️ Karlsruhe" : "🏠 Jugenheim"}`, {direction: "top"});
   overviewGroup.addLayer(baseMarker);
 
+  const isKarte = state.tab === "karte" && !state.sel;
   vis.forEach(t => {
     const h = t.hike || {};
     const title = tourTitle(t);
     const hasGpx = Boolean(h.hasGpx && h.poly5);
     let pts = [];
-    let col = "#0b6aa2";
+    let col = "#0F4C5C";
     if (hasGpx) {
       pts = hikePolyPts(t);
       col = "#15803d";
@@ -2002,7 +3589,7 @@ function drawOverview() {
       const mid = tourMiddle(t, pts[pts.length - 1], revPts[0]);
       if (mid.local) pts.push(...mid.local.slice(1, -1));
       pts.push(...revPts);
-      col = t.region === "schwarzwald" ? "#7c3aed" : t.region === "pfaelzerwald" ? "#d4373f" : "#0284c7";
+      col = t.region === "schwarzwald" ? "#6D28D9" : t.region === "pfaelzerwald" ? "#C2410C" : t.region === "odenwald" ? "#15803D" : "#0F4C5C";
     }
     if (pts.length < 2 && t.transit?.startStop?.lat != null) {
       const ss = t.transit.startStop;
@@ -2012,31 +3599,234 @@ function drawOverview() {
     if (pts.length >= 2) {
       const baseWeight = hasGpx ? 3.5 : 2.5;
       const baseOpacity = hasGpx ? 0.85 : 0.72;
+      const baseRadius = isKarte ? (hasGpx ? 6 : 5) : (hasGpx ? 4.5 : 3.5);
       const line = L.polyline(pts, {color: col, weight: baseWeight, opacity: baseOpacity});
       line.bindTooltip(title, {sticky: true, direction: "top"});
-      line.on("mouseover", () => line.setStyle({weight: baseWeight + 2, opacity: 1}));
-      line.on("mouseout", () => line.setStyle({weight: baseWeight, opacity: baseOpacity}));
-      line.on("click", () => openTour(t.id));
+      const onOverviewHit = e => {
+        L.DomEvent.stopPropagation(e);
+        if (state.tab === "karte" && !state.sel) {
+          highlightMapTour(t.id, {scroll: true, ensureVisible: true});
+        } else {
+          openTour(t.id);
+        }
+      };
+      line.on("mouseover", () => {
+        if (state.mapSelectedId !== t.id) line.setStyle({weight: baseWeight + 2, opacity: 1});
+      });
+      line.on("mouseout", () => {
+        if (state.mapSelectedId !== t.id) line.setStyle({weight: baseWeight, opacity: baseOpacity});
+      });
+      line.on("click", onOverviewHit);
       overviewGroup.addLayer(line);
       bounds.extend(line.getBounds());
 
       // Destination / trailhead marker for easy tapping & visual clarity
       const markerPt = hasGpx ? pts[Math.floor(pts.length / 2)] : (t.transit?.startStop?.lat != null ? [Number(t.transit.startStop.lat), Number(t.transit.startStop.lon)] : pts[pts.length - 1]);
+      let mk = null;
       if (markerPt && markerPt.length === 2 && !Number.isNaN(markerPt[0]) && !Number.isNaN(markerPt[1])) {
-        const mk = L.circleMarker(markerPt, {
-          radius: hasGpx ? 4.5 : 3.5,
+        mk = L.circleMarker(markerPt, {
+          radius: baseRadius,
           color: "#ffffff",
           weight: 1.5,
           fillColor: col,
           fillOpacity: 0.92
         });
         mk.bindTooltip(title, {direction: "top"});
-        mk.on("click", () => openTour(t.id));
+        mk.on("click", onOverviewHit);
         overviewGroup.addLayer(mk);
       }
+
+      const hikeBounds = hasGpx ? L.latLngBounds(pts) : null;
+      const targetPts = [
+        markerPt,
+        ptOf(t.transit?.startStop),
+        ptOf(t.transit?.endStop),
+        ...(t.transit?.vias || []).map(ptOf)
+      ].filter(p => p && p.length === 2 && !Number.isNaN(p[0]) && !Number.isNaN(p[1]));
+      overviewMeta.set(t.id, {
+        t,
+        markerPt,
+        hikeBounds,
+        targetPts,
+        line,
+        marker: mk,
+        baseColor: col,
+        baseWeight,
+        baseOpacity,
+        baseRadius
+      });
     }
   });
   currentBounds = bounds;
+  if (state.mapSelectedId) {
+    if (overviewMeta.has(state.mapSelectedId)) highlightMapTour(state.mapSelectedId, {scroll: false});
+    else state.mapSelectedId = null;
+  }
+}
+
+function highlightMapTour(id, opts) {
+  const prevId = state.mapSelectedId;
+  if (prevId && overviewMeta.has(prevId)) {
+    const old = overviewMeta.get(prevId);
+    old.line.setStyle({color: old.baseColor, weight: old.baseWeight, opacity: old.baseOpacity});
+    if (old.marker) {
+      old.marker.setStyle({radius: old.baseRadius, color: "#ffffff", weight: 1.5, fillColor: old.baseColor, fillOpacity: 0.92});
+    }
+  }
+  state.mapSelectedId = (id && overviewMeta.has(id)) ? id : null;
+  if (state.mapSelectedId) {
+    const m = overviewMeta.get(state.mapSelectedId);
+    m.line.setStyle({weight: m.baseWeight + 2.5, opacity: 1});
+    if (m.line.bringToFront) m.line.bringToFront();
+    if (m.marker) {
+      m.marker.setStyle({radius: 9, color: "#F59E0B", weight: 3, fillColor: m.baseColor, fillOpacity: 1});
+      if (m.marker.bringToFront) m.marker.bringToFront();
+    }
+    if (opts && opts.ensureVisible && state.mapSheetSnap === "collapsed") {
+      setMapSheetSnap("half");
+    }
+  }
+  document.querySelectorAll("#mapSheetBody .sheet-card").forEach(el => {
+    const on = Boolean(state.mapSelectedId && el.dataset.sheetId === state.mapSelectedId);
+    el.classList.toggle("is-selected", on);
+    if (on && opts && opts.scroll) {
+      el.scrollIntoView({behavior: "smooth", block: "nearest"});
+    }
+  });
+}
+
+function isTourInMapBounds(id, vb) {
+  const m = overviewMeta.get(id);
+  if (!m || !vb || !vb.isValid()) return false;
+  if (m.hikeBounds && m.hikeBounds.isValid()) return vb.intersects(m.hikeBounds);
+  return m.targetPts.some(p => vb.contains(p));
+}
+
+function setMapSheetSnap(snap) {
+  const valid = ["collapsed", "half", "expanded"].includes(snap) ? snap : "half";
+  state.mapSheetSnap = valid;
+  const sheet = $("#mapSheet");
+  if (!sheet) return;
+  sheet.dataset.snap = valid;
+  const expBtn = $("#mapSheetExpandBtn");
+  const colBtn = $("#mapSheetCollapseBtn");
+  const tDict = T();
+  if (expBtn) {
+    expBtn.setAttribute("aria-expanded", String(valid === "expanded"));
+    expBtn.textContent = valid === "expanded" ? "⤡" : "⤢";
+    expBtn.title = valid === "expanded" ? tDict.mapShrink : tDict.mapExpand;
+    expBtn.setAttribute("aria-label", valid === "expanded" ? tDict.mapShrink : tDict.mapExpand);
+  }
+  if (colBtn) {
+    colBtn.textContent = valid === "collapsed" ? "▴" : "▾";
+    colBtn.setAttribute("aria-label", tDict.mapCollapse);
+  }
+}
+
+function isFav(id) {
+  return Boolean(id && state.favs.includes(id));
+}
+
+function favBtnHTML(id, cls) {
+  const tDict = T();
+  const active = isFav(id);
+  const lbl = active ? tDict.favRemove : tDict.favAdd;
+  return `<button type="button" class="fav-btn ${cls}" data-fav-id="${esc(id)}" aria-pressed="${active}" aria-label="${esc(lbl)}" title="${esc(lbl)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1z"/></svg></button>`;
+}
+
+function syncFavButtons(id) {
+  const tDict = T();
+  const sel = id ? `.fav-btn[data-fav-id="${CSS && CSS.escape ? CSS.escape(id) : id}"], #detailFavBtn[data-fav-id="${CSS && CSS.escape ? CSS.escape(id) : id}"]` : ".fav-btn[data-fav-id], #detailFavBtn[data-fav-id]";
+  document.querySelectorAll(sel).forEach(btn => {
+    const fid = btn.dataset.favId;
+    const on = isFav(fid);
+    btn.setAttribute("aria-pressed", String(on));
+    if (btn.id === "detailFavBtn") {
+      btn.textContent = on ? tDict.detailFavSaved : tDict.detailFavAdd;
+    } else {
+      const lbl = on ? tDict.favRemove : tDict.favAdd;
+      btn.setAttribute("aria-label", lbl);
+      btn.title = lbl;
+    }
+  });
+}
+
+function toggleFav(id) {
+  if (!id || !BY_ID[id]) return;
+  const idx = state.favs.indexOf(id);
+  const added = idx < 0;
+  if (added) state.favs.unshift(id);
+  else state.favs.splice(idx, 1);
+  store.set("favs", state.favs);
+  syncFavButtons(id);
+  if (state.tab === "gemerkt" && !state.sel) renderSavedView();
+  toast(added ? T().favAdded : T().favRemoved);
+}
+
+function sheetCardHTML(t) {
+  const tDict = T();
+  const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
+  const dep = fwd[0]?.dep || "08:04";
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+  const durMin = minDiff(dep, arr) || t.durationMin || 360;
+  const h = t.hike || {};
+  const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
+  const regLbl = tDict.reg[t.region] || t.region || "";
+  const imgSrc = t.img || `img/${t.id}.jpg`;
+  const selCls = t.id === state.mapSelectedId ? " is-selected" : "";
+  const hikeTxt = (h.hasGpx && h.distKm)
+    ? `🥾 ${Number(h.distKm).toFixed(1).replace(".", ",")} km · ↗ ${Math.round(Number(h.elevGainM || 0))} hm`
+    : (tDict.diff[t.difficulty] || t.difficulty || "leicht");
+  return `<div class="sheet-card${selCls}" data-sheet-id="${esc(t.id)}" data-region="${esc(rk)}" role="button" tabindex="0">
+    <img class="sheet-card-img" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="152" height="136">
+    <div class="sheet-card-body">
+      <div class="sheet-card-title">${esc(tourTitle(t))}</div>
+      <div class="sheet-card-sub">${esc(tourSub(t))}</div>
+      <div class="sheet-card-chips">
+        <span class="chip strong">🕘 ${esc(dep)}–${esc(arr)}</span>
+        <span class="chip">⏱ ${esc(fmtDur(durMin))}</span>
+        <span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>
+        <span class="chip ok">${esc(hikeTxt)}</span>
+      </div>
+    </div>
+    ${favBtnHTML(t.id, "fav-inline")}
+  </div>`;
+}
+
+function renderMapSheet() {
+  if (state.tab !== "karte" || state.sel) return;
+  const sheet = $("#mapSheet");
+  const body = $("#mapSheetBody");
+  if (!sheet || !body) return;
+  const tDict = T();
+  const vb = map.getBounds();
+  const inView = TOURS.filter(t => matchesFilter(t) && isTourInMapBounds(t.id, vb));
+  $("#mapSheetTitle").textContent = tDict.mapSheetTitle(inView.length);
+  const dayLbl = (tDict.days.find(d => d[0] === state.day) || ["", ""])[1];
+  $("#mapSheetBaseChip").textContent = `${state.base === "karlsruhe" ? "❤️ Karlsruhe" : "🏠 Jugenheim"} · ${dayLbl}`;
+
+  if (!inView.length) {
+    body.innerHTML = `<div class="map-sheet-empty">
+      <h4>${esc(tDict.mapEmptyTitle)}</h4>
+      <p>${esc(tDict.mapEmptyHint)}</p>
+      <button type="button" class="act primary" id="mapResetBoundsBtn">${esc(tDict.mapResetBounds)}</button>
+    </div>`;
+    return;
+  }
+
+  let ordered;
+  if (state.sort) {
+    ordered = inView.map(t => [sortKey(t), t]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+  } else {
+    const center = vb.getCenter();
+    const cPt = [center.lat, center.lng];
+    ordered = inView.slice().sort((a, b) => {
+      const ma = overviewMeta.get(a.id)?.markerPt;
+      const mb = overviewMeta.get(b.id)?.markerPt;
+      return haversineM(cPt, ma) - haversineM(cPt, mb);
+    });
+  }
+  body.innerHTML = ordered.map(sheetCardHTML).join("");
 }
 
 function drawSingle(t) {
@@ -2111,15 +3901,24 @@ function drawSingle(t) {
 }
 
 function fitCurrent() {
-  if (currentBounds && currentBounds.isValid()) {
-    map.fitBounds(currentBounds, {padding: [24, 24], maxZoom: 14});
+  if (!currentBounds || !currentBounds.isValid()) return;
+  if (state.tab === "karte" && !state.sel && !$("#mapWrap").classList.contains("full")) {
+    const sheetH = $("#mapSheet")?.getBoundingClientRect().height || 0;
+    const mapY = map.getSize().y || window.innerHeight || 800;
+    if (window.innerWidth >= 960) {
+      map.fitBounds(currentBounds, {paddingTopLeft: [452, 24], paddingBottomRight: [24, 24], maxZoom: 14});
+    } else {
+      const padB = Math.max(24, Math.min(Math.round(sheetH + 16), Math.floor(mapY * 0.48)));
+      map.fitBounds(currentBounds, {paddingTopLeft: [24, 24], paddingBottomRight: [24, padB], maxZoom: 14});
+    }
+    return;
   }
+  map.fitBounds(currentBounds, {padding: [24, 24], maxZoom: 14});
 }
 
 function focusStep(idx) {
   document.querySelectorAll("#detail .st").forEach(el => el.classList.remove("flash"));
-  const el = document.getElementById("step-" + idx);
-  if (el) el.classList.add("flash");
+  document.querySelectorAll(`#detail .st[data-step="${idx}"]`).forEach(el => el.classList.add("flash"));
   const ln = segLayerMap[idx];
   if (ln && ln.getBounds && ln.getBounds().isValid()) {
     map.fitBounds(ln.getBounds(), {padding: [30, 30], maxZoom: 14});
@@ -2129,14 +3928,19 @@ function focusStep(idx) {
 $("#fitBtn").addEventListener("click", fitCurrent);
 $("#fullBtn").addEventListener("click", () => {
   const w = $("#mapWrap");
-  w.classList.toggle("full");
+  const isFull = w.classList.toggle("full");
   w.classList.remove("mini");
-  setTimeout(() => map.invalidateSize(), 150);
+  document.body.classList.toggle("map-full-open", isFull);
+  setTimeout(() => {
+    map.invalidateSize();
+    if (state.tab === "karte" && !state.sel && !isFull) renderMapSheet();
+  }, 150);
 });
 $("#miniBtn").addEventListener("click", () => {
   const w = $("#mapWrap");
   w.classList.toggle("mini");
   w.classList.remove("full");
+  document.body.classList.remove("map-full-open");
   setTimeout(() => map.invalidateSize(), 150);
 });
 $("#gpsBtn").addEventListener("click", () => {
@@ -2145,6 +3949,114 @@ $("#gpsBtn").addEventListener("click", () => {
     map.setView([pos.coords.latitude, pos.coords.longitude], 13);
   }, () => {}, {timeout: 5000});
 });
+
+let mapMoveTimer = null;
+map.on("moveend", () => {
+  if (state.tab !== "karte" || state.sel) return;
+  clearTimeout(mapMoveTimer);
+  mapMoveTimer = setTimeout(() => {
+    if (state.tab === "karte" && !state.sel) renderMapSheet();
+  }, 80);
+});
+
+(function initMapSheetEvents() {
+  const sheet = $("#mapSheet");
+  const handle = $("#mapSheetHandle");
+  const head = $("#mapSheetHead");
+  const body = $("#mapSheetBody");
+  if (!sheet || !handle || !head || !body) return;
+
+  let startY = 0;
+  let startH = 0;
+  let pointerId = null;
+  let dragging = false;
+  let suppressClick = false;
+
+  const onDown = e => {
+    if (e.target.closest("button")) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    pointerId = e.pointerId;
+    startY = e.clientY;
+    startH = sheet.getBoundingClientRect().height;
+    dragging = false;
+    try { e.currentTarget.setPointerCapture(pointerId); } catch (err) {}
+  };
+  const onMove = e => {
+    if (pointerId === null || e.pointerId !== pointerId) return;
+    const dy = startY - e.clientY;
+    if (!dragging && Math.abs(dy) > 6) {
+      dragging = true;
+      sheet.classList.add("is-dragging");
+    }
+    if (dragging) {
+      const maxH = Math.max(240, (window.innerHeight || 800) - 110);
+      const nextH = Math.max(68, Math.min(maxH, startH + dy));
+      sheet.style.height = `${Math.round(nextH)}px`;
+    }
+  };
+  const onUp = e => {
+    if (pointerId === null || e.pointerId !== pointerId) return;
+    pointerId = null;
+    if (dragging) {
+      dragging = false;
+      suppressClick = true;
+      setTimeout(() => { suppressClick = false; }, 120);
+      const finalH = sheet.getBoundingClientRect().height;
+      sheet.classList.remove("is-dragging");
+      sheet.style.height = "";
+      const vh = window.innerHeight || 800;
+      if (finalH < 140) setMapSheetSnap("collapsed");
+      else if (finalH > vh * 0.56) setMapSheetSnap("expanded");
+      else setMapSheetSnap("half");
+    }
+  };
+  [handle, head].forEach(el => {
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+  });
+  handle.addEventListener("click", () => {
+    if (suppressClick) return;
+    setMapSheetSnap(state.mapSheetSnap === "collapsed" ? "half" : "collapsed");
+  });
+  handle.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setMapSheetSnap(state.mapSheetSnap === "collapsed" ? "half" : "collapsed");
+    }
+  });
+  $("#mapSheetExpandBtn").addEventListener("click", () => {
+    setMapSheetSnap(state.mapSheetSnap === "expanded" ? "half" : "expanded");
+  });
+  $("#mapSheetCollapseBtn").addEventListener("click", () => {
+    setMapSheetSnap(state.mapSheetSnap === "collapsed" ? "half" : "collapsed");
+  });
+  $("#mapSheetBaseChip").addEventListener("click", () => {
+    setBase(state.base === "karlsruhe" ? "jugenheim" : "karlsruhe");
+  });
+  body.addEventListener("click", e => {
+    const favBtn = e.target.closest(".fav-btn[data-fav-id]");
+    if (favBtn) {
+      e.stopPropagation();
+      toggleFav(favBtn.dataset.favId);
+      return;
+    }
+    const resetBtn = e.target.closest("#mapResetBoundsBtn");
+    if (resetBtn) { fitCurrent(); return; }
+    const card = e.target.closest(".sheet-card[data-sheet-id]");
+    if (card) openTour(card.dataset.sheetId);
+  });
+  body.addEventListener("keydown", e => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest(".fav-btn")) return;
+    const card = e.target.closest(".sheet-card[data-sheet-id]");
+    if (card) {
+      e.preventDefault();
+      openTour(card.dataset.sheetId);
+    }
+  });
+})();
 
 function decimatePts(pts, maxN) {
   if (!pts || pts.length <= maxN) return pts || [];
@@ -2169,6 +4081,7 @@ function cardHTML(t) {
   const stayMin = (fwdArr && revDep) ? minDiff(fwdArr, revDep) : 0;
   const h = t.hike || {};
   const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
+  const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
   const regLbl = tDict.reg[t.region] || t.region || "";
   const baseTag = state.base === "karlsruhe" ? "ab KA" : "ab JG";
   const imgSrc = t.img || `img/${t.id}.jpg`;
@@ -2181,7 +4094,7 @@ function cardHTML(t) {
   if (stayMin > 0) {
     chips.push(`<span class="chip">🕒 ${state.lang === "en" ? "Stay" : "Vor Ort"} ${esc(fmtDur(stayMin))}</span>`);
   }
-  chips.push(`<span class="chip">${esc(regLbl)}</span>`);
+  chips.push(`<span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>`);
   chips.push(`<span class="chip">${esc(diffLbl)}</span>`);
   if (h.hasGpx && h.distKm) {
     const km = Number(h.distKm).toFixed(1).replace(".", ",");
@@ -2201,9 +4114,10 @@ function cardHTML(t) {
     chips.push(`<span class="chip warn">${state.lang === "en" ? "Alt. day schedule" : "Ausweichtag"}</span>`);
   }
 
-  return `<article class="card tour-card" data-tour-id="${esc(t.id)}" data-id="${esc(t.id)}" tabindex="0">
+  return `<article class="card tour-card" data-tour-id="${esc(t.id)}" data-id="${esc(t.id)}" data-region="${esc(rk)}" tabindex="0">
     <div class="card-thumb-wrap">
       <img class="card-thumb" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="640" height="360">
+      ${favBtnHTML(t.id, "fav-overlay")}
       <span class="card-thumb-badge">${esc(loopBadge)}</span>
     </div>
     <h3>${esc(tourTitle(t))}</h3>
@@ -2224,8 +4138,910 @@ function sortKey(t) {
   }
 }
 
+/* ---------- Discovery Highlights & Tabs ---------- */
+function tourLatestDepMin(t, win) {
+  const wins = win.wins || [];
+  if (!wins.length) return -1;
+  let maxDep = Math.max(...wins.map(w => parseHHMM(w[0]?.dep) ?? -1));
+  const lsrDep = parseHHMM(win.lsr?.dep);
+  if (lsrDep !== null) {
+    const wmin = Number((t.hike && t.hike.walkMin) || 0);
+    const stayReq = wmin > 0 ? wmin + 30 : 60;
+    const fwd = win.fwd || [];
+    const fwdDur = fwd.length ? Math.max(30, minDiff(fwd[0]?.dep, fwd[fwd.length - 1]?.arr)) : 60;
+    const adjLsr = lsrDep < 240 ? lsrDep + 1440 : lsrDep;
+    const latestTaktDep = Math.min(20 * 60 + 30, adjLsr - stayReq - fwdDur);
+    if (latestTaktDep > maxDep) maxDep = latestTaktDep;
+  }
+  return maxDep;
+}
+
+function pickDiscoverTours(vis) {
+  if (!vis || !vis.length) return {hero: null, more: []};
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const isDaytime = !state.feasibleTime && nowMin >= 5 * 60 && nowMin < 18 * 60;
+
+  const entries = vis.map((t, idx) => {
+    const win = getSelectedWindow(t, state.base, state.day);
+    const routable = !win.fallback && win.fwd.length > 0 && win.rev.length > 0;
+    const maxDep = tourLatestDepMin(t, win);
+    const dep = win.fwd[0]?.dep || "";
+    const arr = win.rev[win.rev.length - 1]?.arr || "";
+    const fwdArr = win.fwd[win.fwd.length - 1]?.arr || "";
+    const revDep = win.rev[0]?.dep || "";
+    const fwdDur = win.fwd.length ? minDiff(dep, fwdArr) : 999;
+    const stayMin = (fwdArr && revDep) ? minDiff(fwdArr, revDep) : 0;
+    const h = t.hike || {};
+    let score = 0;
+    if (routable) score += 40;
+    if (h.hasGpx) score += 20;
+    if (fwdDur <= 120) score += 15;
+    else if (fwdDur <= 165) score += 5;
+    if (stayMin >= (Number(h.walkMin || 0) || 90)) score += 15;
+    if (t.source === "curated" || isClosedLoopHike(t)) score += 5;
+    return {t, idx, win, routable, maxDep, score};
+  });
+
+  let pool = isDaytime ? entries.filter(e => e.routable && e.maxDep >= nowMin) : [];
+  if (!pool.length) pool = entries.filter(e => e.routable);
+  if (!pool.length) pool = entries;
+
+  const ranked = pool.slice().sort((a, b) => (b.score - a.score) || (a.idx - b.idx)).map(e => e.t);
+  return {
+    hero: ranked[0] || null,
+    more: ranked.slice(1, 9)
+  };
+}
+
+function renderDiscoverHighlights(vis) {
+  const host = $("#discoverHighlights");
+  if (!host) return;
+  if (!vis || !vis.length) {
+    host.innerHTML = "";
+    return;
+  }
+  const tDict = T();
+  const {hero, more} = pickDiscoverTours(vis);
+  if (!hero) {
+    host.innerHTML = "";
+    return;
+  }
+
+  const hw = getSelectedWindow(hero, state.base, state.day);
+  const hDep = hw.fwd[0]?.dep || "08:04";
+  const hArr = hw.rev[hw.rev.length - 1]?.arr || "18:42";
+  const hDur = minDiff(hDep, hArr) || hero.durationMin || 360;
+  const hh = hero.hike || {};
+  const hImg = hero.img || `img/${hero.id}.jpg`;
+  const hReg = tDict.reg[hero.region] || hero.region || "";
+  const hRk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(hero.region) ? hero.region : "weitere";
+  const hChips = [
+    `<span class="chip strong">🕘 ${esc(hDep)}–${esc(hArr)}</span>`,
+    `<span class="chip">⏱ ${esc(fmtDur(hDur))}</span>`,
+    `<span class="chip reg-chip" data-region="${esc(hRk)}">${esc(hReg)}</span>`
+  ];
+  if (hh.hasGpx && hh.distKm) {
+    hChips.push(`<span class="chip ok">🥾 ${Number(hh.distKm).toFixed(1).replace(".", ",")} km</span>`);
+  }
+
+  const moreHtml = more.length ? `
+    <h2 class="discover-title">${esc(tDict.moreTodayHeading)}</h2>
+    <div class="discover-row">
+      ${more.map(t => {
+        const w = getSelectedWindow(t, state.base, state.day);
+        const dep = w.fwd[0]?.dep || "08:04";
+        const arr = w.rev[w.rev.length - 1]?.arr || "18:42";
+        const h = t.hike || {};
+        const img = t.img || `img/${t.id}.jpg`;
+        const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
+        const hikeStr = (h.hasGpx && h.distKm) ? `🥾 ${Number(h.distKm).toFixed(1).replace(".", ",")} km` : (tDict.diff[t.difficulty] || "leicht");
+        return `<div class="rec-card" data-id="${esc(t.id)}" data-region="${esc(rk)}" role="button" tabindex="0">
+          <div class="rec-card-media">
+            <img class="rec-card-img" src="${esc(img)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="420" height="160">
+            ${favBtnHTML(t.id, "fav-overlay")}
+          </div>
+          <span class="rec-card-title">${esc(tourTitle(t))}</span>
+          <span class="rec-card-meta">🕘 ${esc(dep)}–${esc(arr)}</span>
+          <span class="rec-card-foot"><span>${esc(tDict.reg[t.region] || t.region || "")}</span><span>${esc(hikeStr)}</span></span>
+        </div>`;
+      }).join("")}
+    </div>` : "";
+
+  host.innerHTML = `
+    <h2 class="discover-title">${esc(tDict.heroHeading)}</h2>
+    <div class="rec-hero" data-id="${esc(hero.id)}" role="button" tabindex="0">
+      <div class="rec-hero-media">
+        <img class="rec-hero-img" src="${esc(hImg)}" alt="${esc(tourTitle(hero))}" loading="eager" decoding="async" width="208" height="208">
+        ${favBtnHTML(hero.id, "fav-overlay")}
+      </div>
+      <div class="rec-hero-body">
+        <span class="rec-hero-badge">${esc(tDict.heroBadge)}</span>
+        <div class="rec-hero-title">${esc(tourTitle(hero))}</div>
+        <p class="rec-hero-sub">${esc(tourSub(hero))}</p>
+        <div class="chips">${hChips.join("")}</div>
+      </div>
+    </div>
+    ${moreHtml}`;
+}
+
+const discoverHost = $("#discoverHighlights");
+if (discoverHost) {
+  discoverHost.addEventListener("click", e => {
+    const favBtn = e.target.closest(".fav-btn[data-fav-id]");
+    if (favBtn) {
+      e.stopPropagation();
+      toggleFav(favBtn.dataset.favId);
+      return;
+    }
+    const el = e.target.closest("[data-id]");
+    if (el && el.dataset.id) openTour(el.dataset.id);
+  });
+  discoverHost.addEventListener("keydown", e => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest(".fav-btn")) return;
+    const el = e.target.closest(".rec-hero[data-id], .rec-card[data-id]");
+    if (el && el.dataset.id) {
+      e.preventDefault();
+      openTour(el.dataset.id);
+    }
+  });
+}
+
+function renderBottomNav() {
+  const tDict = T();
+  const labels = {
+    entdecken: tDict.navEntdecken,
+    karte: tDict.navKarte,
+    gemerkt: tDict.navGemerkt,
+    unterwegs: tDict.navUnterwegs
+  };
+  document.querySelectorAll("#bottomNav .bnav-btn").forEach(btn => {
+    const k = btn.dataset.tab;
+    const lbl = btn.querySelector(".bnav-lbl");
+    if (lbl && labels[k]) lbl.textContent = labels[k];
+    const active = state.tab === k;
+    btn.setAttribute("aria-pressed", String(active));
+    if (active) btn.setAttribute("aria-current", "page");
+    else btn.removeAttribute("aria-current");
+  });
+}
+
+function buildFavExportJson() {
+  return JSON.stringify({
+    app: "suedwest-touren",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    favs: state.favs.slice()
+  }, null, 2);
+}
+
+function exportFavoritesJson() {
+  const tDict = T();
+  const json = buildFavExportJson();
+  const fname = "suedwest-touren-gemerkt.json";
+  if (NATIVE && typeof NATIVE.exportJson === "function") {
+    try {
+      NATIVE.exportJson(fname, json, tDict.savedTitle);
+      toast(tDict.savedExported);
+      return;
+    } catch (e) {}
+  }
+  const blob = new Blob([json], {type: "application/json;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast(tDict.savedExported);
+}
+
+function importFavoritesJson(rawText) {
+  const tDict = T();
+  const text = String(rawText || "").trim();
+  if (!text) {
+    toast(tDict.savedImportInvalid);
+    return false;
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (e) {
+    toast(tDict.savedImportInvalid);
+    return false;
+  }
+  const arr = Array.isArray(parsed)
+    ? parsed
+    : (parsed && typeof parsed === "object" && Array.isArray(parsed.favs) ? parsed.favs : null);
+  if (!arr) {
+    toast(tDict.savedImportInvalid);
+    return false;
+  }
+  const seenValid = new Set();
+  const validIds = [];
+  for (const item of arr) {
+    if (typeof item === "string" && BY_ID[item] && !seenValid.has(item)) {
+      seenValid.add(item);
+      validIds.push(item);
+    }
+  }
+  if (!validIds.length) {
+    toast(tDict.savedImportEmpty);
+    return false;
+  }
+  const merged = [];
+  const seen = new Set();
+  for (const id of [...validIds, ...state.favs]) {
+    if (BY_ID[id] && !seen.has(id)) {
+      seen.add(id);
+      merged.push(id);
+    }
+  }
+  state.favs = merged;
+  store.set("favs", state.favs);
+  syncFavButtons();
+  renderSavedView();
+  toast(tDict.savedImported(validIds.length));
+  return true;
+}
+
+function savedCardHTML(t) {
+  const tDict = T();
+  const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
+  const dep = fwd[0]?.dep || "08:04";
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+  const durMin = minDiff(dep, arr) || t.durationMin || 360;
+  const h = t.hike || {};
+  const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
+  const regLbl = tDict.reg[t.region] || t.region || "";
+  const imgSrc = t.img || `img/${t.id}.jpg`;
+  const hikeTxt = (h.hasGpx && h.distKm)
+    ? `🥾 ${Number(h.distKm).toFixed(1).replace(".", ",")} km · ↗ ${Math.round(Number(h.elevGainM || 0))} hm`
+    : (tDict.diff[t.difficulty] || t.difficulty || "leicht");
+  return `<div class="saved-card" data-saved-id="${esc(t.id)}" data-region="${esc(rk)}" role="button" tabindex="0">
+    <img class="saved-card-img" src="${esc(imgSrc)}" alt="${esc(tourTitle(t))}" loading="lazy" decoding="async" width="168" height="152">
+    <div class="saved-card-body">
+      <div class="saved-card-title">${esc(tourTitle(t))}</div>
+      <div class="saved-card-sub">${esc(tourSub(t))}</div>
+      <div class="chips">
+        <span class="chip strong">🕘 ${esc(dep)}–${esc(arr)}</span>
+        <span class="chip">⏱ ${esc(fmtDur(durMin))}</span>
+        <span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>
+        <span class="chip ok">${esc(hikeTxt)}</span>
+      </div>
+    </div>
+    ${favBtnHTML(t.id, "fav-inline")}
+  </div>`;
+}
+
+function renderSavedView() {
+  const saved = $("#savedView");
+  if (!saved) return;
+  const tDict = T();
+  const favTours = state.favs.map(id => BY_ID[id]).filter(Boolean);
+  const listHtml = favTours.length
+    ? `<div class="saved-grid">${favTours.map(savedCardHTML).join("")}</div>`
+    : `<div class="tab-empty">
+        <div class="tab-empty-ico" aria-hidden="true">🔖</div>
+        <h2>${esc(tDict.savedEmptyTitle)}</h2>
+        <p>${esc(tDict.savedEmptyBody)}</p>
+        <button type="button" class="act primary" data-go-tab="entdecken">${esc(tDict.savedBrowseBtn)}</button>
+      </div>`;
+
+  saved.innerHTML = `<div class="saved-shell">
+    <div class="saved-head">
+      <h2>🔖 ${esc(tDict.savedTitle)} <span class="chip strong">${esc(tDict.savedCount(favTours.length))}</span></h2>
+      <div class="saved-toolbar">
+        <button type="button" class="act" id="favExportBtn">${esc(tDict.savedExportBtn)}</button>
+        <button type="button" class="act" id="favImportBtn">${esc(tDict.savedImportBtn)}</button>
+        <input type="file" id="favImportFile" accept=".json,application/json" hidden>
+      </div>
+    </div>
+    ${listHtml}
+    <details class="saved-json-box" id="favJsonDetails">
+      <summary>${esc(tDict.savedJsonToggle)}</summary>
+      <textarea class="saved-json-area" id="favPasteInput" placeholder="${esc(tDict.savedPastePh)}" aria-label="${esc(tDict.savedJsonToggle)}"></textarea>
+      <div class="saved-json-actions">
+        <button type="button" class="act primary" id="favPasteImportBtn">${esc(tDict.savedPasteApply)}</button>
+        <button type="button" class="act" id="favCopyJsonBtn">${esc(tDict.savedCopyBtn)}</button>
+      </div>
+    </details>
+  </div>`;
+}
+
+let tripTicker = null;
+let inPageReminderTimer = null;
+
+function stopTripTicker() {
+  if (tripTicker) {
+    clearInterval(tripTicker);
+    tripTicker = null;
+  }
+}
+
+function startTripTicker() {
+  stopTripTicker();
+  if (state.tab === "unterwegs" && !state.sel && state.activeTrip) {
+    tripTicker = setInterval(updateTripCountdown, 1000);
+  }
+}
+
+function clearInPageReminderTimer() {
+  if (inPageReminderTimer) {
+    clearTimeout(inPageReminderTimer);
+    inPageReminderTimer = null;
+  }
+}
+
+function armInPageReminder(rem) {
+  clearInPageReminderTimer();
+  if (!rem || !rem.triggerAt || rem.status === "fired") return;
+  const delay = rem.triggerAt - Date.now();
+  if (delay <= 0 || delay > 2147483647) return;
+  inPageReminderTimer = setTimeout(() => {
+    inPageReminderTimer = null;
+    if (!state.activeTrip || !state.activeTrip.reminder || state.activeTrip.reminder.id !== rem.id) return;
+    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+      try { new Notification(rem.title, {body: rem.text}); } catch (e) {}
+    }
+    toast(`🔔 ${rem.title} · ${rem.text}`, {ms: 8000});
+  }, delay);
+}
+
+function cancelActiveTripReminder(opts) {
+  clearInPageReminderTimer();
+  const rem = state.activeTrip && state.activeTrip.reminder;
+  if (rem && rem.id && NATIVE && typeof NATIVE.cancelReminder === "function") {
+    try { NATIVE.cancelReminder(rem.id); } catch (e) {}
+  }
+  if (state.activeTrip) {
+    state.activeTrip.reminder = null;
+    store.set("activeTrip", state.activeTrip);
+  }
+  if (!(opts && opts.silent)) {
+    if (state.tab === "unterwegs" && !state.sel) renderTripView();
+    toast(T().tripRemindCleared);
+  }
+}
+
+function resolveActiveTrip(trip) {
+  if (!trip || !BY_ID[trip.tourId]) return null;
+  const t = BY_ID[trip.tourId];
+  const selWin = getSelectedWindow(t, trip.base, trip.day, {
+    winIdx: trip.winIdx,
+    revIdx: trip.revIdx,
+    stayTargetMin: trip.stayTargetMin
+  });
+  return {t, trip, selWin};
+}
+
+function formatCountdown(totalSeconds) {
+  const sec = Math.max(0, Math.floor(totalSeconds));
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+function computeTripProgress(t, selWin) {
+  const tDict = T();
+  const fwd = selWin.fwd || [];
+  const rev = selWin.rev || [];
+  const dep = fwd[0]?.dep || "08:04";
+  const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
+  const revDep = rev[0]?.dep || "16:30";
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+
+  const depMin = toAbsMin(dep) ?? 480;
+  const fwdDurMin = fwd.length ? Math.max(1, minDiff(dep, fwdArr)) : 60;
+  const fwdArrMin = depMin + fwdDurMin;
+  const stayMin = (fwd.length && rev.length) ? Math.max(1, minDiff(fwdArr, revDep)) : 180;
+  const revDepMin = fwdArrMin + stayMin;
+  const revDurMin = rev.length ? Math.max(1, minDiff(revDep, arr)) : 60;
+  const revArrMin = revDepMin + revDurMin;
+
+  const now = new Date();
+  const nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  const nowMin = nowSec / 60;
+
+  let phaseLbl = tDict.tripPhaseBefore;
+  let remainSec = Math.max(0, depMin * 60 - nowSec);
+  let pct = 0;
+  let nextSeg = fwd[0] || rev[0] || null;
+  let nextRole = tDict.flowDep;
+
+  if (nowMin < depMin) {
+    phaseLbl = tDict.tripPhaseBefore;
+    remainSec = depMin * 60 - nowSec;
+    pct = 0;
+    nextSeg = fwd[0] || null;
+    nextRole = tDict.flowDep;
+  } else if (nowMin < fwdArrMin) {
+    phaseLbl = tDict.tripPhaseOutbound;
+    remainSec = fwdArrMin * 60 - nowSec;
+    pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
+    nextSeg = fwd[fwd.length - 1] || fwd[0] || null;
+    nextRole = tDict.flowDep;
+  } else if (nowMin < revDepMin) {
+    phaseLbl = tDict.tripPhaseOnSite;
+    remainSec = revDepMin * 60 - nowSec;
+    pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
+    nextSeg = rev[0] || null;
+    nextRole = tDict.flowRet;
+  } else if (nowMin < revArrMin) {
+    phaseLbl = tDict.tripPhaseReturn;
+    remainSec = revArrMin * 60 - nowSec;
+    pct = Math.round(((nowMin - depMin) / Math.max(1, revArrMin - depMin)) * 100);
+    nextSeg = rev[rev.length - 1] || rev[0] || null;
+    nextRole = tDict.flowRet;
+  } else {
+    phaseLbl = tDict.tripPhaseDone;
+    remainSec = (depMin + 1440) * 60 - nowSec;
+    pct = 100;
+    nextSeg = fwd[0] || null;
+    nextRole = tDict.flowDep;
+  }
+
+  let nextText = `${nextRole}: ${dep} → ${arr}`;
+  if (nextSeg) {
+    const line = nextSeg.line || nextSeg.lineName || String(nextSeg.mode || "").toUpperCase();
+    const fromNm = nextSeg.from?.name || "Start";
+    const toNm = nextSeg.to?.name || "Ziel";
+    const plat = nextSeg.from?.platform ? ` (${tDict.platform} ${nextSeg.from.platform})` : "";
+    nextText = `${nextRole} · ${nextSeg.dep || dep} ${line ? `[${line}] ` : ""}${fromNm}${plat} → ${toNm}`;
+  }
+
+  return {
+    dep,
+    fwdArr,
+    revDep,
+    arr,
+    phaseLbl,
+    countdown: formatCountdown(remainSec),
+    pct: Math.max(0, Math.min(100, pct)),
+    nextText
+  };
+}
+
+function updateTripCountdown() {
+  const resolved = resolveActiveTrip(state.activeTrip);
+  if (!resolved) {
+    stopTripTicker();
+    return;
+  }
+  const prog = computeTripProgress(resolved.t, resolved.selWin);
+  const phEl = $("#tripPhaseLbl");
+  const cdEl = $("#tripCountdownVal");
+  const barEl = $("#tripProgressFill");
+  const nxEl = $("#tripNextStep");
+  if (phEl) phEl.textContent = prog.phaseLbl;
+  if (cdEl) cdEl.textContent = prog.countdown;
+  if (barEl) barEl.style.width = `${prog.pct}%`;
+  if (nxEl) nxEl.textContent = `${T().tripNextStep}: ${prog.nextText}`;
+}
+
+function startTrip(t) {
+  if (!t || !BY_ID[t.id]) return;
+  if (state.activeTrip && state.activeTrip.tourId === t.id) {
+    setTab("unterwegs");
+    return;
+  }
+  if (state.activeTrip && state.activeTrip.reminder) {
+    cancelActiveTripReminder({silent: true});
+  }
+  const selWin = getSelectedWindow(t, state.base, state.day);
+  state.activeTrip = {
+    tourId: t.id,
+    base: state.base,
+    day: state.day,
+    winIdx: selWin.winIdx,
+    revIdx: selWin.revIdx,
+    stayTargetMin: state.stayTargetMin,
+    startedAt: Date.now(),
+    reminder: null
+  };
+  store.set("activeTrip", state.activeTrip);
+  setTab("unterwegs");
+  toast(T().tripStarted);
+}
+
+function stopTrip() {
+  stopTripTicker();
+  if (state.activeTrip && state.activeTrip.reminder) {
+    cancelActiveTripReminder({silent: true});
+  }
+  state.activeTrip = null;
+  store.set("activeTrip", null);
+  renderTripView();
+  if (state.sel && BY_ID[state.sel]) renderDetail(BY_ID[state.sel]);
+  toast(T().tripEnded);
+}
+
+function scheduleTripReminder() {
+  const resolved = resolveActiveTrip(state.activeTrip);
+  if (!resolved) return;
+  const {t, trip, selWin} = resolved;
+  const tDict = T();
+  const target = state.remindTarget === "ret" ? "ret" : "dep";
+  const leadMin = state.remindLead === 30 ? 30 : 15;
+  const targetHHMM = target === "ret" ? (selWin.rev[0]?.dep || "") : (selWin.fwd[0]?.dep || "");
+  const targetM = parseHHMM(targetHHMM);
+  if (targetM === null) {
+    toast(tDict.tripRemindPast);
+    return;
+  }
+  const now = new Date();
+  const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(targetM / 60), targetM % 60, 0, 0);
+  if ((toAbsMin(targetHHMM) ?? 0) >= 1440 && targetDate.getTime() <= now.getTime()) {
+    targetDate.setDate(targetDate.getDate() + 1);
+  }
+  if (targetDate.getTime() <= now.getTime()) {
+    targetDate.setDate(targetDate.getDate() + 1);
+  }
+  const triggerAt = targetDate.getTime() - leadMin * 60000;
+  if (triggerAt <= Date.now()) {
+    toast(tDict.tripRemindPast);
+    return;
+  }
+  const trigDate = new Date(triggerAt);
+  const triggerHHMM = `${String(trigDate.getHours()).padStart(2, "0")}:${String(trigDate.getMinutes()).padStart(2, "0")}`;
+  const id = `sw_trip_${trip.tourId.replace(/[^A-Za-z0-9_-]/g, "_")}_${target}`;
+  const title = tourTitle(t);
+  const targetLbl = target === "ret" ? tDict.tripRemindRet : tDict.tripRemindDep;
+  const body = `${targetLbl} ${targetHHMM} (${tDict.tripRemindLead(leadMin)})`;
+
+  if (trip.reminder && trip.reminder.id) {
+    cancelActiveTripReminder({silent: true});
+  }
+
+  const nextRem = {id, target, leadMin, triggerAt, targetHHMM, triggerHHMM, title, text: body, status: "scheduled"};
+  if (NATIVE && typeof NATIVE.scheduleReminder === "function") {
+    let res = "";
+    try {
+      res = String(NATIVE.scheduleReminder(id, triggerAt, title, body) || "");
+    } catch (e) {
+      res = "error:exception";
+    }
+    if (res === "scheduled") {
+      state.activeTrip.reminder = nextRem;
+      store.set("activeTrip", state.activeTrip);
+      renderTripView();
+      toast(tDict.tripRemindSaved(triggerHHMM));
+    } else if (res === "permission_needed") {
+      nextRem.status = "pending";
+      state.activeTrip.reminder = nextRem;
+      store.set("activeTrip", state.activeTrip);
+      renderTripView();
+    } else if (res === "notifications_disabled") {
+      toast(tDict.tripRemindPermNeeded);
+    } else if (res === "error:past_time") {
+      toast(tDict.tripRemindPast);
+    } else {
+      toast(tDict.tripRemindPermNeeded);
+    }
+    return;
+  }
+
+  if (typeof Notification !== "undefined" && Notification.permission === "default" && typeof Notification.requestPermission === "function") {
+    try {
+      const p = Notification.requestPermission();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    } catch (e) {}
+  }
+  state.activeTrip.reminder = nextRem;
+  store.set("activeTrip", state.activeTrip);
+  armInPageReminder(nextRem);
+  renderTripView();
+  toast(tDict.tripRemindSaved(triggerHHMM));
+}
+
+window.onSwReminderResult = function (id, status) {
+  if (!state.activeTrip || !state.activeTrip.reminder || state.activeTrip.reminder.id !== id) return;
+  const tDict = T();
+  if (status === "scheduled") {
+    state.activeTrip.reminder.status = "scheduled";
+    store.set("activeTrip", state.activeTrip);
+    toast(tDict.tripRemindSaved(state.activeTrip.reminder.triggerHHMM));
+  } else {
+    state.activeTrip.reminder = null;
+    store.set("activeTrip", state.activeTrip);
+    toast(tDict.tripRemindPermNeeded);
+  }
+  if (state.tab === "unterwegs" && !state.sel) renderTripView();
+};
+
+window.swOpenTab = function (tab) {
+  setTab(tab);
+};
+
+function renderTripView() {
+  const tripEl = $("#tripView");
+  if (!tripEl) return;
+  const tDict = T();
+  const resolved = resolveActiveTrip(state.activeTrip);
+  if (!resolved) {
+    stopTripTicker();
+    tripEl.innerHTML = `<div class="tab-empty">
+      <div class="tab-empty-ico" aria-hidden="true">🚆</div>
+      <h2>${esc(tDict.tripEmptyTitle)}</h2>
+      <p>${esc(tDict.tripEmptyBody)}</p>
+      <button type="button" class="act primary" data-go-tab="entdecken">${esc(tDict.tripBrowseBtn)}</button>
+    </div>`;
+    return;
+  }
+
+  const {t, trip, selWin} = resolved;
+  const prog = computeTripProgress(t, selWin);
+  const bInfo = getBaseInfo(trip.base);
+  const dayLbl = (tDict.days.find(d => d[0] === trip.day) || ["", ""])[1];
+  const fwdArr = selWin.fwd[selWin.fwd.length - 1]?.arr || prog.fwdArr;
+  const revsHtml = (selWin.validRevs || []).map((r, i) => {
+    const rDep = r[0]?.dep || "16:00";
+    const rArr = r[r.length - 1]?.arr || "18:00";
+    const rStay = minDiff(fwdArr, rDep);
+    const isLsr = i === selWin.lsrIdx;
+    return `<button type="button" class="trip-ret-btn${isLsr ? " lsr" : ""}" data-ret="${i}" aria-pressed="${i === selWin.revIdx}">${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+  }).join("");
+
+  const rem = trip.reminder;
+  const remStatusHtml = rem
+    ? `<div class="trip-remind-status">
+        <span>${esc(rem.status === "pending" ? tDict.tripRemindPending : tDict.tripRemindActive(rem.triggerHHMM, rem.targetHHMM))}</span>
+        <button type="button" class="mini-btn" id="tripCancelRemindBtn">${esc(tDict.tripRemindCancel)}</button>
+      </div>`
+    : "";
+
+  tripEl.innerHTML = `<div class="trip-shell">
+    <div class="trip-card trip-hero">
+      <h2>${esc(tourTitle(t))}</h2>
+      <p class="trip-sub">${esc(tourSub(t))}</p>
+      <div class="chips">
+        <span class="chip strong">🏠 ${esc(bInfo.name)} · ${esc(dayLbl)}</span>
+        <span class="chip strong">🕘 ${esc(prog.dep)}–${esc(prog.arr)}</span>
+        ${trip.base !== state.base ? `<span class="chip warn">${esc(tDict.tripBaseNote(bInfo.name))}</span>` : ""}
+      </div>
+      <div class="trip-countdown-box">
+        <div class="trip-phase-lbl" id="tripPhaseLbl">${esc(prog.phaseLbl)}</div>
+        <div class="trip-countdown-val" id="tripCountdownVal">${esc(prog.countdown)}</div>
+        <div class="trip-progress-track"><div class="trip-progress-fill" id="tripProgressFill" style="width:${prog.pct}%"></div></div>
+        <div class="trip-next-step" id="tripNextStep">${esc(tDict.tripNextStep)}: ${esc(prog.nextText)}</div>
+      </div>
+      <div class="trip-actions">
+        <button type="button" class="act" id="tripOpenDetailBtn">${esc(tDict.tripDetailBtn)}</button>
+        <button type="button" class="act primary" id="tripOpenAppSheetBtn">🚆 ${esc(tDict.tripAppBtn)}</button>
+        <button type="button" class="act" id="tripStopBtn">${esc(tDict.tripEndBtn)}</button>
+      </div>
+    </div>
+
+    ${revsHtml ? `<div class="trip-card">
+      <h3>🔄 ${esc(tDict.tripLaterReturns)}</h3>
+      <div class="trip-ret-list">${revsHtml}</div>
+    </div>` : ""}
+
+    <div class="trip-card trip-remind-box">
+      <h3>🔔 ${esc(tDict.tripRemindTitle)}</h3>
+      <div class="trip-remind-controls">
+        <button type="button" class="stay-btn" data-rem-target="dep" aria-pressed="${state.remindTarget === "dep"}">${esc(tDict.tripRemindDep)} (${esc(prog.dep)})</button>
+        <button type="button" class="stay-btn" data-rem-target="ret" aria-pressed="${state.remindTarget === "ret"}">${esc(tDict.tripRemindRet)} (${esc(prog.revDep)})</button>
+        <button type="button" class="stay-btn" data-rem-lead="15" aria-pressed="${state.remindLead === 15}">${esc(tDict.tripRemindLead(15))}</button>
+        <button type="button" class="stay-btn" data-rem-lead="30" aria-pressed="${state.remindLead === 30}">${esc(tDict.tripRemindLead(30))}</button>
+        <button type="button" class="act primary" id="tripRemindBtn">${esc(tDict.tripRemindSet)}</button>
+      </div>
+      ${remStatusHtml}
+    </div>
+  </div>`;
+  startTripTicker();
+}
+
+function renderTabViews() {
+  const saved = $("#savedView");
+  const trip = $("#tripView");
+  if (saved) {
+    const showSaved = state.tab === "gemerkt" && !state.sel;
+    saved.hidden = !showSaved;
+    if (showSaved) renderSavedView();
+  }
+  if (trip) {
+    const showTrip = state.tab === "unterwegs" && !state.sel;
+    trip.hidden = !showTrip;
+    if (showTrip) renderTripView();
+    else stopTripTicker();
+  }
+}
+
+$("#savedView")?.addEventListener("click", e => {
+  const favBtn = e.target.closest(".fav-btn[data-fav-id]");
+  if (favBtn) {
+    e.stopPropagation();
+    toggleFav(favBtn.dataset.favId);
+    return;
+  }
+  if (e.target.closest("#favExportBtn")) {
+    exportFavoritesJson();
+    return;
+  }
+  if (e.target.closest("#favImportBtn")) {
+    $("#favImportFile")?.click();
+    return;
+  }
+  if (e.target.closest("#favPasteImportBtn")) {
+    importFavoritesJson($("#favPasteInput")?.value || "");
+    return;
+  }
+  if (e.target.closest("#favCopyJsonBtn")) {
+    const json = buildFavExportJson();
+    const area = $("#favPasteInput");
+    if (area) area.value = json;
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      try {
+        navigator.clipboard.writeText(json).then(() => toast(T().savedCopied), () => {});
+      } catch (err) {}
+    } else {
+      toast(T().savedCopied);
+    }
+    return;
+  }
+  const card = e.target.closest(".saved-card[data-saved-id]");
+  if (card) openTour(card.dataset.savedId);
+});
+
+$("#savedView")?.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  if (e.target.closest(".fav-btn")) return;
+  const card = e.target.closest(".saved-card[data-saved-id]");
+  if (card) {
+    e.preventDefault();
+    openTour(card.dataset.savedId);
+  }
+});
+
+$("#savedView")?.addEventListener("change", e => {
+  const input = e.target.closest("#favImportFile");
+  if (!input) return;
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const done = txt => {
+    input.value = "";
+    importFavoritesJson(txt);
+  };
+  if (typeof file.text === "function") {
+    file.text().then(done, () => {
+      input.value = "";
+      toast(T().savedImportInvalid);
+    });
+  } else {
+    const reader = new FileReader();
+    reader.onload = () => done(reader.result);
+    reader.onerror = () => {
+      input.value = "";
+      toast(T().savedImportInvalid);
+    };
+    reader.readAsText(file);
+  }
+});
+
+$("#tripView")?.addEventListener("click", e => {
+  const resolved = resolveActiveTrip(state.activeTrip);
+  if (!resolved) return;
+  const {t, trip, selWin} = resolved;
+  if (e.target.closest("#tripStopBtn")) {
+    stopTrip();
+    return;
+  }
+  if (e.target.closest("#tripOpenDetailBtn")) {
+    openTour(t.id);
+    return;
+  }
+  if (e.target.closest("#tripOpenAppSheetBtn")) {
+    const urls = buildDetailUrls(t, trip.base, trip.day, {
+      winIdx: selWin.winIdx,
+      revIdx: selWin.revIdx,
+      stayTargetMin: trip.stayTargetMin
+    });
+    openAppSheet(t, urls);
+    return;
+  }
+  const retBtn = e.target.closest(".trip-ret-btn[data-ret]");
+  if (retBtn) {
+    state.activeTrip.revIdx = parseInt(retBtn.dataset.ret, 10) || 0;
+    store.set("activeTrip", state.activeTrip);
+    renderTripView();
+    toast(T().tripReturnUpdated);
+    return;
+  }
+  const targetBtn = e.target.closest("[data-rem-target]");
+  if (targetBtn) {
+    state.remindTarget = targetBtn.dataset.remTarget === "ret" ? "ret" : "dep";
+    renderTripView();
+    return;
+  }
+  const leadBtn = e.target.closest("[data-rem-lead]");
+  if (leadBtn) {
+    state.remindLead = parseInt(leadBtn.dataset.remLead, 10) === 30 ? 30 : 15;
+    renderTripView();
+    return;
+  }
+  if (e.target.closest("#tripRemindBtn")) {
+    scheduleTripReminder();
+    return;
+  }
+  if (e.target.closest("#tripCancelRemindBtn")) {
+    cancelActiveTripReminder();
+    return;
+  }
+});
+
+function setTab(tab, opts) {
+  const next = ["entdecken", "karte", "gemerkt", "unterwegs"].includes(tab) ? tab : "entdecken";
+  closeAppSheet({clear: true});
+  if (state.sel) {
+    state.sel = null;
+    state.winIdx = null;
+    state.revIdx = null;
+    document.body.classList.remove("detail-open");
+    try {
+      if (history.state && history.state.tour) {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+    } catch (e) {}
+  }
+  const mw = $("#mapWrap");
+  if (mw) mw.classList.remove("full", "mini", "menu-open");
+  $("#layerMenu")?.classList.remove("show");
+  document.body.classList.remove("map-full-open");
+
+  state.tab = next;
+  document.body.dataset.tab = next;
+  renderBottomNav();
+  renderHeader();
+  renderTabViews();
+
+  const sheet = $("#mapSheet");
+  if (next === "karte") {
+    if (sheet) sheet.hidden = false;
+    setMapSheetSnap(state.mapSheetSnap || "half");
+    drawOverview();
+    map.invalidateSize();
+    if (!(opts && opts.preserveView)) fitCurrent();
+    renderMapSheet();
+    setTimeout(() => {
+      if (state.tab === "karte" && !state.sel) {
+        map.invalidateSize();
+        if (!(opts && opts.preserveView)) fitCurrent();
+        renderMapSheet();
+      }
+    }, 150);
+  } else {
+    if (sheet) sheet.hidden = true;
+    if (next === "entdecken") {
+      renderList();
+      drawOverview();
+      map.invalidateSize();
+      fitCurrent();
+      setTimeout(() => {
+        if (state.tab === "entdecken" && !state.sel) {
+          map.invalidateSize();
+          fitCurrent();
+        }
+      }, 150);
+    }
+  }
+}
+
+$("#bottomNav")?.addEventListener("click", e => {
+  const btn = e.target.closest(".bnav-btn[data-tab]");
+  if (btn) setTab(btn.dataset.tab);
+});
+document.querySelector("main.content")?.addEventListener("click", e => {
+  const go = e.target.closest("[data-go-tab]");
+  if (go) setTab(go.dataset.goTab);
+});
+
 function renderList() {
   const vis = TOURS.filter(matchesFilter);
+  renderDiscoverHighlights(vis);
   if (!vis.length) {
     $("#list").innerHTML = `<div class="box">${state.lang === "en" ? "No tours match your filter." : "Keine Touren für diesen Filter gefunden."}</div>`;
     return;
@@ -2262,6 +5078,12 @@ function renderList() {
 }
 
 $("#list").addEventListener("click", e => {
+  const favBtn = e.target.closest(".fav-btn[data-fav-id]");
+  if (favBtn) {
+    e.stopPropagation();
+    toggleFav(favBtn.dataset.favId);
+    return;
+  }
   const head = e.target.closest(".region-head");
   if (head) {
     const grp = head.closest(".region-group");
@@ -2555,7 +5377,7 @@ function creditHTML(t) {
 function renderSegmentStep(s, idx, allSegs, globalOffset) {
   const tDict = T();
   const mode = String(s.mode || (s.kind === "walk" ? "walk" : "re")).toLowerCase();
-  const bgCol = MODE_COLORS[mode] || "#0b6aa2";
+  const bgCol = MODE_COLORS[mode] || "#0F4C5C";
   const icon = MODE_ICONS[mode] || "🚆";
   const dep = s.dep || "08:00";
   const arr = s.arr || "08:45";
@@ -2585,9 +5407,9 @@ function renderSegmentStep(s, idx, allSegs, globalOffset) {
 
   const inter = Array.isArray(s.intermediateStops) ? s.intermediateStops.filter(x => x && x.name) : [];
   const interHtml = inter.length > 0
-    ? `<details class="stops-exp"><summary>${esc(tDict.stopsCount(inter.length))}</summary><ul class="stops-list">${
+    ? `<div class="stops-exp"><button type="button" class="stops-btn" aria-expanded="false">▸ ${esc(tDict.stopsCount(inter.length))}</button><ul class="stops-list" hidden>${
         inter.map(st => `<li>${esc(st.arr || st.dep || "")} ${esc(st.name)}${st.platform ? ` (${tDict.platform} ${esc(st.platform)})` : ""}</li>`).join("")
-      }</ul></details>`
+      }</ul></div>`
     : "";
 
   const lineLbl = s.kind === "walk" ? tDict.walkLabel : s.kind === "hike" ? tDict.hikeLabel : (s.line || s.lineName || mode.toUpperCase());
@@ -2598,7 +5420,7 @@ function renderSegmentStep(s, idx, allSegs, globalOffset) {
   const stepDbUrl = isRide ? buildDbUrl(stepFrom, stepTo, state.day, dep) : "";
   const stepGmUrl = buildGmapsUrl(stepFrom, s.to || {lat: 49.35, lon: 8.15}, isRide ? "transit" : "walking");
 
-  return `<div class="st" id="step-${stepId}" data-step="${stepId}" data-i="${stepId}" style="--mc:${bgCol}">
+  return `<div class="st" id="tl-step-${stepId}" data-step="${stepId}" data-i="${stepId}" style="--mc:${bgCol}">
     <div class="st-head">
       <span class="time">${esc(dep)} → ${esc(arr)}</span>
       <span class="badge mode-badge" style="background-color:${bgCol};color:#ffffff">${icon} ${esc(lineLbl)}</span>
@@ -2644,11 +5466,11 @@ function elevProfileHTML(t) {
       <line x1="${PL}" y1="${y(lo).toFixed(1)}" x2="${W - R}" y2="${y(lo).toFixed(1)}" stroke="var(--border)" stroke-dasharray="3 3"/>
       <text class="elev-axis" x="${PL - 4}" y="${(y(hi) + 3).toFixed(1)}" text-anchor="end">${hi} m</text>
       <text class="elev-axis" x="${PL - 4}" y="${(y(lo) + 3).toFixed(1)}" text-anchor="end">${lo} m</text>
-      <path d="${area}" fill="#15803d" fill-opacity="0.18"/>
-      <path d="${line}" fill="none" stroke="#15803d" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="${area}" fill="var(--ok)" fill-opacity="0.18"/>
+      <path d="${line}" fill="none" stroke="var(--ok)" stroke-width="2.2" stroke-linejoin="round"/>
       ${ticks}
       <line class="elev-cursor" x1="0" y1="${TOP}" x2="0" y2="${H - B}" stroke="var(--text-2)" stroke-width="1" visibility="hidden"/>
-      <circle class="elev-dot" r="4.5" cx="0" cy="0" fill="#f59e0b" stroke="var(--surface)" stroke-width="1.5" visibility="hidden"/>
+      <circle class="elev-dot" r="4.5" cx="0" cy="0" fill="var(--amber)" stroke="var(--surface)" stroke-width="1.5" visibility="hidden"/>
     </svg>
     <div class="elev-read" aria-live="polite">${esc(tDict.elevHint)}</div>
   </div>`;
@@ -2727,24 +5549,21 @@ function onElevPointer(e) {
   }
 }
 
-function renderDetail(t) {
-  if (!t) return;
-  const tDict = T();
-  const bInfo = getBaseInfo(state.base);
-  const {fwd, rev, wins, validRevs, revIdx, lsr, fallback, reason, winIdx, recIdx, lsrIdx} = getSelectedWindow(t, state.base, state.day);
+function isPkgInstalled(pkg) {
+  if (!pkg || !NATIVE || typeof NATIVE.isInstalled !== "function") return false;
+  try { return Boolean(NATIVE.isInstalled(pkg)); } catch (e) { return false; }
+}
+
+function buildDetailUrls(t, baseKey, dayKey, winOpts) {
+  const bKey = baseKey || state.base;
+  const dKey = dayKey || state.day;
+  const bInfo = getBaseInfo(bKey);
+  const selWin = getSelectedWindow(t, bKey, dKey, winOpts);
+  const {fwd} = selWin;
   const title = tourTitle(t);
-  const sub = tourSub(t);
   const h = t.hike || {};
   const hasTrack = Boolean(h.hasGpx && h.poly5);
   const dep = fwd[0]?.dep || "08:04";
-  const arr = rev[rev.length - 1]?.arr || "18:42";
-  const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
-  const revDep = rev[0]?.dep || "16:30";
-  const stayMin = minDiff(fwdArr, revDep);
-  const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
-  const regLbl = tDict.reg[t.region] || t.region || "";
-  const imgSrc = t.img || `img/${t.id}.jpg`;
-
   const viasList = Array.isArray(t.transit?.vias) ? t.transit.vias.filter(v => v && (v.name || v.stopName)) : [];
   const rawStart = t.transit?.startStop || fwd[fwd.length - 1]?.to || {name: title, lat: 49.35, lon: 8.15};
   const rawEnd = t.transit?.endStop || rawStart;
@@ -2754,32 +5573,357 @@ function renderDetail(t) {
   const endStop = (!isSameAsBase(rawEnd) && cleanStopName(rawEnd, "") !== cleanStopName(destStop, ""))
     ? rawEnd
     : (viasList[1] || destStop);
-  const dbWebUrl = buildDbUrl(bInfo, destStop, state.day, dep);
-  const dbPrimaryUrl = buildDbAppUrl(bInfo, destStop, state.day, dep);
-  const mvvAppUrl = buildMvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
-  const nvvAppUrl = buildNvvAppUrl(bInfo, destStop, state.day, dep, {roundTrip: true, endStop});
-  const myVrnUrl = buildMyVrnUrl(destStop, title);
-  const naviUrl = buildGeoUrl(destStop, title);
-  const mvvWebUrl = buildMvvWebUrl(bInfo, destStop, state.day, dep);
-  const gmapsMainUrl = buildGmapsUrl(bInfo, destStop, "transit");
-  const mapyUrl = hasTrack ? buildMapyRouteUrl(t) : buildMapyShowUrl(destStop);
-  const loopBadge = isClosedLoopHike(t) ? tDict.loopHikeBadge : tDict.roundTripBadge;
-  const kmStr = Number(h.distKm || 0).toFixed(1).replace(".", ",");
-  const hmUp = Math.round(Number(h.elevGainM || 0));
+  return {
+    bInfo,
+    selWin,
+    dep,
+    hasTrack,
+    destStop,
+    endStop,
+    dbWebUrl: buildDbUrl(bInfo, destStop, dKey, dep),
+    dbPrimaryUrl: buildDbAppUrl(bInfo, destStop, dKey, dep),
+    mvvAppUrl: buildMvvAppUrl(bInfo, destStop, dKey, dep, {roundTrip: true, endStop}),
+    nvvAppUrl: buildNvvAppUrl(bInfo, destStop, dKey, dep, {roundTrip: true, endStop}),
+    myVrnUrl: buildMyVrnUrl(destStop, title),
+    naviUrl: buildGeoUrl(destStop, title),
+    mvvWebUrl: buildMvvWebUrl(bInfo, destStop, dKey, dep),
+    gmapsMainUrl: buildGmapsUrl(bInfo, destStop, "transit"),
+    mapyUrl: hasTrack ? buildMapyRouteUrl(t) : buildMapyShowUrl(destStop)
+  };
+}
 
+function getAppCatalog(urls) {
+  const tDict = T();
+  return [
+    {key: "db", label: tDict.dbPrimary, short: "DB", url: urls.dbPrimaryUrl, pkg: "de.hafas.android.db", start: true, dest: true, vias: false, time: true, external: true},
+    {key: "mvv", label: tDict.mvvAppBtn, short: "MVV", url: urls.mvvAppUrl, pkg: "de.hafas.android.sbm", start: true, dest: true, vias: true, time: true, external: false},
+    {key: "nvv", label: tDict.nvvAppBtn, short: "NVV", url: urls.nvvAppUrl, pkg: "de.hafas.android.nvv", start: true, dest: true, vias: true, time: true, external: false},
+    {key: "myvrn", label: tDict.myVrnBtn, short: "myVRN", url: urls.myVrnUrl, pkg: "com.mdv.VRNCompanion", start: false, dest: true, vias: false, time: false, external: false},
+    {key: "dbweb", label: tDict.dbBtn, short: "DB Web", url: urls.dbWebUrl, pkg: null, start: true, dest: true, vias: false, time: true, external: true},
+    {key: "mvvweb", label: tDict.mvvWebBtn, short: "MVV Web", url: urls.mvvWebUrl, pkg: null, start: true, dest: true, vias: true, time: true, external: true},
+    {key: "gmaps", label: tDict.gmapsBtn, short: "Maps", url: urls.gmapsMainUrl, pkg: null, start: true, dest: true, vias: false, time: false, external: true},
+    {key: "geo", label: tDict.naviBtn, short: "Geo", url: urls.naviUrl, pkg: null, start: false, dest: true, vias: false, time: false, external: false, noPref: true}
+  ];
+}
+
+function renderAppSheet(t, urls) {
+  const sheetTitle = $("#appSheetTitle");
+  const sheetSub = $("#appSheetSub");
+  const sheetClose = $("#closeAppSheet");
+  const body = $("#appSheetBody");
+  if (!body) return;
+  const tDict = T();
+  if (sheetTitle) sheetTitle.textContent = tDict.appSheetTitle;
+  if (sheetClose) {
+    sheetClose.textContent = tDict.appSheetClose;
+    sheetClose.setAttribute("aria-label", tDict.appSheetClose);
+  }
+  if (!t || !urls) {
+    if (sheetSub) sheetSub.textContent = "";
+    body.innerHTML = "";
+    return;
+  }
+  const destNm = cleanStopName(urls.destStop, tourTitle(t));
+  if (sheetSub) {
+    sheetSub.textContent = `${tourTitle(t)} · ${urls.dep} (${urls.bInfo.name} → ${destNm})`;
+  }
+  const apps = getAppCatalog(urls);
+  const capCell = ok => ok
+    ? `<span class="cap-cell cap-yes" aria-label="Ja">✓</span>`
+    : `<span class="cap-cell cap-no" aria-label="Nein">—</span>`;
+  const rowsHtml = apps.map(app => {
+    const isPref = state.prefApp === app.key;
+    const inst = isPkgInstalled(app.pkg);
+    const attrs = app.external ? ` target="_blank" rel="noopener"` : "";
+    const badges = [];
+    if (isPref) badges.push(`<span class="app-pref-badge">★ ${esc(tDict.appPrefBadge)}</span>`);
+    if (inst) badges.push(`<span class="app-inst-badge">✓ ${esc(tDict.appInstalled)}</span>`);
+    const prefCtrl = app.noPref
+      ? `<span></span>`
+      : `<button type="button" class="app-pref-btn" data-pref-app="${esc(app.key)}" aria-pressed="${isPref}" title="${esc(tDict.appSetPref)}" aria-label="${esc(tDict.appSetPref)}: ${esc(app.short)}">${isPref ? "★" : "☆"}</button>`;
+    return `<div class="cap-row${isPref ? " is-preferred" : ""}" data-app-row="${esc(app.key)}">
+      <div class="cap-app-cell">
+        <a class="app-sheet-link" href="${esc(app.url)}" data-app="${esc(app.key)}"${attrs}>${esc(app.label)}</a>
+        ${badges.length ? `<div class="app-badge-row">${badges.join("")}</div>` : ""}
+      </div>
+      ${capCell(app.start)}
+      ${capCell(app.dest)}
+      ${capCell(app.vias)}
+      ${capCell(app.time)}
+      ${prefCtrl}
+    </div>`;
+  }).join("");
+
+  body.innerHTML = `
+    <div class="cap-grid" role="table" aria-label="${esc(tDict.appSheetTitle)}">
+      <div class="cap-row cap-head" role="row">
+        <span>${esc(tDict.capApp)}</span>
+        <span class="cap-cell">${esc(tDict.capStart)}</span>
+        <span class="cap-cell">${esc(tDict.capDest)}</span>
+        <span class="cap-cell">${esc(tDict.capVias)}</span>
+        <span class="cap-cell">${esc(tDict.capTime)}</span>
+        <span class="cap-cell">${esc(tDict.capPref)}</span>
+      </div>
+      ${rowsHtml}
+    </div>
+    <p class="app-sheet-hint">${esc(tDict.appHint)}</p>
+  `;
+}
+
+let appSheetContext = null;
+
+function openAppSheet(customTour, customUrls) {
+  const t = customTour || (state.sel ? BY_ID[state.sel] : null);
+  if (!t) return;
+  const urls = customUrls || buildDetailUrls(t);
+  appSheetContext = {tour: t, urls};
+  renderAppSheet(t, urls);
+  const el = $("#appSheet");
+  if (el) {
+    el.hidden = false;
+    el.setAttribute("role", "dialog");
+    el.classList.add("show");
+  }
+}
+
+function closeAppSheet(opts) {
+  const el = $("#appSheet");
+  if (el) {
+    el.classList.remove("show");
+    el.removeAttribute("role");
+    el.hidden = true;
+  }
+  if (opts && opts.clear) {
+    appSheetContext = null;
+    renderAppSheet(null, null);
+  }
+}
+
+function setPrefApp(key, opts) {
+  if (!VALID_PREF_APPS.includes(key)) return;
+  state.prefApp = key;
+  store.set("prefApp", key);
+  const t = (appSheetContext && appSheetContext.tour) || (state.sel ? BY_ID[state.sel] : null);
+  if (t) {
+    const urls = (appSheetContext && appSheetContext.tour === t && appSheetContext.urls)
+      ? appSheetContext.urls
+      : buildDetailUrls(t);
+    const meta = getAppCatalog(urls).find(a => a.key === key);
+    const pill = document.querySelector("#openAppSheetBtn .sticky-app-pill");
+    if (pill && meta) pill.textContent = meta.short;
+    renderAppSheet(t, urls);
+    if (opts && opts.notify && meta) toast(T().appPrefSaved(meta.short));
+  }
+}
+
+function compactLegHTML(segs, stepOffset, isReturn) {
+  const tDict = T();
+  if (!Array.isArray(segs) || !segs.length) return "";
+  const rides = segs.filter(s => s.kind === "ride");
+  const primary = rides[0] || segs[0];
+  const primaryMode = String(primary.mode || (primary.kind === "walk" ? "walk" : "re")).toLowerCase();
+  const bgCol = MODE_COLORS[primaryMode] || "#0F4C5C";
+  const dep = segs[0]?.dep || (isReturn ? "16:30" : "08:04");
+  const arr = segs[segs.length - 1]?.arr || (isReturn ? "18:42" : "10:15");
+  const dur = Math.max(0, minDiff(dep, arr));
+  const fromName = segs[0]?.from?.name || "Start";
+  const toName = segs[segs.length - 1]?.to?.name || "Ziel";
+
+  let fromPlat = segs[0]?.from?.platform || (segs[0]?.kind === "ride" && primaryMode !== "bus" ? "1" : "");
+  let toPlat = segs[segs.length - 1]?.to?.platform || "";
+  if (!fromPlat && !toPlat) {
+    const anyPlat = segs.find(s => (s.from && s.from.platform) || (s.to && s.to.platform) || (s.kind === "ride" && String(s.mode || "").toLowerCase() !== "bus"));
+    if (anyPlat) {
+      fromPlat = anyPlat.from?.platform || (anyPlat.kind === "ride" && String(anyPlat.mode || "").toLowerCase() !== "bus" ? "1" : "");
+      toPlat = anyPlat.to?.platform || "";
+    }
+  }
+
+  const badgeSegs = rides.length ? rides.slice(0, 3) : [primary];
+  const badgesHtml = badgeSegs.map(s => {
+    const m = String(s.mode || (s.kind === "walk" ? "walk" : "re")).toLowerCase();
+    const col = MODE_COLORS[m] || "#0F4C5C";
+    const ico = MODE_ICONS[m] || "🚆";
+    const lbl = s.kind === "walk" ? tDict.walkLabel : s.kind === "hike" ? tDict.hikeLabel : (s.line || s.lineName || m.toUpperCase());
+    return `<span class="badge mode-badge" style="background-color:${col};color:#ffffff">${ico} ${esc(lbl)}</span>`;
+  }).join("");
+
+  const transfers = Math.max(0, rides.length - 1);
+  let firstGap = null;
+  if (transfers >= 1) {
+    for (let i = 0; i < segs.length; i++) {
+      const s = segs[i];
+      if (s.kind !== "ride") continue;
+      let tv = s.transfer != null ? Number(s.transfer) : null;
+      if (tv === null) {
+        for (let k = i + 1; k < segs.length; k++) {
+          if (segs[k].kind === "ride") {
+            tv = minDiff(s.arr, segs[k].dep);
+            break;
+          }
+        }
+      }
+      if (tv !== null && tv >= 4 && tv <= 240) {
+        firstGap = tv;
+        break;
+      }
+    }
+  }
+  const transferBadge = transfers === 0
+    ? `<span class="chip">${esc(tDict.kpiDirect)}</span>`
+    : `<span class="chip ok">🔄 ${esc(transfers === 1 ? tDict.transferSingle : tDict.transfersCount(transfers))}${firstGap ? ` · ${esc(tDict.transfer(firstGap))}` : ""}</span>`;
+
+  const seenWarn = new Set();
+  const warnsHtml = segs.flatMap(s => Array.isArray(s.warnings) ? s.warnings : []).map(w => {
+    const txt = w.text || w.type || "Hinweis";
+    if (seenWarn.has(txt)) return "";
+    seenWarn.add(txt);
+    return `<span class="chip warn">⚠️ ${esc(txt)}</span>`;
+  }).join("");
+
+  const interAll = [];
+  segs.forEach(s => {
+    if (Array.isArray(s.intermediateStops)) {
+      s.intermediateStops.forEach(st => { if (st && st.name) interAll.push(st); });
+    }
+  });
+  const interHtml = interAll.length > 0
+    ? `<details class="stops-exp"><summary>${esc(tDict.stopsCount(interAll.length))}</summary><ul class="stops-list">${
+        interAll.map(st => `<li>${esc(st.arr || st.dep || "")} ${esc(st.name)}${st.platform ? ` (${esc(tDict.platform)} ${esc(st.platform)})` : ""}</li>`).join("")
+      }</ul></details>`
+    : "";
+
+  const roleLabel = isReturn ? tDict.flowRet : tDict.flowDep;
+  return `<div class="st compact-step" data-step="${stepOffset}" data-i="${stepOffset}" style="--mc:${bgCol}">
+    <div class="st-head">
+      <span class="time">${esc(roleLabel)}: ${esc(dep)} → ${esc(arr)}</span>
+      ${badgesHtml}
+      <span class="dur">${esc(fmtDur(dur))}</span>
+    </div>
+    <div class="route">
+      ${esc(fromName)}${fromPlat ? ` <small>(${esc(tDict.platform)} ${esc(fromPlat)})</small>` : ""}
+      → ${esc(toName)}${toPlat ? ` <small>(${esc(tDict.platform)} ${esc(toPlat)})</small>` : ""}
+    </div>
+    <div class="chips">${transferBadge}${warnsHtml}</div>
+    ${interHtml}
+  </div>`;
+}
+
+function renderDetail(t) {
+  if (!t) return;
+  const tDict = T();
+  const urls = buildDetailUrls(t);
+  const {bInfo, selWin, dep, hasTrack, destStop, endStop, mapyUrl} = urls;
+  const {fwd, rev, wins, validRevs, revIdx, lsr, fallback, reason, winIdx, recIdx, lsrIdx} = selWin;
+  const title = tourTitle(t);
+  const sub = tourSub(t);
+  const h = t.hike || {};
+  const arr = rev[rev.length - 1]?.arr || "18:42";
+  const fwdArr = fwd[fwd.length - 1]?.arr || "10:15";
+  const revDep = rev[0]?.dep || "16:30";
+  const stayMin = (fwd.length && rev.length) ? Math.max(0, minDiff(fwdArr, revDep)) : 0;
+  const diffLbl = tDict.diff[t.difficulty] || t.difficulty || "leicht";
+  const regLbl = tDict.reg[t.region] || t.region || "";
+  const imgSrc = t.img || `img/${t.id}.jpg`;
+
+  const loopBadge = isClosedLoopHike(t) ? tDict.loopHikeBadge : tDict.roundTripBadge;
+  const hasKm = Number(h.distKm) > 0;
+  const hasWalk = Number(h.walkMin) > 0;
+  const hasElev = Boolean(h.hasGpx) || Number(h.elevGainM) > 0 || Number(h.elevLossM) > 0;
+  const kmStr = Number(h.distKm || 0).toFixed(1).replace(".", state.lang === "en" ? "." : ",");
+  const hmUp = Math.round(Number(h.elevGainM || 0));
+  const hmDown = Math.round(Number(h.elevLossM || 0));
+
+  const rk = ["pfaelzerwald", "schwarzwald", "odenwald"].includes(t.region) ? t.region : "weitere";
   const metaChips = [
     `<span class="chip strong">🏠 ${esc(bInfo.name)}</span>`,
     `<span class="chip strong">🕘 ${esc(dep)} – ${esc(arr)}</span>`,
     `<span class="chip ok">${esc(loopBadge)}</span>`,
-    `<span class="chip">${esc(regLbl)}</span>`,
+    `<span class="chip reg-chip" data-region="${esc(rk)}">${esc(regLbl)}</span>`,
     `<span class="chip">${esc(diffLbl)}</span>`
   ];
-  if (h.hasGpx && h.distKm) {
-    metaChips.push(`<span class="chip ok">🥾 ${kmStr} km · ↗ ${hmUp} hm · ${fmtDur(h.walkMin || 180)} ${tDict.hikeLabel}</span>`);
-  }
   if (t.tag === "google_maps") {
     metaChips.push(`<span class="chip">📍 Google Maps</span>`);
   }
+
+  // Phase 4: 4 KPI tiles
+  const fwdDurMin = fwd.length ? Math.max(0, minDiff(dep, fwdArr)) : 0;
+  const fwdRides = fwd.filter(s => s.kind === "ride");
+  const fwdTransfers = Math.max(0, fwdRides.length - 1);
+  const kpiTransitVal = fwd.length ? fmtDur(fwdDurMin) : "—";
+  const kpiTransitSub = fwd.length
+    ? (fwdTransfers === 0 ? tDict.kpiDirect : tDict.kpiTransfers(fwdTransfers))
+    : "—";
+  const kpiHikeVal = hasKm ? `${kmStr} km` : (t.transit?.kind === "shortcut_360" ? tDict.kpiRoundTrip : diffLbl);
+  const kpiHikeSub = hasWalk ? fmtDur(h.walkMin) : (hasKm ? tDict.hikeLabel : diffLbl);
+  const kpiElevVal = hasElev ? `↗ ${hmUp} hm` : "—";
+  const kpiElevSub = hasElev ? `↘ ${hmDown} hm` : regLbl;
+  const kpiStayVal = stayMin > 0 ? fmtDur(stayMin) : "—";
+  const kpiStaySub = (fwd.length && rev.length) ? `${fwdArr} – ${revDep}` : "";
+
+  const kpiHtml = `<div class="kpi-grid">
+    <div class="kpi-tile">
+      <div class="kpi-label">🚆 ${esc(tDict.kpiTransit)}</div>
+      <div class="kpi-val">${esc(kpiTransitVal)}</div>
+      <div class="kpi-sub">${esc(kpiTransitSub)}</div>
+    </div>
+    <div class="kpi-tile">
+      <div class="kpi-label">🥾 ${esc(tDict.kpiHike)}</div>
+      <div class="kpi-val">${esc(kpiHikeVal)}</div>
+      <div class="kpi-sub">${esc(kpiHikeSub)}</div>
+    </div>
+    <div class="kpi-tile">
+      <div class="kpi-label">⛰️ ${esc(tDict.kpiElev)}</div>
+      <div class="kpi-val">${esc(kpiElevVal)}</div>
+      <div class="kpi-sub">${esc(kpiElevSub)}</div>
+    </div>
+    <div class="kpi-tile">
+      <div class="kpi-label">🕒 ${esc(tDict.kpiStay)}</div>
+      <div class="kpi-val">${esc(kpiStayVal)}</div>
+      <div class="kpi-sub">${esc(kpiStaySub)}</div>
+    </div>
+  </div>`;
+
+  // Phase 5: Tagesplan (05–24h) midnight-safe timeline bar (non-button elements)
+  const fwdDepAbs = toAbsMin(dep) ?? 480;
+  const fwdArrAbs = fwdDepAbs + fwdDurMin;
+  const revDepAbs = fwdArrAbs + stayMin;
+  const revDurMin = rev.length ? Math.max(0, minDiff(revDep, arr)) : 0;
+  const revArrAbs = revDepAbs + revDurMin;
+  const clampTp = (s, e) => {
+    const cs = Math.max(300, Math.min(1440, s));
+    const ce = Math.max(cs, Math.min(1440, e));
+    return {
+      left: ((cs - 300) / 1140 * 100).toFixed(2),
+      width: ((ce - cs) / 1140 * 100).toFixed(2),
+      wraps: e > 1440
+    };
+  };
+  const tpFwd = clampTp(fwdDepAbs, fwdArrAbs);
+  const tpStay = clampTp(fwdArrAbs, revDepAbs);
+  const tpRev = clampTp(revDepAbs, revArrAbs);
+  const tpTicks = [5, 9, 13, 17, 21, 24].map((hr, idx, arrTicks) => {
+    const pct = ((hr * 60 - 300) / 1140 * 100).toFixed(2);
+    const attr = idx === 0 ? " data-first" : idx === arrTicks.length - 1 ? " data-last" : "";
+    return `<span class="tp-tick" style="left:${pct}%"${attr}>${String(hr).padStart(2, "0")}</span>`;
+  }).join("");
+  const tpHtml = `<div class="tagesplan" aria-label="${esc(tDict.tagesplanTitle)}">
+    <div class="tp-head">
+      <span>${esc(tDict.tagesplanTitle)}</span>
+      <span class="tp-span">${esc(dep)}–${esc(arr)}${tpRev.wraps ? " (+1)" : ""}</span>
+    </div>
+    <div class="tp-track">
+      ${Number(tpFwd.width) > 0 ? `<div class="tp-seg tp-fwd" style="left:${tpFwd.left}%;width:${tpFwd.width}%" title="${esc(tDict.tpOutbound)}: ${esc(dep)}–${esc(fwdArr)}"></div>` : ""}
+      ${Number(tpStay.width) > 0 ? `<div class="tp-seg tp-stay" style="left:${tpStay.left}%;width:${tpStay.width}%" title="${esc(tDict.tpStay)}: ${esc(fwdArr)}–${esc(revDep)}"></div>` : ""}
+      ${Number(tpRev.width) > 0 ? `<div class="tp-seg tp-rev" style="left:${tpRev.left}%;width:${tpRev.width}%" title="${esc(tDict.tpReturn)}: ${esc(revDep)}–${esc(arr)}"></div>` : ""}
+    </div>
+    <div class="tp-axis">${tpTicks}</div>
+    <div class="tp-legend">
+      <span class="tp-leg-item"><span class="tp-swatch fwd"></span>${esc(tDict.tpOutbound)} ${esc(fmtDur(fwdDurMin))}</span>
+      <span class="tp-leg-item"><span class="tp-swatch stay"></span>${esc(tDict.tpStay)} ${esc(fmtDur(stayMin))}</span>
+      <span class="tp-leg-item"><span class="tp-swatch rev"></span>${esc(tDict.tpReturn)} ${esc(fmtDur(revDurMin))}${tpRev.wraps ? " (+1)" : ""}</span>
+    </div>
+  </div>`;
 
   const winBtn = (w, i) => {
     const wDep = w[0]?.dep || "08:00";
@@ -2831,8 +5975,22 @@ function renderDetail(t) {
     ? `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name} → 🥾 → ${endStop.name} → ${bInfo.name}`
     : `${state.lang === "en" ? "Closed loop" : "Rundkurs"}: ${bInfo.name} → ${destStop.name || title} → 🥾 → ${bInfo.name}`;
 
+  const fwdEndName = fwd[fwd.length - 1]?.to?.name || destStop.name || title;
+  const fwdEndPlat = fwd[fwd.length - 1]?.to?.platform || "";
+  const compactOutHtml = compactLegHTML(fwd, 0, false);
+  const compactRetHtml = compactLegHTML(rev, fwd.length, true);
+  const totalLegs = fwd.length + rev.length;
+
   const gpxLabel = NATIVE ? tDict.gpxNative : tDict.gpxDownload;
-  const mapyLabel = hasTrack ? tDict.mapyRoute : tDict.mapyDest;
+  const mapyLabel = hasTrack ? tDict.openInMapyBtn : tDict.mapyDest;
+  const apps = getAppCatalog(urls);
+  const prefMeta = apps.find(a => a.key === state.prefApp) || apps[1];
+
+  // Phase 6: Keep #appSheet links populated and updated in DOM on every renderDetail
+  renderAppSheet(t, urls);
+
+  const favActive = isFav(t.id);
+  const tripActiveHere = Boolean(state.activeTrip && state.activeTrip.tourId === t.id);
 
   $("#detail").innerHTML = `
     <div class="hero">
@@ -2841,32 +5999,21 @@ function renderDetail(t) {
       <h2>${esc(title)}</h2>
       <p>${esc(sub)}</p>
       <div class="chips">${metaChips.join("")}</div>
-      <div class="actions primary-actions">
-        <button type="button" class="act${hasTrack && NATIVE ? " primary" : ""}" id="gpxBtn" data-a="gpx">${esc(gpxLabel)}</button>
-        <a class="act${hasTrack ? " primary" : ""}" href="${esc(mapyUrl)}" target="_blank" rel="noopener" data-app="mapy">${esc(mapyLabel)}</a>
-        <a class="act${hasTrack ? "" : " primary"}" href="${esc(dbPrimaryUrl)}" target="_blank" rel="noopener" data-app="db">${esc(tDict.dbPrimary)}</a>
+      <div class="hero-cta-row">
+        <button type="button" class="act" id="detailFavBtn" data-fav-id="${esc(t.id)}" aria-pressed="${favActive}">${esc(favActive ? tDict.detailFavSaved : tDict.detailFavAdd)}</button>
+        <button type="button" class="act primary" id="startTripBtn">${esc(tripActiveHere ? tDict.openTripBtn : tDict.startTripBtn)}</button>
       </div>
-      <details class="more-apps">
-        <summary>${esc(tDict.moreApps)}</summary>
-        <div class="actions">
-          <a class="act" href="${esc(mvvAppUrl)}" data-app="mvv">${esc(tDict.mvvAppBtn)}</a>
-          <a class="act" href="${esc(nvvAppUrl)}" data-app="nvv">${esc(tDict.nvvAppBtn)}</a>
-          <a class="act" href="${esc(myVrnUrl)}" data-app="myvrn">${esc(tDict.myVrnBtn)}</a>
-          <a class="act" href="${esc(naviUrl)}" data-app="geo">${esc(tDict.naviBtn)}</a>
-          <a class="act" href="${esc(dbWebUrl)}" target="_blank" rel="noopener">${esc(tDict.dbBtn)}</a>
-          <a class="act" href="${esc(mvvWebUrl)}" target="_blank" rel="noopener">${esc(tDict.mvvWebBtn)}</a>
-          <a class="act" href="${esc(gmapsMainUrl)}" target="_blank" rel="noopener">${esc(tDict.gmapsBtn)}</a>
-        </div>
-        <p class="app-hint">${esc(tDict.appHint)}</p>
-      </details>
     </div>
+
+    ${kpiHtml}
 
     ${elevProfileHTML(t)}
 
     ${fallback ? `<div class="box"><span class="chip warn">${esc(tDict.unroutableNotice(reason))}</span></div>` : ""}
 
-    <div class="box">
+    <div class="box schedule-box">
       <h4>${esc(tDict.windowsTitle)} · ${esc(tDict.dayLong[state.day])}</h4>
+      ${tpHtml}
       ${winsHtml}
       <h4 style="margin-top:10px">⏱ ${esc(tDict.stayChooserTitle)}</h4>
       <div class="stay-row">${stayBtnsHtml}</div>
@@ -2877,28 +6024,43 @@ function renderDetail(t) {
       </div>
     </div>
 
-    <div class="box">
-      <h4>${esc(tDict.outboundTitle)} (${esc(dep)} → ${esc(fwdArr)})</h4>
-      <div class="tl">${fwdStepsHtml}</div>
-    </div>
-
-    <div class="box">
-      <h4>🥾 ${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</h4>
-      <p style="margin:0 0 4px;font-size:12.5px;color:var(--text-2)">
-        ${h.hasGpx ? `${kmStr} km · ${hmUp} hm (${tDict.hikeLabel} ${fmtDur(h.walkMin || 180)} + ≥30 Min. Puffer)` : `${tDict.walkLabel} / Aufenthalt vor Ort: ${fmtDur(stayMin)}`}
-      </p>
-      <p style="margin:0;font-size:12px;color:var(--text-2)">🔄 ${esc(loopFlowTxt)}</p>
-    </div>
-
-    <div class="box">
-      <h4>${esc(tDict.returnTitle)} (${esc(revDep)} → ${esc(arr)})</h4>
-      <div class="tl">${revStepsHtml}</div>
+    <div class="box day-flow-box">
+      <h4>🧭 ${esc(tDict.flowTitle)}</h4>
+      <div class="day-flow">
+        ${compactOutHtml}
+        <div class="flow-node">
+          <div>📍 <strong>${esc(tDict.flowArr)} ${esc(fwdArr)}</strong> · ${esc(fwdEndName)}${fwdEndPlat ? ` (${esc(tDict.platform)} ${esc(fwdEndPlat)})` : ""}</div>
+        </div>
+        <div class="flow-node flow-hike">
+          <div>🥾 <strong>${esc(tDict.hikeStayTitle)} (${esc(fmtDur(stayMin))})</strong></div>
+          <div class="flow-node-sub">${hasKm ? `${kmStr} km · ↗ ${hmUp} hm` : tDict.walkLabel} · ${esc(loopFlowTxt)}</div>
+        </div>
+        ${compactRetHtml}
+      </div>
+      ${totalLegs > 0 ? `<details class="tl-details">
+        <summary>${esc(tDict.detailsAllLegs(totalLegs))}</summary>
+        <div class="tl-details-body">
+          <h4>${esc(tDict.outboundTitle)} (${esc(dep)} → ${esc(fwdArr)})</h4>
+          <div class="tl">${fwdStepsHtml}</div>
+          <h4 style="margin-top:10px">${esc(tDict.returnTitle)} (${esc(revDep)} → ${esc(arr)})</h4>
+          <div class="tl">${revStepsHtml}</div>
+        </div>
+      </details>` : ""}
     </div>
 
     ${(sunTxt || tipsTxt) ? `<div class="box">
       ${sunTxt ? `<p style="margin:0 0 6px;font-size:12.5px">☀️ ${esc(sunTxt)}</p>` : ""}
       ${tipsTxt ? `<p style="margin:0;font-size:12.5px">💡 ${esc(tipsTxt)}</p>` : ""}
     </div>` : ""}
+
+    <div class="detail-sticky-bar" id="detailStickyBar">
+      <button type="button" class="act primary" id="openAppSheetBtn">
+        <span>🚆 ${esc(tDict.connectBtn)}</span>
+        <span class="sticky-app-pill">${esc(prefMeta.short)}</span>
+      </button>
+      <a class="act" href="${esc(mapyUrl)}" target="_blank" rel="noopener" data-app="mapy">${esc(mapyLabel)}</a>
+      <button type="button" class="act" id="gpxBtn" data-a="gpx">${esc(gpxLabel)}</button>
+    </div>
   `;
 }
 
@@ -2908,6 +6070,20 @@ $("#detail").addEventListener("pointerdown", onElevPointer);
 $("#detail").addEventListener("click", e => {
   const t = BY_ID[state.sel];
   if (!t) return;
+  const favBtn = e.target.closest("#detailFavBtn, .fav-btn[data-fav-id]");
+  if (favBtn) {
+    e.stopPropagation();
+    toggleFav(favBtn.dataset.favId || t.id);
+    return;
+  }
+  if (e.target.closest("#startTripBtn")) {
+    startTrip(t);
+    return;
+  }
+  if (e.target.closest("#openAppSheetBtn")) {
+    openAppSheet();
+    return;
+  }
   const gpxBtn = e.target.closest("[data-a='gpx'], #gpxBtn");
   if (gpxBtn) {
     downloadGPX(t);
@@ -2939,9 +6115,41 @@ $("#detail").addEventListener("click", e => {
     drawSingle(t);
     return;
   }
-  if (e.target.closest("a, summary, details, button")) return;
+  const stopsBtn = e.target.closest(".stops-btn");
+  if (stopsBtn) {
+    const list = stopsBtn.nextElementSibling;
+    if (list) {
+      const open = list.hidden;
+      list.hidden = !open;
+      stopsBtn.setAttribute("aria-expanded", String(open));
+    }
+    return;
+  }
+  if (e.target.closest("a, summary, button, details.stops-exp, .stops-list")) return;
   const st = e.target.closest(".st[data-i]");
   if (st) focusStep(parseInt(st.dataset.i, 10) || 0);
+});
+
+$("#closeAppSheet")?.addEventListener("click", () => closeAppSheet());
+$("#appSheet")?.addEventListener("click", e => {
+  if (e.target === $("#appSheet")) {
+    closeAppSheet();
+    return;
+  }
+  const prefBtn = e.target.closest(".app-pref-btn[data-pref-app]");
+  if (prefBtn) {
+    setPrefApp(prefBtn.dataset.prefApp, {notify: true});
+    return;
+  }
+  const link = e.target.closest(".app-sheet-link[data-app]");
+  if (link && VALID_PREF_APPS.includes(link.dataset.app)) {
+    setPrefApp(link.dataset.app, {notify: false});
+  }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && $("#appSheet")?.classList.contains("show")) {
+    closeAppSheet();
+  }
 });
 
 /* ---------- Navigation (with history: Android back gesture closes the detail view) ---------- */
@@ -2950,11 +6158,25 @@ let suppressPopUntil = 0;
 function openTour(id, opts) {
   const t = BY_ID[id];
   if (!t) return;
+  if (!state.sel) {
+    state.returnScrollY = window.scrollY || 0;
+    if (state.tab === "karte") {
+      state.savedMapView = {center: map.getCenter(), zoom: map.getZoom()};
+    }
+  }
+  const mw = $("#mapWrap");
+  if (mw) mw.classList.remove("full", "mini", "menu-open");
+  $("#layerMenu")?.classList.remove("show");
+  document.body.classList.remove("map-full-open");
+  const sheet = $("#mapSheet");
+  if (sheet) sheet.hidden = true;
+
   state.sel = id;
   state.winIdx = null;
   state.revIdx = null;
   document.body.classList.add("detail-open");
   renderHeader();
+  renderTabViews();
   renderDetail(t);
   drawSingle(t);
   setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
@@ -2971,15 +6193,42 @@ function openTour(id, opts) {
 }
 
 function closeTour(opts) {
+  closeAppSheet({clear: true});
   state.sel = null;
   state.winIdx = null;
   state.revIdx = null;
   document.body.classList.remove("detail-open");
   renderHeader();
-  renderList();
-  drawOverview();
-  setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
-  fitCurrent();
+  renderTabViews();
+  const sheet = $("#mapSheet");
+  if (state.tab === "karte") {
+    if (sheet) sheet.hidden = false;
+    const saved = state.savedMapView;
+    state.savedMapView = null;
+    drawOverview();
+    const restoreKarte = () => {
+      map.invalidateSize();
+      if (saved && saved.center) map.setView(saved.center, saved.zoom, {animate: false});
+      else fitCurrent();
+      renderMapSheet();
+    };
+    restoreKarte();
+    setTimeout(() => { if (state.tab === "karte" && !state.sel) restoreKarte(); }, 150);
+  } else if (state.tab === "entdecken") {
+    if (sheet) sheet.hidden = true;
+    renderList();
+    drawOverview();
+    setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
+    fitCurrent();
+    if (state.returnScrollY > 0) {
+      const y = state.returnScrollY;
+      state.returnScrollY = 0;
+      setTimeout(() => window.scrollTo({top: y}), 0);
+    }
+  } else {
+    if (sheet) sheet.hidden = true;
+    state.returnScrollY = 0;
+  }
   if (!(opts && opts.fromPop)) {
     try {
       if (history.state && history.state.tour) {
@@ -3002,11 +6251,32 @@ $("#backBtn").addEventListener("click", () => closeTour());
 /* Called by the native Android app on the system back gesture; returns true if the app handled it. */
 window.swHandleBack = function () {
   if ($("#homeModal").classList.contains("show")) { closeHomeModal(); return true; }
+  if ($("#appSheet")?.classList.contains("show")) { closeAppSheet(); return true; }
   const mw = $("#mapWrap");
-  if (mw.classList.contains("full")) { mw.classList.remove("full"); setTimeout(() => map.invalidateSize(), 150); return true; }
-  if ($("#layerMenu").classList.contains("show")) { $("#layerMenu").classList.remove("show"); return true; }
+  if (mw.classList.contains("full")) {
+    mw.classList.remove("full");
+    document.body.classList.remove("map-full-open");
+    setTimeout(() => {
+      map.invalidateSize();
+      if (state.tab === "karte" && !state.sel) renderMapSheet();
+    }, 150);
+    return true;
+  }
+  if ($("#layerMenu").classList.contains("show")) {
+    $("#layerMenu").classList.remove("show");
+    mw.classList.remove("menu-open");
+    return true;
+  }
   if (state.sel) { closeTour(); return true; }
-  if (state.filtersOpen) { state.filtersOpen = false; syncFilterPanel(); return true; }
+  if (state.tab === "karte" && state.mapSheetSnap === "expanded") {
+    setMapSheetSnap("half");
+    return true;
+  }
+  if (state.tab !== "entdecken") {
+    setTab("entdecken");
+    return true;
+  }
+  if (state.filtersOpen && window.innerWidth < 960) { state.filtersOpen = false; syncFilterPanel(); return true; }
   return false;
 };
 
@@ -3030,7 +6300,9 @@ function setBase(newBase, customHome) {
   } else {
     renderList();
     drawOverview();
-    fitCurrent();
+    if (state.tab === "karte") renderMapSheet();
+    else if (state.tab === "gemerkt") renderSavedView();
+    else fitCurrent();
   }
 }
 
@@ -3043,11 +6315,15 @@ $("#langBtn").addEventListener("click", () => {
   renderHeader();
   renderDays();
   renderPills();
+  renderBottomNav();
+  renderTabViews();
   syncHomeModalLabels();
   if (state.sel && BY_ID[state.sel]) {
     renderDetail(BY_ID[state.sel]);
   } else {
     renderList();
+    drawOverview();
+    if (state.tab === "karte") renderMapSheet();
   }
 });
 
@@ -3065,6 +6341,8 @@ $("#daySeg").addEventListener("click", e => {
   } else {
     renderList();
     drawOverview();
+    if (state.tab === "karte") renderMapSheet();
+    else if (state.tab === "gemerkt") renderSavedView();
   }
 });
 
@@ -3104,6 +6382,7 @@ $("#pills").addEventListener("click", e => {
   renderPills();
   renderList();
   drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 });
 
 $("#staySelect").addEventListener("change", e => {
@@ -3118,6 +6397,8 @@ $("#staySelect").addEventListener("change", e => {
   } else {
     renderList();
     drawOverview();
+    if (state.tab === "karte") renderMapSheet();
+    else if (state.tab === "gemerkt") renderSavedView();
   }
 });
 
@@ -3133,6 +6414,7 @@ $("#maxRideSelect").addEventListener("change", e => {
   renderPills();
   renderList();
   drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 });
 
 $("#sortSelect").addEventListener("change", e => {
@@ -3140,6 +6422,8 @@ $("#sortSelect").addEventListener("change", e => {
   store.set("sort", state.sort);
   renderPills();
   renderList();
+  drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 });
 
 function onFeasibleTimeChange(e) {
@@ -3149,6 +6433,7 @@ function onFeasibleTimeChange(e) {
   renderPills();
   renderList();
   drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 }
 $("#feasibleTime").addEventListener("input", onFeasibleTimeChange);
 $("#feasibleTime").addEventListener("change", onFeasibleTimeChange);
@@ -3157,12 +6442,14 @@ $("#q").addEventListener("input", e => {
   state.q = (e.target.value || "").trim();
   renderList();
   drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 });
 $("#qClear").addEventListener("click", () => {
   $("#q").value = "";
   state.q = "";
   renderList();
   drawOverview();
+  if (state.tab === "karte" && !state.sel) renderMapSheet();
 });
 
 /* ---------- Home Location Modal ---------- */
@@ -3301,14 +6588,20 @@ if (location.search.includes("base=karlsruhe")) {
   HOME = {...BASE_DEFAULTS.karlsruhe};
 }
 if (window.matchMedia && window.matchMedia("(min-width: 960px)").matches) state.filtersOpen = true;
+document.body.dataset.tab = state.tab;
 applyTheme();
 setLayer(state.layer);
 renderHeader();
 renderDays();
 renderPills();
+renderBottomNav();
+renderTabViews();
 renderList();
 drawOverview();
 setTimeout(fitCurrent, 50);
+if (!NATIVE && state.activeTrip && state.activeTrip.reminder) {
+  armInPageReminder(state.activeTrip.reminder);
+}
 (function bootDeepLink() {
   const m = location.hash.match(/^#tour=([^&]+)/);
   if (!m) return;

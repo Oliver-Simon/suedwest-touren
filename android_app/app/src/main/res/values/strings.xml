@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Südwest-Touren</string>
+    <string name="notif_channel_name">Touren-Erinnerungen</string>
+    <string name="notif_channel_desc">Erinnerungen an Abfahrt und Rückfahrt aktiver Touren</string>
 </resources>

@@ -60,6 +60,28 @@ class NativeBridge(private val activity: MainActivity) {
 
     @JavascriptInterface
     fun appVersion(): String = BuildConfigInfo.VERSION
+
+    @JavascriptInterface
+    fun exportJson(fileName: String, json: String, title: String): Boolean {
+        activity.runOnUiThread { activity.exportJson(fileName, json, title) }
+        return true
+    }
+
+    @JavascriptInterface
+    fun hasNotificationPermission(): Boolean = activity.hasNotificationPermission()
+
+    @JavascriptInterface
+    fun requestNotificationPermission() {
+        activity.runOnUiThread { activity.requestNotificationPermission() }
+    }
+
+    @JavascriptInterface
+    fun scheduleReminder(id: String, triggerAtMillis: Long, title: String, text: String): String =
+        activity.scheduleReminder(id, triggerAtMillis, title, text)
+
+    @JavascriptInterface
+    fun cancelReminder(id: String): Boolean =
+        activity.cancelReminder(id)
 }
 
 internal object BuildConfigInfo {

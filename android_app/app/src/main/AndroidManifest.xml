@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Phase 7: Tour departure/return reminder notifications (runtime prompt on Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Exact alarms auto-granted on Android 12/12L; Android 13+ uses canScheduleExactAlarms() with setAndAllowWhileIdle fallback -->
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
 
     <!-- Android 11+ package visibility: transit & map apps we hand trips/tracks to -->
     <queries>
@@ -56,5 +62,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <receiver
+            android:name=".ReminderReceiver"
+            android:exported="false" />
     </application>
 </manifest>

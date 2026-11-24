@@ -2,7 +2,7 @@
     <style name="Theme.SuedwestTouren" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/window_bg</item>
         <item name="android:colorPrimary">@color/ic_bg</item>
-        <item name="android:colorAccent">#0B6AA2</item>
+        <item name="android:colorAccent">#0F4C5C</item>
         <item name="android:statusBarColor">@color/window_bg</item>
         <item name="android:navigationBarColor">@color/window_bg</item>
         <item name="android:windowLightStatusBar">true</item>
