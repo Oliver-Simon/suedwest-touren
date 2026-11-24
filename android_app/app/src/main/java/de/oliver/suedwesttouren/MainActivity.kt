@@ -2,9 +2,7 @@ package de.oliver.suedwesttouren
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -436,57 +434,12 @@ class MainActivity : ComponentActivity() {
         return scheduleAlarmInternal(id, triggerAtMillis, title, text)
     }
 
-    private fun reminderPendingIntent(id: String, title: String, text: String, flags: Int): PendingIntent? {
-        val intent = Intent(this, ReminderReceiver::class.java).apply {
-            action = ReminderReceiver.ACTION_REMINDER
-            data = Uri.parse("swreminder://$id")
-            putExtra(ReminderReceiver.EXTRA_ID, id)
-            putExtra(ReminderReceiver.EXTRA_TITLE, title)
-            putExtra(ReminderReceiver.EXTRA_TEXT, text)
-        }
-        return PendingIntent.getBroadcast(this, id.hashCode(), intent, flags)
-    }
-
-    private fun scheduleAlarmInternal(id: String, triggerAtMillis: Long, title: String, text: String): String {
-        ReminderReceiver.ensureChannel(this)
-        val am = getSystemService(AlarmManager::class.java) ?: return "error:no_alarm_manager"
-        val pi = reminderPendingIntent(
-            id, title, text,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        ) ?: return "error:no_pending_intent"
-
-        return try {
-            val canExact = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || am.canScheduleExactAlarms()
-            if (canExact) {
-                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pi)
-            } else {
-                am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pi)
-            }
-            Log.i(TAG, "reminder scheduled: $id at $triggerAtMillis (exact=$canExact)")
-            "scheduled"
-        } catch (se: SecurityException) {
-            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pi)
-            Log.w(TAG, "exact alarm denied, used inexact for $id", se)
-            "scheduled"
-        } catch (e: Exception) {
-            Log.w(TAG, "scheduleReminder failed for $id", e)
-            "error:${e.javaClass.simpleName}"
-        }
-    }
+    private fun scheduleAlarmInternal(id: String, triggerAtMillis: Long, title: String, text: String): String =
+        Reminders.schedule(this, id, triggerAtMillis, title, text)
 
     fun cancelReminder(id: String): Boolean {
         if (id.isBlank()) return false
-        val am = getSystemService(AlarmManager::class.java)
-        val pi = reminderPendingIntent(
-            id, "", "",
-            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        )
-        var cancelled = false
-        if (pi != null && am != null) {
-            am.cancel(pi)
-            pi.cancel()
-            cancelled = true
-        }
+        val cancelled = Reminders.cancel(this, id)
         getSystemService(NotificationManager::class.java)?.cancel(id.hashCode())
         Log.i(TAG, "reminder cancelled: $id (existed=$cancelled)")
         return true

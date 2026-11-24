@@ -39,6 +39,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getStringExtra(EXTRA_ID) ?: return
+        Reminders.forget(context, id)
         val title = intent.getStringExtra(EXTRA_TITLE)?.takeIf { it.isNotBlank() }
             ?: context.getString(R.string.app_name)
         val text = intent.getStringExtra(EXTRA_TEXT).orEmpty()

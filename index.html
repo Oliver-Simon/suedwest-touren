@@ -1285,6 +1285,7 @@ html.dark .leaflet-tile-pane,
 .chip.strong { background: var(--accent-soft); color: var(--text); font-weight: 600; }
 .chip.ok { background: var(--ok-soft); color: var(--ok); font-weight: 600; }
 .chip.warn { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+.ret-btn.short, .trip-ret-btn.short { border-style: dashed; border-color: var(--warn); color: var(--warn); }
 .chip.bad { background: var(--bad-soft); color: var(--bad); font-weight: 600; }
 
 /* Detail View */
@@ -2325,9 +2326,10 @@ html.dark .sticky-app-pill {
   position: absolute;
   top: 0;
   transform: translateX(-50%);
+  white-space: nowrap;
 }
 .tp-tick[data-first] { transform: none; left: 0 !important; }
-.tp-tick[data-last] { transform: translateX(-100%); left: 100% !important; }
+.tp-tick[data-last] { transform: none; left: auto !important; right: 0; }
 .tp-legend {
   display: flex;
   flex-wrap: wrap;
@@ -2422,7 +2424,7 @@ html.dark .sticky-app-pill {
 }
 .cap-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) repeat(4, 30px) 38px;
+  grid-template-columns: minmax(0, 1fr) repeat(4, 36px) 38px;
   align-items: center;
   gap: 4px;
   padding: 7px 8px;
@@ -2486,6 +2488,13 @@ html.dark .sticky-app-pill {
   text-align: center;
   font-size: 12px;
   font-weight: 700;
+}
+.cap-row.cap-head .cap-cell {
+  font-size: 9.5px;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 .cap-yes { color: var(--ok); }
 .cap-row.is-preferred .cap-yes { color: #166534; }
@@ -2866,6 +2875,12 @@ html.dark .cap-row.is-preferred .cap-yes { color: var(--ok); }
   gap: 8px;
   flex-wrap: wrap;
 }
+.trip-remind-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
 
 @media (pointer: coarse) {
   .pill, .seg button, .base-btn, .icon-btn, .act, .win-btn, .stay-btn, .ret-btn, .trip-ret-btn, .mini-btn, .stay-select, .home-preset-btn, .geo-item, .region-head { min-height: 40px; }
@@ -2876,7 +2891,20 @@ html.dark .cap-row.is-preferred .cap-yes { color: var(--ok); }
   .home-chip { min-height: 30px; }
   .map-tools .icon-btn { height: 38px; min-width: 38px; }
   .leaflet-touch .leaflet-bar a { width: 38px; height: 38px; line-height: 38px; }
+  .stay-btn { min-width: 44px; }
+  .stops-btn { min-height: 40px; display: inline-flex; align-items: center; }
+  .credit a { display: inline-block; padding: 12px 2px; margin: -12px 0; }
 }
+:root[data-theme="dark"] .leaflet-bar a,
+html.dark .leaflet-bar a {
+  background: var(--surface);
+  color: var(--text);
+  border-bottom-color: var(--border);
+}
+:root[data-theme="dark"] .leaflet-bar a.leaflet-disabled,
+html.dark .leaflet-bar a.leaflet-disabled { background: var(--surface-2); color: var(--muted); }
+:root[data-theme="dark"] .leaflet-bar,
+html.dark .leaflet-bar { border-color: var(--border); }
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -3222,6 +3250,7 @@ const I18N = {
     loopHikeBadge: "🔄 Rundwanderung",
     roundTripBadge: "🔄 ÖPNV-Rundkurs",
     shortStayWarn: m => `⚠️ Gewählter Aufenthalt ist kürzer als die geschätzte Wanderzeit (${m}).`,
+    retTooShort: m => `Zu knapp: kürzer als die geschätzte Wanderzeit (${m})`,
     unroutableNotice: r => `Hinweis: An diesem Wochentag eingeschränkt (${r || "Saison-/Taktlücke"}).`,
     homeModalTitle: "🏠 Heimatort & Startpunkt",
     homePresetLabel: "Schnellauswahl (Presets):",
@@ -3296,6 +3325,7 @@ const I18N = {
     tripRemindCleared: "Erinnerung gelöscht",
     tripRemindPast: "Zielzeit liegt bereits in der Vergangenheit",
     tripRemindPermNeeded: "Mitteilungs-Berechtigung fehlt",
+    tripRemindWebHint: "Im Browser kommt die Erinnerung nur, solange die Seite geöffnet ist. Zuverlässig auch bei geschlossener App: Android-App.",
     mapSheetTitle: n => n === 1 ? "1 Tour im Kartenausschnitt" : `${n} Touren im Kartenausschnitt`,
     mapEmptyTitle: "Keine Touren im Kartenausschnitt",
     mapEmptyHint: "Zoome heraus oder springe zurück zur Südwest-Übersicht.",
@@ -3410,6 +3440,7 @@ const I18N = {
     loopHikeBadge: "🔄 Loop hike",
     roundTripBadge: "🔄 Transit round-trip",
     shortStayWarn: m => `⚠️ Selected stay is shorter than the estimated hike time (${m}).`,
+    retTooShort: m => `Too tight: shorter than the estimated hike time (${m})`,
     unroutableNotice: r => `Note: Limited service on this day (${r || "seasonal/schedule gap"}).`,
     homeModalTitle: "🏠 Home Location & Starting Point",
     homePresetLabel: "Quick Presets:",
@@ -3484,6 +3515,7 @@ const I18N = {
     tripRemindCleared: "Reminder cancelled",
     tripRemindPast: "Target time is already in the past",
     tripRemindPermNeeded: "Notification permission required",
+    tripRemindWebHint: "In the browser the reminder only fires while this page is open. Reliable even when closed: the Android app.",
     mapSheetTitle: n => n === 1 ? "1 tour in map area" : `${n} tours in map area`,
     mapEmptyTitle: "No tours in map area",
     mapEmptyHint: "Zoom out or reset back to the Southwest overview.",
@@ -3891,6 +3923,12 @@ function stayMinutes(arrMin, rev) {
   let stay = depMin - arrMin;
   if (stay < 0) stay += 1440;
   return stay;
+}
+
+/* Returns the hike time (min) if a return leaves before the hike can be finished, else 0. */
+function isShortReturn(t, stayMin) {
+  const wmin = Number((t && t.hike && t.hike.walkMin) || 0);
+  return wmin > 0 && typeof stayMin === "number" && stayMin >= 0 && stayMin < wmin ? wmin : 0;
 }
 
 function getSelectedWindow(t, baseKey, dayKey, opts) {
@@ -5151,11 +5189,24 @@ function armInPageReminder(rem) {
   inPageReminderTimer = setTimeout(() => {
     inPageReminderTimer = null;
     if (!state.activeTrip || !state.activeTrip.reminder || state.activeTrip.reminder.id !== rem.id) return;
-    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-      try { new Notification(rem.title, {body: rem.text}); } catch (e) {}
-    }
+    showSystemNotification(rem);
     toast(`🔔 ${rem.title} · ${rem.text}`, {ms: 8000});
   }, delay);
+}
+
+// Chrome on Android only allows notifications through the service worker registration;
+// new Notification() throws there. Desktop browsers without an active SW keep the constructor.
+function showSystemNotification(rem) {
+  if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+  const opts = {body: rem.text, tag: rem.id, icon: "./icon-192.png", badge: "./icon-192.png", renotify: true};
+  const viaCtor = () => { try { new Notification(rem.title, opts); } catch (e) {} };
+  if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.getRegistration()
+      .then(reg => (reg && reg.showNotification ? reg.showNotification(rem.title, opts) : viaCtor()))
+      .catch(viaCtor);
+  } else {
+    viaCtor();
+  }
 }
 
 function cancelActiveTripReminder(opts) {
@@ -5450,10 +5501,15 @@ function renderTripView() {
     const rArr = r[r.length - 1]?.arr || "18:00";
     const rStay = minDiff(fwdArr, rDep);
     const isLsr = i === selWin.lsrIdx;
-    return `<button type="button" class="trip-ret-btn${isLsr ? " lsr" : ""}" data-ret="${i}" aria-pressed="${i === selWin.revIdx}">${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    const short = isShortReturn(t, rStay);
+    return `<button type="button" class="trip-ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === selWin.revIdx}"${short ? ` title="${esc(tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
   }).join("");
 
-  const rem = trip.reminder;
+  let rem = trip.reminder;
+  if (rem && rem.triggerAt && rem.triggerAt <= Date.now() && rem.status !== "pending") {
+    trip.reminder = rem = null;
+    store.set("activeTrip", trip);
+  }
   const remStatusHtml = rem
     ? `<div class="trip-remind-status">
         <span>${esc(rem.status === "pending" ? tDict.tripRemindPending : tDict.tripRemindActive(rem.triggerHHMM, rem.targetHHMM))}</span>
@@ -5498,6 +5554,7 @@ function renderTripView() {
         <button type="button" class="act primary" id="tripRemindBtn">${esc(tDict.tripRemindSet)}</button>
       </div>
       ${remStatusHtml}
+      ${NATIVE ? "" : `<p class="trip-remind-hint">${esc(tDict.tripRemindWebHint)}</p>`}
     </div>
   </div>`;
   startTripTicker();
@@ -5651,7 +5708,8 @@ function setTab(tab, opts) {
     document.body.classList.remove("detail-open");
     try {
       if (history.state && history.state.tour) {
-        history.replaceState(null, "", location.pathname + location.search);
+        suppressPopUntil = Date.now() + 800;
+        history.back();
       }
     } catch (e) {}
   }
@@ -6623,7 +6681,8 @@ function renderDetail(t) {
     const rArr = r[r.length - 1]?.arr || "18:00";
     const rStay = minDiff(fwdArr, rDep);
     const isLsr = i === lsrIdx;
-    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}">${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
+    const short = isShortReturn(t, rStay);
+    return `<button type="button" class="ret-btn${isLsr ? " lsr" : ""}${short ? " short" : ""}" data-ret="${i}" aria-pressed="${i === revIdx}"${short ? ` title="${esc(tDict.retTooShort(fmtDur(short)))}"` : ""}>${short ? "⚠️ " : ""}${isLsr ? `${esc(tDict.lsrTag)} ` : ""}${esc(rDep)} → ${esc(rArr)} (${esc(fmtDur(rStay))})</button>`;
   }).join("");
 
   const shortStayWarn = (h.hasGpx && h.walkMin && stayMin > 0 && stayMin < Number(h.walkMin))
@@ -7286,6 +7345,8 @@ if (window.matchMedia) {
 if (NATIVE && typeof NATIVE.contentReady === "function") {
   requestAnimationFrame(() => { try { NATIVE.contentReady(performance.now()); } catch (e) {} });
 }
+if (!NATIVE && state.activeTrip && state.activeTrip.reminder) armInPageReminder(state.activeTrip.reminder);
+
 if (!NATIVE && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
   let hadController = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker.addEventListener("controllerchange", () => {

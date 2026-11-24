@@ -106,3 +106,12 @@ self.addEventListener("fetch", e => {
   if (rel === "sw.js") return;
   e.respondWith(assetResponse(req));
 });
+
+// Reminder notifications (shown via registration.showNotification): tap brings the app to the front.
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({type: "window", includeUncontrolled: true}).then(list => {
+    for (const c of list) if ("focus" in c) return c.focus();
+    return self.clients.openWindow ? self.clients.openWindow("./") : undefined;
+  }));
+});

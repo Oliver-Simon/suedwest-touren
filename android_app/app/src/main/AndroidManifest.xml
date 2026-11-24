@@ -7,10 +7,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Phase 7: Tour departure/return reminder notifications (runtime prompt on Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Exact alarms auto-granted on Android 12/12L; Android 13+ uses canScheduleExactAlarms() with setAndAllowWhileIdle fallback -->
+    <!-- Exact reminder alarms: SCHEDULE_EXACT_ALARM is auto-granted on Android 12/12L,
+         USE_EXACT_ALARM on Android 13+ (without it Android 13+ would only fire inexact alarms) -->
     <uses-permission
         android:name="android.permission.SCHEDULE_EXACT_ALARM"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Alarms are dropped on reboot: BootReceiver re-arms the remembered reminders -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- Android 11+ package visibility: transit & map apps we hand trips/tracks to -->
     <queries>
@@ -66,5 +70,15 @@
         <receiver
             android:name=".ReminderReceiver"
             android:exported="false" />
+
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
