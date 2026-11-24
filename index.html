@@ -4212,6 +4212,8 @@ let state = {
   mapSelectedId: null,
   savedMapView: null,
   returnScrollY: 0,
+  returnAnchor: null,
+  collapsedRegions: new Set((() => { const v = store.get("collapsedRegions", []); return Array.isArray(v) ? v.filter(x => typeof x === "string") : []; })()),
   prefApp: VALID_PREF_APPS.includes(rawPrefApp) ? rawPrefApp : "mvv",
   directOpen: store.get("directOpen", false) === true,
   favs: loadValidFavs(),
@@ -6798,8 +6800,9 @@ function renderList() {
   tDict.regGroups.forEach(([rk, label]) => {
     const items = buckets.get(rk) || [];
     if (!items.length) return;
-    sections.push(`<div class="region-group" data-region="${esc(rk)}">
-      <button type="button" class="region-head" aria-expanded="true">
+    const shut = state.collapsedRegions.has(rk);
+    sections.push(`<div class="region-group${shut ? " collapsed" : ""}" data-region="${esc(rk)}">
+      <button type="button" class="region-head" aria-expanded="${shut ? "false" : "true"}">
         <span>${esc(label)}</span>
         <span class="reg-meta"><span>(${items.length})</span><span class="reg-chev">▾</span></span>
       </button>
@@ -6822,6 +6825,11 @@ $("#list").addEventListener("click", e => {
     if (grp) {
       const collapsed = grp.classList.toggle("collapsed");
       head.setAttribute("aria-expanded", String(!collapsed));
+      const rk = grp.dataset.region;
+      if (rk && rk !== "sorted") {
+        if (collapsed) state.collapsedRegions.add(rk); else state.collapsedRegions.delete(rk);
+        store.set("collapsedRegions", [...state.collapsedRegions]);
+      }
     }
     return;
   }
@@ -8565,11 +8573,47 @@ function commitSharedTrip(tourId, role) {
 /* ---------- Navigation (with history: Android back gesture closes the detail view) ---------- */
 let suppressPopUntil = 0;
 
+/* Back from a tour page: put the list back exactly where it was (same card at the same height on screen). */
+function viewCards() {
+  const root = state.tab === "gemerkt" ? $("#savedView") : $("#list");
+  return root ? [...root.querySelectorAll(".card[data-id], .saved-card[data-saved-id]")] : [];
+}
+const cardId = c => c.dataset.id || c.dataset.savedId;
+function listAnchorFor(id) {
+  if (state.tab !== "entdecken" && state.tab !== "gemerkt") return null;
+  const cards = viewCards().filter(c => c.offsetParent !== null);
+  const pick = cards.find(c => cardId(c) === id && (() => { const r = c.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; })())
+    || cards.find(c => c.getBoundingClientRect().bottom > 80);
+  return pick ? {id: cardId(pick), top: pick.getBoundingClientRect().top, tab: state.tab} : null;
+}
+function restoreListPosition(anchor, y) {
+  let lastSet = null, userMoved = false;
+  const stop = () => { userMoved = true; };
+  window.addEventListener("touchstart", stop, {once: true, passive: true});
+  window.addEventListener("wheel", stop, {once: true, passive: true});
+  const apply = () => {
+    if (userMoved || state.sel || (anchor && anchor.tab !== state.tab)) return;
+    if (lastSet !== null && Math.abs(window.scrollY - lastSet) > 2) return;   // scrolled in between
+    const c = anchor && viewCards().find(x => cardId(x) === anchor.id && x.offsetParent !== null);
+    const target = c ? window.scrollY + c.getBoundingClientRect().top - anchor.top : y;
+    if (target > 0) window.scrollTo({top: target, behavior: "instant"});
+    lastSet = window.scrollY;
+  };
+  requestAnimationFrame(apply);
+  setTimeout(apply, 120);
+  setTimeout(apply, 400);
+  setTimeout(() => {
+    window.removeEventListener("touchstart", stop);
+    window.removeEventListener("wheel", stop);
+  }, 450);
+}
+
 function openTour(id, opts) {
   const t = BY_ID[id];
   if (!t) return;
   if (!state.sel) {
     state.returnScrollY = window.scrollY || 0;
+    state.returnAnchor = listAnchorFor(id);
     if (state.tab === "karte") {
       state.savedMapView = {center: map.getCenter(), zoom: map.getZoom()};
     }
@@ -8630,14 +8674,14 @@ function closeTour(opts) {
     drawOverview();
     setTimeout(() => { map.invalidateSize(); fitCurrent(); }, 0);
     fitCurrent();
-    if (state.returnScrollY > 0) {
-      const y = state.returnScrollY;
-      state.returnScrollY = 0;
-      setTimeout(() => window.scrollTo({top: y}), 0);
-    }
+    restoreListPosition(state.returnAnchor, state.returnScrollY);
+    state.returnScrollY = 0;
+    state.returnAnchor = null;
   } else {
     if (sheet) sheet.hidden = true;
+    if (state.tab === "gemerkt") restoreListPosition(state.returnAnchor, state.returnScrollY);
     state.returnScrollY = 0;
+    state.returnAnchor = null;
   }
   if (!(opts && opts.fromPop)) {
     try {
@@ -8648,6 +8692,9 @@ function closeTour(opts) {
     } catch (e) {}
   }
 }
+
+// The app restores list positions itself (restoreListPosition); the browser's own restore would jump to 0.
+try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
 
 window.addEventListener("popstate", e => {
   if (Date.now() < suppressPopUntil) { suppressPopUntil = 0; return; }
