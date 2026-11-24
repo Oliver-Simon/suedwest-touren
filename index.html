@@ -2607,6 +2607,34 @@ function getSegmentCoords(s, fallbackFrom, fallbackTo) {
   return pts;
 }
 
+/* Part of the tour between arrival and return departure that has no timetable segment:
+   360° rings (via 1 → via 2), A→B tours without GPX (start → end stop), walks stop ↔ GPX trailhead. */
+function ptOf(st) {
+  return st && st.lat != null && st.lon != null ? [Number(st.lat), Number(st.lon)] : null;
+}
+function tourMiddle(t, fwdEnd, revStart) {
+  const h = t.hike || {};
+  const hp = (h.hasGpx && h.poly5) ? hikePolyPts(t) : [];
+  const far = (a, b) => a && b && haversineM(a, b) > 150;
+  const out = {walkIn: null, walkOut: null, local: null};
+  if (hp.length >= 2) {
+    if (far(fwdEnd, hp[0])) out.walkIn = [fwdEnd, hp[0]];
+    if (far(hp[hp.length - 1], revStart)) out.walkOut = [hp[hp.length - 1], revStart];
+    return out;
+  }
+  const b = getBaseInfo(state.base);
+  const basePt = [b.lat, b.lon];
+  const cands = [fwdEnd];
+  const tr = t.transit || {};
+  const mids = tr.kind === "shortcut_360" ? (tr.vias || []) : [tr.startStop, tr.endStop];
+  mids.map(ptOf).forEach(q => { if (q && haversineM(q, basePt) > 1500) cands.push(q); });
+  cands.push(revStart);
+  const line = [];
+  cands.forEach(q => { if (q && (!line.length || far(line[line.length - 1], q))) line.push(q); });
+  if (line.length >= 2) out.local = line;
+  return out;
+}
+
 function drawOverview() {
   overviewGroup.clearLayers();
   singleGroup.clearLayers();
@@ -2635,8 +2663,13 @@ function drawOverview() {
       pts = hikePolyPts(t);
       col = "#15803d";
     } else {
-      const {fwd} = getSelectedWindow(t, state.base, state.day);
+      const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
       fwd.forEach(s => pts.push(...getSegmentCoords(s, bInfo, t.transit?.startStop)));
+      const revPts = [];
+      rev.forEach(s => revPts.push(...getSegmentCoords(s, t.transit?.endStop, bInfo)));
+      const mid = tourMiddle(t, pts[pts.length - 1], revPts[0]);
+      if (mid.local) pts.push(...mid.local.slice(1, -1));
+      pts.push(...revPts);
       col = t.region === "schwarzwald" ? "#7c3aed" : t.region === "pfaelzerwald" ? "#d4373f" : "#0284c7";
     }
     if (pts.length < 2 && t.transit?.startStop?.lat != null) {
@@ -2716,20 +2749,31 @@ function drawSingle(t) {
     }
   });
 
-  // Always draw distinct hike / destination track so there are >= 2 distinct stroke colors
-  let hikePts = (h.hasGpx && h.poly5) ? decodePoly(h.poly5) : [];
-  if (hikePts.length < 2) {
-    const ss = t.transit?.startStop || {lat: 49.35, lon: 8.15};
-    const es = t.transit?.endStop || {lat: Number(ss.lat) + 0.02, lon: Number(ss.lon) + 0.02};
-    hikePts = [
-      [Number(ss.lat), Number(ss.lon)],
-      [(Number(ss.lat) + Number(es.lat)) / 2 + 0.008, (Number(ss.lon) + Number(es.lon)) / 2 + 0.008],
-      [Number(es.lat), Number(es.lon)]
-    ];
+  // Hike track (GPX) and the untimed middle part, so the whole round is visible
+  const fwdPts = fwd.length ? getSegmentCoords(fwd[fwd.length - 1], bInfo, t.transit?.startStop) : [];
+  const revPts = rev.length ? getSegmentCoords(rev[0], t.transit?.endStop, bInfo) : [];
+  const fwdEnd = fwdPts.length ? fwdPts[fwdPts.length - 1] : ptOf(t.transit?.startStop);
+  const revStart = revPts.length ? revPts[0] : ptOf(t.transit?.endStop);
+  const mid = tourMiddle(t, fwdEnd, revStart);
+  const hikePts = (h.hasGpx && h.poly5) ? hikePolyPts(t) : [];
+  const addLine = (pts, opts) => {
+    if (!pts || pts.length < 2) return;
+    const ln = L.polyline(pts, opts);
+    singleGroup.addLayer(ln);
+    bounds.extend(ln.getBounds());
+  };
+  addLine(mid.walkIn, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
+  addLine(mid.walkOut, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
+  if (hikePts.length >= 2) {
+    addLine(hikePts, {color: "#15803d", weight: 5, opacity: 0.95});
+  } else if (mid.local) {
+    // own stage on site (e.g. via 1 → via 2 of a 360° ring): no timetable data, drawn dashed
+    addLine(mid.local, {color: "#15803d", weight: 4, opacity: 0.9, dashArray: "8 7"});
+  } else if (fwdEnd) {
+    const mk = L.circleMarker(fwdEnd, {radius: 7, color: "#ffffff", weight: 2, fillColor: "#15803d", fillOpacity: 1});
+    singleGroup.addLayer(mk);
+    bounds.extend(L.latLngBounds([fwdEnd, fwdEnd]));
   }
-  const hikeLine = L.polyline(hikePts, {color: "#15803d", weight: 5, opacity: 0.95});
-  singleGroup.addLayer(hikeLine);
-  bounds.extend(hikeLine.getBounds());
 
   currentBounds = bounds;
 }
