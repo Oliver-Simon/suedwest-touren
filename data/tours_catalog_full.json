@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-23T16:53:46+01:00",
+  "generated": "2026-11-24T15:04:14+01:00",
   "waypoints": [
     {
       "name": "Bench",
@@ -19286,6 +19286,2225 @@
         "elevProfile": []
       },
       "wikimediaQuery": "Roßkopfturm"
+    },
+    {
+      "id": "busrunde-albtal-kaeppele-murgtal-x44",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Albtal – Loffenau Käppele – Murgtal-Passrunde (S1 + X44 + S8)",
+        "en": "Alb Valley – Loffenau Käppele – Murg Valley Pass Loop (S1 + X44 + S8)"
+      },
+      "subtitle": {
+        "de": "Winterfeste Schwarzwald-Passrunde im Regiobus X44 über Käppele-Serpentinen nach Gernsbach & ins Murgtal",
+        "en": "All-year Black Forest pass loop via Regiobus X44 over Käppele hairpins to Gernsbach & Murg valley rail"
+      },
+      "sun": {
+        "de": "Freie Panoramablicke über Loffenau hinab ins Murgtal und zur Rheinebene; Gernsbacher Altstadt sonnig.",
+        "en": "Open panoramic views over Loffenau into the Murg Valley and Rhine plain; sunny Gernsbach old town."
+      },
+      "tips": {
+        "de": "Ab Karlsruhe S1 nach Bad Herrenalb (ca. 40 Min.), dann KVV bwregiobus X44 über Loffenau Käppele nach Gernsbach (26 Min., täglich stündlich) und per Murgtalbahn S8 zurück.",
+        "en": "From Karlsruhe take S1 to Bad Herrenalb (~40 min), then KVV X44 bus over Loffenau Käppele to Gernsbach (26 min, hourly daily), returning via Murg Valley rail S8."
+      },
+      "eveningSun": true,
+      "places": [
+        "Bad Herrenalb",
+        "Loffenau Käppele",
+        "Loffenau Marktplatz",
+        "Gernsbach Bahnhof",
+        "Rastatt"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Bad Herrenalb",
+          "lat": 48.80245,
+          "lon": 8.43907,
+          "dhid": "de:08235:9558",
+          "transitousId": "de-KVV_Pde:08235:9558",
+          "ibnr": "8007011"
+        },
+        "endStop": {
+          "name": "Gernsbach Bahnhof",
+          "lat": 48.768307,
+          "lon": 8.336714,
+          "dhid": "de:08216:32142",
+          "transitousId": "de-DELFI_de:08216:32142",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Teufelsmühle (Schwarzwald)"
+    },
+    {
+      "id": "busrunde-schauinsland-notschrei-feldberg-140-7300",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Hochschwarzwald-Zweipässe-Busrunde: Schauinsland/Notschrei & Feldberg (140 + 7300)",
+        "en": "High Black Forest Two-Pass Bus Loop: Notschrei & Feldberg Pass (140 + 7300)"
+      },
+      "subtitle": {
+        "de": "Zwei Hochschwarzwald-Pässe (1.119 m & 1.231 m) komplett per Linienbus ohne teure Bergbahn",
+        "en": "Traverse two High Black Forest mountain passes (1,119 m & 1,231 m) by regional bus in one loop"
+      },
+      "sun": {
+        "de": "Hochflächen an Notschrei/Halde und Feldbergpass mit weitem Belchen-, Vogesen- und Alpenpanorama.",
+        "en": "High-altitude panoramas across Notschrei and Feldberg Pass with Vosges and Alpine views."
+      },
+      "tips": {
+        "de": "Schnellste Anfahrt ab Karlsruhe über RE7 Freiburg + S1 Kirchzarten; Bus 140 (ehem. 7215) über Notschrei nach Todtnau und Feldbergbus 7300 nach Titisee im Stundentakt.",
+        "en": "Take RE7 to Freiburg + S1 to Kirchzarten, then Bus 140 over Notschrei to Todtnau and Bus 7300 over Feldberg Pass to Titisee; all covered by Deutschlandticket."
+      },
+      "eveningSun": false,
+      "places": [
+        "Kirchzarten Bahnhof",
+        "Schauinsland Halde",
+        "Notschrei Passhöhe (1.119 m)",
+        "Todtnau Busbahnhof",
+        "Feldbergpass Hebelhof",
+        "Titisee Bahnhof"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Kirchzarten Bahnhof",
+          "lat": 47.968132,
+          "lon": 7.959909,
+          "dhid": "de:08315:6519",
+          "transitousId": "de-DELFI_de:08315:6519",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Titisee, Bahnhof",
+          "lat": 47.90336,
+          "lon": 8.155598,
+          "dhid": "de:08315:6548",
+          "transitousId": "de-DELFI_de:08315:6548",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Todtnau, Busbahnhof",
+            "lat": 47.828804,
+            "lon": 7.941925,
+            "dhid": "de:08336:3667",
+            "transitousId": "de-DELFI_de:08336:3667:0:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Notschrei"
+    },
+    {
+      "id": "busrunde-enztal-x78-murgtal",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Enztal – Hochschwarzwald-Plateau (X78) – Murgtal-Runde",
+        "en": "Enz Valley – Black Forest Plateau (X78) – Murg Valley Loop"
+      },
+      "subtitle": {
+        "de": "S6 Enztalbahn ab Bad Wildbad, im Erlebnisbus X78 über Enzklösterle & Besenfeld und per S8 durchs Murgtal",
+        "en": "S6 Enz Valley train to Bad Wildbad, scenic Erlebnisbus X78 across the plateau, and Murg Valley S8 return"
+      },
+      "sun": {
+        "de": "Abwechslungsreiche Wald- & Hochmoor-Passagen rund um Enzklösterle sowie freie Talblicke auf den Murg-Viadukten.",
+        "en": "Mixed pine plateaus around Enzklösterle paired with open viaduct views down the Murg Valley."
+      },
+      "tips": {
+        "de": "X78 (ehem. 7780) fährt ganzjährig täglich stündlich von Bad Wildbad Kurpark nach Freudenstadt Stadtbf (~60 Min.); ideal kombinierbar mit dem Kurpark Bad Wildbad.",
+        "en": "Bus X78 (formerly 7780) runs hourly year-round from Bad Wildbad Kurpark to Freudenstadt Stadtbahnhof (~60 min); pair with a stroll in Bad Wildbad spa gardens."
+      },
+      "eveningSun": false,
+      "places": [
+        "Pforzheim Hbf",
+        "Bad Wildbad Kurpark",
+        "Enzklösterle",
+        "Besenfeld",
+        "Freudenstadt Stadtbahnhof",
+        "Forbach"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Bad Wildbad, Kurpark",
+          "lat": 48.748623,
+          "lon": 8.550515,
+          "dhid": "de:08235:8961",
+          "transitousId": "de-KVV_Pde:08235:8961",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Freudenstadt Stadtbahnhof",
+          "lat": 48.467567,
+          "lon": 8.410694,
+          "dhid": "de:08237:1002",
+          "transitousId": "de-DELFI_de:08237:1002",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Baumwipfelpfad Schwarzwald"
+    },
+    {
+      "id": "busrunde-wolftal-kniebis-murgtal-f13",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Kinzigtal – Wolftal – Kniebis – Murgtal-Runde (7266 / Freizeitbus F13)",
+        "en": "Kinzig Valley – Wolf Valley – Kniebis – Murg Valley Loop (7266 / F13)"
+      },
+      "subtitle": {
+        "de": "Durchs wilde Wolftal vorbei am Bärenpark über den Kniebis (900+ m) nach Freudenstadt & ins Murgtal",
+        "en": "Scenic gorge bus through the Wolf Valley past the Bear Park and over 900 m Kniebis Pass"
+      },
+      "sun": {
+        "de": "Schattiges Felsen- und Bachtal an der Wolf; weite Höhenblicke auf der Kniebis-Passhöhe.",
+        "en": "Sheltered forested Wolf gorge rising to airy summit views atop the Kniebis ridge."
+      },
+      "tips": {
+        "de": "Mo–Fr Bus 7266, Sa/So/Feiertag ganzjährig Freizeitbus F13 im 2h-Takt (Kniebis/Bad Rippoldsau – Schapbach – Wolfach).",
+        "en": "Weekdays covered by Bus 7266; weekends & public holidays year-round by Freizeitbus F13 (every 2 hours)."
+      },
+      "eveningSun": false,
+      "places": [
+        "Hausach",
+        "Wolfach Bahnhof",
+        "Schapbach Bärenpark",
+        "Bad Rippoldsau Kirche",
+        "Kniebis",
+        "Freudenstadt Stadtbahnhof"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Wolfach, Bahnhof",
+          "lat": 48.294727,
+          "lon": 8.221818,
+          "dhid": "de:08317:18010",
+          "transitousId": "de-DELFI_de:08317:18010",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Freudenstadt Stadtbahnhof",
+          "lat": 48.467567,
+          "lon": 8.410694,
+          "dhid": "de:08237:1002",
+          "transitousId": "de-DELFI_de:08237:1002",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Bad Rippoldsau Kirche",
+            "lat": 48.4272,
+            "lon": 8.32955,
+            "dhid": "de:08237:2601",
+            "transitousId": "de-DELFI_de:08237:2601:0:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Kniebis"
+    },
+    {
+      "id": "busrunde-kandel-glottertal-st-maergen-120-112",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Glottertal – St. Peter – Kandel-Gipfelkamm (1.200 m) Panorama-Busrunde",
+        "en": "Glotter Valley – St. Peter – Kandel Summit Ridge (1,200 m) Bus Loop"
+      },
+      "subtitle": {
+        "de": "Seit Sept. 2026 mit den neuen RVF-Bergbussen 120 & 112 aus dem Glottertal direkt hinauf zum Kandel-Rasthaus",
+        "en": "Ride RVF Buses 120 & 112 through the Glotter Valley to St. Peter and right up to 1,200 m Kandel ridge"
+      },
+      "sun": {
+        "de": "Freier Spätnachmittagsblick vom Kandel auf Rheinebene, Kaiserstuhl und Vogesen.",
+        "en": "Open afternoon views from the exposed Kandel summit terrace across the Rhine plain and Vosges."
+      },
+      "tips": {
+        "de": "RE7 bis Denzlingen → Bus 120 nach St. Peter → Bus 112 zum Kandel Rasthaus (1.200 m) → über St. Peter / Bus 110 nach Kirchzarten; im Hochwinter Schneewetter prüfen.",
+        "en": "RE7 to Denzlingen → Bus 120 to St. Peter → Bus 112 up to Kandel Rasthaus (1,200 m), returning via Bus 110 through the Dreisam Valley to Kirchzarten."
+      },
+      "eveningSun": true,
+      "places": [
+        "Denzlingen",
+        "Glottertal",
+        "St. Peter Zähringer Eck",
+        "Waldkirch Kandel Rasthaus",
+        "St. Märgen",
+        "Kirchzarten Bahnhof"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "St. Peter Zähringer Eck",
+          "lat": 48.01582,
+          "lon": 8.033903,
+          "dhid": "de:08315:262",
+          "transitousId": "de-DELFI_de:08315:262:0:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Kirchzarten Bahnhof",
+          "lat": 47.968132,
+          "lon": 7.959909,
+          "dhid": "de:08315:6519",
+          "transitousId": "de-DELFI_de:08315:6519",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Waldkirch Kandel Rasthaus",
+            "lat": 48.06489,
+            "lon": 8.016503,
+            "dhid": "de:08316:401",
+            "transitousId": "de-DELFI_de:08316:401:0:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Kandel (Berg)"
+    },
+    {
+      "id": "busrunde-rheinhessen-hiwwel-schweiz-660-440",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "wein",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Rheinhessen-Hiwwel & Rheinhessische Schweiz (Bus 660 + 440)",
+        "en": "Rheinhessen Wine Hills & Hessian Switzerland Bus Loop (Bus 660 + 440)"
+      },
+      "subtitle": {
+        "de": "Entspannte Überlandbus-Tour über das rheinhessische Rebenmeer von Alzey nach Bad Kreuznach",
+        "en": "Relaxed rural bus loop across Rheinhessen vineyard hills and porphyry cliffs to Bad Kreuznach"
+      },
+      "sun": {
+        "de": "Weitgehend offene Weinberghügel mit viel Sonne den ganzen Tag über.",
+        "en": "Mostly open rolling vineyard landscape enjoying abundant sunshine throughout the day."
+      },
+      "tips": {
+        "de": "Ab Jugenheim empfiehlt sich der Start per Bus 660 direkt von Mainz Hbf quer durch Rheinhessen nach Alzey (~62 Min.), ab dort RNN Bus 440 durch die Rheinhessische Schweiz nach Bad Kreuznach.",
+        "en": "From Jugenheim start via Bus 660 directly from Mainz Hbf across the wine hills to Alzey (~62 min), then RNN Bus 440 through the Rheinhessische Schweiz to Bad Kreuznach."
+      },
+      "eveningSun": true,
+      "places": [
+        "Alzey Bahnhof",
+        "Rheinhessische Schweiz",
+        "Undenheim",
+        "Wendelsheim",
+        "Siefersheim",
+        "Bad Kreuznach Bahnhof"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Alzey, Bahnhof",
+          "lat": 49.75014,
+          "lon": 8.109784,
+          "dhid": "de:07331:55",
+          "transitousId": "de-DELFI_de:07331:55:1:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Bad Kreuznach, Bahnhof",
+          "lat": 49.8424,
+          "lon": 7.866435,
+          "dhid": "de:07133:8178",
+          "transitousId": "de-DELFI_de:07133:8178_G",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Rheinhessen Weinberge"
+    },
+    {
+      "id": "busrunde-ueberwald-neckartal-681-685",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "odenwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Gorxheimertal – Überwald – Ulfenbachtal – Neckartal (Bus 681 + 685)",
+        "en": "Gorxheim Valley – Überwald – Ulfenbach Valley Loop (Bus 681 + 685)"
+      },
+      "subtitle": {
+        "de": "Nahe Odenwald-Busrunde über Wald-Michelbach durchs stille Ulfenbachtal nach Burg Hirschhorn am Neckar",
+        "en": "Close-range Odenwald bus crossing from Wald-Michelbach through the quiet Ulfenbach valley to Hirschhorn"
+      },
+      "sun": {
+        "de": "Abwechslung aus grünen Wiesentälern im Überwald und sonnigem Neckar-Burgblick in Hirschhorn.",
+        "en": "Mix of tranquil Odenwald meadow valleys and sunny castle views above the Neckar at Hirschhorn."
+      },
+      "tips": {
+        "de": "Ab Jugenheim über Weinheim + Bus 681 hinauf nach Wald-Michelbach, per Bus 685 nach Hirschhorn (Neckar) und via S1 über Heidelberg zurück; auf Randkursen Ruftaxi beachten.",
+        "en": "Ride via Weinheim & Bus 681 up to Wald-Michelbach, descend on Bus 685 through Ulfenbach Valley to Hirschhorn, and return via Heidelberg."
+      },
+      "eveningSun": false,
+      "places": [
+        "Weinheim Hbf",
+        "Gorxheimertal",
+        "Wald-Michelbach ZOB",
+        "Heddesbach",
+        "Hirschhorn (Neckar)",
+        "Heidelberg Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Wald-Michelbach, ZOB",
+          "lat": 49.57402,
+          "lon": 8.822947,
+          "dhid": "de:06431:3981",
+          "transitousId": "de-DELFI_de:06431:3981:0:Ri O",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Hirschhorn, Bahnhof",
+          "lat": 49.44267,
+          "lon": 8.896055,
+          "dhid": "de:06431:1590",
+          "transitousId": "de-DELFI_de:06431:1590_G",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Burg Hirschhorn"
+    },
+    {
+      "id": "bahnrunde-grosse-schwarzwald-achterbahn",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Große Schwarzwald-Achterbahn: Murgtalbahn (S8/RE40) & Kinzigtalbahn (RS1)",
+        "en": "Grand Black Forest Figure-Eight Rail Loop: Murg Valley & Kinzig Valley"
+      },
+      "subtitle": {
+        "de": "Ohne einen doppelten Schienenmeter über Murg-Viadukte nach Freudenstadt & durch Fachwerkstädte bis Offenburg",
+        "en": "Zero-overlap scenic rail loop riding Murg Valley stone viaducts to Freudenstadt and half-timbered Kinzig towns"
+      },
+      "sun": {
+        "de": "Morgens schattig-tiefe Steiltäler bei Forbach, nachmittags weite Wiesen & Rebberge zwischen Haslach und Offenburg.",
+        "en": "Dramatic steep gorges above Forbach transitioning into broad sunlit Kinzig meadows toward Offenburg."
+      },
+      "tips": {
+        "de": "Kinzigtalbahn-Sperrung ist beendet (stündlicher Takt Freudenstadt – Schiltach – Hausach – Offenburg); herrliche Zwischenstopps in Schiltach oder Gengenbach.",
+        "en": "Hourly connections all the way from Freudenstadt past Alpirsbach, Schiltach, Haslach and Gengenbach to Offenburg."
+      },
+      "eveningSun": false,
+      "places": [
+        "Forbach (Schwarzw)",
+        "Freudenstadt Hbf",
+        "Alpirsbach",
+        "Schiltach Bahnhof",
+        "Haslach",
+        "Gengenbach",
+        "Offenburg"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Freudenstadt Hauptbahnhof",
+          "lat": 48.460323,
+          "lon": 8.428803,
+          "dhid": "de:08237:1050",
+          "transitousId": "de-DELFI_de:08237:1050",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Offenburg",
+          "lat": 48.476475,
+          "lon": 7.946723,
+          "dhid": "de:08317:14506",
+          "transitousId": "de-DELFI_de:08317:14506_G",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Schiltach Bahnhof",
+            "lat": 48.29118,
+            "lon": 8.334875,
+            "dhid": "de:08325:6585",
+            "transitousId": "de-DELFI_de:08325:6585_G",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Schiltach"
+    },
+    {
+      "id": "bahnrunde-nordpfalz-lautertal-glan-alsenz",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "pfaelzerwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Nordpfalz Vier-Täler-Loop: Lautertal – Meisenheim (Bus 260) – Nahe – Alsenz",
+        "en": "North Palatinate Four-Valley Loop: Lauter, Glan (Bus 260), Nahe & Alsenz"
+      },
+      "subtitle": {
+        "de": "Geschlossener ÖPNV-Kreis durch vier Flusstäler inkl. Fachwerkjuwel Meisenheim am Glan",
+        "en": "Seamless four-valley rail & bus loop linking Lauter, Glan, Nahe and Alsenz rivers with medieval Meisenheim"
+      },
+      "sun": {
+        "de": "Offene Wiesen- und Weinbergslandschaft entlang von Glan und Nahe mit steiler Rotenfels-Kulisse.",
+        "en": "Open river meadows and vineyards along Glan and Nahe rivers framed by Rotenfels cliffs."
+      },
+      "tips": {
+        "de": "Ab Kaiserslautern mit RB66 nach Lauterecken, Anschlussbus 260 (wartet bei Verspätung planmäßig 3–5 Min.) über Meisenheim nach Bad Sobernheim, RE3 nach Bad Kreuznach & RB65 durchs Alsenztal.",
+        "en": "From Kaiserslautern take RB66 to Lauterecken, timed Bus 260 through medieval Meisenheim to Bad Sobernheim, RE3 to Bad Kreuznach, and RB65 via the Alsenz Valley."
+      },
+      "eveningSun": false,
+      "places": [
+        "Kaiserslautern Hbf",
+        "Lauterecken-Grumbach",
+        "Meisenheim",
+        "Bad Sobernheim",
+        "Bad Kreuznach",
+        "Rockenhausen"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Lauterecken, P+R",
+          "lat": 49.65371,
+          "lon": 7.59071,
+          "dhid": "de:07336:8034",
+          "transitousId": "de-DELFI_de:07336:8034_G",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Bad Kreuznach, Bahnhof",
+          "lat": 49.8424,
+          "lon": 7.866435,
+          "dhid": "de:07133:8178",
+          "transitousId": "de-DELFI_de:07133:8178_G",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Bad Sobernheim, Bahnhof",
+            "lat": 49.782978,
+            "lon": 7.649397,
+            "dhid": "de:07133:30624",
+            "transitousId": "de-DELFI_de:07133:30624:1:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Schlosskirche (Meisenheim)"
+    },
+    {
+      "id": "bahnrunde-mittelrhein-hunsrueckbahn-rheinhessen",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Steilstrecke Hunsrückbahn (RB37) & Rheinhessenbahn (RB35)-Loop",
+        "en": "Steep Hunsrückbahn Mountain Rail (RB37) & Rheinhessen (RB35) Loop"
+      },
+      "subtitle": {
+        "de": "UNESCO-Mittelrheintal bis Boppard, 6-%-Steilstrecke nach Emmelshausen & komplett per Bahn durch Rheinhessen",
+        "en": "UNESCO Rhine Gorge to Boppard, Germany's steepest adhesion railway (6%) to Emmelshausen & Rheinhessen return"
+      },
+      "sun": {
+        "de": "Sonnige Rheinterrassen links des Rheins und weite Hochflächen über dem Hubertusviadukt.",
+        "en": "Sunny Left Rhine terraces and airy plateau vistas atop the Hubertus viaduct."
+      },
+      "tips": {
+        "de": "Hinweis Nov. 2026: Rechte Rheinstrecke (RB10) bis 12.12.2026 im SEV – daher verläuft der Rückweg ab Boppard über Bingen und die Rheinhessenbahn RB35 (Alzey – Worms) komplett auf der Schiene!",
+        "en": "Avoids Right Rhine rail works (through Dec 12, 2026) by looping back via Left Rhine RE2/RB26 to Bingen and Rheinhessenbahn RB35 to Alzey & Worms."
+      },
+      "eveningSun": true,
+      "places": [
+        "Boppard Hbf",
+        "Hubertusviadukt",
+        "Emmelshausen Bahnhof",
+        "Bingen (Rhein) Hbf",
+        "Alzey Bahnhof",
+        "Worms Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Boppard Hauptbahnhof",
+          "lat": 50.231422,
+          "lon": 7.586014,
+          "dhid": "de:07140:060039",
+          "transitousId": "de-DELFI_de:07140:060039",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Alzey, Bahnhof",
+          "lat": 49.75014,
+          "lon": 8.109784,
+          "dhid": "de:07331:55",
+          "transitousId": "de-DELFI_de:07331:55:1:1",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Emmelshausen Bahnhof",
+            "lat": 50.157673,
+            "lon": 7.560494,
+            "dhid": "de:07140:060101",
+            "transitousId": "de-DELFI_de:07140:060101",
+            "ibnr": null
+          },
+          {
+            "name": "Bingen, Hauptbahnhof",
+            "lat": 49.969147,
+            "lon": 7.882717,
+            "dhid": "de:07339:8183",
+            "transitousId": "de-DELFI_de:07339:8183:1:102",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Hunsrückbahn"
+    },
+    {
+      "id": "bahnrunde-odenwaldbahn-neckartal-bergstrasse",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "odenwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Odenwaldbahn (Himbächel-Viadukt) – Neckartal (S1) – Bergstraße-Dreieck",
+        "en": "Odenwald Railway Viaduct – Neckar Valley (S1) – Bergstraße Triangle"
+      },
+      "subtitle": {
+        "de": "Vom Mümlingtal (Michelstadt/Erbach) über das 43 m hohe Himbächel-Viadukt ins Neckar-Burgentor bei Eberbach",
+        "en": "Ride the Odenwald Railway from Michelstadt across the 43 m Himbächel Viaduct into the Neckar Valley at Eberbach"
+      },
+      "sun": {
+        "de": "Lichte Waldhochflächen im Mümlingtal und romantisches Neckartal zwischen Eberbach, Hirschhorn und Heidelberg.",
+        "en": "Airy valley pastures in central Odenwald transitioning into castle-lined Neckar gorge scenery."
+      },
+      "tips": {
+        "de": "Ab Jugenheim über Darmstadt per VIAS Odenwaldbahn nach Michelstadt, weiter über Erbach & Himbächel-Viadukt nach Eberbach (WE 2h-Takt zwischen Erbach & Eberbach) und S1 über Heidelberg zurück.",
+        "en": "VIAS RE80/RB82 reaches Michelstadt via Darmstadt; continue over Erbach and Himbächel Viaduct to Eberbach (2h cadence on weekends) and return via Neckar S1."
+      },
+      "eveningSun": false,
+      "places": [
+        "Darmstadt Hbf",
+        "Michelstadt Bahnhof",
+        "Erbach (Odw)",
+        "Himbächel-Viadukt",
+        "Eberbach",
+        "Hirschhorn (Neckar)",
+        "Heidelberg Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Michelstadt Bahnhof",
+          "lat": 49.684856,
+          "lon": 9.001453,
+          "dhid": "de:06437:11222",
+          "transitousId": "de-DELFI_de:06437:11222",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Eberbach",
+          "lat": 49.465607,
+          "lon": 8.984476,
+          "dhid": "de:08226:534",
+          "transitousId": "de-DELFI_de:08226:534:4:2",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Himbächel-Viadukt"
+    },
+    {
+      "id": "bahnrunde-nagoldtal-hermann-hesse-bahn",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Nagoldtalbahn (RB74) & neue Hermann-Hesse-Bahn (RB76) über Calw",
+        "en": "Nagold Valley Rail (RB74) & New Hermann-Hesse-Bahn (RB76) Loop via Calw"
+      },
+      "subtitle": {
+        "de": "Bahn-Neuheit 2026: Durchs Nagoldtal nach Calw und auf der reaktivierten Hermann-Hesse-Bahn nach Renningen",
+        "en": "2026 railway reopening: ride through the Nagold Valley to Calw & the newly reopened Hermann-Hesse-Bahn to Renningen"
+      },
+      "sun": {
+        "de": "Tief eingeschnittenes Waldtal entlang der Nagold und offene Heckengäu-Landschaft bei Weil der Stadt.",
+        "en": "Wooded meanders along the Nagold river giving way to sunlit Heckengäu meadows around Weil der Stadt."
+      },
+      "tips": {
+        "de": "Leise Akku-Triebzüge auf der historischen Württembergischen Schwarzwaldbahn RB76 Calw – Renningen (Mo–Fr 30-Min.-, Sa/So 60-Min.-Takt); Rückweg ab Renningen über Mühlacker/Bretten oder Stuttgart.",
+        "en": "Quiet battery trains operate the reopened RB76 Calw–Renningen tunnel line (30 min weekday / 60 min weekend cadence); return via Mühlacker/Pforzheim."
+      },
+      "eveningSun": false,
+      "places": [
+        "Pforzheim Hbf",
+        "Kloster Hirsau",
+        "Calw Bahnhof/ZOB",
+        "Forst- & Hirsauer Tunnel",
+        "Renningen",
+        "Mühlacker"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Calw, Bahnhof/ZOB",
+          "lat": 48.71448,
+          "lon": 8.741811,
+          "dhid": "de:08235:9030",
+          "transitousId": "de-DELFI_de:08235:9030",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Renningen",
+          "lat": 48.77512,
+          "lon": 8.93235,
+          "dhid": "de:08115:7302",
+          "transitousId": "de-DELFI_de:08115:7302",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Calw"
+    },
+    {
+      "id": "busrunde-suedpfalz-weintor-wissembourg-lauterbourg",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "pfaelzerwald",
+      "category": "wein",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Südpfalz, Deutsches Weintor & Elsass-Fachwerk: Wissembourg & Lauterbourg",
+        "en": "South Palatinate Wine Gate & Alsace Half-Timbered Towns: Wissembourg & Lauterbourg"
+      },
+      "subtitle": {
+        "de": "100 % D-Ticket über Bad Bergzabern am Weintor vorbei nach Wissembourg & über Winden ins Festungsstädtchen Lauterbourg",
+        "en": "100% Deutschlandticket cross-border loop via German Wine Gate, Wissembourg and Lauterbourg"
+      },
+      "sun": {
+        "de": "Offene Weinberge an der Südlichen Weinstraße sowie gemütliche Fachwerkgassen an der Lauter.",
+        "en": "Sunny Southern Wine Route vineyards and charming riverside streets in Alsace."
+      },
+      "tips": {
+        "de": "100 % D-Ticket bis Wissembourg (Bus 543 / RB53 DB Regio) & Lauterbourg (RB52 DB Regio). Wichtig: In Wissembourg & Lauterbourg keine französischen TER/Fluo-Busse tiefer ins Elsass besteigen!",
+        "en": "Fully Deutschlandticket-valid to Wissembourg (Bus 543 / DB Regio RB53) and Lauterbourg (DB Regio RB52); do not board domestic French TER/Fluo buses deeper into Alsace."
+      },
+      "eveningSun": true,
+      "places": [
+        "Landau (Pfalz) Hbf",
+        "Wissembourg Gare",
+        "Schweigen Deutsches Weintor",
+        "Bad Bergzabern Bahnhof",
+        "Wörth (Rhein)",
+        "Lauterbourg"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Landau (Pfalz) Hbf",
+          "lat": 49.198223,
+          "lon": 8.12615,
+          "dhid": "de:07313:8304",
+          "transitousId": null,
+          "ibnr": "8000216"
+        },
+        "endStop": {
+          "name": "Lauterbourg",
+          "lat": 48.967663,
+          "lon": 8.182904,
+          "dhid": "fr:24067:479",
+          "transitousId": "de-DELFI_fr:24067:479",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Wissembourg Gare",
+            "lat": 49.031647,
+            "lon": 7.950014,
+            "dhid": "fr:24067:466",
+            "transitousId": "de-DELFI_fr:24067:466",
+            "ibnr": null
+          },
+          {
+            "name": "Bad Bergzabern, Bahnhof",
+            "lat": 49.103214,
+            "lon": 8.00327,
+            "dhid": "de:07337:4561",
+            "transitousId": "de-DELFI_de:07337:4561:1:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Deutsches Weintor"
+    },
+    {
+      "id": "stadt-speyer-schwetzingen-kurpfalz",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "stadt",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "UNESCO-Kaiserdom Speyer & Schloss Schwetzingen (S3 + Bus 717 + S9)",
+        "en": "UNESCO Imperial Cathedral Speyer & Schwetzingen Palace Loop"
+      },
+      "subtitle": {
+        "de": "Kultur-Rundkurs ganz ohne Wanderpflicht: Vom romanischen Kaiserdom über den Rhein direkt vors Schwetzinger Schloss",
+        "en": "Zero-hike heritage loop connecting Speyer's UNESCO cathedral across the Rhine to Schwetzingen Palace"
+      },
+      "sun": {
+        "de": "Weitläufiger Domplatz und sonniger Schwetzinger Schlossgarten mit Orangerie und Moscheegarten.",
+        "en": "Open cathedral square in Speyer and sunlit baroque palace gardens in Schwetzingen."
+      },
+      "tips": {
+        "de": "Ab Speyer Hbf/Domplatz fährt Bus 717 über Ketsch bis direkt zum Schwetzinger Schlossplatz (~35 Min.); ab dort stündlich/halbstündlich S9 nach Karlsruhe bzw. Mannheim/Jugenheim.",
+        "en": "VRN Bus 717 links Speyer Hbf/Domplatz with Schwetzingen Schlossplatz in ~35 min; frequent S9 rail connects onward to Karlsruhe and Jugenheim."
+      },
+      "eveningSun": true,
+      "places": [
+        "Speyer Hbf",
+        "Speyer Kaiserdom & SchUM-Viertel",
+        "Ketsch",
+        "Schwetzingen Schlossplatz",
+        "Mannheim Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Speyer, Hbf/ZOB",
+          "lat": 49.324585,
+          "lon": 8.427976,
+          "dhid": "de:07318:3603",
+          "transitousId": "de-DELFI_de:07318:3603",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Schwetzingen, Schlossplatz",
+          "lat": 49.383797,
+          "lon": 8.572353,
+          "dhid": "de:08226:3499",
+          "transitousId": "de-DELFI_de:08226:3499:0:1",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Speyerer Dom"
+    },
+    {
+      "id": "stadt-maulbronn-bretten-kraichgau",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "stadt",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "UNESCO-Kloster Maulbronn & Melanchthonstadt Bretten (S4 + Bus 700 + IRE1)",
+        "en": "UNESCO Maulbronn Abbey & Bretten Half-Timbered Town Loop"
+      },
+      "subtitle": {
+        "de": "Per Bus 700 direkt bis vors mittelalterliche Klostertor und im Bogen über Mühlacker durch den Kraichgau",
+        "en": "Ride S4 to Bretten, Bus 700 directly to medieval Maulbronn Monastery gate, and return via Mühlacker"
+      },
+      "sun": {
+        "de": "Geschützter Klosterhof, weite Kraichgauer Hügel und historischer Bretter Marktplatz; wetterfest bei Herbstwind.",
+        "en": "Sheltered medieval cloisters paired with rolling Kraichgau countryside and Bretten's old square."
+      },
+      "tips": {
+        "de": "Wichtig: Kloster Maulbronn hat Nov–Feb montags Ruhetag (Di–So 9:30–17 Uhr offen); Bus 700 fährt auch im Winter täglich bis direkt vor die Klostermauer.",
+        "en": "Note: Maulbronn Abbey is closed Mondays in Nov–Feb (open Tue–Sun 9:30–17:00); VPE Bus 700 stops right outside the monastery walls daily."
+      },
+      "eveningSun": false,
+      "places": [
+        "Bretten",
+        "Maulbronn Kloster",
+        "Mühlacker ZOB",
+        "Pforzheim Hbf",
+        "Bruchsal"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Bretten",
+          "lat": 49.0369,
+          "lon": 8.693448,
+          "dhid": "de:08215:1551",
+          "transitousId": "de-DELFI_de:08215:1551",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Mühlacker ZOB",
+          "lat": 48.9531,
+          "lon": 8.845881,
+          "dhid": "de:08236:3090",
+          "transitousId": "de-DELFI_de:08236:3090",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Maulbronn Kloster",
+            "lat": 49.000175,
+            "lon": 8.812239,
+            "dhid": "de:08236:2213",
+            "transitousId": "de-DELFI_de:08236:2213:1:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Kloster Maulbronn"
+    },
+    {
+      "id": "busrunde-taunus-x72-idstein-lahn",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Wiesbaden – Taunus-Expressbus (X72) – Limburg (Lahn) – Idstein",
+        "en": "Wiesbaden – Taunus Express Bus (X72) – Limburg Cathedral – Idstein Loop"
+      },
+      "subtitle": {
+        "de": "Quer über den Taunus-Kamm im Schnellbus X72 zum sieben-türmigen Limburger Dom & zurück durchs Fachwerk-Idstein",
+        "en": "Cross the Taunus crest on Express Bus X72 to 7-spired Limburg Cathedral and return through historic Idstein"
+      },
+      "sun": {
+        "de": "Offene Taunus-Höhenrücken zwischen Taunusstein & Kirberg sowie sonniger Domfelsen über der Lahn.",
+        "en": "Open Taunus ridges on Express Bus X72, cathedral cliff overlooking the Lahn river, and Idstein old town."
+      },
+      "tips": {
+        "de": "RMV-Expressbus X72 verkehrt ganzjährig täglich (auch Sa/So stündlich) ohne Zuschlag zwischen Wiesbaden Hbf & Limburg (71 Min.); Rückweg über die Main-Lahn-Bahn RE20/RB22 nach Idstein & Frankfurt.",
+        "en": "RMV Express Bus X72 runs hourly daily year-round (71 min Wiesbaden–Limburg) at no extra cost; return on Main-Lahn regional trains via Idstein."
+      },
+      "eveningSun": false,
+      "places": [
+        "Wiesbaden Hbf",
+        "Limburger Dom",
+        "Taunusstein",
+        "Idstein Bahnhof",
+        "Frankfurt (M) Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Wiesbaden Hauptbahnhof",
+          "lat": 50.07079,
+          "lon": 8.243731,
+          "dhid": "de:06414:6907",
+          "transitousId": "de-DELFI_de:06414:6907",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Idstein Bahnhof",
+          "lat": 50.21599,
+          "lon": 8.257264,
+          "dhid": "de:06439:11318",
+          "transitousId": "de-DELFI_de:06439:11318",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Limburg (Lahn) Bahnhof",
+            "lat": 50.384117,
+            "lon": 8.062342,
+            "dhid": "de:06533:11025",
+            "transitousId": "de-DELFI_de:06533:11025",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Limburger Dom"
+    },
+    {
+      "id": "bahnrunde-hoellental-dreiseen-schwarzwaldbahn",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Höllentalbahn (S10), Dreiseenbahn (Seebrugg) & Schwarzwaldbahn-Kehrtunnel",
+        "en": "Höllental Gorge Rail, Three-Lakes Line (Seebrugg) & Black Forest Railway Loop"
+      },
+      "subtitle": {
+        "de": "Die steilsten Gebirgsbahnen Südwestdeutschlands: 5,5-%-Rampe, 967 m höchster DB-Bahnhof & 36 Triberger Tunnel",
+        "en": "Three iconic mountain railways in one day: Höllental gorge, Germany's highest standard-gauge station & 36 tunnels"
+      },
+      "sun": {
+        "de": "Wilde Felsschlucht am Ravenna-Viadukt, weiter Seespiegel am Schluchsee & Panorama-Kehrschleifen im Gutachtal.",
+        "en": "Dramatic ravine at Ravenna Viaduct, snowy mountain lakes around Schluchsee, and sweeping loops above Triberg."
+      },
+      "tips": {
+        "de": "Alle Herbstbauarbeiten auf Höllental- und Schwarzwaldbahn sind beendet; Abstecher per S1 ab Titisee bis Seebrugg am Schluchsee dauert nur 30 Min.",
+        "en": "All autumn rail works are complete; the S1 branch from Titisee climbs past Feldberg-Bärental (967 m) to Lake Schluchsee (Seebrugg)."
+      },
+      "eveningSun": false,
+      "places": [
+        "Höllental (Schwarzwald)",
+        "Ravennaschlucht",
+        "Titisee",
+        "Feldberg-Bärental (967 m)",
+        "Seebrugg (Schluchsee)",
+        "Donaueschingen",
+        "Triberg"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Titisee, Bahnhof",
+          "lat": 47.90336,
+          "lon": 8.155598,
+          "dhid": "de:08315:6548",
+          "transitousId": "de-DELFI_de:08315:6548",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Donaueschingen",
+          "lat": 47.947872,
+          "lon": 8.499141,
+          "dhid": "de:08326:6537",
+          "transitousId": "de-DELFI_de:08326:6537",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Seebrugg Bahnhof",
+            "lat": 47.803486,
+            "lon": 8.190991,
+            "dhid": "de:08315:6547",
+            "transitousId": "de-DELFI_de:08315:6547",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Ravennaschlucht"
+    },
+    {
+      "id": "bahnrunde-westfranken-main-madonnenland-neckar",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "odenwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Maintalbahn (RE87), Madonnenlandbahn (RB84) & Neckartal-Dreieck",
+        "en": "Main Valley, Madonnenland Rural Rail (RB84) & Neckar Castle Triangle"
+      },
+      "subtitle": {
+        "de": "Diesel-Nebenbahnromantik von Aschaffenburg & Miltenberg über Amorbach nach Seckach und per S1 durchs Neckartal",
+        "en": "Country branch-line loop from Miltenberg past Amorbach and Walldürn to Seckach, returning down the Neckar"
+      },
+      "sun": {
+        "de": "Weite Odenwald-Hochfläche rund um Walldürn und steile Waldhänge über Main und Neckar.",
+        "en": "Rolling Odenwald plateau scenery around Amorbach and Walldürn paired with Main and Neckar river valleys."
+      },
+      "tips": {
+        "de": "Ab Jugenheim ideal per RB75 nach Aschaffenburg & RE87 nach Miltenberg (~2h). Ab Miltenberg fährt die RB84 ganzjährig direkt bis Seckach (~91 Min., Sa/So 2h-Takt beachten!).",
+        "en": "Reaches Miltenberg cleanly via Darmstadt & Aschaffenburg; branch line RB84 runs across the eastern Odenwald to Seckach (2h cadence on weekends) connecting straight to Neckar S1."
+      },
+      "eveningSun": false,
+      "places": [
+        "Aschaffenburg Hbf",
+        "Miltenberg",
+        "Kloster Amorbach",
+        "Walldürn",
+        "Seckach Bahnhof",
+        "Eberbach",
+        "Heidelberg Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Miltenberg",
+          "lat": 49.7064,
+          "lon": 9.248388,
+          "dhid": "de:09676:1254",
+          "transitousId": "de-DELFI_de:09676:1254",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Seckach, Bahnhof",
+          "lat": 49.441105,
+          "lon": 9.338446,
+          "dhid": "de:08225:8203",
+          "transitousId": "de-DELFI_de:08225:8203",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Kloster Amorbach"
+    },
+    {
+      "id": "busrunde-elztal-simonswald-furtwangen-triberg",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Elztal – Simonswäldertal (Bus 240) – Furtwangen – Triberg (Bus 550)",
+        "en": "Elz Valley – Simonswald (Bus 240) – Furtwangen Clock Museum – Triberg"
+      },
+      "subtitle": {
+        "de": "West-Ost-Querung über die zentralen Schwarzwaldpässe kombiniert mit dem Deutschen Uhrenmuseum & RE2-Kehrtunneln",
+        "en": "West-to-east Black Forest ridge bus crossing via Furtwangen Clock Museum down to Triberg & Schwarzwaldbahn"
+      },
+      "sun": {
+        "de": "Tief eingeschnittenes Simonswäldertal bei Bleibach, sonnige Höhenweiden um Schönwald/Furtwangen.",
+        "en": "Deep scenic Simonswald valley followed by open mountain pastures around Furtwangen and Schönwald."
+      },
+      "tips": {
+        "de": "Mo–Sa im Stundentakt über move Bus 240 & 550; Achtung sonntags: Bus 550 Furtwangen→Triberg verkehrt erst nachmittags (~ab 13 Uhr) teils als Rufbus – früh planen!",
+        "en": "Hourly Mon–Sat via Buses 240 & 550; on Sundays Bus 550 runs afternoon departures only (~13:00+)."
+      },
+      "eveningSun": false,
+      "places": [
+        "Bleibach Bahnhof",
+        "Simonswäldertal",
+        "Furtwangen Rößleplatz",
+        "Deutsches Uhrenmuseum",
+        "Schönwald",
+        "Triberg Bahnhof",
+        "Offenburg"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Bleibach Bahnhof",
+          "lat": 48.12403,
+          "lon": 8.005004,
+          "dhid": "de:08316:6503",
+          "transitousId": "de-DELFI_de:08316:6503",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Triberg",
+          "lat": 48.140034,
+          "lon": 8.236886,
+          "dhid": "de:08326:6591",
+          "transitousId": "de-DELFI_de:08326:6591_G",
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Furtwangen Rößleplatz",
+            "lat": 48.052654,
+            "lon": 8.207332,
+            "dhid": "de:08326:1181",
+            "transitousId": "de-DELFI_de:08326:1181:0:1",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Simonswäldertal"
+    },
+    {
+      "id": "busrunde-nationalpark-erbeskopf-800-890",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Nationalpark Hunsrück-Hochwald & Erbeskopf (816 m): Bus 800 + 890",
+        "en": "Hunsrück-Hochwald National Park & Erbeskopf (816 m): Buses 800 + 890"
+      },
+      "subtitle": {
+        "de": "Doppelstockbus 800 bis zum höchsten Gipfel von Rheinland-Pfalz (816 m) & per Nationalparkbus 890 nach Neubrücke",
+        "en": "Double-decker Bus 800 up to Rhineland-Palatinate's highest summit (816 m) and National Park Bus 890 down to Neubrücke"
+      },
+      "sun": {
+        "de": "Exponierte Gipfelwiese am Erbeskopf mit Skulptur ‚Windklang‘ und weitem Hunsrück-Fernblick.",
+        "en": "Open 816 m summit plateau at Erbeskopf with iconic Windklang sculpture and wide Hunsrück views."
+      },
+      "tips": {
+        "de": "Ideal ab Jugenheim via Mainz + Nahe-Express RE3 nach Idar-Oberstein (~3h). Hochwald-Schnellbus 800 & Nationalparkbus 890 fahren ganzjährig täglich im 1–2h-Takt.",
+        "en": "Best reached from Jugenheim via RE3 along the Nahe valley to Idar-Oberstein; express Bus 800 (double-decker) and Bus 890 run year-round."
+      },
+      "eveningSun": true,
+      "places": [
+        "Idar-Oberstein Bahnhof",
+        "Hilscheid Hunsrückhaus/Erbeskopf (816 m)",
+        "Birkenfeld",
+        "Neubrücke (Nahe)",
+        "Mainz Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Idar-Oberstein, Bahnhof",
+          "lat": 49.699425,
+          "lon": 7.32118,
+          "dhid": "de:07134:35000",
+          "transitousId": "de-DELFI_de:07134:35000:1:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Neubrücke (Nahe), Bahnhof",
+          "lat": 49.60592,
+          "lon": 7.17279,
+          "dhid": "de:07134:35406",
+          "transitousId": null,
+          "ibnr": null
+        },
+        "vias": [
+          {
+            "name": "Hilscheid, H'haus/Erbeskopf",
+            "lat": 49.737354,
+            "lon": 7.083108,
+            "dhid": "de:07231:40416",
+            "transitousId": "de-DELFI_de:07231:40416",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Erbeskopf"
+    },
+    {
+      "id": "stadt-staufen-breisach-kaiserstuhl",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "stadt",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Fauststadt Staufen (Burgruine) & Münsterstadt Breisach am Kaiserstuhl",
+        "en": "Historic Staufen Castle Town & Breisach Minster atop the Rhine Loop"
+      },
+      "subtitle": {
+        "de": "Farbige Altstadt & Burgruine Staufen (+15 Min. Spaziergang) + Breisacher Münsterberg hoch über Rhein & Kaiserstuhl",
+        "en": "Colorfully painted Faust town of Staufen plus Breisach's Romanesque cathedral terrace high above the Rhine"
+      },
+      "sun": {
+        "de": "Sonnenverwöhntes Markgräflerland & Kaiserstuhl mit goldenen Spätnachmittagsblicken zu den Vogesen.",
+        "en": "Sun-warmed Markgräflerland and Kaiserstuhl terraces glowing above the Upper Rhine toward Alsace."
+      },
+      "tips": {
+        "de": "RE7 + Münstertalbahn S3 nach Staufen; weiter mit Breisacher Bahn S1 oder Kaiserstuhlbahn S5 um den Vulkan-Rücken; beide Stadtberge jederzeit kostenlos begehbar.",
+        "en": "RE7 + S3 serve Staufen directly; continue via Freiburg on S1 to Breisach (and return around Kaiserstuhl volcano if desired)."
+      },
+      "eveningSun": true,
+      "places": [
+        "Bad Krozingen",
+        "Staufen Bahnhof & Burgruine",
+        "Freiburg Hbf",
+        "Breisach Münsterberg",
+        "Riegel-Malterdingen"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Staufen (Brsg) Bahnhof",
+          "lat": 47.885426,
+          "lon": 7.728117,
+          "dhid": "de:08315:6526",
+          "transitousId": "de-DELFI_de:08315:6526",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Breisach Bahnhof",
+          "lat": 48.02715,
+          "lon": 7.589839,
+          "dhid": "de:08315:6504",
+          "transitousId": "de-DELFI_de:08315:6504",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Breisacher Stephansmünster"
+    },
+    {
+      "id": "bahnrunde-oberes-donautal-schwarzwaldbahn",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "panoramatour",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Schwäbischer Grand Canyon: Oberes Donautal (RE55) & Schwarzwaldbahn",
+        "en": "Upper Danube Gorge (RE55) & Black Forest Railway (RE2) Grand Loop"
+      },
+      "subtitle": {
+        "de": "Schwarzwaldbahn-Tunnel bis Villingen, weiter an 200 m hohen Kalkfelsen vorbei über Beuron & Sigmaringen bis Ulm",
+        "en": "Black Forest Railway into Villingen, then cliff-walled Upper Danube valley past Beuron Abbey & Sigmaringen Castle to Ulm"
+      },
+      "sun": {
+        "de": "Dramatische, weiß leuchtende Jurakalkfelsen im Durchbruchstal der jungen Donau und prächtiges Hohenzollernschloss Sigmaringen.",
+        "en": "Towering white limestone crags in the Upper Danube breakthrough valley and Sigmaringen palace cliff."
+      },
+      "tips": {
+        "de": "Ab Karlsruhe RE2 bis Villingen (~1h56) und direkt auf dem Donautal-Express RE55 nach Sigmaringen/Ulm (Rückweg per RE5/RE1 über Stuttgart; bis 12.12.26 schneller als Zollernbahn).",
+        "en": "Out via RE2 Schwarzwaldbahn to Villingen, through the Danube gorge on RE55 to Sigmaringen & Ulm, returning swiftly via RE5/RE1."
+      },
+      "eveningSun": false,
+      "places": [
+        "Triberg",
+        "Villingen (Schwarzw)",
+        "Tuttlingen",
+        "Kloster Beuron",
+        "Sigmaringen",
+        "Ulm Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Villingen Bahnhof/ZOB",
+          "lat": 48.057804,
+          "lon": 8.465526,
+          "dhid": "de:08326:6592",
+          "transitousId": "de-DELFI_de:08326:6592",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Ulm Hbf",
+          "lat": 48.399345,
+          "lon": 9.982933,
+          "dhid": "de:08421:1008",
+          "transitousId": null,
+          "ibnr": "8000170"
+        },
+        "vias": [
+          {
+            "name": "Sigmaringen",
+            "lat": 48.086983,
+            "lon": 9.221851,
+            "dhid": "de:08437:42111",
+            "transitousId": "de-DELFI_de:08437:42111_G",
+            "ibnr": null
+          }
+        ],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Kloster Beuron"
+    },
+    {
+      "id": "stadt-seligenstadt-aschaffenburg-main",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "stadt",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Einhardstadt Seligenstadt (Kloster) & Schlossstadt Aschaffenburg (RB75 + RB86)",
+        "en": "Seligenstadt Abbey Old Town & Aschaffenburg Johannisburg Palace Loop"
+      },
+      "subtitle": {
+        "de": "Rotes Mainschloss Johannisburg & historische Einhard-Basilika mit Fachwerkmarkt in kurzer Distanz ab Jugenheim",
+        "en": "Red-sandstone Renaissance Johannisburg Palace on the Main paired with Seligenstadt's Carolingian abbey town"
+      },
+      "sun": {
+        "de": "Uferpromenaden am Main und sonniger barocker Klostergarten in Seligenstadt; perfekte Halbtages-/Wintertour.",
+        "en": "Main riverbank promenades and sheltered Baroque abbey garden in Seligenstadt; great any season."
+      },
+      "tips": {
+        "de": "Ab Jugenheim in ~80–95 Min. via Darmstadt nach Aschaffenburg; Schloss-Innenräume Nov–März Di–So 10–16 Uhr (Pompejanum Winterpause; Außenanlagen jederzeit frei).",
+        "en": "Quick ~85 min ride from Jugenheim to Aschaffenburg via Darmstadt; hop RB75+RB86 to Seligenstadt and return via Hanau & Frankfurt."
+      },
+      "eveningSun": false,
+      "places": [
+        "Darmstadt Hbf",
+        "Aschaffenburg Hbf & Schloss Johannisburg",
+        "Babenhausen (Hess)",
+        "Seligenstadt Kloster & Altstadt",
+        "Hanau Hbf"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Aschaffenburg Hbf",
+          "lat": 49.980556,
+          "lon": 9.143697,
+          "dhid": "de:09661:99082",
+          "transitousId": "de-DELFI_de:09661:99082",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Seligenstadt Bahnhof",
+          "lat": 50.04146,
+          "lon": 8.967472,
+          "dhid": "de:06438:6601",
+          "transitousId": "de-DELFI_de:06438:6601",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Schloss Johannisburg"
+    },
+    {
+      "id": "stadt-esslingen-ludwigsburg-barock",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "stadt",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Mittelalterstadt Esslingen („Klein-Venedig“) & Barockresidenz Ludwigsburg",
+        "en": "Medieval Esslingen Half-Timbered Town & Baroque Ludwigsburg Palace Loop"
+      },
+      "subtitle": {
+        "de": "Verwinkelte Kanäle & Weinbergstaffeln hinauf zur Esslinger Burg kombiniert mit dem Residenzschloss Ludwigsburg",
+        "en": "Canals & hilltop castle ramparts in medieval Esslingen combined with the grand Baroque palace of Ludwigsburg"
+      },
+      "sun": {
+        "de": "Süd-West-Weinbergstaffeln unterhalb der Esslinger Burg mit weitem Neckartal-Abendblick.",
+        "en": "South-facing vineyard steps below Esslingen Castle and vast palace courtyards in Ludwigsburg."
+      },
+      "tips": {
+        "de": "Ab Karlsruhe stündlich/halbstündlich per IRE1/RE1 + S1/S4/S5 erreichbar; im Advent (ab 24.11.) bieten sowohl Esslingens Mittelaltermarkt als auch Ludwigsburg besondere Höhepunkte.",
+        "en": "Easy hourly RE1/IRE1 + S-Bahn connections from Karlsruhe; both towns also host celebrated historic Christmas markets from late November."
+      },
+      "eveningSun": true,
+      "places": [
+        "Stuttgart Hbf",
+        "Esslingen (Neckar) Klein-Venedig",
+        "Esslinger Burg",
+        "Ludwigsburg Residenzschloss",
+        "Bietigheim-Bissingen"
+      ],
+      "transit": {
+        "kind": "shortcut_360",
+        "startStop": {
+          "name": "Esslingen (N)",
+          "lat": 48.73854,
+          "lon": 9.30052,
+          "dhid": "de:08116:7800",
+          "transitousId": "de-DELFI_de:08116:7800",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Ludwigsburg",
+          "lat": 48.89186,
+          "lon": 9.18542,
+          "dhid": "de:08118:7402",
+          "transitousId": "de-DELFI_de:08118:7402",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 0,
+        "walkFromEndM": 0,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 0.0,
+        "elevGainM": 0,
+        "elevLossM": 0,
+        "walkMin": 0,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Esslinger Burg"
+    },
+    {
+      "id": "aussicht-rotenfels-bastei-nahe",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "berg",
+      "difficulty": "mittel",
+      "ring": false,
+      "title": {
+        "de": "Rotenfels-Bastei: Höchste Steilwand nördlich der Alpen & Salinental",
+        "en": "Rotenfels Cliff Bastion & Bad Kreuznach Salinental Viewpoint"
+      },
+      "subtitle": {
+        "de": "Kurze, steile Aussichts-Wanderung ab Bad Münster (35–45 Min.) auf die 202 m hohe Porphyr-Felswand über der Nahe",
+        "en": "Short steep ascent (35–45 min) to Europe's highest porphyry cliff face north of the Alps above the Nahe River"
+      },
+      "sun": {
+        "de": "Südost-exponierte Felskanzel auf über 200 m über dem Fluss mit eindrucksvollem Fernblick nach Rheinhessen.",
+        "en": "Sun-warmed south-east porphyry crag dropping 202 m sheer toward Ebernburg Castle and the Nahe valley."
+      },
+      "tips": {
+        "de": "Handfähre Rheingrafenstein ruht im Winter → daher Aufstieg direkt ab Bad Münster Bahnhof zur Bastei (~35–45 Min., +230 Hm) und gemütlicher Tal-Rückweg durchs Salinental nach Bad Kreuznach.",
+        "en": "Seasonal ferry pauses in winter, so hike directly from Bad Münster station to the Rotenfels cliff rim and descend via the Salinental saltworks to Bad Kreuznach."
+      },
+      "eveningSun": true,
+      "places": [
+        "Bad Münster am Stein",
+        "Rotenfels-Bastei (327 m)",
+        "Salinental Gradierwerke",
+        "Bad Kreuznach Bahnhof"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Bad Münster, Bahnhof",
+          "lat": 49.813427,
+          "lon": 7.846989,
+          "dhid": "de:07133:8177",
+          "transitousId": "de-DELFI_de:07133:8177",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Bad Kreuznach, Bahnhof",
+          "lat": 49.8424,
+          "lon": 7.866435,
+          "dhid": "de:07133:8178",
+          "transitousId": "de-DELFI_de:07133:8178_G",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 150,
+        "walkFromEndM": 100,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 6.2,
+        "elevGainM": 230,
+        "elevLossM": 240,
+        "walkMin": 105,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Rotenfels (Nahe)"
+    },
+    {
+      "id": "aussicht-freiburg-schlossbergturm",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "schwarzwald",
+      "category": "berg",
+      "difficulty": "mittel",
+      "ring": true,
+      "title": {
+        "de": "Freiburg Schlossberg: Kanonenplatz & 35-m-Schlossbergturm",
+        "en": "Freiburg Schlossberg Cannon Terrace & 35 m Observation Tower"
+      },
+      "subtitle": {
+        "de": "Direkt per RE7 & Tram 1 ohne teure Seilbahn in 30 Min. über den Kanonenplatz auf den 35 m hohen Aussichtsturm",
+        "en": "Reach Freiburg's 35 m panoramic steel tower via RE7 and Tram 1 without needing the paid cable car"
+      },
+      "sun": {
+        "de": "Traumhafter West- und Sonnenuntergangsblick über Münsterspitze, Kaiserstuhl und die Vogesen.",
+        "en": "Unbeatable sunset panorama over Freiburg Minster spire, the Kaiserstuhl hills, and Alsace across the Rhine."
+      },
+      "tips": {
+        "de": "24/7 kostenlos zugänglich! Per VAG Tram 1 (im D-Ticket) bis Oberlinden am Schwabentor, ~30–35 Min. Stadtberg-Anstieg (+185 Hm) zum Turm und über Stadtgarten zurück.",
+        "en": "Free 24/7 open-air access! Take VAG Tram 1 to Oberlinden near Schwabentor, climb ~30 min (+185 m) past Kanonenplatz to the tower, and loop back to the old town."
+      },
+      "eveningSun": true,
+      "places": [
+        "Freiburg Hbf",
+        "Oberlinden / Schwabentor",
+        "Kanonenplatz",
+        "Schlossbergturm (35 m)",
+        "Freiburg Münster"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Freiburg, Oberlinden",
+          "lat": 47.9939,
+          "lon": 7.853378,
+          "dhid": "de:08311:30118",
+          "transitousId": "de-DELFI_de:08311:30118:0:1",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Freiburg, Oberlinden",
+          "lat": 47.9939,
+          "lon": 7.853378,
+          "dhid": "de:08311:30118",
+          "transitousId": "de-DELFI_de:08311:30118:0:1",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 50,
+        "walkFromEndM": 50,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 3.8,
+        "elevGainM": 185,
+        "elevLossM": 185,
+        "walkMin": 75,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Schlossbergturm (Freiburg im Breisgau)"
+    },
+    {
+      "id": "aussicht-burg-steinsberg-kraichgau",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "burg",
+      "difficulty": "leicht",
+      "ring": false,
+      "title": {
+        "de": "Burg Steinsberg („Kompass des Kraichgaus“) mit 30-m-Bergfried",
+        "en": "Steinsberg Castle ('Compass of the Kraichgau') & 30 m Donjon Viewpoint"
+      },
+      "subtitle": {
+        "de": "Nur 15 Min. Weinbergs-Spaziergang ab Bushalt Weiler auf den Vulkan-Kegel (333 m) mit 360°-Weitblick",
+        "en": "Quick 15-min vineyard walk from Weiler bus stop up a volcanic cone (333 m) to a panoramic 360° octagonal keep"
+      },
+      "sun": {
+        "de": "Freistehender Gipfel über allen Nachbartälern – ideal für goldene Nachmittags- und Abendsonne.",
+        "en": "Free-standing volcanic peak bathed in afternoon sun with 360° views from Black Forest to Odenwald."
+      },
+      "tips": {
+        "de": "Burg & achteckiger Bergfried ganzjährig kostenlos offen! Sa/So verkehrt Bus 763 ab Sinsheim Hbf teils als VRN-Ruftaxi (bitte 30–60 Min. vorab bestellen, im D-Ticket enthalten).",
+        "en": "Castle grounds and octagonal keep are free & open daily year-round; on weekends check whether Bus 763 from Sinsheim runs as on-demand VRN Ruftaxi."
+      },
+      "eveningSun": true,
+      "places": [
+        "Sinsheim (Elsenz) Hbf",
+        "Weiler Ortsmitte",
+        "Burg Steinsberg (333 m)",
+        "30-m-Bergfried"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Weiler, Ortsmitte",
+          "lat": 49.211254,
+          "lon": 8.874502,
+          "dhid": "de:08226:3569",
+          "transitousId": "de-DELFI_de:08226:3569:1:RiN",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Weiler, Ortsmitte",
+          "lat": 49.211254,
+          "lon": 8.874502,
+          "dhid": "de:08226:3569",
+          "transitousId": "de-DELFI_de:08226:3569:1:RiN",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 100,
+        "walkFromEndM": 100,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 2.0,
+        "elevGainM": 85,
+        "elevLossM": 85,
+        "walkMin": 45,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Burg Steinsberg"
+    },
+    {
+      "id": "aussicht-burg-hornberg-neckarzimmern",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "odenwald",
+      "category": "burg",
+      "difficulty": "leicht",
+      "ring": false,
+      "title": {
+        "de": "Burg Hornberg & 33-m-Bergfried über dem Neckartal (S1/S2)",
+        "en": "Hornberg Castle & 33 m Keep above Steep Neckar Vineyards"
+      },
+      "subtitle": {
+        "de": "Besterhaltene Neckar-Ritterburg nur 15–20 Min. oberhalb des Bahnhofs Neckarzimmern inmitten steiler Weinberge",
+        "en": "Largest and best-preserved castle in the Neckar valley just 15–20 min walk above Neckarzimmern S-Bahn station"
+      },
+      "sun": {
+        "de": "Sonnige Süd- und West-Terrassenlagen über der Neckarschleife am späten Nachmittag.",
+        "en": "Sunlit south- and west-facing castle terraces overlooking steep vineyard bends of the Neckar river."
+      },
+      "tips": {
+        "de": "Direkt per S1/S2 ab Heidelberg/Eberbach bzw. S41/RE10a ab Heilbronn erreichbar. Im November Mi–So 11–16 Uhr offen (Mo/Di Ruhetag; 10 % D-Ticket/bwegtPlus-Rabatt vor Ort).",
+        "en": "Served directly by S1/S2 from Heidelberg or RE10a/S41 from Heilbronn. In November castle grounds open Wed–Sun 11:00–16:00 (10% discount with bwegtPlus/D-Ticket)."
+      },
+      "eveningSun": true,
+      "places": [
+        "Neckarzimmern Bahnhof",
+        "Weinberg-Steig",
+        "Burg Hornberg",
+        "33-m-Bergfried"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Neckarzimmern",
+          "lat": 49.31665,
+          "lon": 9.137394,
+          "dhid": "de:08225:8223",
+          "transitousId": "de-DELFI_de:08225:8223",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Neckarzimmern",
+          "lat": 49.31665,
+          "lon": 9.137394,
+          "dhid": "de:08225:8223",
+          "transitousId": "de-DELFI_de:08225:8223",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 250,
+        "walkFromEndM": 250,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 2.6,
+        "elevGainM": 90,
+        "elevLossM": 90,
+        "walkMin": 55,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Burg Hornberg (Neckarzimmern)"
+    },
+    {
+      "id": "aussicht-bingen-klopp-rochusberg",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "burg",
+      "difficulty": "leicht",
+      "ring": true,
+      "title": {
+        "de": "Bingen: Burg Klopp & Rochusberg-Panorama über Mäuseturm & Rheingau",
+        "en": "Bingen: Klopp Castle & Rochusberg Overlook above Mäuseturm & Rheingau"
+      },
+      "subtitle": {
+        "de": "Kurzer Stadtspaziergang hinauf zur Burg Klopp und über den sonnigen Rochusberg-Kamm (per Stadtbus 607 abkürzbar)",
+        "en": "Easy town panorama climb to Klopp Castle and along sunny Rochusberg ridge above the Rhine–Nahe confluence"
+      },
+      "sun": {
+        "de": "Sonniger Süd- und Westblick über das Binger Loch, Mäuseturm und das gegenüberliegende Niederwalddenkmal.",
+        "en": "Panoramic sweep across the Nahe mouth, Bingen Mouse Tower island, and Rheingau vineyard slopes."
+      },
+      "tips": {
+        "de": "Stündliche RB26/RE2-Verbindungen bis Bingen (Rhein) Stadt; Außenhof Burg Klopp & Rochuskapellen-Plateau ganzjährig 24/7 frei begehbar (Stadtbus 606/607 im D-Ticket).",
+        "en": "Direct hourly trains to Bingen Stadt; Klopp Castle courtyard and Rochusberg ridge stay freely open year-round, with City Bus 606/607 saving the uphill climb if desired."
+      },
+      "eveningSun": true,
+      "places": [
+        "Bingen (Rhein) Stadt",
+        "Burg Klopp",
+        "Rochuskapelle",
+        "Rochusberg Weinberge"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Bingen, Stadtbahnhof",
+          "lat": 49.969746,
+          "lon": 7.902985,
+          "dhid": "de:07339:8199",
+          "transitousId": "de-DELFI_de:07339:8199",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Bingen, Stadtbahnhof",
+          "lat": 49.969746,
+          "lon": 7.902985,
+          "dhid": "de:07339:8199",
+          "transitousId": "de-DELFI_de:07339:8199",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 150,
+        "walkFromEndM": 150,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 4.6,
+        "elevGainM": 140,
+        "elevLossM": 140,
+        "walkMin": 85,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Burg Klopp"
+    },
+    {
+      "id": "aussicht-ehrenbreitstein-koblenz",
+      "source": "shortcut",
+      "tag": "deep_research",
+      "region": "weitere",
+      "category": "burg",
+      "difficulty": "leicht",
+      "ring": false,
+      "title": {
+        "de": "Festung Ehrenbreitstein & „Rhein-Mosel-Blick“ (Bus + Festungsaufzug)",
+        "en": "Ehrenbreitstein Fortress & Rhine-Moselle Overlook (without Cable Car)"
+      },
+      "subtitle": {
+        "de": "118 m hoch über dem Deutschen Eck ohne teure Seilbahn: koveb-Bus nach Ehrenbreitstein + Schrägaufzug im D-Ticket",
+        "en": "Towering 118 m above the Rhine–Moselle confluence using local bus + inclined elevator covered by Deutschlandticket"
+      },
+      "sun": {
+        "de": "West- und Südwest-Plateau mit ikonischem Blick auf Koblenz, Moselmündung und das Deutsche Eck.",
+        "en": "Iconic late-afternoon view straight across the confluence of the Moselle and Rhine rivers."
+      },
+      "tips": {
+        "de": "Hinweis 2026: Anfahrt ab Mainz per Linker Rheinstrecke (RE2/RB26; Rechtsrhein bis 12.12.26 im SEV). Ab Koblenz Hbf Bus 9/10/19/460 nach Ehrenbreitstein – der Schrägaufzug ist im D-Ticket inklusive (Seilbahn nicht!).",
+        "en": "Travel via Left Rhine RE2/RB26 to Koblenz Hbf, then bus 9/10/19/460 to Ehrenbreitstein; the inclined Festungsaufzug is included in Deutschlandticket (cable car is paid extra)."
+      },
+      "eveningSun": true,
+      "places": [
+        "Koblenz Hbf",
+        "Koblenz Ehrenbreitstein",
+        "Schrägaufzug Festungsaufzug",
+        "Plattform Rhein-Mosel-Blick"
+      ],
+      "transit": {
+        "kind": "curated",
+        "startStop": {
+          "name": "Koblenz Ehrenbreitstein",
+          "lat": 50.36205,
+          "lon": 7.61003,
+          "dhid": "de:07111:010063",
+          "transitousId": "de-DELFI_de:07111:010063:03:02_G",
+          "ibnr": null
+        },
+        "endStop": {
+          "name": "Koblenz Ehrenbreitstein",
+          "lat": 50.36205,
+          "lon": 7.61003,
+          "dhid": "de:07111:010063",
+          "transitousId": "de-DELFI_de:07111:010063:03:02_G",
+          "ibnr": null
+        },
+        "vias": [],
+        "walkToStartM": 200,
+        "walkFromEndM": 200,
+        "unlinkedReason": null
+      },
+      "hike": {
+        "hasGpx": false,
+        "gpxFiles": [],
+        "distKm": 2.2,
+        "elevGainM": 40,
+        "elevLossM": 40,
+        "walkMin": 60,
+        "startCoord": null,
+        "endCoord": null,
+        "poly5": "",
+        "elevProfile": []
+      },
+      "wikimediaQuery": "Festung Ehrenbreitstein"
     }
   ]
 }
