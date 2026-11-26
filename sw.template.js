@@ -17,7 +17,11 @@ const TILE_HOSTS = [
   "a.tiles.openrailwaymap.org",
   "b.tiles.openrailwaymap.org",
   "c.tiles.openrailwaymap.org",
-  "tile.memomaps.de"
+  "tile.memomaps.de",
+  "a.tile-cyclosm.openstreetmap.fr",
+  "b.tile-cyclosm.openstreetmap.fr",
+  "c.tile-cyclosm.openstreetmap.fr",
+  "server.arcgisonline.com"
 ];
 const MAX_TILES = 3000;
 const SHELL_KEY = new URL("./", self.location).href;

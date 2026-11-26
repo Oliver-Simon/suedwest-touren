@@ -26,7 +26,11 @@ class TileCache(context: Context) {
             "a.tiles.openrailwaymap.org",
             "b.tiles.openrailwaymap.org",
             "c.tiles.openrailwaymap.org",
-            "tile.memomaps.de"
+            "tile.memomaps.de",
+            "a.tile-cyclosm.openstreetmap.fr",
+            "b.tile-cyclosm.openstreetmap.fr",
+            "c.tile-cyclosm.openstreetmap.fr",
+            "server.arcgisonline.com"
         )
         private const val MAX_TILES = 4000
         private const val USER_AGENT = "SuedwestTouren/1.0 (Android; +https://oliver-simon.github.io/suedwest-touren/)"

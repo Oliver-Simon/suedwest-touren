@@ -440,11 +440,6 @@ header.top {
   background: var(--accent-soft);
   font-weight: 700;
 }
-.dark-tiles .leaflet-tile-pane,
-html.dark .leaflet-tile-pane,
-:root[data-theme="dark"] .leaflet-tile-pane {
-  filter: brightness(0.74) contrast(1.08) saturate(0.85);
-}
 
 /* Main Content & Cards */
 .content {
@@ -2664,6 +2659,21 @@ body.detail-open .map-wrap .leg-toggle { display: flex; position: absolute; z-in
   #detail .dt-page .hero-cta-row { margin: 12px 0 0; }
   #detail .dt-page .hero-cta-row .act { width: 100%; justify-content: center; min-height: 48px; }
 }
+
+/* Vollbild-Karte der Tourseite: Schritte als wischbare Karten unten */
+.step-strip { display: none; }
+body.detail-open .map-wrap.full .step-strip { display: flex; position: absolute; left: 0; right: 0; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 1000; gap: 10px; padding: 0 9%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.step-strip::-webkit-scrollbar { display: none; }
+.step-card { flex: 0 0 82%; max-width: 420px; box-sizing: border-box; scroll-snap-align: center; scroll-snap-stop: always; background: var(--surface); color: var(--text); border-radius: 16px; padding: 10px 14px; min-height: 92px; box-shadow: 0 4px 16px rgba(0,0,0,.28); border: 2px solid transparent; cursor: pointer; }
+.step-card.on { border-color: var(--accent); }
+.sc-kick { font-size: 11px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; }
+.sc-head { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 15.5px; min-width: 0; }
+.sc-head strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sc-ico { font-size: 17px; }
+.sc-head .badge { flex: 0 0 auto; white-space: nowrap; }
+.sc-time { margin-top: 4px; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc-sub { margin-top: 2px; font-size: 12.5px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.detail-open .map-wrap.full .elev-overlay { display: none; }
 </style>
 </head>
 <body>
@@ -2777,6 +2787,7 @@ body.detail-open .map-wrap .leg-toggle { display: flex; position: absolute; z-in
         <button type="button" class="icon-btn" id="gpsBtn" title="GPS-Standort" aria-label="GPS-Standort"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
       <div class="layer-menu" id="layerMenu"></div>
+      <div class="step-strip" id="stepStrip" aria-label="Schritte der Tour"></div>
       <div class="leg-toggle" id="legToggle" role="group" aria-label="Hin- oder Rückfahrt zeigen">
         <button type="button" data-leg="all" aria-pressed="true">Alles</button>
         <button type="button" data-leg="out" aria-pressed="false">Hin</button>
@@ -2942,7 +2953,10 @@ const MODE_ICONS = {
 
 const LAYERS = {
   osm: {name: "OpenStreetMap", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", attr: "© OpenStreetMap", max: 19},
+  outdoor: {name: "Outdoor (CyclOSM)", url: "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png", attr: "© OpenStreetMap · CyclOSM", max: 20},
   topo: {name: "OpenTopoMap", url: "https://a.tile.opentopomap.org/{z}/{x}/{y}.png", attr: "© OpenTopoMap", max: 17},
+  esritopo: {name: "Topo hell (Esri)", url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", attr: "Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap", max: 19},
+  sat: {name: "Satellit (Esri)", url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", overlay: "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", overlayOpacity: 1, attr: "Tiles © Esri — Esri, Maxar, Earthstar Geographics", max: 19},
   trails: {name: "Waymarked Trails", url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", overlay: "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png", attr: "© OSM & WaymarkedTrails", max: 18},
   // ÖPNV-Karte (memomaps.de): no CORS headers → loaded without crossOrigin (not cached by the PWA service worker)
   oepnv: {name: "ÖPNV-Karte", url: "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png", attr: "© OpenStreetMap · Karte: memomaps.de (ÖPNVkarte)", max: 18, cors: false},
@@ -3087,6 +3101,17 @@ const I18N = {
     userTourDeleteConfirm: "Diese eigene Tour wirklich löschen?",
     doneAdd: "Als gemacht markieren",
     dtTabDay: "Dein Tag",
+    stepAll: "Ganze Tour",
+    stepsN: n => `${n} Schritte – wischen für den nächsten`,
+    stepWalkTo: n => n ? `Fußweg zu ${n}` : "Fußweg",
+    stepFrom: "ab",
+    stepTransfer: n => `Umstieg in ${n}`,
+    stepHike: "Wanderung",
+    stepStay: "vor Ort",
+    stepSite: "Vor Ort",
+    legOutK: "Hinfahrt",
+    legMidK: "Weiterfahrt",
+    legRetK: "Rückfahrt",
     legToggleLbl: "Auf der Karte zeigen",
     legAll: "Alles",
     legOut: "Hin",
@@ -3379,6 +3404,17 @@ const I18N = {
     userTourDeleteConfirm: "Really delete this own tour?",
     doneAdd: "Mark as done",
     dtTabDay: "Your day",
+    stepAll: "Whole tour",
+    stepsN: n => `${n} steps – swipe for the next`,
+    stepWalkTo: n => n ? `Walk to ${n}` : "Walk",
+    stepFrom: "from",
+    stepTransfer: n => `Change at ${n}`,
+    stepHike: "Hike",
+    stepStay: "on site",
+    stepSite: "On site",
+    legOutK: "Outbound",
+    legMidK: "Onward",
+    legRetK: "Return",
     legToggleLbl: "Show on map",
     legAll: "All",
     legOut: "Out",
@@ -4237,7 +4273,7 @@ function renderPills() {
 }
 
 /* ---------- Map ---------- */
-const map = L.map("map", {zoomControl: false, attributionControl: true}).setView([49.35, 8.45], 8);
+const map = L.map("map", {zoomControl: false, attributionControl: true, zoomSnap: 0, zoomDelta: 1, wheelPxPerZoomLevel: 90}).setView([49.35, 8.45], 8);
 L.control.zoom({position: "topleft"}).addTo(map);
 let baseTileLayer = null;
 let overlayTileLayer = null;
@@ -4337,6 +4373,11 @@ map.on("click", () => {
         else map._resetView(center, z);
         map.doubleClickZoom.disable();
         setTimeout(() => map.doubleClickZoom.enable(), 400);
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+        // plain double tap: one level in, around the tapped point
+        map.setZoomAround(anchor, Math.min(map.getMaxZoom(), Math.round(map.getZoom() + 1)));
         e.preventDefault();
         e.stopPropagation();
       }
@@ -4829,11 +4870,14 @@ function drawSingle(t) {
   // Draw transit approach from active base (ensures distinct rail vs bus colors & base-dependent geometry)
   const allTransit = [...fwd, ...rev];
   const legFilter = state.mapLegFilter || "all";
+  const stepBuckets = {out: [], mid: [], site: [], ret: []};
   allTransit.forEach((s, idx) => {
     if (legFilter === "out" && idx >= fwd.length) return;
     if (legFilter === "ret" && idx < fwd.length) return;
     const pts = getSegmentCoords(s, bInfo, t.transit?.startStop);
+    const bucket = idx < fwd.length ? stepBuckets.out : stepBuckets.ret;
     if (isLongStraight(pts, hasRealPoly(s))) {
+      bucket.push({seg: s, pts, layer: null});
       segLayerMap[idx] = L.polyline(pts);
       [pts[0], pts[pts.length - 1]].forEach(q => singleGroup.addLayer(L.circleMarker(q, {radius: 4, color: "#ffffff", weight: 1.5, fillColor: "#7c3aed", fillOpacity: 1})));
       bounds.extend(L.latLngBounds(pts));
@@ -4857,6 +4901,7 @@ function drawSingle(t) {
       segLayerMap[idx] = line;
       bounds.extend(line.getBounds());
       if (!isWalk) addRideMarks(s, pts, strokeCol);
+      bucket.push({seg: s, pts, layer: line});
     }
   });
 
@@ -4872,6 +4917,7 @@ function drawSingle(t) {
       singleGroup.addLayer(ln);
       bounds.extend(ln.getBounds());
       if (!isWalk) addRideMarks(s, pts, MODE_COLORS[mode] || "#7c3aed");
+      stepBuckets.mid.push({seg: s, pts, layer: ln});
     });
   }
 
@@ -4883,21 +4929,23 @@ function drawSingle(t) {
   const mid = tourMiddle(t, fwdEnd, revStart);
   const hikePts = (h.hasGpx && h.poly5) ? hikePolyPts(t) : [];
   const addLine = (pts, opts) => {
-    if (!pts || pts.length < 2) return;
+    if (!pts || pts.length < 2) return null;
     const ln = L.polyline(pts, opts);
     singleGroup.addLayer(ln);
     bounds.extend(ln.getBounds());
+    return ln;
   };
   if (mid.walkIn && pathLenM(mid.walkIn) <= STRAIGHT_MAX_M) addLine(mid.walkIn, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
   if (mid.walkOut && pathLenM(mid.walkOut) <= STRAIGHT_MAX_M) addLine(mid.walkOut, {color: "#64748b", weight: 3, opacity: 0.92, dashArray: "3 6"});
   if (hikePts.length >= 2) {
-    addLine(hikePts, {color: "#15803d", weight: 5, opacity: 0.95});
+    stepBuckets.site.push({kind: "hike", pts: hikePts, layer: addLine(hikePts, {color: "#15803d", weight: 5, opacity: 0.95})});
   } else if (midSt && midSt.segs.length) {
     // middle stage already drawn from the timetable
   } else if (mid.local && pathLenM(mid.local) <= STRAIGHT_MAX_M) {
     // short own stage on site: no timetable data, drawn dashed
-    addLine(mid.local, {color: "#15803d", weight: 4, opacity: 0.9, dashArray: "8 7"});
+    stepBuckets.site.push({kind: "site", pts: mid.local, layer: addLine(mid.local, {color: "#15803d", weight: 4, opacity: 0.9, dashArray: "8 7"})});
   } else if (mid.local) {
+    stepBuckets.site.push({kind: "site", pts: mid.local, layer: null});
     // long stage without map data (e.g. via 1 → via 2 of a 360° ring): only its stops, no straight line across the map
     mid.local.forEach(q => {
       singleGroup.addLayer(L.circleMarker(q, {radius: 6, color: "#ffffff", weight: 2, fillColor: "#15803d", fillOpacity: 1}));
@@ -4907,11 +4955,125 @@ function drawSingle(t) {
     const mk = L.circleMarker(fwdEnd, {radius: 7, color: "#ffffff", weight: 2, fillColor: "#15803d", fillOpacity: 1});
     singleGroup.addLayer(mk);
     bounds.extend(L.latLngBounds([fwdEnd, fwdEnd]));
+    stepBuckets.site.push({kind: "site", pts: [fwdEnd], layer: null, point: true});
   }
 
   currentBounds = bounds;
+  buildMapSteps(t, stepBuckets, fwd, rev);
   setTimeout(updateLineLabels, 0);
 }
+
+/* ---------- Fullscreen tour map: one card per step at the bottom, swipe → map zooms to that step ---------- */
+let mapSteps = [], stepActive = 0, stepScrollTimer = null;
+function buildMapSteps(t, b, fwd, rev) {
+  const tDict = T();
+  const h = t.hike || {};
+  const segStep = (x, leg) => {
+    const s = x.seg;
+    const mode = String(s.mode || "re").toLowerCase();
+    const isWalk = s.kind === "walk" || mode === "foot" || mode === "walk";
+    const dur = (s.dep && s.arr) ? fmtDur(Math.max(0, minDiff(s.dep, s.arr))) : "";
+    if (isWalk) {
+      return {kind: "walk", leg, seg: s, pts: x.pts, layer: x.layer, ico: "🚶", title: tDict.stepWalkTo(s.to?.name || ""),
+        time: [s.dep && s.arr ? `${s.dep}–${s.arr}` : "", dur].filter(Boolean).join(" · "), sub: s.from?.name ? `${tDict.stepFrom} ${s.from.name}` : ""};
+    }
+    const plat = x => x?.platform ? ` (${tDict.platform} ${x.platform})` : "";
+    return {kind: "ride", leg, seg: s, pts: x.pts, layer: x.layer, col: MODE_COLORS[mode] || "#7c3aed", line: s.line || s.lineName || mode.toUpperCase(),
+      title: `→ ${s.dest || s.to?.name || ""}`, time: `${s.dep || ""} ${s.from?.name || ""}${plat(s.from)}`, sub: `${s.arr || ""} ${s.to?.name || ""}${plat(s.to)}${dur ? ` · ${dur}` : ""}`};
+  };
+  const withTransfers = (list, leg) => {
+    const out = [];
+    list.forEach(x => {
+      const st = segStep(x, leg);
+      const prev = out[out.length - 1];
+      if (prev && prev.kind === "ride" && st.kind === "ride" && x.pts && x.pts[0]) {
+        const gap = (prev.seg.arr && x.seg.dep) ? minDiff(prev.seg.arr, x.seg.dep) : null;
+        const pf = prev.seg.to?.platform, pt = x.seg.from?.platform;
+        out.push({kind: "xfer", leg, pts: [x.pts[0]], point: true, ico: "↺", title: tDict.stepTransfer(x.seg.from?.name || prev.seg.to?.name || ""),
+          time: [prev.seg.arr && x.seg.dep ? `${prev.seg.arr}–${x.seg.dep}` : "", gap != null && gap >= 0 ? fmtDur(gap) : ""].filter(Boolean).join(" · "),
+          sub: (pf || pt) ? `${tDict.platform} ${pf || "?"} → ${tDict.platform} ${pt || "?"}` : ""});
+      }
+      out.push(st);
+    });
+    return out;
+  };
+  const fwdArr = fwd[fwd.length - 1]?.arr || "", revDep = rev[0]?.dep || "";
+  const stay = fwdArr && revDep ? fmtDur(Math.max(0, minDiff(fwdArr, revDep))) : "";
+  const site = b.site.map(x => {
+    if (x.kind === "hike") {
+      const km = Number(h.distKm || 0).toFixed(1).replace(".", state.lang === "en" ? "." : ",");
+      return {kind: "hike", leg: "site", pts: x.pts, layer: x.layer, ico: "🥾", title: `${tDict.stepHike} ${km} km`,
+        time: [fwdArr && revDep ? `${fwdArr}–${revDep}` : "", stay ? `${tDict.stepStay} ${stay}` : ""].filter(Boolean).join(" · "),
+        sub: [Number(h.elevGainM) ? `↗ ${Math.round(h.elevGainM)} hm` : "", Number(h.walkMin) ? `${tDict.dtWalkTime} ${fmtDur(h.walkMin)}` : ""].filter(Boolean).join(" · ")};
+    }
+    return {kind: "site", leg: "site", pts: x.pts, layer: x.layer, point: x.point || x.pts.length < 2, ico: "📍", title: tDict.stepSite,
+      time: [fwdArr && revDep ? `${fwdArr}–${revDep}` : "", stay].filter(Boolean).join(" · "), sub: fwd[fwd.length - 1]?.to?.name || ""};
+  });
+  const steps = [...withTransfers(b.out, "out"), ...site, ...withTransfers(b.mid, "mid"), ...withTransfers(b.ret, "ret")];
+  steps.forEach(x => { x.baseW = x.layer && x.layer.options ? x.layer.options.weight : null; });
+  const dep = fwd[0]?.dep || "", arr = rev[rev.length - 1]?.arr || "";
+  mapSteps = [{kind: "all", ico: "🗺️", title: tourTitle(t), time: dep && arr ? `${dep}–${arr}` : "", sub: tDict.stepsN(steps.length)}, ...steps];
+  stepActive = 0;
+  renderStepStrip();
+}
+function renderStepStrip() {
+  const el = $("#stepStrip");
+  if (!el) return;
+  const tDict = T();
+  const kick = {out: tDict.legOutK, mid: tDict.legMidK, site: tDict.stepSite, ret: tDict.legRetK};
+  const n = mapSteps.length - 1;
+  el.innerHTML = mapSteps.map((x, i) => `<div class="step-card${i === stepActive ? " on" : ""}" data-i="${i}" role="button" tabindex="0">
+      <div class="sc-kick">${i === 0 ? esc(tDict.stepAll) : `${esc(kick[x.leg] || "")} · ${i}/${n}`}</div>
+      <div class="sc-head">${x.kind === "ride" ? `<span class="badge mode-badge" style="background-color:${x.col};color:#fff">${esc(x.line)}</span>` : `<span class="sc-ico" aria-hidden="true">${x.ico}</span>`}<strong>${esc(x.title)}</strong></div>
+      ${x.time ? `<div class="sc-time">${esc(x.time)}</div>` : ""}
+      ${x.sub ? `<div class="sc-sub">${esc(x.sub)}</div>` : ""}
+    </div>`).join("");
+  el.scrollLeft = 0;
+}
+function stepStripOpen() {
+  return Boolean(state.sel && document.body.classList.contains("detail-open") && $("#mapWrap").classList.contains("full") && mapSteps.length > 1);
+}
+function focusMapStep(i) {
+  const st = mapSteps[i];
+  if (!st) return;
+  stepActive = i;
+  document.querySelectorAll("#stepStrip .step-card").forEach((c, k) => c.classList.toggle("on", k === i));
+  mapSteps.forEach(x => { if (x.layer && x.layer.setStyle && x.baseW) x.layer.setStyle({weight: x.baseW, opacity: 0.92}); });
+  if (st.layer && st.layer.setStyle && st.baseW) {
+    st.layer.setStyle({weight: st.baseW + 3, opacity: 1});
+    if (st.layer.bringToFront) st.layer.bringToFront();
+  }
+  if (st.kind === "all") { fitCurrent(); return; }
+  const pts = (st.pts || []).filter(Boolean);
+  if (!pts.length) return;
+  let b = L.latLngBounds(pts);
+  if (st.point || pts.length < 2) b = L.latLng(pts[0]).toBounds(350);
+  const stripH = $("#stepStrip")?.offsetHeight || 0;
+  const mw = $("#mapWrap").getBoundingClientRect();
+  const lt = $("#legToggle");
+  const padT = lt && lt.offsetParent !== null ? lt.getBoundingClientRect().bottom - mw.top + 12 : 24;
+  map.flyToBounds(b, {paddingTopLeft: [36, padT], paddingBottomRight: [36, stripH + 36], maxZoom: st.point ? 17 : 16.5, duration: 0.45});
+}
+$("#stepStrip")?.addEventListener("scroll", () => {
+  clearTimeout(stepScrollTimer);
+  stepScrollTimer = setTimeout(() => {
+    const el = $("#stepStrip");
+    const mid = el.scrollLeft + el.clientWidth / 2;
+    let best = 0, bd = Infinity;
+    [...el.children].forEach((c, k) => {
+      const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+      if (d < bd) { bd = d; best = k; }
+    });
+    if (best !== stepActive) focusMapStep(best);
+  }, 110);
+}, {passive: true});
+$("#stepStrip")?.addEventListener("click", e => {
+  const c = e.target.closest(".step-card[data-i]");
+  if (!c) return;
+  const i = parseInt(c.dataset.i, 10) || 0;
+  c.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
+  if (i === stepActive) focusMapStep(i);
+});
 
 function fitCurrent() {
   if (!currentBounds || !currentBounds.isValid()) return;
@@ -4941,17 +5103,26 @@ function fitCurrent() {
     if (lt && lt.offsetParent !== null) padT = Math.max(padT, lt.getBoundingClientRect().bottom - mw.top + 10);
     else if (top) padT = Math.max(padT, Math.min(top.getBoundingClientRect().bottom - mw.top, 60) + 4);
     padT = Math.min(padT, Math.floor((map.getSize().y || 300) * 0.45));
-    // quarter zoom steps: with whole steps a slightly shorter map (pinned) drops a full level → route half as big
-    const snap = map.options.zoomSnap;
-    map.options.zoomSnap = 0.25;
+    // stepless zoom (zoomSnap 0): the route fills the map – pinned or not
     map.fitBounds(currentBounds, {paddingTopLeft: [24, padT], paddingBottomRight: [24, 24], maxZoom: 14, animate: false});
-    map.options.zoomSnap = snap;
+    return;
+  }
+  if (stepStripOpen()) {
+    const mw = $("#mapWrap").getBoundingClientRect(), lt = $("#legToggle");
+    const padT = lt && lt.offsetParent !== null ? lt.getBoundingClientRect().bottom - mw.top + 12 : 24;
+    map.fitBounds(currentBounds, {paddingTopLeft: [24, padT], paddingBottomRight: [24, ($("#stepStrip")?.offsetHeight || 0) + 30], maxZoom: 14, animate: false});
     return;
   }
   map.fitBounds(currentBounds, {padding: [24, 24], maxZoom: 14});
 }
 
 function focusStep(idx) {
+  if (stepStripOpen()) {
+    const ln = segLayerMap[idx];
+    const k = mapSteps.findIndex(x => x.layer && x.layer === ln);
+    const card = k >= 0 ? $("#stepStrip").children[k] : null;
+    if (card) { card.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"}); return; }
+  }
   document.querySelectorAll("#detail .st").forEach(el => el.classList.remove("flash"));
   document.querySelectorAll(`#detail .st[data-step="${idx}"]`).forEach(el => el.classList.add("flash"));
   const ln = segLayerMap[idx];
@@ -4977,6 +5148,13 @@ $("#fullBtn").addEventListener("click", () => {
   const isFull = w.classList.toggle("full");
   w.classList.remove("mini");
   document.body.classList.toggle("map-full-open", isFull);
+  if (state.sel) {
+    stepActive = 0;
+    const ss = $("#stepStrip");
+    if (ss) ss.scrollLeft = 0;
+    document.querySelectorAll("#stepStrip .step-card").forEach((c, k) => c.classList.toggle("on", k === 0));
+    mapSteps.forEach(x => { if (x.layer && x.layer.setStyle && x.baseW) x.layer.setStyle({weight: x.baseW, opacity: 0.92}); });
+  }
   setTimeout(() => {
     map.invalidateSize();
     fitCurrent();
