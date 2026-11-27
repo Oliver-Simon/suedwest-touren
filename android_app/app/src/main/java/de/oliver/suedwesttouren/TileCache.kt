@@ -4,15 +4,22 @@ import android.content.Context
 import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import okhttp3.Dns
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.ByteArrayInputStream
 import java.io.File
-import java.net.HttpURLConnection
-import java.net.URL
+import java.net.Inet4Address
+import java.util.concurrent.TimeUnit
 
 /**
  * Disk cache for map tiles (OSM / OpenTopoMap / Waymarked Trails / OpenRailwayMap / ÖPNV-Karte): every tile seen once stays available offline.
  * Keeps at most MAX_TILES files (oldest removed first). Responses carry CORS headers because the web UI
  * requests tiles with crossOrigin="anonymous".
+ *
+ * Fetches go through OkHttp with IPv4 addresses first: on networks that hand out an IPv6 address without
+ * working IPv6 routing, the platform HttpURLConnection tried every AAAA record with the full connect
+ * timeout (> 1 min per tile) while the WebView itself falls back to IPv4 at once.
  */
 class TileCache(context: Context) {
 
@@ -39,6 +46,14 @@ class TileCache(context: Context) {
     }
 
     private val dir = File(context.cacheDir, "tiles").apply { mkdirs() }
+    private val client = OkHttpClient.Builder()
+        .dns(object : Dns {
+            override fun lookup(hostname: String) =
+                Dns.SYSTEM.lookup(hostname).sortedBy { if (it is Inet4Address) 0 else 1 }
+        })
+        .connectTimeout(5, TimeUnit.SECONDS)
+        .readTimeout(12, TimeUnit.SECONDS)
+        .build()
     @Volatile private var writes = 0
 
     fun load(request: WebResourceRequest): WebResourceResponse {
@@ -49,31 +64,32 @@ class TileCache(context: Context) {
             return response(file.readBytes())
         }
         return try {
-            val conn = (URL(url.toString()).openConnection() as HttpURLConnection).apply {
-                connectTimeout = 8000
-                readTimeout = 12000
-                setRequestProperty("User-Agent", USER_AGENT)
+            val req = Request.Builder()
+                .url(url.toString())
+                .header("User-Agent", USER_AGENT)
                 // OpenRailwayMap answers 403 without a Referer (tile usage policy)
-                setRequestProperty("Referer", request.requestHeaders["Referer"] ?: "https://appassets.androidplatform.net/")
-            }
-            conn.inputStream.use { input ->
-                val bytes = input.readBytes()
-                if (conn.responseCode == 200 && bytes.isNotEmpty()) {
-                    file.writeBytes(bytes)
-                    if (++writes % 100 == 0) trim()
-                }
+                .header("Referer", request.requestHeaders["Referer"] ?: "https://appassets.androidplatform.net/")
+                .build()
+            client.newCall(req).execute().use { resp ->
+                val bytes = resp.body?.bytes() ?: ByteArray(0)
+                if (resp.code != 200 || bytes.isEmpty()) throw java.io.IOException("HTTP ${resp.code}")
+                file.writeBytes(bytes)
+                if (++writes % 100 == 0) trim()
                 response(bytes)
             }
         } catch (e: Exception) {
-            Log.d(MainActivity.TAG, "tile offline: ${url.path}")
+            Log.d(MainActivity.TAG, "tile offline: ${url.host}${url.path} $e")
             WebResourceResponse("image/png", null, 504, "Offline", cors(), ByteArrayInputStream(ByteArray(0)))
         }
     }
 
     private fun cors() = mapOf("Access-Control-Allow-Origin" to "*", "Cache-Control" to "max-age=604800")
 
-    private fun response(bytes: ByteArray) =
-        WebResourceResponse("image/png", null, 200, "OK", cors(), ByteArrayInputStream(bytes))
+    private fun response(bytes: ByteArray): WebResourceResponse {
+        // Esri serves JPEG tiles, the others PNG
+        val jpeg = bytes.size > 2 && bytes[0] == 0xFF.toByte() && bytes[1] == 0xD8.toByte()
+        return WebResourceResponse(if (jpeg) "image/jpeg" else "image/png", null, 200, "OK", cors(), ByteArrayInputStream(bytes))
+    }
 
     private fun trim() {
         val files = dir.listFiles() ?: return
