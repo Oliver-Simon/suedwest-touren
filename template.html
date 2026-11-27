@@ -1042,7 +1042,7 @@ body.detail-open .content {
   bottom: 0;
   z-index: 1500;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 2px;
   background: var(--surface);
   border-top: 1px solid var(--border);
@@ -1089,12 +1089,17 @@ body[data-tab="gemerkt"]:not(.detail-open) #list,
 body[data-tab="unterwegs"]:not(.detail-open) #listControls,
 body[data-tab="unterwegs"]:not(.detail-open) #mapWrap,
 body[data-tab="unterwegs"]:not(.detail-open) #discoverHighlights,
-body[data-tab="unterwegs"]:not(.detail-open) #list {
+body[data-tab="unterwegs"]:not(.detail-open) #list,
+body[data-tab="tagebuch"]:not(.detail-open) #listControls,
+body[data-tab="tagebuch"]:not(.detail-open) #mapWrap,
+body[data-tab="tagebuch"]:not(.detail-open) #discoverHighlights,
+body[data-tab="tagebuch"]:not(.detail-open) #list {
   display: none;
 }
 @media (min-width: 960px) {
   body[data-tab="gemerkt"]:not(.detail-open) .layout,
-  body[data-tab="unterwegs"]:not(.detail-open) .layout {
+  body[data-tab="unterwegs"]:not(.detail-open) .layout,
+  body[data-tab="tagebuch"]:not(.detail-open) .layout {
     display: block;
   }
 }
@@ -2043,6 +2048,77 @@ html.dark .cap-row.is-preferred .cap-yes { color: var(--ok); }
   max-width: 100%;
 }
 .saved-card[data-region="pfaelzerwald"] { border-left: 3px solid var(--reg-pfalz); }
+/* Tagebuch (journal) */
+.jr-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0 0 14px; }
+.jr-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px 8px; text-align: center; min-width: 0; }
+.jr-stat b { display: block; font-family: var(--font-display); font-size: 21px; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--text); }
+.jr-stat span { display: block; font-size: 11.5px; line-height: 1.25; color: var(--text-2); margin-top: 2px; hyphens: manual; overflow-wrap: anywhere; }
+.jr-cal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; margin: 0 0 16px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+@media (min-width: 720px) { .jr-cal { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.jr-mc-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; font-weight: 700; color: var(--text-2); margin-bottom: 4px; }
+.jr-month-cal.has .jr-mc-head span { color: var(--text); }
+.jr-mc-head b { color: var(--accent); font-size: 12px; }
+.jr-mc-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.jr-day { aspect-ratio: 1; border-radius: 3px; background: var(--surface-2); border: 0; padding: 0; min-width: 0; }
+.jr-day.pad { background: transparent; }
+.jr-day.today { box-shadow: inset 0 0 0 1.5px var(--text-2); }
+.jr-day.on { background: var(--accent); cursor: pointer; position: relative; }
+.jr-day.on.multi { background: var(--ok); }
+.jr-day.on::after { content: ""; position: absolute; inset: -4px; }   /* bigger tap target */
+.jr-note { margin: -6px 2px 12px; font-size: 12.5px; color: var(--text-2); }
+.jr-mhead { display: flex; align-items: center; gap: 8px; font-size: 16px; margin: 18px 0 8px; }
+.jr-group:first-child .jr-mhead { margin-top: 4px; }
+.jr-tl { list-style: none; margin: 0; padding: 0; position: relative; }
+.jr-tl::before { content: ""; position: absolute; left: 21px; top: 6px; bottom: 6px; width: 2px; background: var(--border); border-radius: 1px; }
+.jr-entry { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 8px; align-items: center; margin-bottom: 8px; cursor: pointer; border-radius: var(--radius); }
+.jr-when { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+.jr-when b { font-size: 15px; font-variant-numeric: tabular-nums; }
+.jr-when span { font-size: 10px; color: var(--text-2); margin-top: 2px; text-transform: uppercase; }
+.jr-card { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; box-shadow: var(--shadow); min-width: 0; }
+.jr-img { width: 64px; height: 56px; object-fit: cover; border-radius: var(--radius-sm); background: var(--surface-2); display: block; }
+.jr-body { min-width: 0; }
+.jr-title { font-weight: 700; font-size: 14.5px; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.jr-meta { font-size: 12.5px; color: var(--text-2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jr-tag { font-size: 11px; font-weight: 700; color: var(--accent); }
+.jr-entry.flash .jr-card { animation: jrFlash 1.6s ease-out; }
+@keyframes jrFlash { 0%, 30% { box-shadow: 0 0 0 3px var(--accent); } 100% { box-shadow: var(--shadow); } }
+/* Zeitachse (Timeline review) */
+.tl-banner { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 14px; padding: 12px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.tl-banner-ico { font-size: 22px; line-height: 1; }
+.tl-banner-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tl-banner-text span { color: var(--text-2); font-size: 13px; }
+.tl-banner-go { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.tl-back { align-self: flex-start; text-align: left; border: 0; background: none; color: var(--accent); font: inherit; font-weight: 700; font-size: 14px; padding: 4px 0; margin: 0 0 2px; cursor: pointer; }
+.tl-filters { display: flex; gap: 8px; overflow-x: auto; margin: 0 0 14px; scrollbar-width: none; }
+.tl-filters::-webkit-scrollbar { display: none; }
+.tl-filters button { flex: 0 0 auto; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: var(--radius-pill); padding: 7px 14px; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.tl-filters button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.tlr-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: 18px; }
+@media (min-width: 720px) { .tlr-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.tlr-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; box-shadow: var(--shadow); min-width: 0; }
+.tlr-top { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.tlr-img { width: 56px; height: 56px; object-fit: cover; border-radius: var(--radius-sm); background: var(--surface-2); display: block; }
+.tlr-body { min-width: 0; }
+.tlr-title { font-weight: 700; font-size: 15px; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.tlr-sub { color: var(--text-2); font-size: 12.5px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tlr-badge { align-self: start; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-pill); background: var(--surface-2); color: var(--text-2); white-space: nowrap; }
+.tlr-badge[data-conf="sure"], .tlr-badge[data-conf="auto"] { background: var(--ok-soft); color: var(--ok); }
+.tlr-badge[data-conf="likely"] { background: var(--warn-soft); color: var(--warn); }
+.tlr-badge[data-conf="trip"] { background: var(--accent-soft); color: var(--text); }
+.tlr-note { margin-top: 6px; font-size: 12px; color: var(--text-2); }
+.tlr-dates { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tlr-date { border: 1px solid var(--border); background: var(--surface-2); color: var(--text); border-radius: var(--radius-pill); padding: 5px 10px; font: inherit; font-size: 12.5px; cursor: pointer; }
+.tlr-date[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); font-weight: 700; }
+.tlr-date:disabled { cursor: default; opacity: 1; }
+.tlr-mapbox { margin-top: 8px; }
+.tlr-map { height: 230px; border-radius: var(--radius-sm); overflow: hidden; background: #e3ebf2; }
+.tlr-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--text-2); margin-top: 6px; }
+.tlr-legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+.tlr-legend i.dash { background: repeating-linear-gradient(90deg, #D6336C 0 6px, transparent 6px 10px); }
+.tlr-acts { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.tlr-acts .act { padding: 8px 12px; font-size: 13px; }
+.tl-foot { margin: 22px 0 8px; color: var(--text-2); font-size: 12.5px; }
+.tl-foot p { margin: 8px 2px 0; }
 .saved-card[data-region="odenwald"] { border-left: 3px solid var(--reg-odenwald); }
 .saved-card[data-region="schwarzwald"] { border-left: 3px solid var(--reg-schwarzwald); }
 .saved-card[data-region="weitere"] { border-left: 3px solid var(--reg-weitere); }
@@ -2305,6 +2381,7 @@ body[data-tab="entdecken"]:not(.detail-open) .map-wrap.full { margin: 0; border-
 /* Bottom-Navigation mit Linien-Icons */
 .bottom-nav { padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px)); gap: 4px; box-shadow: none; }
 .bnav-btn { min-height: 54px; gap: 4px; border-radius: 12px; font-size: 12px; color: var(--text-2); }
+@media (max-width: 400px) { .bottom-nav { padding-left: 6px; padding-right: 6px; gap: 2px; } .bnav-btn { font-size: 11px; } }
 .bnav-btn .bnav-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
 @media (min-width: 960px) {
   .layout { grid-template-areas: "map hl" "map main"; grid-template-rows: auto 1fr; }
@@ -2316,7 +2393,8 @@ body[data-tab="entdecken"]:not(.detail-open) .map-wrap.full { margin: 0; border-
 
 /* Seitenkopf der Tabs Gemerkt/Unterwegs (globaler Kopf ausgeblendet wie im Konzept) */
 body[data-tab="gemerkt"]:not(.detail-open) header.top,
-body[data-tab="unterwegs"]:not(.detail-open) header.top { display: none; }
+body[data-tab="unterwegs"]:not(.detail-open) header.top,
+body[data-tab="tagebuch"]:not(.detail-open) header.top { display: none; }
 .tab-view { padding-top: env(safe-area-inset-top, 0px); }
 .tab-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin: 6px 0 14px; }
 .tab-head-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -2803,6 +2881,7 @@ body.detail-open .map-wrap.full .elev-overlay { display: none; }
       <section class="detail" id="detail"></section>
       <section class="tab-view" id="savedView" hidden></section>
       <section class="tab-view" id="tripView" hidden></section>
+      <section class="tab-view" id="journalView" hidden></section>
     </main>
   </div>
   <section class="map-sheet" id="mapSheet" data-snap="half" aria-label="Touren im Kartenausschnitt" hidden>
@@ -2825,6 +2904,7 @@ body.detail-open .map-wrap.full .elev-overlay { display: none; }
     <button type="button" class="bnav-btn" data-tab="entdecken" aria-pressed="true" aria-current="page"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span><span class="bnav-lbl" id="navEntdeckenLbl">Entdecken</span></button>
     <button type="button" class="bnav-btn" data-tab="karte" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="bnav-lbl" id="navKarteLbl">Karte</span></button>
     <button type="button" class="bnav-btn" data-tab="gemerkt" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span><span class="bnav-lbl" id="navGemerktLbl">Gemerkt</span></button>
+    <button type="button" class="bnav-btn" data-tab="tagebuch" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg></span><span class="bnav-lbl" id="navTagebuchLbl">Tagebuch</span></button>
     <button type="button" class="bnav-btn" data-tab="unterwegs" aria-pressed="false"><span class="bnav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M9 21l3-7 3 3v4M7 12l3-4 4 1 3 4"/></svg></span><span class="bnav-lbl" id="navUnterwegsLbl">Unterwegs</span></button>
   </nav>
 </div>
@@ -3061,6 +3141,20 @@ const I18N = {
     navKarte: "Karte",
     navGemerkt: "Gemerkt",
     navUnterwegs: "Unterwegs",
+    navTagebuch: "Tagebuch",
+    jrKicker: n => `${n} ${n === 1 ? "Tour" : "Touren"} gemacht`,
+    jrStatTours: "Touren",
+    jrStatKm: "km zu Fuß",
+    jrStatHm: "Höhen\u00ADmeter",
+    jrStatRegions: "Regionen",
+    jrAll: "Alle",
+    jrNoDate: "Ohne Datum",
+    jrNoDateNote: n => `+ ${n} ohne Datum – unter „Alle“`,
+    jrEmptyTitle: "Noch keine gemachten Touren",
+    jrEmptyBody: "Markiere eine Tour auf ihrer Seite mit ✓ als gemacht – oder lade deine Google-Zeitachse, dann erscheinen deine Touren hier mit Datum.",
+    jrFromTl: "Zeitachse",
+    jrTlPending: n => `${n} zu prüfen`,
+    jrCalDay: (d, names) => `${d}: ${names}`,
     timetableOf: d => `${d}-Fahrplan`,
     toursCount: n => `${n} Touren`,
     statDep: "Los",
@@ -3134,6 +3228,44 @@ const I18N = {
     doneOn: d => `Gemacht am ${d}`,
     doneTitle: "Gemacht",
     doneCount: n => `${n} gemacht`,
+    tlTitle: "Aus deiner Zeitachse",
+    tlBanner: (p, a) => `${p} zu prüfen · ${a} übernommen`,
+    tlReviewBtn: "Prüfen ›",
+    tlFilterPending: n => `Zu prüfen (${n})`,
+    tlFilterDone: n => `Übernommen (${n})`,
+    tlFilterNo: n => `Verworfen (${n})`,
+    tlToursH: "Touren aus der App",
+    tlTripsH: "Ausflüge ohne passende Tour",
+    tlSure: "Sicher",
+    tlLikely: "Wahrscheinlich",
+    tlAuto: "Automatisch",
+    tlTripBadge: "Ausflug",
+    tlOften: "Du warst oft in der Gegend – passt das Datum?",
+    tlShared: "Am selben Tag passt auch eine andere Tour",
+    tlPre: "Hattest du schon selbst als gemacht markiert",
+    tlWalk: km => `${km} km zu Fuß`,
+    tlFar: km => `bis ${km} km weit weg`,
+    tlYes: "✓ Gemacht",
+    tlYesTrip: "✓ Als Tour speichern",
+    tlNo: "✗ Nein",
+    tlMap: "🗺 Karte",
+    tlUndo: "↩ Rückgängig",
+    tlRestore: "↩ Wieder prüfen",
+    tlOpen: "Öffnen ›",
+    tlTripTitle: p => `Ausflug: ${p}`,
+    tlTripSub: (d, km) => `Aus deiner Zeitachse · ${d}${km ? ` · ${km} km zu Fuß` : ""}`,
+    tlLegendTour: "Tour",
+    tlLegendDay: d => `Dein Weg am ${d}`,
+    tlLegendWalk: "zu Fuß",
+    tlEmpty: "Alles geprüft 🎉",
+    tlNone: "Hier ist nichts",
+    tlImported: (a, p) => `Zeitachse importiert: ${a} Touren als gemacht markiert, ${p} zum Prüfen`,
+    tlBadFile: "Keine Zeitachsen-Datei",
+    tlDelete: "Zeitachsen-Daten vom Gerät löschen",
+    tlDeleteConfirm: "Nochmal tippen zum Löschen",
+    tlDeleteHint: "Deine Entscheidungen bleiben erhalten (gemachte Touren, gespeicherte Ausflüge); nur die Wege aus der Zeitachse werden vom Gerät entfernt.",
+    tlDeleted: "Zeitachsen-Daten gelöscht",
+    tlRange: (a, b) => `${a} – ${b}`,
     hideDone: "✓ Gemachte Touren ausblenden",
     savedExportBtn: "⬇️ JSON Export",
     savedImportBtn: "⬆️ JSON Import",
@@ -3365,6 +3497,20 @@ const I18N = {
     navKarte: "Map",
     navGemerkt: "Saved",
     navUnterwegs: "Trip",
+    navTagebuch: "Journal",
+    jrKicker: n => `${n} ${n === 1 ? "tour" : "tours"} done`,
+    jrStatTours: "Tours",
+    jrStatKm: "km on foot",
+    jrStatHm: "Elevation (m)",
+    jrStatRegions: "Regions",
+    jrAll: "All",
+    jrNoDate: "No date",
+    jrNoDateNote: n => `+ ${n} without a date – under “All”`,
+    jrEmptyTitle: "No tours done yet",
+    jrEmptyBody: "Mark a tour as done with ✓ on its page – or load your Google Timeline, and your tours will show up here with their dates.",
+    jrFromTl: "Timeline",
+    jrTlPending: n => `${n} to review`,
+    jrCalDay: (d, names) => `${d}: ${names}`,
     timetableOf: d => `${d} timetable`,
     toursCount: n => `${n} tours`,
     statDep: "Depart",
@@ -3438,6 +3584,44 @@ const I18N = {
     doneOn: d => `Done on ${d}`,
     doneTitle: "Done",
     doneCount: n => `${n} done`,
+    tlTitle: "From your Timeline",
+    tlBanner: (p, a) => `${p} to review · ${a} applied`,
+    tlReviewBtn: "Review ›",
+    tlFilterPending: n => `To review (${n})`,
+    tlFilterDone: n => `Applied (${n})`,
+    tlFilterNo: n => `Dismissed (${n})`,
+    tlToursH: "Tours in the app",
+    tlTripsH: "Trips without a matching tour",
+    tlSure: "Sure",
+    tlLikely: "Likely",
+    tlAuto: "Automatic",
+    tlTripBadge: "Trip",
+    tlOften: "You were often in the area – is the date right?",
+    tlShared: "Another tour matches the same day",
+    tlPre: "You had already marked it as done",
+    tlWalk: km => `${km} km on foot`,
+    tlFar: km => `up to ${km} km away`,
+    tlYes: "✓ Done",
+    tlYesTrip: "✓ Save as tour",
+    tlNo: "✗ No",
+    tlMap: "🗺 Map",
+    tlUndo: "↩ Undo",
+    tlRestore: "↩ Review again",
+    tlOpen: "Open ›",
+    tlTripTitle: p => `Trip: ${p}`,
+    tlTripSub: (d, km) => `From your Timeline · ${d}${km ? ` · ${km} km on foot` : ""}`,
+    tlLegendTour: "Tour",
+    tlLegendDay: d => `Your route on ${d}`,
+    tlLegendWalk: "on foot",
+    tlEmpty: "All reviewed 🎉",
+    tlNone: "Nothing here",
+    tlImported: (a, p) => `Timeline imported: ${a} tours marked as done, ${p} to review`,
+    tlBadFile: "Not a Timeline file",
+    tlDelete: "Delete Timeline data from this device",
+    tlDeleteConfirm: "Tap again to delete",
+    tlDeleteHint: "Your decisions stay (tours done, saved trips); only the routes from the Timeline are removed from the device.",
+    tlDeleted: "Timeline data deleted",
+    tlRange: (a, b) => `${a} – ${b}`,
     hideDone: "✓ Hide tours already done",
     savedExportBtn: "⬇️ Export JSON",
     savedImportBtn: "⬆️ Import JSON",
@@ -3604,6 +3788,12 @@ function loadValidDone() {
   return out;
 }
 
+/* Timeline review (see "Zeitachse" below): {created, range, items: [...]} */
+function loadTl() {
+  const v = store.get("tlReview", null);
+  return v && typeof v === "object" && Array.isArray(v.items) ? v : null;
+}
+
 function loadValidFavs() {
   const raw = store.get("favs", []);
   if (!Array.isArray(raw)) return [];
@@ -3678,6 +3868,10 @@ let state = {
   mapPinned: store.get("mapPinned", false) === true,
   favs: loadValidFavs(),
   done: loadValidDone(),
+  tl: loadTl(),
+  tlOpen: false,
+  tlFilter: "pending",
+  jrYear: null,
   sharedTrips: loadSharedTrips(),
   hideDone: store.get("hideDone", false) === true,
   activeTrip: loadValidActiveTrip(),
@@ -4201,7 +4395,7 @@ $("#themeBtn").addEventListener("click", () => {
 function renderHeader() {
   const tDict = T();
   document.documentElement.lang = state.lang;
-  const tabTitle = {entdecken: tDict.navEntdecken, karte: tDict.navKarte, gemerkt: tDict.navGemerkt, unterwegs: tDict.navUnterwegs}[state.tab];
+  const tabTitle = {entdecken: tDict.navEntdecken, karte: tDict.navKarte, gemerkt: tDict.navGemerkt, tagebuch: tDict.navTagebuch, unterwegs: tDict.navUnterwegs}[state.tab];
   $("#brandTitle").textContent = state.sel && BY_ID[state.sel] ? tourTitle(BY_ID[state.sel]) : (tabTitle || tDict.brandTitle);
   const now = new Date(linkDateIso(state.day) + "T12:00:00");
   const wdName = now.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {weekday: "short"}).replace(/\.$/, "");
@@ -4701,6 +4895,7 @@ function toggleDone(id) {
   });
   renderList();
   if (state.tab === "gemerkt" && !state.sel) renderSavedView();
+  if (state.tab === "tagebuch" && !state.sel) renderJournalView();
   toast(was ? tDict.doneRemoved : tDict.doneAdded);
 }
 
@@ -5539,6 +5734,7 @@ function renderBottomNav() {
     entdecken: tDict.navEntdecken,
     karte: tDict.navKarte,
     gemerkt: tDict.navGemerkt,
+    tagebuch: tDict.navTagebuch,
     unterwegs: tDict.navUnterwegs
   };
   document.querySelectorAll("#bottomNav .bnav-btn").forEach(btn => {
@@ -5598,6 +5794,7 @@ function importFavoritesJson(rawText) {
     toast(tDict.savedImportInvalid);
     return false;
   }
+  if (parsed && parsed.kind === "sw-timeline-review") return importTimelineReview(parsed);
   if (parsed && typeof parsed === "object" && parsed.done && typeof parsed.done === "object" && !Array.isArray(parsed.done)) {
     let nDone = 0;
     for (const [id, d] of Object.entries(parsed.done)) {
@@ -5673,7 +5870,14 @@ function savedCardHTML(t) {
 function renderSavedView() {
   const saved = $("#savedView");
   if (!saved) return;
+  if (state.tlOpen && state.tl) { renderTlReview(); return; }
   const tDict = T();
+  const tlc = state.tl ? tlCounts() : null;
+  const tlBanner = tlc && (tlc.pending || tlc.done || tlc.no) ? `<button type="button" class="tl-banner" id="tlOpenBtn">
+      <span class="tl-banner-ico" aria-hidden="true">🕘</span>
+      <span class="tl-banner-text"><strong>${esc(tDict.tlTitle)}</strong><span>${esc(tDict.tlBanner(tlc.pending, tlc.done))}</span></span>
+      <span class="tl-banner-go">${esc(tDict.tlReviewBtn)}</span>
+    </button>` : "";
   const favTours = state.favs.map(id => BY_ID[id]).filter(Boolean);
   const doneTours = Object.entries(state.done || {}).sort((a, b) => String(b[1]).localeCompare(String(a[1]))).map(([id]) => BY_ID[id]).filter(Boolean);
   const doneHtml = doneTours.length ? `<h2 class="saved-sub">✓ ${esc(tDict.doneTitle)} <span class="chip">${esc(tDict.savedCount(doneTours.length))}</span></h2>
@@ -5701,6 +5905,7 @@ function renderSavedView() {
         <input type="file" id="favImportFile" accept=".json,application/json" hidden>
       </div>
     </div>
+    ${tlBanner}
     ${listHtml}
     ${doneHtml}
     <details class="saved-json-box" id="favJsonDetails">
@@ -6179,6 +6384,12 @@ function renderTabViews() {
     saved.hidden = !showSaved;
     if (showSaved) renderSavedView();
   }
+  const journal = $("#journalView");
+  if (journal) {
+    const showJournal = state.tab === "tagebuch" && !state.sel;
+    journal.hidden = !showJournal;
+    if (showJournal) renderJournalView();
+  }
   if (trip) {
     const showTrip = state.tab === "unterwegs" && !state.sel;
     trip.hidden = !showTrip;
@@ -6188,6 +6399,7 @@ function renderTabViews() {
 }
 
 $("#savedView")?.addEventListener("click", e => {
+  if (tlHandleClick(e)) return;
   const favBtn = e.target.closest(".fav-btn[data-fav-id]");
   if (favBtn) {
     e.stopPropagation();
@@ -6334,7 +6546,7 @@ $("#tripView")?.addEventListener("click", e => {
 });
 
 function setTab(tab, opts) {
-  const next = ["entdecken", "karte", "gemerkt", "unterwegs"].includes(tab) ? tab : "entdecken";
+  const next = ["entdecken", "karte", "gemerkt", "tagebuch", "unterwegs"].includes(tab) ? tab : "entdecken";
   closeAppSheet({clear: true});
   if (state.sel) {
     state.sel = null;
@@ -8316,6 +8528,431 @@ function deleteUserTour(id) {
   renderList();
 }
 
+/* ---------- Tagebuch: done tours as statistics, year calendar and timeline ---------- */
+function journalEntries() {
+  return Object.entries(state.done || {}).map(([id, d]) => ({t: BY_ID[id], d: /^\d{4}-\d{2}-\d{2}$/.test(String(d)) ? String(d) : ""}))
+    .filter(x => x.t)
+    .sort((a, b) => (b.d || "0").localeCompare(a.d || "0") || tourTitle(a.t).localeCompare(tourTitle(b.t)));
+}
+function jrStatsHTML(list) {
+  const tDict = T();
+  const km = list.reduce((a, x) => a + (Number(x.t.hike?.distKm) || 0), 0);
+  const hm = list.reduce((a, x) => a + (Number(x.t.hike?.elevGainM) || 0), 0);
+  const regs = new Set(list.map(x => x.t.region || "weitere")).size;
+  const loc = state.lang === "en" ? "en-GB" : "de-DE";
+  const tile = (v, l) => `<div class="jr-stat"><b>${esc(v)}</b><span>${esc(l)}</span></div>`;
+  return `<div class="jr-stats">${tile(list.length, tDict.jrStatTours)}${tile(Math.round(km).toLocaleString(loc), tDict.jrStatKm)}${tile(Math.round(hm).toLocaleString(loc), tDict.jrStatHm)}${tile(regs, tDict.jrStatRegions)}</div>`;
+}
+function jrCalendarHTML(year, list) {
+  const tDict = T();
+  const loc = state.lang === "en" ? "en-GB" : "de-DE";
+  const byDay = new Map();
+  list.forEach(x => { if (x.d.startsWith(`${year}-`)) byDay.set(x.d, [...(byDay.get(x.d) || []), x.t]); });
+  const today = new Date();
+  const todayIso = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  let html = "";
+  for (let m = 0; m < 12; m++) {
+    const first = new Date(year, m, 1);
+    const nDays = new Date(year, m + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7;                       // Monday first
+    let cells = "", cnt = 0;
+    for (let i = 0; i < lead; i++) cells += `<span class="jr-day pad"></span>`;
+    for (let d = 1; d <= nDays; d++) {
+      const iso = `${year}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      const ts = byDay.get(iso);
+      const cls = iso === todayIso ? " today" : "";
+      if (ts) {
+        cnt += ts.length;
+        const lbl = tDict.jrCalDay(tlFmtDate(iso), ts.map(tourTitle).join(", "));
+        cells += `<button type="button" class="jr-day on${ts.length > 1 ? " multi" : ""}${cls}" data-jr-date="${iso}" title="${esc(lbl)}" aria-label="${esc(lbl)}"></button>`;
+      } else cells += `<span class="jr-day${cls}"></span>`;
+    }
+    const mName = first.toLocaleDateString(loc, {month: "short"}).replace(/\.$/, "");
+    html += `<div class="jr-month-cal${cnt ? " has" : ""}"><div class="jr-mc-head"><span>${esc(mName)}</span>${cnt ? `<b>${cnt}</b>` : ""}</div><div class="jr-mc-grid">${cells}</div></div>`;
+  }
+  return `<div class="jr-cal">${html}</div>`;
+}
+function jrEntryHTML(x) {
+  const tDict = T();
+  const t = x.t;
+  const h = t.hike || {};
+  const loc = state.lang === "en" ? "en-GB" : "de-DE";
+  const dt = x.d ? new Date(`${x.d}T12:00:00`) : null;
+  const meta = [
+    h.distKm ? `🥾 ${tlKm(h.distKm)} km` : "",
+    h.elevGainM ? `↗ ${Math.round(h.elevGainM)} hm` : "",
+    tDict.reg[t.region] || ""
+  ].filter(Boolean).join(" · ");
+  return `<li class="jr-entry" data-saved-id="${esc(t.id)}" data-jr-day="${esc(x.d)}" role="button" tabindex="0">
+    <div class="jr-when">${dt ? `<b>${dt.getDate()}</b><span>${esc(dt.toLocaleDateString(loc, {weekday: "short"}).replace(/\.$/, ""))}</span>` : `<span>–</span>`}</div>
+    <div class="jr-card">
+      <img class="jr-img" src="${esc(t.img || `img/${t.id}.jpg`)}" alt="" loading="lazy" decoding="async" width="64" height="56">
+      <div class="jr-body">
+        <div class="jr-title">${esc(tourTitle(t))}</div>
+        <div class="jr-meta">${esc(meta)}${t.fromTimeline ? ` <span class="jr-tag">🕘 ${esc(tDict.jrFromTl)}</span>` : ""}</div>
+      </div>
+    </div>
+  </li>`;
+}
+function renderJournalView() {
+  const view = $("#journalView");
+  if (!view) return;
+  const tDict = T();
+  const loc = state.lang === "en" ? "en-GB" : "de-DE";
+  const all = journalEntries();
+  const years = [...new Set(all.filter(x => x.d).map(x => Number(x.d.slice(0, 4))))].sort((a, b) => b - a);
+  // null = "follow the newest year" until the user picks one ("all" stays an explicit choice)
+  if (state.jrYear !== "all" && !years.includes(state.jrYear)) state.jrYear = years.length ? years[0] : null;
+  const yr = state.jrYear === null ? "all" : state.jrYear;
+  const list = yr === "all" ? all : all.filter(x => x.d.startsWith(`${yr}-`));
+  const undated = all.filter(x => !x.d);
+  const pend = state.tl ? tlCounts().pending : 0;
+  const tlBox = pend ? `<button type="button" class="tl-banner" id="jrTlBtn"><span class="tl-banner-ico" aria-hidden="true">🕘</span><span class="tl-banner-text"><strong>${esc(tDict.tlTitle)}</strong><span>${esc(tDict.jrTlPending(pend))}</span></span><span class="tl-banner-go">${esc(tDict.tlReviewBtn)}</span></button>` : "";
+  if (!all.length) {
+    view.innerHTML = `<div class="saved-shell jr-shell">
+      <div class="tab-head"><div class="tab-head-text"><span class="tab-kicker">${esc(tDict.jrKicker(0))}</span><h1 class="tab-title">${esc(tDict.navTagebuch)}</h1></div></div>
+      ${tlBox}
+      <div class="tab-empty"><div class="tab-empty-ico" aria-hidden="true">📔</div><h2>${esc(tDict.jrEmptyTitle)}</h2><p>${esc(tDict.jrEmptyBody)}</p>
+      <button type="button" class="act primary" data-go-tab="entdecken">${esc(tDict.savedBrowseBtn)}</button></div>
+    </div>`;
+    return;
+  }
+  // timeline grouped by month (by year first when "all" is selected)
+  const groups = [];
+  for (const x of list) {
+    const key = x.d ? x.d.slice(0, 7) : "";
+    let g = groups[groups.length - 1];
+    if (!g || g.key !== key) { g = {key, items: []}; groups.push(g); }
+    g.items.push(x);
+  }
+  if (yr === "all" && undated.length && !groups.some(g => g.key === "")) groups.push({key: "", items: undated});
+  const monthLbl = key => key ? new Date(`${key}-15T12:00:00`).toLocaleDateString(loc, {month: "long", year: "numeric"}) : tDict.jrNoDate;
+  const tl = groups.map(g => `<section class="jr-group"><h2 class="jr-mhead">${esc(monthLbl(g.key))} <span class="chip">${g.items.length}</span></h2><ol class="jr-tl">${g.items.map(jrEntryHTML).join("")}</ol></section>`).join("");
+  const chip = (v, l) => `<button type="button" data-jr-year="${v}" aria-pressed="${String(yr) === String(v)}">${esc(l)}</button>`;
+  view.innerHTML = `<div class="saved-shell jr-shell">
+    <div class="tab-head"><div class="tab-head-text"><span class="tab-kicker">${esc(tDict.jrKicker(all.length))}</span><h1 class="tab-title">${esc(tDict.navTagebuch)}</h1></div></div>
+    ${tlBox}
+    <div class="tl-filters jr-years">${years.map(y => chip(y, String(y))).join("")}${chip("all", tDict.jrAll)}</div>
+    ${jrStatsHTML(list)}
+    ${yr === "all" ? "" : jrCalendarHTML(yr, list)}
+    ${yr !== "all" && undated.length ? `<p class="jr-note">${esc(tDict.jrNoDateNote(undated.length))}</p>` : ""}
+    <div class="jr-timeline">${tl}</div>
+  </div>`;
+}
+$("#journalView")?.addEventListener("click", e => {
+  if (e.target.closest("#jrTlBtn")) { setTab("gemerkt"); openTlReview(); return; }
+  const yb = e.target.closest("[data-jr-year]");
+  if (yb) {
+    state.jrYear = yb.dataset.jrYear === "all" ? "all" : Number(yb.dataset.jrYear);
+    renderJournalView();
+    return;
+  }
+  const day = e.target.closest("[data-jr-date]");
+  if (day) {
+    const el = document.querySelector(`#journalView .jr-entry[data-jr-day="${day.dataset.jrDate}"]`);
+    if (el) {
+      el.scrollIntoView({behavior: "smooth", block: "center"});
+      el.classList.remove("flash");
+      void el.offsetWidth;
+      el.classList.add("flash");
+    }
+    return;
+  }
+  const entry = e.target.closest(".jr-entry[data-saved-id]");
+  if (entry) openTour(entry.dataset.savedId);
+});
+$("#journalView")?.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const entry = e.target.closest(".jr-entry[data-saved-id]");
+  if (entry) { e.preventDefault(); openTour(entry.dataset.savedId); }
+});
+
+/* ---------- Zeitachse: review of the user's own Google Timeline export ----------
+   The review file is built locally from the Timeline export (outside this repository) and loaded only
+   on the device (Gemerkt → JSON Import, or DevTools). It lives in localStorage ("tlReview"); nothing
+   is uploaded. Clear tour matches are marked as done right away, everything else waits for a decision. */
+function saveTl() {
+  if (state.tl) store.set("tlReview", state.tl);
+}
+function tlValid(it) {
+  return it && (it.type === "trip" || Boolean(BY_ID[it.id]));
+}
+function tlCounts() {
+  const c = {pending: 0, done: 0, no: 0};
+  for (const it of state.tl?.items || []) {
+    if (!tlValid(it)) continue;
+    if (it.status === "pending") c.pending++;
+    else if (it.status === "no") c.no++;
+    else c.done++;
+  }
+  return c;
+}
+function tlFmtDate(d, long) {
+  const dt = new Date(`${d}T12:00:00`);
+  if (isNaN(dt.getTime())) return String(d || "");
+  return dt.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE",
+    long ? {weekday: "short", day: "2-digit", month: "2-digit", year: "numeric"} : {day: "2-digit", month: "2-digit", year: "numeric"});
+}
+const tlKm = v => (Math.round(Number(v || 0) * 10) / 10).toLocaleString(state.lang === "en" ? "en-GB" : "de-DE");
+function importTimelineReview(p) {
+  if (!p || p.kind !== "sw-timeline-review" || !Array.isArray(p.tours) || !Array.isArray(p.trips)) {
+    toast(T().tlBadFile);
+    return false;
+  }
+  const old = new Map((state.tl?.items || []).map(it => [it.k, it]));
+  const items = [];
+  let nAuto = 0;
+  for (const x of p.tours) {
+    if (!x || !BY_ID[x.id] || !Array.isArray(x.dates) || !x.dates.length) continue;
+    const k = `tour:${x.id}`;
+    const prev = old.get(k);
+    const it = Object.assign({k, type: "tour"}, x, prev ? {status: prev.status, pick: prev.pick || 0, pre: prev.pre} : {status: "pending", pick: 0});
+    if (!prev) {
+      if (isDone(x.id)) { it.status = "yes"; it.pre = true; }          // already marked by hand
+      else if (x.conf === "sure") { state.done[x.id] = x.dates[0].d; it.status = "auto"; nAuto++; }
+    }
+    items.push(it);
+  }
+  const ownDays = new Map(TOURS.filter(t => t.source === "user" && t.fromTimeline).map(t => [t.fromTimeline.d, t.id]));
+  for (const x of p.trips) {
+    if (!x || !x.key || !x.d) continue;
+    const prev = old.get(x.key);
+    const it = Object.assign({k: x.key, type: "trip"}, x, prev ? {status: prev.status, tourId: prev.tourId || ""} : {status: "pending", tourId: ""});
+    if (!prev && ownDays.has(x.d)) { it.status = "yes"; it.tourId = ownDays.get(x.d); }
+    items.push(it);
+  }
+  for (const [k, it] of old) if (it.status !== "pending" && !items.some(x => x.k === k)) items.push(it);
+  state.tl = {created: p.created || "", range: Array.isArray(p.range) ? p.range : [], items};
+  saveTl();
+  store.set("done", state.done);
+  toast(T().tlImported(nAuto, tlCounts().pending), {ms: 6000});
+  renderList();
+  if (state.tab === "gemerkt" && !state.sel) renderSavedView();
+  if (state.tab === "tagebuch" && !state.sel) renderJournalView();
+  return true;
+}
+function userTourFromTimeline(it) {
+  const walk = it.walk ? decodePoly(it.walk) : [];
+  const km = Number(it.walkKm) || 0;
+  const hasWalk = walk.length >= 2 && km >= 1;
+  const stop = (x, fb) => ({name: (x && x.name) || it.place, lat: Number(x ? x.lat : fb[0]), lon: Number(x ? x.lon : fb[1])});
+  const s0 = stop(it.from, it.walkStart), s1 = stop(it.to, it.walkEnd);
+  const dDe = new Date(`${it.d}T12:00:00`).toLocaleDateString("de-DE"), dEn = new Date(`${it.d}T12:00:00`).toLocaleDateString("en-GB");
+  const kmDe = km >= 1 ? String(Math.round(km * 10) / 10).replace(".", ",") : "", kmEn = km >= 1 ? String(Math.round(km * 10) / 10) : "";
+  const walkMin = hasWalk ? sacWalkMin(km, 0, 0) : 0;
+  const t = {
+    id: `user-tl-${it.d}`, source: "user", region: regionOfCoord(s0.lat, s0.lon), category: "eigene",
+    ring: hasWalk ? haversineM(walk[0], walk[walk.length - 1]) < 300 : s0.name === s1.name,
+    difficulty: km < 6 ? "leicht" : (km > 12 ? "schwer" : "mittel"),
+    title: {de: I18N.de.tlTripTitle(it.place), en: I18N.en.tlTripTitle(it.place)},
+    subtitle: {de: I18N.de.tlTripSub(dDe, kmDe), en: I18N.en.tlTripSub(dEn, kmEn)},
+    places: [s0.name, s1.name],
+    transit: {kind: hasWalk ? "gpx_linked" : "curated", startStop: s0, endStop: s1, vias: [],
+      walkToStartM: it.from?.distM ?? null, walkFromEndM: it.to?.distM ?? null},
+    hike: hasWalk
+      ? {hasGpx: true, distKm: Math.round(km * 100) / 100, elevGainM: 0, elevLossM: 0, walkMin, poly5: it.walk, elevProfile: [],
+        startCoord: walk[0], endCoord: walk[walk.length - 1]}
+      : {hasGpx: false, distKm: 0, elevGainM: 0, elevLossM: 0, walkMin: 0, poly5: "", elevProfile: [], startCoord: null, endCoord: null},
+    durationMin: (walkMin || 60) + 240, plans: {}, importedAt: new Date().toISOString(),
+    fromTimeline: {d: it.d}
+  };
+  t.img = USER_TOUR_IMG;
+  return t;
+}
+function tlDecide(it, act) {
+  if (act === "yes") {
+    if (it.type === "tour") state.done[it.id] = (it.dates[it.pick || 0] || it.dates[0]).d;
+    else {
+      let t = it.tourId && BY_ID[it.tourId];
+      if (!t) {
+        t = userTourFromTimeline(it);
+        if (BY_ID[t.id]) t = BY_ID[t.id];
+        else { TOURS.push(t); BY_ID[t.id] = t; saveUserTours(); }
+        it.tourId = t.id;
+      }
+      state.done[t.id] = it.d;
+    }
+    it.status = "yes";
+  } else if (act === "no") {
+    it.status = "no";
+  } else if (act === "undo") {
+    if (it.pre) return;
+    if (it.type === "tour") delete state.done[it.id];
+    else if (it.tourId) {
+      delete state.done[it.tourId];
+      if (BY_ID[it.tourId]?.fromTimeline) deleteUserTour(it.tourId);
+      it.tourId = "";
+    }
+    it.status = "pending";
+  } else if (act === "restore") {
+    it.status = "pending";
+  }
+  store.set("done", state.done);
+  saveTl();
+  renderList();
+  renderSavedView();
+}
+function openTlReview() {
+  state.tlOpen = true;
+  state.tlFilter = tlCounts().pending ? "pending" : "done";
+  renderSavedView();
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+function closeTlReview() {
+  state.tlOpen = false;
+  renderSavedView();
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+const TL_MODE_ICO = {IN_TRAIN: "🚆", IN_BUS: "🚌", IN_TRAM: "🚋", IN_SUBWAY: "🚇", IN_FERRY: "⛴️"};
+function tlCardHTML(it) {
+  const tDict = T();
+  const isTour = it.type === "tour";
+  const t = isTour ? BY_ID[it.id] : (it.tourId && BY_ID[it.tourId]);
+  const dates = isTour ? it.dates : [{d: it.d, walkKm: it.walkKm}];
+  const pick = Math.min(it.pick || 0, dates.length - 1);
+  const conf = it.status === "auto" ? "auto" : (isTour ? it.conf : "trip");
+  const badge = {auto: tDict.tlAuto, sure: tDict.tlSure, likely: tDict.tlLikely, trip: tDict.tlTripBadge}[conf];
+  const title = isTour ? tourTitle(t) : tDict.tlTripTitle(it.place);
+  const sub = isTour ? tourSub(t)
+    : [(it.modes || []).map(m => TL_MODE_ICO[m] || "").join(""), it.walkKm >= 1 ? tDict.tlWalk(tlKm(it.walkKm)) : "", tDict.tlFar(it.maxKm)].filter(Boolean).join(" · ");
+  const img = isTour ? (t.img || `img/${t.id}.jpg`) : USER_TOUR_IMG;
+  const notes = [it.pre ? tDict.tlPre : "", it.often ? tDict.tlOften : "", it.shared ? tDict.tlShared : ""].filter(Boolean);
+  const chips = dates.map((x, i) => `<button type="button" class="tlr-date" data-tl-pick="${i}" aria-pressed="${i === pick}"${dates.length < 2 ? " disabled" : ""}>${esc(tlFmtDate(x.d, true))}${x.walkKm >= 0.5 ? ` · 🥾 ${esc(tlKm(x.walkKm))} km` : ""}</button>`).join("");
+  const btn = (a, lbl, cls) => `<button type="button" class="act${cls ? " " + cls : ""}" data-tl-act="${a}">${esc(lbl)}</button>`;
+  const acts = it.status === "pending"
+    ? btn("map", tDict.tlMap) + btn("no", tDict.tlNo) + btn("yes", isTour ? tDict.tlYes : tDict.tlYesTrip, "primary")
+    : it.status === "no"
+      ? btn("map", tDict.tlMap) + btn("restore", tDict.tlRestore)
+      : btn("map", tDict.tlMap) + (it.pre ? "" : btn("undo", tDict.tlUndo)) + (t ? btn("open", tDict.tlOpen, "primary") : "");
+  return `<article class="tlr-card" data-tl-key="${esc(it.k)}">
+    <div class="tlr-top">
+      <img class="tlr-img" src="${esc(img)}" alt="" loading="lazy" decoding="async" width="56" height="56">
+      <div class="tlr-body"><div class="tlr-title">${esc(title)}</div><div class="tlr-sub">${esc(sub)}</div></div>
+      <span class="tlr-badge" data-conf="${conf}">${esc(badge)}</span>
+    </div>
+    ${notes.length ? `<div class="tlr-note">${notes.map(esc).join(" · ")}</div>` : ""}
+    <div class="tlr-dates">${chips}</div>
+    <div class="tlr-mapbox" hidden><div class="tlr-legend"></div></div>
+    <div class="tlr-acts">${acts}</div>
+  </article>`;
+}
+function renderTlReview() {
+  const saved = $("#savedView");
+  const tDict = T();
+  const c = tlCounts();
+  const f = state.tlFilter;
+  const want = it => tlValid(it) && (f === "pending" ? it.status === "pending" : f === "no" ? it.status === "no" : (it.status === "yes" || it.status === "auto"));
+  const items = state.tl.items.filter(want);
+  const dOf = it => (it.type === "tour" ? (it.dates[it.pick || 0] || it.dates[0]).d : it.d) || "";
+  const tours = items.filter(i => i.type === "tour").sort((a, b) => ((a.conf === "sure") === (b.conf === "sure") ? 0 : a.conf === "sure" ? -1 : 1) || dOf(b).localeCompare(dOf(a)));
+  const trips = items.filter(i => i.type === "trip").sort((a, b) => dOf(b).localeCompare(dOf(a)));
+  const rg = state.tl.range || [];
+  const fb = (k, lbl) => `<button type="button" data-tl-filter="${k}" aria-pressed="${f === k}">${esc(lbl)}</button>`;
+  saved.innerHTML = `<div class="saved-shell tl-shell">
+    <div class="tab-head">
+      <div class="tab-head-text">
+        <button type="button" class="tl-back" id="tlBackBtn">‹ ${esc(tDict.navGemerkt)}</button>
+        <h1 class="tab-title">${esc(tDict.tlTitle)}</h1>
+        ${rg.length === 2 ? `<span class="tab-kicker">${esc(tDict.tlRange(tlFmtDate(rg[0]), tlFmtDate(rg[1])))}</span>` : ""}
+      </div>
+    </div>
+    <div class="tl-filters">${fb("pending", tDict.tlFilterPending(c.pending))}${fb("done", tDict.tlFilterDone(c.done))}${fb("no", tDict.tlFilterNo(c.no))}</div>
+    ${tours.length ? `<h2 class="saved-sub">${esc(tDict.tlToursH)} <span class="chip">${tours.length}</span></h2><div class="tlr-list">${tours.map(tlCardHTML).join("")}</div>` : ""}
+    ${trips.length ? `<h2 class="saved-sub">${esc(tDict.tlTripsH)} <span class="chip">${trips.length}</span></h2><div class="tlr-list">${trips.map(tlCardHTML).join("")}</div>` : ""}
+    ${items.length ? "" : `<div class="tab-empty"><div class="tab-empty-ico" aria-hidden="true">${f === "pending" ? "🎉" : "🗂"}</div><h2>${esc(f === "pending" ? tDict.tlEmpty : tDict.tlNone)}</h2></div>`}
+    <div class="tl-foot"><button type="button" class="act" id="tlDeleteBtn">🗑 ${esc(tDict.tlDelete)}</button><p>${esc(tDict.tlDeleteHint)}</p></div>
+  </div>`;
+}
+/* one small Leaflet map, moved into whichever card asks for it */
+let tlMap = null, tlMapEl = null, tlMapLayers = null;
+function tlShowMap(card, it) {
+  const box = card.querySelector(".tlr-mapbox");
+  if (!box) return;
+  if (!box.hidden && tlMapEl && box.contains(tlMapEl)) { box.hidden = true; return; }
+  document.querySelectorAll(".tlr-mapbox").forEach(b => { b.hidden = true; });
+  if (!tlMapEl) { tlMapEl = document.createElement("div"); tlMapEl.className = "tlr-map"; }
+  box.prepend(tlMapEl);
+  box.hidden = false;
+  if (!tlMap) {
+    tlMap = L.map(tlMapEl, {zoomControl: false, attributionControl: true, zoomSnap: 0});
+    const cfg = LAYERS[state.layer] && !LAYERS[state.layer].overlay ? LAYERS[state.layer] : LAYERS.osm;
+    const isFile = location.protocol === "file:";
+    L.tileLayer(isFile ? OFFLINE_TILE_SVG : cfg.url, {maxZoom: cfg.max, attribution: cfg.attr, crossOrigin: isFile || cfg.cors === false ? undefined : "anonymous"}).addTo(tlMap);
+    tlMapLayers = L.layerGroup().addTo(tlMap);
+  }
+  tlMap.invalidateSize({pan: false});
+  tlDrawMap(card, it);
+}
+function tlDrawMap(card, it) {
+  if (!tlMap) return;
+  const tDict = T();
+  tlMapLayers.clearLayers();
+  const dates = it.type === "tour" ? it.dates : [it];
+  const x = dates[Math.min(it.pick || 0, dates.length - 1)] || {};
+  if (it.type === "tour") {
+    const t = BY_ID[it.id];
+    const lines = [];
+    const hp = hikePolyPts(t);
+    if (hp.length >= 2) lines.push(hp);
+    const {fwd, rev} = getSelectedWindow(t, state.base, state.day);
+    const mid = getMiddle(t, state.base, state.day, fwd, rev);
+    [...fwd, ...(mid && mid.segs ? mid.segs : []), ...rev].forEach(s => { const c = getSegmentCoords(s); if (c.length >= 2) lines.push(c); });
+    lines.forEach(c => L.polyline(c, {color: "#0F4C5C", weight: 5, opacity: 0.7, interactive: false}).addTo(tlMapLayers));
+  }
+  if (x.path) L.polyline(decodePoly(x.path), {color: "#D6336C", weight: 3.5, opacity: 0.95, dashArray: "7 6", interactive: false}).addTo(tlMapLayers);
+  if (it.type === "trip" && it.walk) L.polyline(decodePoly(it.walk), {color: "#15803D", weight: 5, opacity: 0.9, interactive: false}).addTo(tlMapLayers);
+  const lg = card.querySelector(".tlr-legend");
+  if (lg) lg.innerHTML = `${it.type === "tour" ? `<span><i style="background:#0F4C5C"></i>${esc(tDict.tlLegendTour)}</span>` : ""}<span><i class="dash"></i>${esc(tDict.tlLegendDay(tlFmtDate(x.d)))}</span>${it.type === "trip" && it.walk ? `<span><i style="background:#15803D"></i>${esc(tDict.tlLegendWalk)}</span>` : ""}`;
+  const b = Array.isArray(x.box) && x.box.length === 4 ? L.latLngBounds([x.box[0], x.box[1]], [x.box[2], x.box[3]]) : null;
+  if (b && b.isValid()) tlMap.fitBounds(b, {padding: [10, 10], animate: false});
+}
+function tlHandleClick(e) {
+  if (e.target.closest("#tlOpenBtn")) { openTlReview(); return true; }
+  if (e.target.closest("#tlBackBtn")) { closeTlReview(); return true; }
+  const fb = e.target.closest("[data-tl-filter]");
+  if (fb) { state.tlFilter = fb.dataset.tlFilter; renderSavedView(); return true; }
+  const del = e.target.closest("#tlDeleteBtn");
+  if (del) {
+    if (del.dataset.armed !== "1") {
+      del.dataset.armed = "1";
+      del.textContent = `🗑 ${T().tlDeleteConfirm}`;
+      setTimeout(() => { if (del.isConnected) { del.dataset.armed = ""; del.textContent = `🗑 ${T().tlDelete}`; } }, 4000);
+      return true;
+    }
+    try { localStorage.removeItem("sw:tlReview"); } catch (err) {}
+    state.tl = null;
+    state.tlOpen = false;
+    renderSavedView();
+    toast(T().tlDeleted);
+    return true;
+  }
+  const card = e.target.closest(".tlr-card[data-tl-key]");
+  if (!card || !state.tl) return false;
+  const it = state.tl.items.find(x => x.k === card.dataset.tlKey);
+  if (!it) return true;
+  const pb = e.target.closest("[data-tl-pick]");
+  if (pb) {
+    it.pick = parseInt(pb.dataset.tlPick, 10) || 0;
+    if (it.type === "tour" && (it.status === "yes" || it.status === "auto") && !it.pre) {
+      state.done[it.id] = it.dates[it.pick].d;
+      store.set("done", state.done);
+    }
+    saveTl();
+    card.querySelectorAll("[data-tl-pick]").forEach(b => b.setAttribute("aria-pressed", String(b === pb)));
+    const box = card.querySelector(".tlr-mapbox");
+    if (box && !box.hidden) tlDrawMap(card, it);
+    return true;
+  }
+  const ab = e.target.closest("[data-tl-act]");
+  if (ab) {
+    const a = ab.dataset.tlAct;
+    if (a === "map") tlShowMap(card, it);
+    else if (a === "open") openTour(it.type === "tour" ? it.id : it.tourId);
+    else tlDecide(it, a);
+  }
+  return true;
+}
+
 /* --- entry point: Android share intent / PWA share target --- */
 window.swHandleShared = function (payload) {
   const tDict = T();
@@ -8380,12 +9017,12 @@ let suppressPopUntil = 0;
 
 /* Back from a tour page: put the list back exactly where it was (same card at the same height on screen). */
 function viewCards() {
-  const root = state.tab === "gemerkt" ? $("#savedView") : $("#list");
-  return root ? [...root.querySelectorAll(".card[data-id], .saved-card[data-saved-id]")] : [];
+  const root = state.tab === "gemerkt" ? $("#savedView") : state.tab === "tagebuch" ? $("#journalView") : $("#list");
+  return root ? [...root.querySelectorAll(".card[data-id], .saved-card[data-saved-id], .jr-entry[data-saved-id]")] : [];
 }
 const cardId = c => c.dataset.id || c.dataset.savedId;
 function listAnchorFor(id) {
-  if (state.tab !== "entdecken" && state.tab !== "gemerkt") return null;
+  if (state.tab !== "entdecken" && state.tab !== "gemerkt" && state.tab !== "tagebuch") return null;
   const cards = viewCards().filter(c => c.offsetParent !== null);
   const pick = cards.find(c => cardId(c) === id && (() => { const r = c.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; })())
     || cards.find(c => c.getBoundingClientRect().bottom > 80);
@@ -8493,7 +9130,7 @@ function closeTour(opts) {
     state.returnAnchor = null;
   } else {
     if (sheet) sheet.hidden = true;
-    if (state.tab === "gemerkt") restoreListPosition(state.returnAnchor, state.returnScrollY);
+    if (state.tab === "gemerkt" || state.tab === "tagebuch") restoreListPosition(state.returnAnchor, state.returnScrollY);
     state.returnScrollY = 0;
     state.returnAnchor = null;
   }
@@ -8548,6 +9185,10 @@ window.swHandleBack = function () {
     setMapSheetSnap("half");
     return true;
   }
+  if (state.tab === "gemerkt" && state.tlOpen) {
+    closeTlReview();
+    return true;
+  }
   if (state.tab !== "entdecken") {
     setTab("entdecken");
     return true;
@@ -8578,6 +9219,7 @@ function setBase(newBase, customHome) {
     drawOverview();
     if (state.tab === "karte") renderMapSheet();
     else if (state.tab === "gemerkt") renderSavedView();
+    else if (state.tab === "tagebuch") renderJournalView();
     else fitCurrent();
   }
 }
@@ -8620,6 +9262,7 @@ $("#daySeg").addEventListener("click", e => {
     drawOverview();
     if (state.tab === "karte") renderMapSheet();
     else if (state.tab === "gemerkt") renderSavedView();
+    else if (state.tab === "tagebuch") renderJournalView();
   }
 });
 
@@ -8676,6 +9319,7 @@ $("#staySelect").addEventListener("change", e => {
     drawOverview();
     if (state.tab === "karte") renderMapSheet();
     else if (state.tab === "gemerkt") renderSavedView();
+    else if (state.tab === "tagebuch") renderJournalView();
   }
 });
 
